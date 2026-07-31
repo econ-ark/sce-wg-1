@@ -3,6 +3,7 @@ title: Semantic Ontologies in Economics
 subtitle: Special Issue Proposal
 authors:
   - name: Christopher Carroll
+  - name: Akshay Shanker
 exports:
   - format: pdf
     template: templates/plain_latex_wide
