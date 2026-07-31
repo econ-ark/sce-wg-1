@@ -3,7 +3,6 @@ title: Semantic Ontologies in Economics
 subtitle: Special Issue Proposal
 authors:
   - name: Christopher Carroll
-  - name: Akshay Shanker
 exports:
   - format: pdf
     template: templates/plain_latex_wide
@@ -101,8 +100,6 @@ The working group's members include developers of Dynare, HARK, and the VFI
 Toolkit.
 Committed teams: [to be listed; only teams that have agreed in writing].
 The working group's papers will come from its subgroups.
-Akshay Shanker and Matthew McKay chair the working group and coordinate the
-teams and the internal review.
 The guest editors (a lead editor and at least one co-editor, neither
 submitting to the issue) are drawn from outside the working group [names,
 institutions; TBC].
