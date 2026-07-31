@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      BASE_URL: /${{ github.event.repository.name }}
+      BASE_URL: /${{ github.event.repository.name }}/jedc
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,9 +33,14 @@ jobs:
           cp JEDC-special-issue-proposal.pdf _build/html/
           python3 inject.py
         working-directory: jedc-prop
+      - name: Assemble site under /jedc
+        run: |
+          mkdir -p site/jedc
+          cp -r jedc-prop/_build/html/. site/jedc/
+          printf '<!doctype html><meta http-equiv="refresh" content="0; url=/sce-wg1/jedc/">' > site/index.html
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: jedc-prop/_build/html
+          path: site
   deploy:
     needs: build
     runs-on: ubuntu-latest
