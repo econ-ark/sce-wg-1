@@ -1,0 +1,14 @@
+# MyST config for the JEDC special-issue proposal (self-contained)
+version: 1
+project:
+  title: Semantic Ontologies in Economics
+  authors:
+    - name: Christopher Carroll
+    - name: Akshay Shanker
+  toc:
+    - file: JEDC-special-issue-proposal.md
+site:
+  template: article-theme
+  title: Semantic Ontologies in Economics
+  options:
+    favicon: favicon.ico

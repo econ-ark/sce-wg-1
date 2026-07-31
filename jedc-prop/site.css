@@ -1,0 +1,44 @@
+/* Fixed reading width on large screens */
+.myst-article, .myst-article-header-content, .myst-footnotes {
+  max-width: 62rem; margin-left: auto; margin-right: auto;
+}
+/* Display boxes (HTML counterpart of the PDF tcolorbox) */
+.displaybox { border: 1px solid #999; background: #fafafa; border-radius: 2px;
+  padding: 1rem 1.25rem; margin: 1.5rem 0; }
+.displaybox::before { display: block; font-variant: small-caps;
+  letter-spacing: 0.06em; font-weight: 600; border-bottom: 1px solid #ddd;
+  padding-bottom: 0.4rem; margin-bottom: 0.75rem; }
+.displaybox-domains::before { content: "Domains of study"; }
+.displaybox-themes::before { content: "The research themes"; }
+.displaybox-proposal::before { content: "Proposed special issue"; }
+/* Section demarcation in the Econ-ARK teal */
+.myst-article h2 { color: #00695c; border-bottom: 2px solid rgba(0,105,92,0.25);
+  padding-bottom: 0.3rem; margin-top: 2.2rem; }
+.myst-article h3 { color: #00796b; margin-top: 1.8rem; }
+.displaybox::before { color: #00695c; }
+/* Long URLs in the reference list wrap instead of overflowing */
+.myst-article a { overflow-wrap: anywhere; }
+/* Page subtitle under the title, larger than the author line */
+.page-subtitle { font-size: 1.3rem; font-weight: 600; color: #333;
+  margin: 0.15rem 0 0.35rem; }
+/* Working-group line under the authors */
+.wg-line { font-style: italic; font-size: 0.95rem; color: #333;
+  margin: 0.4rem 0 0.5rem; }
+/* Compact PDF download control */
+.pdf-button { display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.28rem 0.5rem; border: 1px solid #c9c9c9; border-radius: 4px;
+  color: #445; line-height: 0; }
+.pdf-button:hover { border-color: #00695c; color: #00695c; }
+/* Tighten the gap between the title block and the abstract */
+.myst-article { padding-top: 0.25rem; }
+.myst-article-header-content { margin-top: 1.25rem; margin-bottom: 0; }
+/* Dark-theme variants: keep every custom element legible on dark ground */
+html.dark .displaybox { background: #1d1f21; border-color: #555; }
+html.dark .displaybox::before { color: #4db6ac; border-bottom-color: #444; }
+html.dark .myst-article h2 { color: #4db6ac;
+  border-bottom-color: rgba(77, 182, 172, 0.35); }
+html.dark .myst-article h3 { color: #80cbc4; }
+html.dark .wg-line { color: #c9c9c9; }
+html.dark .page-subtitle { color: #ddd; }
+html.dark .pdf-button { border-color: #666; color: #b5b5b5; }
+html.dark .pdf-button:hover { border-color: #4db6ac; color: #4db6ac; }
