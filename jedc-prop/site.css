@@ -1,53 +1,101 @@
+/* Econ-ARK look for the MyST article theme. Palette, type, and components
+   follow econ-ark.org (assets/sass/_variables.scss, _main.scss,
+   _sections.scss): ark blue #1f476b, light blue #00aeef, green #39b54a,
+   yellow #fcb040, grey #676470; Roboto; body ground #f7fafb. */
+
 /* Fixed reading width on large screens */
 .myst-article, .myst-article-header-content, .myst-footnotes {
   max-width: 62rem; margin-left: auto; margin-right: auto;
 }
-/* Display boxes (HTML counterpart of the PDF tcolorbox) */
-.displaybox { border: 1px solid #999; background: #fafafa; border-radius: 2px;
+/* Roboto, as on econ-ark.org (stylesheet added by the injected script) */
+body { font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI',
+  Helvetica, Arial, sans-serif; }
+/* Page ground */
+html:not(.dark) body { background-color: #f7fafb; }
+
+/* Top banner, after econ-ark.org's .header */
+.ark-banner { background: #1f476b; color: #fff; padding: 0.5rem 0; }
+.ark-banner-inner { max-width: 62rem; margin: 0 auto; padding: 0 1rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 0.5rem; }
+.ark-banner .ark-logo { border: 0; line-height: 0; }
+.ark-banner .ark-logo img { width: 130px; height: auto; display: block; }
+.ark-nav { display: flex; flex-wrap: wrap; align-items: center; }
+.ark-nav a { display: block; padding: 0.6rem 1rem; color: #fff;
+  font-size: 1.05rem; font-weight: 400; line-height: 1;
+  text-decoration: none; border-bottom: 2px solid transparent; }
+.ark-nav a:hover { border-bottom-color: #fff; color: #fff; }
+
+/* Title block: section-title pattern (light weight, ark blue) */
+.myst-article-header-fm h1 { color: #1f476b; font-weight: 300; }
+.page-subtitle { font-size: 1.3rem; font-weight: 400; color: #666;
+  margin: 0.15rem 0 0.35rem; }
+.wg-line { font-style: italic; font-size: 0.95rem; color: #676470;
+  margin: 0.4rem 0 0.5rem; }
+
+/* Section demarcation in ark blue */
+.myst-article h2 { color: #1f476b;
+  border-bottom: 2px solid rgba(31, 71, 107, 0.25);
+  padding-bottom: 0.3rem; margin-top: 2.2rem; }
+.myst-article h3 { color: #005b8f; margin-top: 1.8rem; }
+
+/* Links in ark blue; long URLs in the reference lists wrap */
+.myst-article a { color: #1f476b; font-weight: 500;
+  overflow-wrap: anywhere; }
+.myst-article a:hover { color: #00aeef; }
+
+/* Display boxes: journey-card pattern (white card, thick colored left
+   accent; darker accent tone for the title text) */
+.displaybox { background: #fff; border: 1px solid #e2e8ec;
+  border-left: 6px solid #00aeef; border-radius: 2px;
   padding: 1rem 1.25rem; margin: 1.5rem 0; }
 .displaybox::before { display: block; font-variant: small-caps;
-  letter-spacing: 0.06em; font-weight: 600; border-bottom: 1px solid #ddd;
-  padding-bottom: 0.4rem; margin-bottom: 0.75rem; }
-.displaybox-domains::before { content: "Domains of study"; }
-.displaybox-themes::before { content: "The research themes"; }
-.displaybox-proposal::before { content: "Proposed special issue"; }
-/* Section demarcation in the Econ-ARK teal */
-.myst-article h2 { color: #00695c; border-bottom: 2px solid rgba(0,105,92,0.25);
-  padding-bottom: 0.3rem; margin-top: 2.2rem; }
-.myst-article h3 { color: #00796b; margin-top: 1.8rem; }
-.displaybox::before { color: #00695c; }
-/* Long URLs in the reference list wrap instead of overflowing */
-.myst-article a { overflow-wrap: anywhere; }
-/* Page subtitle under the title, larger than the author line */
-.page-subtitle { font-size: 1.3rem; font-weight: 600; color: #333;
-  margin: 0.15rem 0 0.35rem; }
-/* Working-group line under the authors */
-.wg-line { font-style: italic; font-size: 0.95rem; color: #333;
-  margin: 0.4rem 0 0.5rem; }
-/* Compact PDF download controls (one per document: proposal and annex) */
-.pdf-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem;
-  margin-top: 0.5rem; }
-.pdf-button { display: inline-flex; align-items: center; gap: 0.35rem;
-  padding: 0.3rem 0.6rem; border: 1px solid #c9c9c9; border-radius: 4px;
-  color: #445; font-size: 0.85rem; line-height: 1; }
-.pdf-button:hover { border-color: #00695c; color: #00695c; }
-/* Annex demarcation: heavier top rule and larger type than a section */
+  letter-spacing: 0.06em; font-weight: 600;
+  border-bottom: 1px solid #e2e8ec; padding-bottom: 0.4rem;
+  margin-bottom: 0.75rem; }
+.displaybox-domains { border-left-color: #00aeef; }
+.displaybox-domains::before { content: "Domains of study"; color: #005b8f; }
+.displaybox-themes { border-left-color: #39b54a; }
+.displaybox-themes::before { content: "The research themes"; color: #2e7d32; }
+.displaybox-proposal::before { content: "Proposed special issue"; color: #005b8f; }
+
+/* Annex banner: filled brand band with a yellow accent */
 .myst-article h2#annex, .myst-article h2#annex-guidelines-for-papers {
-  margin-top: 3.2rem; padding-top: 1.5rem; font-size: 1.7em;
-  border-top: 3px double rgba(0,105,92,0.55); }
-html.dark .myst-article h2#annex,
-html.dark .myst-article h2#annex-guidelines-for-papers {
-  border-top-color: rgba(77,182,172,0.55); }
-/* Tighten the gap between the title block and the abstract */
+  background: #1f476b; color: #fff; border-bottom: 0;
+  border-left: 6px solid #fcb040; border-radius: 3px;
+  padding: 0.75rem 1.1rem; margin-top: 3.2rem; }
+
+/* PDF controls: econ-ark outlined button (fills on hover) */
+.pdf-buttons { display: flex; flex-wrap: wrap; gap: 0.6rem;
+  margin-top: 0.6rem; }
+.pdf-button { display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.6rem; border: 2px solid #1f476b;
+  color: #1f476b !important; font-size: 0.9rem; font-weight: 500;
+  line-height: 1; }
+.pdf-button:hover { background: #1f476b; color: #fff !important; }
+
+/* Tighten the gap between the title block and the first section */
 .myst-article { padding-top: 0.25rem; }
 .myst-article-header-content { margin-top: 1.25rem; margin-bottom: 0; }
+
 /* Dark-theme variants: keep every custom element legible on dark ground */
-html.dark .displaybox { background: #1d1f21; border-color: #555; }
-html.dark .displaybox::before { color: #4db6ac; border-bottom-color: #444; }
-html.dark .myst-article h2 { color: #4db6ac;
-  border-bottom-color: rgba(77, 182, 172, 0.35); }
-html.dark .myst-article h3 { color: #80cbc4; }
+html.dark .ark-banner { background: #16334d; }
+html.dark .myst-article-header-fm h1 { color: #d6e6f2; }
+html.dark .myst-article h2 { color: #58b0e3;
+  border-bottom-color: rgba(88, 176, 227, 0.35); }
+html.dark .myst-article h3 { color: #7cc4ee; }
+html.dark .myst-article a { color: #7cc4ee; }
+html.dark .myst-article a:hover { color: #00aeef; }
+html.dark .displaybox { background: #1d1f21; border-color: #555;
+  border-left-color: #00aeef; }
+html.dark .displaybox::before { border-bottom-color: #444; }
+html.dark .displaybox-domains::before { color: #58b0e3; }
+html.dark .displaybox-themes { border-left-color: #39b54a; }
+html.dark .displaybox-themes::before { color: #66bb6a; }
+html.dark .myst-article h2#annex,
+html.dark .myst-article h2#annex-guidelines-for-papers {
+  background: #1f476b; color: #fff; }
 html.dark .wg-line { color: #c9c9c9; }
 html.dark .page-subtitle { color: #ddd; }
-html.dark .pdf-button { border-color: #666; color: #b5b5b5; }
-html.dark .pdf-button:hover { border-color: #4db6ac; color: #4db6ac; }
+html.dark .pdf-button { border-color: #7cc4ee; color: #7cc4ee !important; }
+html.dark .pdf-button:hover { background: #1f476b; color: #fff !important; }

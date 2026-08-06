@@ -1,5 +1,6 @@
-# Post-build injection: working-group line and PDF download controls in the
-# article header (inserted after hydration via a load-time script).
+# Post-build injection: Econ-ARK top banner, Roboto stylesheet,
+# working-group line, and PDF download controls (inserted after hydration
+# via a load-time script, so the Remix re-render cannot remove them).
 p = '_build/html/index.html'
 t = open(p).read()
 svg_dl = ('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" '
@@ -9,6 +10,28 @@ svg_dl = ('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" '
           '<line x1="5" y1="21" x2="19" y2="21"></line></svg>')
 script = (
  "<script>window.addEventListener('load',function(){setTimeout(function(){"
+ # Roboto, as on econ-ark.org
+ "if(!document.getElementById('ark-fonts')){"
+ "var f=document.createElement('link');f.id='ark-fonts';f.rel='stylesheet';"
+ "f.href='https://fonts.googleapis.com/css?family=Roboto:400,500,700"
+ "&display=swap';document.head.appendChild(f);}"
+ # Top banner: white logo left, white nav links right
+ "if(!document.querySelector('.ark-banner')){"
+ "var b=document.createElement('div');b.className='ark-banner';"
+ "var bi=document.createElement('div');bi.className='ark-banner-inner';"
+ "var la=document.createElement('a');la.className='ark-logo';"
+ "la.href='https://econ-ark.org';"
+ "var im=document.createElement('img');im.src='econ-ark-logo-white.png';"
+ "im.alt='Econ-ARK';la.appendChild(im);"
+ "var nv=document.createElement('nav');nv.className='ark-nav';"
+ "[['JEDC-special-issue-proposal.pdf','Proposal PDF'],"
+ "['JEDC-annex.pdf','Annex PDF'],"
+ "['https://github.com/econ-ark/sce-wg1','GitHub']]"
+ ".forEach(function(d){var a=document.createElement('a');a.href=d[0];"
+ "a.textContent=d[1];nv.appendChild(a);});"
+ "bi.appendChild(la);bi.appendChild(nv);b.appendChild(bi);"
+ "document.body.insertBefore(b,document.body.firstChild);}"
+ # Subtitle, working-group line, and PDF buttons in the article header
  "var h=document.querySelector('.myst-article-header-fm');"
  "if(h&&!document.querySelector('.pdf-buttons')){"
  "var st=document.createElement('div');st.className='page-subtitle';"

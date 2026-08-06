@@ -30,7 +30,7 @@ jobs:
         run: |
           myst build --html
           cat site.css >> _build/html/myst-theme.css
-          cp JEDC-special-issue-proposal.pdf JEDC-annex.pdf _build/html/
+          cp JEDC-special-issue-proposal.pdf JEDC-annex.pdf econ-ark-logo-white.png _build/html/
           python3 inject.py
         working-directory: jedc-prop
       - name: Assemble site under /jedc
