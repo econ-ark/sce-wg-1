@@ -1,17 +1,21 @@
 ---
 title: Semantic Ontologies in Economics
-subtitle: Special Issue Proposal
+subtitle: "Proposal Annex: Guidelines for Papers"
 authors:
   - name: Christopher Carroll
   - name: Akshay Shanker
 exports:
   - format: pdf
     template: templates/plain_latex_wide
-    output: JEDC-special-issue-proposal.pdf
+    output: JEDC-annex.pdf
   - format: tex
     template: templates/plain_latex_wide
-    output: JEDC-special-issue-proposal.tex
+    output: JEDC-annex.tex
 ---
 
-```{include} parts/proposal.md
+```{raw:tex}
+\setcounter{secnumdepth}{-1}
+```
+
+```{include} parts/annex.md
 ```

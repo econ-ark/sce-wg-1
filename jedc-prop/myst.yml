@@ -6,7 +6,7 @@ project:
     - name: Christopher Carroll
     - name: Akshay Shanker
   toc:
-    - file: JEDC-special-issue-proposal.md
+    - file: index.md
 site:
   template: article-theme
   title: Semantic Ontologies in Economics

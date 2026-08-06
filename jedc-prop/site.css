@@ -24,11 +24,20 @@
 /* Working-group line under the authors */
 .wg-line { font-style: italic; font-size: 0.95rem; color: #333;
   margin: 0.4rem 0 0.5rem; }
-/* Compact PDF download control */
-.pdf-button { display: inline-flex; align-items: center; gap: 0.3rem;
-  padding: 0.28rem 0.5rem; border: 1px solid #c9c9c9; border-radius: 4px;
-  color: #445; line-height: 0; }
+/* Compact PDF download controls (one per document: proposal and annex) */
+.pdf-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-top: 0.5rem; }
+.pdf-button { display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.3rem 0.6rem; border: 1px solid #c9c9c9; border-radius: 4px;
+  color: #445; font-size: 0.85rem; line-height: 1; }
 .pdf-button:hover { border-color: #00695c; color: #00695c; }
+/* Annex demarcation: heavier top rule and larger type than a section */
+.myst-article h2#annex, .myst-article h2#annex-guidelines-for-papers {
+  margin-top: 3.2rem; padding-top: 1.5rem; font-size: 1.7em;
+  border-top: 3px double rgba(0,105,92,0.55); }
+html.dark .myst-article h2#annex,
+html.dark .myst-article h2#annex-guidelines-for-papers {
+  border-top-color: rgba(77,182,172,0.55); }
 /* Tighten the gap between the title block and the abstract */
 .myst-article { padding-top: 0.25rem; }
 .myst-article-header-content { margin-top: 1.25rem; margin-bottom: 0; }

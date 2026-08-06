@@ -1,13 +1,8 @@
-# Post-build injection: working-group line and compact PDF control in the
+# Post-build injection: working-group line and PDF download controls in the
 # article header (inserted after hydration via a load-time script).
 p = '_build/html/index.html'
 t = open(p).read()
-svg_doc = ('<svg viewBox="0 0 24 24" width="15" height="15" fill="none" '
-           'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
-           'stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 '
-           '0 2 2h12a2 2 0 0 0 2-2V8z"></path>'
-           '<polyline points="14 2 14 8 20 8"></polyline></svg>')
-svg_dl = ('<svg viewBox="0 0 24 24" width="15" height="15" fill="none" '
+svg_dl = ('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" '
           'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
           'stroke-linejoin="round"><path d="M12 3v12"></path>'
           '<polyline points="7 10 12 15 17 10"></polyline>'
@@ -15,17 +10,20 @@ svg_dl = ('<svg viewBox="0 0 24 24" width="15" height="15" fill="none" '
 script = (
  "<script>window.addEventListener('load',function(){setTimeout(function(){"
  "var h=document.querySelector('.myst-article-header-fm');"
- "if(h&&!document.querySelector('.pdf-button')){"
+ "if(h&&!document.querySelector('.pdf-buttons')){"
  "var st=document.createElement('div');st.className='page-subtitle';"
  "st.textContent='Special Issue Proposal';"
  "var t1=h.querySelector('h1');if(t1)t1.insertAdjacentElement('afterend',st);"
  "var w=document.createElement('div');w.className='wg-line';"
  "w.textContent='Society for Computational Economics Working Group No. 1 "
  "on Language and Formal Semantics';h.appendChild(w);"
- "var a=document.createElement('a');a.className='pdf-button';"
- "a.href='JEDC-special-issue-proposal.pdf';"
- "a.setAttribute('aria-label','Download PDF');a.title='Download PDF';"
- "a.innerHTML='" + svg_doc + svg_dl + "';h.appendChild(a);}},250);});"
- "</script>")
+ "var box=document.createElement('div');box.className='pdf-buttons';"
+ "var docs=[['JEDC-special-issue-proposal.pdf','Proposal (PDF)'],"
+ "['JEDC-annex.pdf','Annex (PDF)']];"
+ "docs.forEach(function(d){var a=document.createElement('a');"
+ "a.className='pdf-button';a.href=d[0];"
+ "a.setAttribute('aria-label','Download '+d[1]);a.title='Download '+d[1];"
+ "a.innerHTML='" + svg_dl + "<span>'+d[1]+'</span>';box.appendChild(a);});"
+ "h.appendChild(box);}},250);});</script>")
 t = t.replace('</body>', script + '</body>', 1)
 open(p, 'w').write(t)
