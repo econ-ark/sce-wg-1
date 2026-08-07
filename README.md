@@ -7,7 +7,7 @@ No. 1 on Language and Formal Semantics.
 
 *Semantic Ontologies in Economics* (draft):
 
-- [Read online](https://econ-ark.github.io/sce-wg1/jedc/)
-- [Proposal (PDF)](https://econ-ark.github.io/sce-wg1/jedc/JEDC-special-issue-proposal.pdf)
-- [Annex: Guidelines for Papers (PDF)](https://econ-ark.github.io/sce-wg1/jedc/JEDC-annex.pdf)
+- [Read online](https://econ-ark.github.io/sce-wg-1/jedc/)
+- [Proposal (PDF)](https://econ-ark.github.io/sce-wg-1/jedc/JEDC-special-issue-proposal.pdf)
+- [Annex: Guidelines for Papers (PDF)](https://econ-ark.github.io/sce-wg-1/jedc/JEDC-annex.pdf)
 - Source: [`jedc-prop/`](jedc-prop/)

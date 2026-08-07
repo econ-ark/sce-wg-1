@@ -26,7 +26,7 @@ script = (
  "var nv=document.createElement('nav');nv.className='ark-nav';"
  "[['JEDC-special-issue-proposal.pdf','Proposal PDF'],"
  "['JEDC-annex.pdf','Annex PDF'],"
- "['https://github.com/econ-ark/sce-wg1','GitHub']]"
+ "['https://github.com/econ-ark/sce-wg-1','GitHub']]"
  ".forEach(function(d){var a=document.createElement('a');a.href=d[0];"
  "a.textContent=d[1];nv.appendChild(a);});"
  "bi.appendChild(la);bi.appendChild(nv);b.appendChild(bi);"
