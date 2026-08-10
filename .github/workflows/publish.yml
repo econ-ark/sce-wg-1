@@ -1,0 +1,282 @@
+# Builds and publishes the whole site to GitHub Pages in a single deploy.
+#
+# Two independent document builds feed one Pages artifact:
+#
+#   jedc  the MyST article site for the JEDC special-issue proposal
+#         (jedc-prop/), served at /jedc/. Its two PDFs are committed and
+#         copied, never rebuilt, so their bytes do not move.
+#   wg1   the working-group landing page (docs/index.html, hand-written) and
+#         the Project A page + PDF, generated on every run from
+#         project-a/special-issue-proposal.md by tools/build-project-a.mjs.
+#
+# They have to live in one workflow. GitHub Pages holds exactly one artifact
+# per site and actions/deploy-pages replaces the whole site with it, so a
+# second workflow calling deploy-pages would not add to this site, it would
+# overwrite it. For the same reason neither build job may be skipped or
+# path-filtered: the artifact is the entire site, so a skipped job deletes
+# half of it.
+#
+# Pages must be set to build from GitHub Actions:
+# Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
+
+name: Publish
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Raised to pages:write / id-token:write on the deploy job only, so the two
+# long build jobs and the assemble job never hold a deploy-capable token.
+permissions:
+  contents: read
+
+# One deploy at a time. Deliberately not cancel-in-progress: a run cancelled
+# between upload-pages-artifact and deploy-pages leaves the live site on the
+# previous commit with nothing in the log to say why. Queued pushes coalesce.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # --------------------------------------------------------------- jedc ----
+  # Identical to the old deploy-pages.yml build job except that it hands its
+  # output to `assemble` instead of uploading a Pages artifact, and no longer
+  # writes the root redirect stub (the root is a real page now).
+  #
+  # Nothing in this job may change: the PDFs are copied from the repository,
+  # and BASE_URL is what puts /sce-wg-1/jedc in front of every asset URL.
+  jedc:
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: /${{ github.event.repository.name }}/jedc
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install MyST
+        run: npm install -g mystmd
+      - name: Build HTML
+        run: |
+          myst build --html
+          cat site.css >> _build/html/myst-theme.css
+          cp JEDC-special-issue-proposal.pdf JEDC-annex.pdf econ-ark-logo-white.png _build/html/
+          python3 inject.py
+        working-directory: jedc-prop
+
+      # include-hidden-files, because upload-artifact v4 drops dotfiles by
+      # default and would silently strip anything like .nojekyll.
+      - name: Hand the MyST site to the assemble job
+        uses: actions/upload-artifact@v4
+        with:
+          name: jedc-html
+          path: jedc-prop/_build/html
+          include-hidden-files: true
+          retention-days: 1
+
+  # ---------------------------------------------------------------- wg1 ----
+  # The Project A page and PDF, plus the hand-written pages in docs/.
+  # Kept in its own job so the 2.66 GB TeX Live pull runs in parallel with the
+  # MyST build instead of in front of it, and so neither half can pick up the
+  # other's Node major or mystmd version.
+  wg1:
+    runs-on: ubuntu-latest
+    # Pinned by digest, not by tag: `latest-*` tags move, and a TeX Live change
+    # can reflow the PDF's line breaks, which matters for a document going to a
+    # journal. The full scheme is required - newtx is in collection-fontsextra
+    # and tcolorbox/nowidow/titling/xurl/enumitem in collection-latexextra,
+    # neither of which scheme-medium carries.
+    # To upgrade deliberately: docker pull texlive/texlive:latest && docker inspect
+    # --format='{{index .RepoDigests 0}}' texlive/texlive:latest
+    container:
+      # This is the digest of `latest` / `latest-full` (2.66 GB). Do not
+      # substitute `latest-medium` (0.94 GB) - it has xelatex but not
+      # collection-latexextra, so the build dies on a missing xurl.sty.
+      image: texlive/texlive@sha256:f69ee97de275fd4a2f0f84d7d432063e5a7f79b35512cf3e601b5b95224f3dec
+    steps:
+      - uses: actions/checkout@v4
+
+      # The container runs as root while the checkout is owned by the runner
+      # user, which git otherwise refuses to operate on.
+      - name: Trust the workspace
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+
+      - name: Install build dependencies
+        working-directory: tools
+        run: npm ci
+
+      # A missing style file otherwise surfaces as a LaTeX error buried in a
+      # log, several steps after the image that caused it. Fail here instead,
+      # naming the package - this is what a wrong image tag looks like.
+      - name: Check the LaTeX toolchain is complete
+        shell: sh -eu {0}
+        run: |
+          xelatex --version | head -1
+          missing=
+          for pkg in newtxtext newtxmath tcolorbox nowidow titlesec titling \
+                     xurl enumitem microtype geometry natbib setspace graphicx hyperref; do
+            kpsewhich "$pkg.sty" >/dev/null 2>&1 || missing="$missing $pkg"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::the TeX image is missing:$missing"
+            echo "The full TeX Live scheme is required - scheme-medium lacks collection-latexextra."
+            exit 1
+          fi
+          echo "ok - every package the template needs is present"
+
+      # Writes docs/project-a.html and docs/special-issue-proposal.pdf.
+      # Uses templates/plain_latex_wide at the repository root - NOT the
+      # separate, already-diverged copy in jedc-prop/templates/.
+      - name: Build the Project A page and PDF
+        working-directory: tools
+        run: npm run build
+
+      # A regression here is silent - the page still builds, it just loses
+      # content - so the things most likely to break are asserted, not eyeballed.
+      # The TeX Live image ships no bash, so GitHub falls back to `sh -e {0}`
+      # (dash). Declared explicitly, and written to POSIX - no process
+      # substitution, which is what broke the first run.
+      - name: Check the generated page
+        shell: sh -eu {0}
+        run: |
+          page=docs/project-a.html
+          fail() { echo "::error file=$page::$1"; exit 1; }
+
+          anchors=$(mktemp)
+          targets=$(mktemp)
+          grep -o 'id="ref-[^"]*"'    "$page" | sed 's/id="//;s/"//'    | sort -u > "$anchors"
+          grep -o 'href="#ref-[^"]*"' "$page" | sed 's/href="#//;s/"//' | sort -u > "$targets"
+          n_anchors=$(grep -c . "$anchors" || true)
+          n_links=$(grep -o 'href="#ref-' "$page" | grep -c . || true)
+          dangling=$(comm -13 "$anchors" "$targets" | grep -c . || true)
+
+          [ "$n_anchors" -gt 0 ] || fail "no reference anchors were generated"
+          [ "$dangling" -eq 0 ]  || fail "$dangling citation link(s) point at missing anchors"
+          grep -q 'displaybox' "$page" || fail "the display boxes lost their styling hook"
+          ! grep -q '<!--\s*needs' "$page" || fail "an editorial comment leaked into the page"
+          ! grep -q '{raw:tex}' "$page"    || fail "a raw LaTeX block leaked into the page"
+          ! grep -q '::::' "$page"         || fail "an unrendered MyST directive fence leaked into the page"
+
+          # poppler is not part of TeX Live, so the PDF is checked without it.
+          pdf=docs/special-issue-proposal.pdf
+          head -c 5 "$pdf" | grep -q '%PDF-' || fail "the PDF is missing or not a PDF"
+          bytes=$(wc -c < "$pdf")
+          [ "$bytes" -gt 20000 ] || fail "the PDF is only $bytes bytes - the LaTeX run probably failed"
+
+          echo "ok - $n_anchors anchors, $n_links citation links, 0 dangling; PDF $bytes bytes"
+
+      - name: Hand the WG1 pages to the assemble job
+        uses: actions/upload-artifact@v4
+        with:
+          name: wg1-pages
+          path: docs
+          include-hidden-files: true
+          retention-days: 1
+
+  # ----------------------------------------------------------- assemble ----
+  # The only place the two halves meet. Composes the tree, checks it, and
+  # uploads it once.
+  assemble:
+    needs: [jedc, wg1]
+    runs-on: ubuntu-latest
+    steps:
+      # docs/ becomes the site root: index.html (the WG1 landing page, which
+      # replaces the old meta-refresh stub), project-a.html,
+      # special-issue-proposal.pdf, chrome.css, chrome.js, proposal.css,
+      # .nojekyll.
+      - name: Collect the WG1 pages at the site root
+        uses: actions/download-artifact@v4
+        with:
+          name: wg1-pages
+          path: site
+
+      # Same path as before the merge, so /jedc/ and both PDF URLs are
+      # unchanged.
+      - name: Collect the MyST site under /jedc
+        uses: actions/download-artifact@v4
+        with:
+          name: jedc-html
+          path: site/jedc
+
+      # Runs on the assembled tree, before the upload, so a broken link fails
+      # the run instead of reaching the site.
+      - name: Check the site's internal links resolve
+        working-directory: site
+        run: |
+          set -eu
+          missing=0
+
+          # Only the WG1 pages at the site root. `*.html` does not recurse, so
+          # site/jedc/index.html is never opened - deliberately. With
+          # BASE_URL=/sce-wg-1/jedc the MyST output's asset hrefs are
+          # site-absolute (href="/sce-wg-1/jedc/build/...css"); they resolve on
+          # the deployed site but never against a path on disk, so walking
+          # jedc/ would report every MyST asset as missing. Do not add `/` to
+          # the character class below and do not switch this loop to `find`.
+          for f in *.html; do
+            for href in $(grep -oE 'href="[A-Za-z0-9._-]+\.(html|pdf|css|js)"' "$f" \
+                          | sed 's/href="//;s/"//' | sort -u); do
+              [ -e "$href" ] || { echo "::error file=docs/$f::links to missing $href"; missing=1; }
+            done
+
+            # Directory links - "./" in the Project A nav and footer, and
+            # "jedc/" on the landing page. They have no file extension, so the
+            # pattern above cannot see them and a dead one would be invisible.
+            for dir in $(grep -oE 'href="(\./|[A-Za-z0-9._-]+/)"' "$f" \
+                         | sed 's/href="//;s/"//' | sort -u); do
+              [ -f "$dir/index.html" ] || { echo "::error file=docs/$f::links to $dir, which has no index.html"; missing=1; }
+            done
+          done
+
+          # The MyST half is checked by assertion rather than by regex: its
+          # download buttons are written by inject.py as JavaScript string
+          # literals (a.href=d[0]), so no href="..." literal exists for a link
+          # checker to find.
+          for required in jedc/index.html \
+                          jedc/JEDC-special-issue-proposal.pdf \
+                          jedc/JEDC-annex.pdf; do
+            [ -f "$required" ] || { echo "::error::$required is missing from the assembled site"; missing=1; }
+          done
+
+          [ "$missing" -eq 0 ] || exit 1
+          echo "ok - all internal links resolve"
+
+      # Fork PRs get a read-only token and cannot deploy, so the built site is
+      # attached instead. The author can see the rendered result without
+      # installing Node or LaTeX.
+      - name: Upload the built site for review
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: site
+          include-hidden-files: true
+          retention-days: 14
+
+      - name: Package the site for Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: assemble
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

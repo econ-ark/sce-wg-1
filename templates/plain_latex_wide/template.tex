@@ -1,0 +1,87 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\usepackage{microtype}
+\usepackage{titling}
+\setlength{\droptitle}{-4.5em}
+\usepackage{setspace}
+\setstretch{1.03}
+\usepackage[defaultlines=3,all]{nowidow}
+\raggedbottom
+\setlength{\parskip}{0.3em plus 0.1em}
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+\titleformat*{\subsection}{\normalsize\bfseries}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\setlist{noitemsep}
+% Titled display box (optional extra keys; argument: small-caps title)
+\newtcolorbox{displaybox}[2][]{
+  #1,
+  enhanced,
+  colback=gray!4,
+  colframe=black!70,
+  boxrule=0.4pt,
+  arc=1pt,
+  left=9pt, right=9pt, top=7pt, bottom=7pt,
+  title=\textsc{#2},
+  fonttitle=\normalsize,
+  coltitle=black,
+  colbacktitle=gray!12,
+  toptitle=3.5pt, bottomtitle=3.5pt,
+  fontupper=\small,
+  before upper={\setlength{\parindent}{0pt}\emergencystretch=1.2em
+    \setlist[enumerate,1]{leftmargin=1.7em,labelsep=0.5em,itemsep=0.5em,topsep=0.15em,parsep=0pt}
+    \setlist[itemize,1]{leftmargin=1.3em,labelsep=0.5em,itemsep=0.5em,topsep=0.15em,parsep=0pt}},
+  before skip=1.4em, after skip=1.4em
+}
+\bibliographystyle{abbrvnat}
+
+[-IMPORTS-]
+
+% colors for hyperlinks
+\hypersetup{colorlinks=true, allcolors=blue!50!black}
+
+[# if options.logo #]
+\newcommand{\logo}{
+  \href{https://curvenote.com}{\includegraphics[width=2cm]{curvenote.png}}
+}
+[# endif #]
+
+\title{[-doc.title-][# if doc.subtitle #]\\[0.4em]{\large [-doc.subtitle-]}[# endif #]}
+
+\author{\parbox{0.85\textwidth}{\centering [-doc.authors|join(" and ", "name")-]\\[0.5em]
+  {\small\itshape Society for Computational Economics Working Group No.~1 on Language and Formal Semantics}}}
+
+\date{\ifcase [-doc.date.month-] \or January\or February\or March\or
+  April\or May\or June\or July\or August\or September\or October\or
+  November\or December\fi~[-doc.date.day-], [-doc.date.year-]}
+
+\begin{document}
+\maketitle
+[# if parts.abstract #]\begin{abstract}[-parts.abstract-]\end{abstract}[# endif #]
+[# if options.logo #]
+\begin{center}\logo\end{center}
+[# endif #]
+
+[# if options.link #]
+% Optional footnote with a link back to the online version of your article
+\newcommand{\documentnote}[1]{{%
+  \let\thempfn\relax% Remove footnote number printing mechanism
+  \footnotetext[0]{\emph{#1}}% Print footnote text
+}}
+\documentnote{Available online at:\\ \href{[-options.link-]}{[-options.link-]}}
+[# endif #]
+
+[-CONTENT-]
+
+
+[# if doc.bibliography #]
+\bibliography{[- doc.bibliography | join(", ") -]}
+[# endif #]
+\end{document}

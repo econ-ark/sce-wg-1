@@ -1,0 +1,17 @@
+{
+  "name": "sce-wg1-tools",
+  "private": true,
+  "type": "module",
+  "description": "Builds docs/project-a.html and its PDF from project-a/special-issue-proposal.md.",
+  "scripts": {
+    "build": "node build-project-a.mjs",
+    "build:no-pdf": "node build-project-a.mjs --no-pdf"
+  },
+  "dependencies": {
+    "js-yaml": "4.1.0",
+    "mdast-util-to-hast": "12.3.0",
+    "myst-parser": "1.7.3",
+    "myst-to-html": "1.7.3",
+    "mystmd": "1.10.1"
+  }
+}
