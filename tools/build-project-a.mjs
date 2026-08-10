@@ -77,7 +77,18 @@ let fm;
 try {
   fm = yaml.load(fmBlock[1]);
 } catch (err) {
-  console.error(`${SRC}: could not parse the YAML frontmatter — ${err.message}`);
+  /* A colon-space inside an unquoted scalar is the frontmatter error worth naming,
+     because "Main title: Subtitle" is the ordinary shape of a paper's title and
+     YAML reads the second colon as a second key. The parser's own message points
+     at the column without saying what to do about it. */
+  const culprit = fmBlock[1].split('\n')
+    .find((l) => /^[a-z_]+:\s+[^"'>|\s][^\n]*:\s/i.test(l));
+  console.error(`${SRC}: could not parse the YAML frontmatter — ${err.message}` +
+    (culprit
+      ? `\n\nThis line contains a second ": ", which YAML reads as another key:\n\n` +
+        `  ${culprit.trim()}\n\nQuote the value:\n\n` +
+        `  ${culprit.replace(/^([a-z_]+):\s+(.*)$/i, (_, k, v) => `${k}: "${v.replace(/"/g, '\\"')}"`).trim()}\n`
+      : ''));
   process.exit(1);
 }
 for (const key of ['title', 'abstract']) {

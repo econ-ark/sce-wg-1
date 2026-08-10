@@ -5,7 +5,8 @@
   "description": "Builds docs/project-a.html and its PDF from project-a/special-issue-proposal.md.",
   "scripts": {
     "build": "node build-project-a.mjs",
-    "build:no-pdf": "node build-project-a.mjs --no-pdf"
+    "build:no-pdf": "node build-project-a.mjs --no-pdf",
+    "dev": "node dev.mjs"
   },
   "dependencies": {
     "js-yaml": "4.1.0",
