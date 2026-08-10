@@ -66,8 +66,10 @@ generating new modeling research, become operations a language model can
 carry out and be checked on cheaply, rather than manual recoding.
 
 
+<!--
 Part 1) relate to existing semantic ontologies in economics (ie, bELLMAN project)
-Part 2) describe semantic ontologies have been developed, a lot of commonalities, but also some differences. Could lead toa synthesized ontologies for domains of overlap. 
+Part 2) describe semantic ontologies have been developed, a lot of commonalities, but also some differences. Could lead toa synthesized ontologies for domains of overlap.
+-->
 
 
 
@@ -248,10 +250,8 @@ the domain-of-study footnote), for review.
 -->
 
 **Research themes.**
-The research themes of the issue are two of the core research questions
-each paper will answer: first, constructing a semantic ontology for its
-domain of study, and second, establishing the ontology's *metatheory*,
-statements about the ontology rather than components of it.
+The core research each paper will answer are first, constructing a semantic ontology for its
+domain of study, and second, establishing the ontology's *metatheory*. 
 There are three components to each semantic ontology: what is assumed to exist
 (the *ontology*), what stands for and relates to what (the *denotation*), and
 what is written down (the *syntax*).

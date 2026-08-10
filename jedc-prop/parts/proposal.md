@@ -33,8 +33,10 @@ generating new modeling research, become operations a language model can
 carry out and be checked on cheaply, rather than manual recoding.
 
 
+<!--
 Part 1) relate to existing semantic ontologies in economics (ie, bELLMAN project)
-Part 2) describe semantic ontologies have been developed, a lot of commonalities, but also some differences. Could lead toa synthesized ontologies for domains of overlap. 
+Part 2) describe semantic ontologies have been developed, a lot of commonalities, but also some differences. Could lead toa synthesized ontologies for domains of overlap.
+-->
 
 
 
