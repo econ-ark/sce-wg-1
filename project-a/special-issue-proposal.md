@@ -5,18 +5,21 @@ authors:
   - name: Christopher Carroll
   - name: Akshay Shanker
 abstract: |
-  Economists increasingly use large language models (AIs) to write,
-  modify, and translate modeling code.  But AI output is probabilistic by
-  construction.
-  Unverified, such code can compute a different model from the one
-  intended, and someone who fed the same prompts to a different AI (where version updates count as different AIs) might
-  get a substantially different model, with little ability to understand whether either 
-  solution was right.  Computer scientists have addressed these problems, 
-  and the consensus is that meaningful verification requires a *semantic ontology*: 
-  an AI-readable, deterministic
-  statement, independent of code and solver, of which economic objects
-  exist, what stands for what, what is written down, and when the
-  interpretation holds.
+  Economists increasingly use large language models (AIs) to write, modify,
+  and translate modeling code, and AI output is probabilistic by construction.
+  Unverified, such code can compute a model different from the one intended;
+  the same prompts put to a different model, or to a later version of the same
+  one, can yield a substantially different implementation, with no independent
+  standard against which to judge either.
+  Other computational sciences met this problem before AI made it acute, and
+  each answered it the same way: by stating a model's meaning separately from
+  any program that realizes it. Systems biology has SBML and its Systems
+  Biology Ontology, physiology CellML, neuroscience NeuroML, engineering
+  Modelica, and ecology the ODD protocol for agent-based models.
+  We call such a statement a *semantic ontology*: an explicit, machine-readable
+  account, independent of code and solver, of which economic objects exist,
+  what stands for what, and what is written down, together with the conditions
+  under which that interpretation holds.
   We propose a special issue collecting semantic ontologies for modeling
   languages, toolkits, empirical methods, and model classes.
 exports:
@@ -33,38 +36,43 @@ downloads:
 
 <!-- REVIEW (title and abstract):
 
+STILL OPEN.
+
 1. TITLE. "AI Modeling" reads three ways -- modeling of AI, modeling with AI,
    AI that models -- and the issue's actual subject, semantic ontologies, does
    not appear in it. Consider naming the object and letting AI be the
-   motivation rather than the headline.
+   motivation rather than the headline. Two starting points: "Semantic
+   Ontologies for Computational Economics: Making Model Meaning Verifiable",
+   or, keeping the present framing but disambiguating, "AI-Assisted Modeling
+   in Economics: Transparency and Verification".
 
-2. OVERCLAIM, the one a CS referee will land on. "Computer scientists have
-   addressed these problems, and the consensus is that meaningful verification
-   requires a semantic ontology" -- there is no such consensus. Verification in
-   CS mostly means model checking, type systems, proof assistants and testing,
-   not ontologies. A defensible version that still does the work: in other
-   computational fields, interchange and cross-verification have repeatedly
-   required an explicit, solver-independent statement of meaning -- then PSL,
-   Modelica, PDDL, NeuroML, which we already have.
+2. ANNEX ALIGNMENT, created by the abstract rewrite below. The abstract now
+   names SBML/SBO, CellML, NeuroML, Modelica and ODD; the annex's exemplar
+   paragraph still leads with manufacturing's PSL and cites the AWS blog. The
+   two lists should be the same list. See semantic-ontology-precedents.md in
+   this directory for the verified citations and where each one belongs; SBML
+   with SBO is the case to lead on, being the same syntax/denotation split we
+   propose, maintained as two separate processes for our reason, for twenty
+   years. That file also carries the CF-conventions/CMIP finding, which is a
+   better precedent for the closing comparison paper than den Haan et al.
 
-3. WEAK SOURCE. The AWS Database Blog is cited three times, including in
-   support of the claim above. A vendor blog post carrying that weight in an
-   otherwise strong bibliography is an easy thing for a referee to pick at.
+TAKEN, recorded here so the reasoning is not lost:
 
-4. DEFINITION DRIFT. "Semantic ontology" is defined four times and the
-   versions do not line up:
-     abstract  -- exist / stands for what / written down / when the
-                  interpretation holds  (four items)
-     section 1 -- objects computed / relations enforced  (two)
-     annex     -- objects and relations / meaning / written forms  (three)
-     themes    -- ontology / denotation / syntax, plus two statements ABOUT it
-   The themes section says explicitly that well-posedness is NOT a component,
-   but the abstract folds it in as a fourth. Harmonise on the triple plus the
-   two statements-about, and use the same three words in all four places.
-
-5. WORDING. "deterministic" is doing odd work -- an ontology is explicit or
-   unambiguous, not deterministic. And "(where version updates count as
-   different AIs)" stalls the sentence; it belongs in a footnote.
+  - The abstract claimed a consensus among computer scientists that
+    verification requires a semantic ontology. No such consensus exists;
+    verification in CS mostly means model checking, type systems, proof
+    assistants and testing. Replaced with a claim about what four fields
+    actually built, which is checkable and supports the same conclusion.
+  - "AI-readable, deterministic" -> "explicit, machine-readable". An ontology
+    is unambiguous, not deterministic.
+  - The parenthetical about version updates is folded into the sentence.
+  - DEFINITION DRIFT is resolved in the abstract: three components (exist /
+    stands for what / written down) with well-posedness attached by "together
+    with", marking it a statement ABOUT the ontology rather than a fourth
+    component -- which is what the themes section says. Section 1's two-part
+    gloss is still looser than the annex's three; worth a look.
+  - The AWS blog no longer carries the load-bearing claim. It should survive
+    only in the annex's bottom-up paragraph, where a blog is adequate support.
 -->
 
 ## The Challenge: AI and the Meaning of Economic Models
@@ -85,17 +93,16 @@ As a result, without a concrete statement of the model's meaning to check agains
 computational results are hard to cross-verify, and interoperability between
 implementations becomes difficult.
 
-<!-- REVIEW (this paragraph): the recent edit weakened it. The earlier version
-     ran "costly even amongst humans, but it fails completely when AI is used
-     to write, modify, and translate modeling code" -- tighter, and with a real
-     escalation. The replacement adds a near-tautology (relying on implicit
-     convention is costly because people do not share conventions) and softens
-     "fails completely" to "is worse". Suggest keeping "among" and restoring
-     the rest. Typos in the next two lines: "situtation", and "when when". -->
-Relying on implicit professional convention alone is costly even among humans,
-because not everyone has the same understanding of conventions and implicit norms.
-The situtation is worse when when AI is used to write, modify, and
-translate modeling code.
+Relying on implicit professional convention is costly even among humans:
+conventions are absorbed rather than stated, so anyone outside the tradition
+that produced a model must reconstruct them or guess.
+It fails outright when AI is used to write, modify, and translate modeling
+code -- not because a language model lacks the tradition, but because it has
+absorbed all of them at once.
+Where an economist knows which subfield's conventions govern the model in front
+of them, an AI interpolates across conventions that conflict, settles the
+ambiguity silently, and returns fluent code bearing no trace that a choice was
+made; asked again, it may settle it differently.
 To interpret or verify AI output, we
 need a statement, independent of the code, of which economic objects are
 computed and which relations among them are enforced; these statements are called
