@@ -32,6 +32,12 @@ With semantic ontologies, translating models between toolkits, and even
 generating new modeling research, become operations a language model can
 carry out and be checked on cheaply, rather than manual recoding.
 
+
+Part 1) relate to existing semantic ontologies in economics (ie, bELLMAN project)
+Part 2) describe semantic ontologies have been developed, a lot of commonalities, but also some differences. Could lead toa synthesized ontologies for domains of overlap. 
+
+
+
 ## The Proposed Special Issue
 
 We propose a special issue that constructs semantic ontologies for the
@@ -55,7 +61,7 @@ invite the rest, and a comparison paper, written jointly by the participating
 teams, will close the issue.
 
 The semantic ontologies we develop will be kept in an open-source
-[GitHub repository](https://github.com/econ-ark/sce-wg1), to which members of the community can contribute improvements
+[GitHub repository](https://github.com/econ-ark/sce-wg-1), to which members of the community can contribute improvements
 and modifications.
 <!-- needs to be something here about challenges for economics, i.e. application diversity. -->
 <!--
