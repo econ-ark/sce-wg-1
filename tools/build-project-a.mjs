@@ -148,7 +148,7 @@ fs.writeFileSync(OUT, `<!DOCTYPE html>
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://econ-ark.github.io/sce-wg-1/project-a.html">
 <link rel="canonical" href="https://econ-ark.github.io/sce-wg-1/project-a.html">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2396402E'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='48' font-weight='600' fill='%23FAF9F6' text-anchor='middle'%3EW1%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231F476B'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='48' font-weight='600' fill='%23FFFFFF' text-anchor='middle'%3EW1%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">

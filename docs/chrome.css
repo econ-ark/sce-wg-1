@@ -5,11 +5,11 @@
 /* --- Theme -------------------------------------------------------------- */
 /* Light is the default. Dark applies from the system preference unless an
    explicit choice is recorded in data-om-theme, which always wins. */
-:root{color-scheme:light dark;--bg:#FAF9F6;--surface:#F3F1EC;--ink:#1D1B18;--muted:#6E6961;--muted-strong:#66615A;--line:#E4E1D9;--accent:#96402E;--accent-soft:color-mix(in oklab,#96402E 10%,var(--bg));}
+:root{color-scheme:light dark;--bg:#FFFFFF;--surface:#F5F8FA;--ink:#20262E;--muted:#676470;--muted-strong:#57545E;--line:#E2E8EC;--accent:#1F476B;--accent-soft:color-mix(in oklab,#1F476B 10%,var(--bg));}
 @media (prefers-color-scheme: dark){
-:root:not([data-om-theme="light"]){--bg:#171512;--surface:#201D19;--ink:#E9E6DF;--muted:#9B958B;--muted-strong:#9B958B;--line:#2F2B25;--accent:color-mix(in oklab,#96402E 72%,white);--accent-soft:color-mix(in oklab,#96402E 18%,var(--bg));}
+:root:not([data-om-theme="light"]){--bg:#12161B;--surface:#1A2026;--ink:#E6E9ED;--muted:#939AA3;--muted-strong:#939AA3;--line:#262D35;--accent:color-mix(in oklab,#3E8ACC 85%,white);--accent-soft:color-mix(in oklab,#3E8ACC 18%,var(--bg));}
 }
-:root[data-om-theme="dark"]{color-scheme:dark;--bg:#171512;--surface:#201D19;--ink:#E9E6DF;--muted:#9B958B;--muted-strong:#9B958B;--line:#2F2B25;--accent:color-mix(in oklab,#96402E 72%,white);--accent-soft:color-mix(in oklab,#96402E 18%,var(--bg));}
+:root[data-om-theme="dark"]{color-scheme:dark;--bg:#12161B;--surface:#1A2026;--ink:#E6E9ED;--muted:#939AA3;--muted-strong:#939AA3;--line:#262D35;--accent:color-mix(in oklab,#3E8ACC 85%,white);--accent-soft:color-mix(in oklab,#3E8ACC 18%,var(--bg));}
 :root[data-om-theme="light"]{color-scheme:light;}
 
 /* --- Base --------------------------------------------------------------- */
