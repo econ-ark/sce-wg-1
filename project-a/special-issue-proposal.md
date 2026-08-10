@@ -250,8 +250,8 @@ the domain-of-study footnote), for review.
 -->
 
 **Research themes.**
-The core research each paper will answer are first, constructing a semantic ontology for its
-domain of study, and second, establishing the ontology's *metatheory*. 
+Each paper will construct a semantic ontology for its
+domain of study, and second, establish the ontology's *metatheory*. 
 There are three components to each semantic ontology: what is assumed to exist
 (the *ontology*), what stands for and relates to what (the *denotation*), and
 what is written down (the *syntax*).
@@ -259,7 +259,8 @@ Domains of study will differ in how important these components are, and some,
 such as a model class, may not have certain components, such as syntax.
 The metatheory states when the interpretation holds (*well-posedness*) and
 what preserves it (*equivalence*, *adequacy*, and *convergence*).
-Details of these research themes are given in the Research Themes
+Details of these research themes are given in the
+{raw:tex}`\hyperref[research-themes]{`[Research Themes](#research-themes){raw:tex}`}`
 section at the end of this annex.
 
 ### Methodology
@@ -342,6 +343,7 @@ papers will work top-down; a bottom-up construction may suit agent-based
 modeling or policy research, where observed relations precede a settled
 theory.
 
+(research-themes)=
 ### Research Themes
 
 A paper addresses those of the following five research themes relevant to its

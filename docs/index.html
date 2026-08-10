@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SCE WG1 · Language and Formal Semantics</title>
-<meta name="description" content="A working group of the Society for Computational Economics building a shared, formal language for dynamic economic models and their computational solutions.">
-<meta property="og:title" content="SCE WG1 · Language and Formal Semantics">
-<meta property="og:description" content="Economic models that machines can read, manipulate, and verify. A working group of the Society for Computational Economics.">
+<title>SCE Working Group 1 | Language and Formal Semantics</title>
+<meta name="description" content="Working Group 1 of the Society for Computational Economics studies formal representations of dynamic economic models and their computational solutions.">
+<meta property="og:title" content="SCE Working Group 1 | Language and Formal Semantics">
+<meta property="og:description" content="Working Group 1 of the Society for Computational Economics studies formal representations of dynamic economic models and their computational solutions.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://econ-ark.github.io/sce-wg-1/">
 <link rel="canonical" href="https://econ-ark.github.io/sce-wg-1/">
@@ -31,6 +31,7 @@
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#how" class="nav-link">How we work</a>
         <a href="#milestones" class="nav-link">Milestones</a>
+        <a href="#contacts" class="nav-link">Contacts</a>
         <button type="button" id="theme-toggle" class="theme-toggle" title="Switch between light and dark" aria-label="Switch between light and dark">
           <svg class="i-light" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.9 1.9M19.1 4.9l-1.8 1.8M6.7 17.3l-1.9 1.9"/></svg>
           <svg class="i-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
@@ -40,13 +41,10 @@
     </nav>
 
     <header style="padding:88px 0 72px;">
-      <p style="margin:0 0 20px; font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">SCE Working Group 1 · Language &amp; Formal Semantics</p>
-      <h1 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:clamp(38px, 5.5vw, 58px); line-height:1.08; letter-spacing:-0.01em; max-width:17ch; text-wrap:pretty;">Economic models that machines can read, manipulate, and verify.</h1>
-      <p style="margin:28px 0 0; font-size:19px; line-height:1.55; color:var(--muted); max-width:72ch; text-wrap:pretty;">A working group of the Society for Computational Economics building a shared, formal language for dynamic economic models and their computational solutions.</p>
-      <div style="display:flex; flex-wrap:wrap; gap:8px 40px; margin-top:36px;">
-        <p style="margin:0; font-size:15px;">Co-chaired by <strong style="font-weight:600;">Akshay Shanker</strong> and <strong style="font-weight:600;">Matt McKay</strong></p>
-      </div>
-      <p style="margin:10px 0 0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; line-height:1.7; color:var(--muted);">Formed at CEF 2026, Venice · Sponsored by SCE and partnered with Econ-ARK and QuantEcon</p>
+      <p style="margin:0 0 20px; font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Society for Computational Economics · Working Group 1</p>
+      <h1 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:clamp(38px, 5.5vw, 58px); line-height:1.08; letter-spacing:-0.01em; max-width:17ch; text-wrap:pretty;">Language and formal semantics</h1>
+      <p style="margin:28px 0 0; font-size:19px; line-height:1.55; color:var(--muted); max-width:72ch; text-wrap:pretty;">Working Group 1 develops formal descriptions of dynamic economic models and the methods used to solve and estimate them.</p>
+      <p style="margin:36px 0 0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; line-height:1.7; color:var(--muted);">Formed at CEF 2026 in Venice · Partners: <a href="https://econ-ark.org">Econ-ARK</a> and <a href="https://quantecon.org">QuantEcon</a></p>
     </header>
 
     <section id="problem" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
@@ -55,12 +53,12 @@
       </div>
       <div style="flex:999 1 400px; min-width:0; display:grid; gap:28px;">
         <div>
-          <h2 style="margin:0 0 12px; font-family:'Newsreader',serif; font-weight:500; font-size:26px; line-height:1.2;">The problem</h2>
-          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">Structural economics has no standard, shareable representation of a dynamic model together with its computational solution. Models can't travel between toolkits, and results are hard to cross-verify. AI raises the stakes: language models already write modeling code, but without an explicit statement of what a model <em>is</em>, checking their output falls back on the economist.</p>
+          <h2 style="margin:0 0 12px; font-family:'Newsreader',serif; font-weight:500; font-size:26px; line-height:1.2;">Why the group was formed</h2>
+          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">Structural economists have no standard way to represent a dynamic model together with its computational solution. Moving a model between toolkits requires manual translation, and verifying that two implementations represent the same model can be difficult. Large language models can write and translate modeling code, but without an explicit account of what a model file means, economists must still check the result by hand.</p>
         </div>
         <div>
-          <h2 style="margin:0 0 12px; font-family:'Newsreader',serif; font-weight:500; font-size:26px; line-height:1.2;">The vision</h2>
-          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">A formal account of what a model file means, stated by the people who build the toolkits — so a model written in one system can be checked, translated, and reproduced in another, by humans and machines alike.</p>
+          <h2 style="margin:0 0 12px; font-family:'Newsreader',serif; font-weight:500; font-size:26px; line-height:1.2;">Vision</h2>
+          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">We seek a solver-independent account of what model files mean for each toolkit, written by its maintainers. These accounts would let economists compare implementations across toolkits and determine whether they represent the same model.</p>
         </div>
       </div>
     </section>
@@ -73,18 +71,18 @@
         <article style="display:flex; flex-direction:column; gap:14px; border:1px solid var(--line); background:var(--surface); padding:28px 26px;">
           <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Project A</span>
           <h3 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:23px; line-height:1.25; text-wrap:pretty;"><a href="project-a.html" class="card-link">The Semantics of Economic Models</a></h3>
-          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">Each toolkit team — Dynare, HARK, VFI Toolkit, and others — states formally what its model files mean, publishing a per-toolkit paper.</p>
+          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">Authors write papers developing semantic ontologies for toolkits, methods, and model classes.</p>
           <div style="display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid var(--line);">
-            <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1.6; color:var(--muted);">→ Toward a journal special issue</p>
-            <a href="project-a.html" class="card-more">Read the plan →</a>
+            <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1.6; color:var(--muted);">→ Proposed journal special issue</p>
+            <a href="project-a.html" class="card-more">Read proposal and guidelines →</a>
           </div>
         </article>
         <article style="display:flex; flex-direction:column; gap:14px; border:1px solid var(--line); background:var(--surface); padding:28px 26px;">
           <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Project B</span>
           <h3 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:23px; line-height:1.25; text-wrap:pretty;"><a href="https://quantecon.github.io/community-library/" class="card-link">A Community Library of Baseline Models</a></h3>
-          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">The field's baseline models, implemented and documented across the toolkits that can solve them — same model, multiple tools, side by side.</p>
+          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">The library collects documented implementations of baseline economic models in several toolkits. Readers can compare how each toolkit represents and solves the same model.</p>
           <div style="display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid var(--line);">
-            <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1.6; color:var(--muted);">→ Starts now · test corpus for Project A</p>
+            <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1.6; color:var(--muted);">→ In progress · provides examples for Project A</p>
             <a href="https://quantecon.github.io/community-library/" class="card-more">Visit the library ↗</a>
           </div>
         </article>
@@ -98,31 +96,32 @@
       <div style="flex:999 1 400px; min-width:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:28px 40px;">
         <div>
           <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Quarterly meetings</h3>
-          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">The full group convenes once a quarter, alternating between two standing times so the timezone burden is shared. Meetings are recorded.</p>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">The full group meets once each quarter. Meetings alternate between two times to accommodate members in different time zones. Each meeting is recorded.</p>
         </div>
         <div>
-          <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Sub-groups</h3>
-          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">Project sub-groups set their own schedule and working rhythm.</p>
+          <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Project subgroups</h3>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">Each project subgroup chooses its own meeting schedule.</p>
         </div>
         <div>
           <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Membership by invitation</h3>
-          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">The group works in the open; membership is extended by the co-chairs, keeping the author set coherent across Project A.</p>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">The co-chairs invite new members. The group's work remains public.</p>
         </div>
         <div>
           <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Advisory group</h3>
-          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">A small advisory group is consulted on the group's direction. Advisors are not expected to attend meetings or author papers; decisions rest with the members and co-chairs.</p>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">A small advisory group comments on the group's plans. Advisors need not attend meetings or coauthor papers. Members and co-chairs make the decisions.</p>
         </div>
         <div>
           <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Code of conduct</h3>
-          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">A short code of conduct applies in all group venues — meetings, repositories, and the mailing list.</p>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">A short code of conduct applies to meetings, repositories, and the mailing list.</p>
         </div>
       </div>
     </section>
 
     <!-- Members section intentionally omitted until the membership is announced with the
          welcome email (canvas prop showMembers=false). When adding it back, insert it here
-         as "04 · Members" and renumber Milestones below to "05 · Milestones". The advisory
-         group is listed alongside it, as a separate list under the same section. -->
+         as "04 · Members", renumber Milestones below to "05 · Milestones", and renumber
+         Contacts to "06 · Contacts". The advisory group is listed alongside Members as a
+         separate list under the same section. -->
 
     <section id="milestones" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
       <div style="flex:1 1 150px; max-width:190px;">
@@ -157,15 +156,24 @@
       </div>
     </section>
 
+    <section id="contacts" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
+      <div style="flex:1 1 150px; max-width:190px;">
+        <h2 style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">05 · Contacts</h2>
+      </div>
+      <div style="flex:999 1 400px; min-width:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:20px 40px;">
+        <p style="margin:0; font-family:'Newsreader',serif; font-size:21px; line-height:1.4;">Akshay Shanker</p>
+        <p style="margin:0; font-family:'Newsreader',serif; font-size:21px; line-height:1.4;">Matt McKay</p>
+      </div>
+    </section>
+
     <footer style="border-top:1px solid var(--line); padding:40px 0 56px; display:grid; gap:24px;">
       <div style="display:flex; flex-wrap:wrap; gap:10px 32px;">
         <a href="https://econ-ark.github.io/cef_venice_2026/" class="foot-link">CEF 2026 pre-conference</a>
-        <a href="jedc/" class="foot-link">JEDC proposal draft</a>
         <a href="https://github.com/econ-ark/sce-wg-1" class="foot-link">Group repository</a>
         <span class="foot-tbd">Mailing list ⟨tbd⟩</span>
         <span class="foot-tbd">Code of conduct ⟨tbd⟩</span>
       </div>
-      <p style="margin:0; font-size:13.5px; line-height:1.7; color:var(--muted); max-width:64ch; text-wrap:pretty;">WG1 works alongside WG2 (Methods, Backends &amp; Verification) and WG3 (AI Assistance, Reproducibility &amp; Standards) — three working groups of the Society for Computational Economics addressing the Tower of Babel problem in computational economics.</p>
+      <p style="margin:0; font-size:13.5px; line-height:1.7; color:var(--muted); max-width:64ch; text-wrap:pretty;">WG1 is one of three related SCE working groups. WG2 covers Methods, Backends &amp; Verification; WG3 covers AI Assistance, Reproducibility &amp; Standards.</p>
       <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted);">© 2026 SCE Working Group on Language and Formal Semantics</p>
     </footer>
 

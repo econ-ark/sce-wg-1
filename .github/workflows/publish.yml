@@ -1,20 +1,10 @@
-# Builds and publishes the whole site to GitHub Pages in a single deploy.
+# Builds and publishes the site to GitHub Pages.
 #
-# Two independent document builds feed one Pages artifact:
-#
-#   jedc  the MyST article site for the JEDC special-issue proposal
-#         (jedc-prop/), served at /jedc/. Its two PDFs are committed and
-#         copied, never rebuilt, so their bytes do not move.
-#   wg1   the working-group landing page (docs/index.html, hand-written) and
-#         the Project A page + PDF, generated on every run from
-#         project-a/special-issue-proposal.md by tools/build-project-a.mjs.
-#
-# They have to live in one workflow. GitHub Pages holds exactly one artifact
-# per site and actions/deploy-pages replaces the whole site with it, so a
-# second workflow calling deploy-pages would not add to this site, it would
-# overwrite it. For the same reason neither build job may be skipped or
-# path-filtered: the artifact is the entire site, so a skipped job deletes
-# half of it.
+# One build feeds the Pages artifact: the working-group landing page
+# (docs/index.html, hand-written) and the Project A page + PDF, generated on
+# every run from project-a/special-issue-proposal.md by
+# tools/build-project-a.mjs. GitHub Pages holds exactly one artifact per
+# site and actions/deploy-pages replaces the whole site with it.
 #
 # Pages must be set to build from GitHub Actions:
 # Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
@@ -40,42 +30,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # --------------------------------------------------------------- jedc ----
-  # Identical to the old deploy-pages.yml build job except that it hands its
-  # output to `assemble` instead of uploading a Pages artifact, and no longer
-  # writes the root redirect stub (the root is a real page now).
-  #
-  # Nothing in this job may change: the PDFs are copied from the repository,
-  # and BASE_URL is what puts /sce-wg-1/jedc in front of every asset URL.
-  jedc:
-    runs-on: ubuntu-latest
-    env:
-      BASE_URL: /${{ github.event.repository.name }}/jedc
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install MyST
-        run: npm install -g mystmd
-      - name: Build HTML
-        run: |
-          myst build --html
-          cat site.css >> _build/html/myst-theme.css
-          cp JEDC-special-issue-proposal.pdf JEDC-annex.pdf econ-ark-logo-white.png _build/html/
-          python3 inject.py
-        working-directory: jedc-prop
-
-      # include-hidden-files, because upload-artifact v4 drops dotfiles by
-      # default and would silently strip anything like .nojekyll.
-      - name: Hand the MyST site to the assemble job
-        uses: actions/upload-artifact@v4
-        with:
-          name: jedc-html
-          path: jedc-prop/_build/html
-          include-hidden-files: true
-          retention-days: 1
-
   # ---------------------------------------------------------------- wg1 ----
   # The Project A page and PDF, plus the hand-written pages in docs/.
   # Kept in its own job so the 2.66 GB TeX Live pull runs in parallel with the
@@ -182,29 +136,19 @@ jobs:
           retention-days: 1
 
   # ----------------------------------------------------------- assemble ----
-  # The only place the two halves meet. Composes the tree, checks it, and
-  # uploads it once.
+  # Composes the site tree, checks it, and uploads it once.
   assemble:
-    needs: [jedc, wg1]
+    needs: [wg1]
     runs-on: ubuntu-latest
     steps:
-      # docs/ becomes the site root: index.html (the WG1 landing page, which
-      # replaces the old meta-refresh stub), project-a.html,
-      # special-issue-proposal.pdf, chrome.css, chrome.js, proposal.css,
-      # .nojekyll.
+      # docs/ becomes the site root: index.html (the WG1 landing page),
+      # project-a.html, special-issue-proposal.pdf, chrome.css, chrome.js,
+      # proposal.css, .nojekyll.
       - name: Collect the WG1 pages at the site root
         uses: actions/download-artifact@v4
         with:
           name: wg1-pages
           path: site
-
-      # Same path as before the merge, so /jedc/ and both PDF URLs are
-      # unchanged.
-      - name: Collect the MyST site under /jedc
-        uses: actions/download-artifact@v4
-        with:
-          name: jedc-html
-          path: site/jedc
 
       # Runs on the assembled tree, before the upload, so a broken link fails
       # the run instead of reaching the site.
@@ -214,36 +158,19 @@ jobs:
           set -eu
           missing=0
 
-          # Only the WG1 pages at the site root. `*.html` does not recurse, so
-          # site/jedc/index.html is never opened - deliberately. With
-          # BASE_URL=/sce-wg-1/jedc the MyST output's asset hrefs are
-          # site-absolute (href="/sce-wg-1/jedc/build/...css"); they resolve on
-          # the deployed site but never against a path on disk, so walking
-          # jedc/ would report every MyST asset as missing. Do not add `/` to
-          # the character class below and do not switch this loop to `find`.
           for f in *.html; do
             for href in $(grep -oE 'href="[A-Za-z0-9._-]+\.(html|pdf|css|js)"' "$f" \
                           | sed 's/href="//;s/"//' | sort -u); do
               [ -e "$href" ] || { echo "::error file=docs/$f::links to missing $href"; missing=1; }
             done
 
-            # Directory links - "./" in the Project A nav and footer, and
-            # "jedc/" on the landing page. They have no file extension, so the
-            # pattern above cannot see them and a dead one would be invisible.
+            # Directory links - "./" in the Project A nav and footer. They
+            # have no file extension, so the pattern above cannot see them
+            # and a dead one would be invisible.
             for dir in $(grep -oE 'href="(\./|[A-Za-z0-9._-]+/)"' "$f" \
                          | sed 's/href="//;s/"//' | sort -u); do
               [ -f "$dir/index.html" ] || { echo "::error file=docs/$f::links to $dir, which has no index.html"; missing=1; }
             done
-          done
-
-          # The MyST half is checked by assertion rather than by regex: its
-          # download buttons are written by inject.py as JavaScript string
-          # literals (a.href=d[0]), so no href="..." literal exists for a link
-          # checker to find.
-          for required in jedc/index.html \
-                          jedc/JEDC-special-issue-proposal.pdf \
-                          jedc/JEDC-annex.pdf; do
-            [ -f "$required" ] || { echo "::error::$required is missing from the assembled site"; missing=1; }
           done
 
           [ "$missing" -eq 0 ] || exit 1
