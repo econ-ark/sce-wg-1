@@ -1,0 +1,40 @@
+jtex: v1
+title: Plain LaTeX (wide margins)
+description: Plain LaTeX with 1.25 inch margins and no logo, for journal proposals
+version: 1.0.0
+license: CC-BY-4.0
+# Derived from the MyST "Plain LaTeX" template (tex/myst/plain_latex), which is
+# CC-BY-4.0; the upstream authors field was dropped when this copy was vendored,
+# and attribution is a licence condition, so it is restored here.
+authors:
+  - name: Steve Purves
+    affiliations:
+      - Curvenote
+parts:
+  - id: abstract
+    description: Article abstract.
+doc:
+  - id: title
+    required: true
+  - id: authors
+    required: true
+  - id: date
+  - id: bibliography
+options:
+  - id: link
+    type: string
+    title: Footnote Link
+    description: Adds a footnote containing a link to the online version.
+  - id: logo
+    type: boolean
+    default: false
+    title: Curvenote Logo
+    description: Adds the Curvenote logo after the abstract.
+files:
+  - template.tex
+  - curvenote.png
+packages:
+  - datetime
+  - graphicx
+  - hyperref
+  - natbib

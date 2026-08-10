@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCE WG1 · Language and Formal Semantics</title>
+<meta name="description" content="A working group of the Society for Computational Economics building a shared, formal language for dynamic economic models and their computational solutions.">
+<meta property="og:title" content="SCE WG1 · Language and Formal Semantics">
+<meta property="og:description" content="Economic models that machines can read, manipulate, and verify. A working group of the Society for Computational Economics.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://econ-ark.github.io/sce-wg-1/">
+<link rel="canonical" href="https://econ-ark.github.io/sce-wg-1/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2396402E'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='48' font-weight='600' fill='%23FAF9F6' text-anchor='middle'%3EW1%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="chrome.css">
+<script>
+/* Apply a saved theme override before first paint to avoid a flash of the wrong theme. */
+(function(){try{var t=localStorage.getItem('wg1-theme');if(t==='light'||t==='dark')document.documentElement.dataset.omTheme=t;}catch(e){}})();
+</script>
+<script src="chrome.js" defer></script>
+</head>
+<body>
+<div style="min-height:100vh; background:var(--bg); color:var(--ink);">
+  <div style="max-width:1000px; margin:0 auto; padding:0 24px;">
+
+    <nav style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:28px 0; border-bottom:1px solid var(--line);">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.06em; color:var(--ink);">SCE&nbsp;·&nbsp;WG1</span>
+      <div style="display:flex; gap:28px; flex-wrap:wrap; align-items:center;">
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#how" class="nav-link">How we work</a>
+        <a href="#milestones" class="nav-link">Milestones</a>
+        <button type="button" id="theme-toggle" class="theme-toggle" title="Switch between light and dark" aria-label="Switch between light and dark">
+          <svg class="i-light" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.9 1.9M19.1 4.9l-1.8 1.8M6.7 17.3l-1.9 1.9"/></svg>
+          <svg class="i-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+          <span class="sr-only" id="theme-state" aria-live="polite"></span>
+        </button>
+      </div>
+    </nav>
+
+    <header style="padding:88px 0 72px;">
+      <p style="margin:0 0 20px; font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">SCE Working Group 1 · Language &amp; Formal Semantics</p>
+      <h1 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:clamp(38px, 5.5vw, 58px); line-height:1.08; letter-spacing:-0.01em; max-width:17ch; text-wrap:pretty;">Economic models that machines can read, manipulate, and verify.</h1>
+      <p style="margin:28px 0 0; font-size:19px; line-height:1.55; color:var(--muted); max-width:72ch; text-wrap:pretty;">A working group of the Society for Computational Economics building a shared, formal language for dynamic economic models and their computational solutions.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px 40px; margin-top:36px;">
+        <p style="margin:0; font-size:15px;">Co-chaired by <strong style="font-weight:600;">Akshay Shanker</strong> and <strong style="font-weight:600;">Matt McKay</strong></p>
+      </div>
+      <p style="margin:10px 0 0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; line-height:1.7; color:var(--muted);">Formed at CEF 2026, Venice · Sponsored by SCE and partnered with Econ-ARK and QuantEcon</p>
+    </header>
+
+    <section id="problem" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
+      <div style="flex:1 1 150px; max-width:190px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">01 · Why</span>
+      </div>
+      <div style="flex:999 1 400px; min-width:0; display:grid; gap:28px;">
+        <div>
+          <h2 style="margin:0 0 12px; font-family:'Newsreader',serif; font-weight:500; font-size:26px; line-height:1.2;">The problem</h2>
+          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">Structural economics has no standard, shareable representation of a dynamic model together with its computational solution. Models can't travel between toolkits, and results are hard to cross-verify. AI raises the stakes: language models already write modeling code, but without an explicit statement of what a model <em>is</em>, checking their output falls back on the economist.</p>
+        </div>
+        <div>
+          <h2 style="margin:0 0 12px; font-family:'Newsreader',serif; font-weight:500; font-size:26px; line-height:1.2;">The vision</h2>
+          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">A formal account of what a model file means, stated by the people who build the toolkits — so a model written in one system can be checked, translated, and reproduced in another, by humans and machines alike.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
+      <div style="flex:1 1 150px; max-width:190px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">02 · Projects</span>
+      </div>
+      <div style="flex:999 1 400px; min-width:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(270px, 1fr)); gap:20px;">
+        <article style="display:flex; flex-direction:column; gap:14px; border:1px solid var(--line); background:var(--surface); padding:28px 26px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Project A</span>
+          <h3 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:23px; line-height:1.25; text-wrap:pretty;"><a href="project-a.html" class="card-link">The Semantics of Economic Models</a></h3>
+          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">Each toolkit team — Dynare, HARK, VFI Toolkit, and others — states formally what its model files mean, publishing a per-toolkit paper.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid var(--line);">
+            <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1.6; color:var(--muted);">→ Toward a journal special issue</p>
+            <a href="project-a.html" class="card-more">Read the plan →</a>
+          </div>
+        </article>
+        <article style="display:flex; flex-direction:column; gap:14px; border:1px solid var(--line); background:var(--surface); padding:28px 26px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Project B</span>
+          <h3 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:23px; line-height:1.25; text-wrap:pretty;"><a href="https://quantecon.github.io/community-library/" class="card-link">A Community Library of Baseline Models</a></h3>
+          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">The field's baseline models, implemented and documented across the toolkits that can solve them — same model, multiple tools, side by side.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid var(--line);">
+            <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1.6; color:var(--muted);">→ Starts now · test corpus for Project A</p>
+            <a href="https://quantecon.github.io/community-library/" class="card-more">Visit the library ↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="how" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
+      <div style="flex:1 1 150px; max-width:190px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">03 · How we work</span>
+      </div>
+      <div style="flex:999 1 400px; min-width:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:28px 40px;">
+        <div>
+          <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Quarterly meetings</h3>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">The full group convenes once a quarter, alternating between two standing times so the timezone burden is shared. Meetings are recorded.</p>
+        </div>
+        <div>
+          <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Sub-groups</h3>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">Project sub-groups set their own schedule and working rhythm.</p>
+        </div>
+        <div>
+          <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Membership by invitation</h3>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">The group works in the open; membership is extended by the co-chairs, keeping the author set coherent across Project A.</p>
+        </div>
+        <div>
+          <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Advisory group</h3>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">A small advisory group is consulted on the group's direction. Advisors are not expected to attend meetings or author papers; decisions rest with the members and co-chairs.</p>
+        </div>
+        <div>
+          <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Code of conduct</h3>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--muted);">A short code of conduct applies in all group venues — meetings, repositories, and the mailing list.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Members section intentionally omitted until the membership is announced with the
+         welcome email (canvas prop showMembers=false). When adding it back, insert it here
+         as "04 · Members" and renumber Milestones below to "05 · Milestones". The advisory
+         group is listed alongside it, as a separate list under the same section. -->
+
+    <section id="milestones" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
+      <div style="flex:1 1 150px; max-width:190px;">
+        <h2 style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">04 · Milestones</h2>
+      </div>
+      <div style="flex:999 1 400px; min-width:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:32px 0;">
+        <div style="position:relative; border-top:1px solid var(--line); padding:20px 20px 0 0;">
+          <span style="position:absolute; top:-5px; left:0; width:9px; height:9px; border-radius:50%; background:var(--accent);"></span>
+          <p style="margin:0 0 4px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--accent);">JUN 2026</p>
+          <p style="margin:0; font-size:14.5px; line-height:1.5; text-wrap:pretty;">Formed at CEF 2026, Venice</p>
+        </div>
+        <div style="position:relative; border-top:1px solid var(--line); padding:20px 20px 0 0;">
+          <span style="position:absolute; top:-5px; left:0; width:9px; height:9px; border-radius:50%; background:var(--bg); border:1.5px solid var(--accent); box-sizing:border-box;"></span>
+          <p style="margin:0 0 4px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--muted);">NEXT</p>
+          <p style="margin:0; font-size:14.5px; line-height:1.5; text-wrap:pretty;">Welcome email &amp; first full-group meeting</p>
+        </div>
+        <div style="position:relative; border-top:1px solid var(--line); padding:20px 20px 0 0;">
+          <span style="position:absolute; top:-5px; left:0; width:9px; height:9px; border-radius:50%; background:var(--bg); border:1.5px solid var(--line); box-sizing:border-box;"></span>
+          <p style="margin:0 0 4px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--muted);">THEN</p>
+          <p style="margin:0; font-size:14.5px; line-height:1.5; text-wrap:pretty;">First baseline templates published</p>
+        </div>
+        <div style="position:relative; border-top:1px solid var(--line); padding:20px 20px 0 0;">
+          <span style="position:absolute; top:-5px; left:0; width:9px; height:9px; border-radius:50%; background:var(--bg); border:1.5px solid var(--line); box-sizing:border-box;"></span>
+          <p style="margin:0 0 4px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--muted);">THEN</p>
+          <p style="margin:0; font-size:14.5px; line-height:1.5; text-wrap:pretty;">Special-issue proposal submitted</p>
+        </div>
+        <div style="position:relative; border-top:1px solid var(--line); padding:20px 0 0 0;">
+          <span style="position:absolute; top:-5px; left:0; width:9px; height:9px; border-radius:50%; background:var(--bg); border:1.5px solid var(--line); box-sizing:border-box;"></span>
+          <p style="margin:0 0 4px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.06em; color:var(--muted);">JUN 2027</p>
+          <p style="margin:0; font-size:14.5px; line-height:1.5; text-wrap:pretty;">Follow-up session at CEF 2027</p>
+        </div>
+      </div>
+    </section>
+
+    <footer style="border-top:1px solid var(--line); padding:40px 0 56px; display:grid; gap:24px;">
+      <div style="display:flex; flex-wrap:wrap; gap:10px 32px;">
+        <a href="https://econ-ark.github.io/cef_venice_2026/" class="foot-link">CEF 2026 pre-conference</a>
+        <a href="jedc/" class="foot-link">JEDC proposal draft</a>
+        <a href="https://github.com/econ-ark/sce-wg-1" class="foot-link">Group repository</a>
+        <span class="foot-tbd">Mailing list ⟨tbd⟩</span>
+        <span class="foot-tbd">Code of conduct ⟨tbd⟩</span>
+      </div>
+      <p style="margin:0; font-size:13.5px; line-height:1.7; color:var(--muted); max-width:64ch; text-wrap:pretty;">WG1 works alongside WG2 (Methods, Backends &amp; Verification) and WG3 (AI Assistance, Reproducibility &amp; Standards) — three working groups of the Society for Computational Economics addressing the Tower of Babel problem in computational economics.</p>
+      <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted);">© 2026 SCE Working Group on Language and Formal Semantics</p>
+    </footer>
+
+  </div>
+</div>
+</body>
+</html>

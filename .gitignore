@@ -1,1 +1,19 @@
+# MyST build trees, wherever they appear: jedc-prop/ builds the JEDC site and
+# project-a/ builds the Project A PDF. The bare rule covers both; the explicit
+# jedc-prop line is kept so its intent stays visible.
+_build/
 jedc-prop/_build/
+
+.DS_Store
+node_modules/
+
+# The assembled Pages tree, if you reproduce the workflow's assemble step
+# locally. CI builds it on a runner and never commits it.
+site/
+
+# Generated from project-a/special-issue-proposal.md by tools/build-project-a.mjs
+# and rebuilt by .github/workflows/publish.yml on every deploy. Edit the markdown.
+docs/project-a.html
+docs/special-issue-proposal.pdf
+project-a/special-issue-proposal.pdf
+project-a/special-issue-proposal.tex

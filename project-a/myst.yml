@@ -1,0 +1,15 @@
+# MyST config for the special-issue proposal (self-contained in project-a/).
+# PDF only: the proposal's own `exports:` block drives the build, via
+#   myst build project-a/special-issue-proposal.md --pdf
+# There is deliberately no `site:` block. The published site is the hand-written
+# HTML in docs/, and docs/project-a.html summarises this proposal and links the
+# PDF; a second MyST-generated site would duplicate it with a different theme
+# and a theme toggle the rest of the site can't drive.
+version: 1
+project:
+  title: Semantic Ontologies in Economics
+  authors:
+    - name: Christopher Carroll
+    - name: Akshay Shanker
+  toc:
+    - file: special-issue-proposal.md
