@@ -31,86 +31,114 @@ downloads:
     title: Proposal (PDF)
 ---
 
-## Introduction and Proposal
+## The Challenge: AI and the Meaning of Economic Models
 
 When economists compute a model, its precise *meaning* is
 distributed, much of it implicitly, across prose, notation, calibration, and
 code.
 The paper says "we solve the following model", but its equations
-underdetermine both what its code computes and what the computations mean,
-leaving the reader to fill the gaps.
-The same gaps confront whoever rebuilds or extends the model.
+underdetermine both what its code computes and what the computations mean.
+Only an informed reader can fill the gaps, one who knows the surrounding
+literature and has absorbed, through their professional networks, the conventions and
+traditions the paper leaves unstated.
+The same gaps confront anyone who attempts to interpret the model's findings,
+rebuild the model, or extend it.
 As a result, without a concrete statement of the model's meaning to check against,
 computational results are hard to cross-verify, and interoperability between
 implementations becomes difficult.
 
-So far, professional convention has helped trained modelers
-within a discipline to interpret, replicate, and build on one another's
-models.
-But convention breaks down once AI is used to write, modify, and
+Relying on implicit professional convention alone is costly even amongst humans,
+but it fails completely when AI is used to write, modify, and
 translate modeling code.
-To interpret or verify AI output we need a statement, independent of the
-code, of which economic objects are computed and which relations among them
-are enforced; we call such statements *semantic ontologies*.
-Without semantic ontologies, AI use is prone to error and misunderstanding.
+To interpret or verify AI output, we
+need a statement, independent of the code, of which economic objects are
+computed and which relations among them are enforced; these statements are called
+*semantic ontologies*.
+Outside economics, the use of semantic ontologies has grown rapidly,
+because without them, AI outputs remain probabilistic, and prone to error and misunderstanding 
+([Grüninger and Menzel 2003](#ref-gruninger2003);
+[Modelica Association 2023](#ref-modelica2023);
+[Gleeson et al. 2010](#ref-gleeson2010);
+[AWS Database Blog 2026](#ref-aws2026); see the *Semantic Ontologies*
+section of the annex).
 With semantic ontologies, translating models between toolkits, and even
 generating new modeling research, become operations a language model can
-carry out and be checked on cheaply, rather than manual recoding.[^mmb]
+carry out and be checked on cheaply, rather than manual recoding.
 
-```{raw:tex}
-\begin{displaybox}[breakable]{Proposed special issue}
-```
 
-::::{div}
-:class: displaybox displaybox-proposal
+Part 1) relate to existing semantic ontologies in economics (ie, bELLMAN project)
+Part 2) describe semantic ontologies have been developed, a lot of commonalities, but also some differences. Could lead toa synthesized ontologies for domains of overlap. 
 
-We propose a special issue that collects semantic ontologies for the domains
-of computational economics: modeling languages, toolkits, empirical methods,
-and model classes.
-Each paper takes one domain of study, states its semantic ontology, and
+
+
+## The Proposed Special Issue
+
+We propose a special issue that constructs semantic ontologies for the
+domains of computational economics: domain-specific modeling languages (for
+example, Dynare), toolkits (for example, HARK and SSJ), empirical methods
+(for example, structural modeling and estimation), and model classes (for
+example, life-cycle, real-business-cycle, and agent-based models).
+Each paper takes one domain of study, proposes a semantic ontology, and
 demonstrates it on worked examples of the team's own choosing.
+In addition to the semantic ontologies, the working group will author a
+paper and a community resource of canonical models and their
+ontologies.[^mmb]
+<!-- Matt: this is a key passage, please put it in your words. -->
+The special issue will also include related contributions by the working
+group that use the stated ontologies to compare different modeling
+strategies for the same problem, for instance agent-based models against
+heterogeneous-agent models.
+
 The SCE working group will submit a subset of the papers, an open call will
 invite the rest, and a comparison paper, written jointly by the participating
 teams, will close the issue.
 
-::::
-
-```{raw:tex}
-\end{displaybox}
-```
-
+The semantic ontologies we develop will be kept in an open-source
+[GitHub repository](https://github.com/econ-ark/sce-wg-1), to which members of the community can contribute improvements
+and modifications.
 <!-- needs to be something here about challenges for economics, i.e. application diversity. -->
+<!--
+The format is familiar at the journal, whose scope includes computational
+methods: in two earlier special issues, several teams computed the same models
+and a closing comparison drew the results together (den Haan, Judd and
+Juillard 2010, 2011).
+We keep the many teams and the closing comparison, but instead of solving
+common models the teams state what their models and code mean.
+When a model written for one toolkit can be read, checked, and re-solved in
+another, the semantic ontologies that make this possible are research
+infrastructure.
+-->
 
-### Semantic Ontologies
+## Organization
 
-Semantic ontologies are broadly defined as a formal way to codify the
-meaning of computational models.
-For our purposes, a semantic ontology consists of the objects and
-relations within the model, the meaning of those objects and relations, and
-the written forms that record them (syntax: a file, a model write-up, a
-specification).[^ha]
-Theory supplies part of the semantic ontology (a general-equilibrium
-model's objects are precisely defined), but the semantic ontology must
-collect these definitions, map them concretely to computational and written
-counterparts, and state the assumptions under which the mapping holds.
-Without a written semantic ontology, nothing says which of the theory's
-objects a given file or function call stands for, and ordinary solver code
-gives one executable realization, not a solver-independent statement of what
-the representation denotes.
+Papers pass an internal review within the working group [process TBC] and then
+the journal's ordinary external refereeing.
+We expect six to eight papers, with a session at the Society's conference
+between submission and revision.
 
-The importance of semantic ontologies is broadly recognized across research fields and in industry.
-Manufacturing's Process Specification Language ([Grüninger and Menzel 2003](#ref-gruninger2003); [Bock and Grüninger 2005](#ref-bock2005)), Modelica for physical systems ([Fritzson and Engelson 1998](#ref-fritzson1998); [Modelica Association 2023](#ref-modelica2023)), planning's PDDL2.1 ([Fox and Long 2003](#ref-fox2003)), and neuroscience's
-NeuroML ([Gleeson et al. 2010](#ref-gleeson2010)) each attach an explicit, solver-independent
-meaning to a model representation.
-Industry has met the same need from the opposite direction, reconstructing
-never-written conceptual models of the business from its data and business
-processes ([AWS Database Blog 2026](#ref-aws2026)).
-Compared with all of these, economics is well placed: the relations among a
-model's objects are the theory itself, already stated precisely in the paper.
-What remains unstated is the map from the representations economists compute
-with (model files, toolkit calls, estimation specifications) to that
-theory, and the conditions under which the map holds.
-Stating these maps, domain by domain, is the work this issue proposes.
+### Teams and Editors
+
+The working group's members include developers of Dynare, HARK, and the VFI
+Toolkit.
+Committed teams: [to be listed; only teams that have agreed in writing].
+The working group's papers will come from its subgroups.
+The guest editors (a lead editor and at least one co-editor, neither
+submitting to the issue) are drawn from outside the working group [names,
+institutions; TBC].
+Papers are submitted through the journal's editorial system, marked for this
+special issue, and are refereed under the journal's ordinary standards; the
+guest editors handle every paper, including the comparison paper, subject to
+the journal's final editorial authority.
+
+### Timeline
+
+Calendar dates TBC on acceptance.
+
+- Call for papers [on acceptance]
+- Submissions [+9 months]
+- Internal review completed [+12 months; process TBC]
+- Referee reports [+15 months]
+- Revisions and the comparison paper [+24 months]
 
 <!--
 [^example]: For example, the sentence "a policy shock raises entrants at date
@@ -125,25 +153,52 @@ Su (2012) show a loose inner-loop tolerance changing estimated own-price
 elasticities by roughly a factor of two.
 -->
 
-[^cg]: Whichever domain a paper addresses, its theory and mathematics are
-taken as pre-existing: the Bellman equation is not in question, while what
-a given Dynare file or HARK model means is. A language, toolkit, or empirical-method
-paper therefore emphasizes the map from representations to the mathematical
-objects they stand for, while a model-class paper emphasizes the objects and relations
-implied by its mathematical and theoretical framework. Differences among the stated ontologies
-are results for the closing comparison to report.
-
-[^ha]: In a heterogeneous-agent model, for instance, the ontology contains the
-response of decision rules to prices, the cross-sectional distribution
-decisions induce, and the feedback of that distribution into prices, both
-as relations of the theory and as their computational counterparts.
-
 [^mmb]: The nearest precedent in economics, the Macroeconomic Model Data Base
 ([Wieland et al. 2012](#ref-wieland2012)), compares models under common variables, common shocks,
 and a menu of common policy rules while each model keeps its own equations; it
 standardizes comparison, not meaning.
 
-## Guidelines for Papers
+```{raw:tex}
+\clearpage
+\setcounter{secnumdepth}{-1}
+```
+
+## Annex: Guidelines for Papers
+
+(semantic-ontologies)=
+### Semantic Ontologies
+
+The goal of the semantic ontologies we propose is to codify formally the
+meaning of computational models.
+For our purposes, a semantic ontology consists of the objects and
+relations within the domain of study, the meaning of those objects and relations, and
+the written forms that record them (syntax: a file, a model write-up, a
+specification).[^ha]
+Theory supplies part of the semantic ontology (a general-equilibrium
+model's objects are precisely defined), but the semantic ontology must
+collect these definitions, map them concretely to computational and written
+counterparts, and state the assumptions under which the mapping holds.
+Without a written semantic ontology, nothing says which of the theory's
+objects a given file or function call stands for, and ordinary solver code
+gives one executable realization, not a solver-independent statement of what
+the representation denotes.
+
+The importance of semantic ontologies for interpreting and working with
+AI-generated code and output is now broadly recognized across research
+fields and in industry.
+Manufacturing's Process Specification Language ([Grüninger and Menzel 2003](#ref-gruninger2003); [Bock and Grüninger 2005](#ref-bock2005)), Modelica for physical systems ([Fritzson and Engelson 1998](#ref-fritzson1998); [Modelica Association 2023](#ref-modelica2023)), planning's PDDL2.1 ([Fox and Long 2003](#ref-fox2003)), and neuroscience's
+NeuroML ([Gleeson et al. 2010](#ref-gleeson2010)) each attach an explicit, solver-independent
+meaning to a model representation.
+Industry has met the same need from the opposite direction, reconstructing
+never-written conceptual models of the business from its data and business
+processes ([AWS Database Blog 2026](#ref-aws2026)).
+Compared with all of these, economics is well placed: the relations among a
+domain of study's objects are the theory itself, which is well-defined in economics.
+What remains unstated is the map from the representations economists compute
+with (model files, toolkit calls, estimation specifications) to that
+theory, and the conditions under which the map holds.
+Stating these maps, domain by domain, is the work this issue proposes.
+
 
 ### Research Domains and Themes
 
@@ -187,6 +242,11 @@ method, a model class, or a combination of these.[^cg]
 \end{displaybox}
 ```
 
+<!--
+AAS to AAS: I am not sure about the model-class emphasis sentence (now in
+the domain-of-study footnote), for review.
+-->
+
 **Research themes.**
 The research themes of the issue are two of the core research questions
 each paper will answer: first, constructing a semantic ontology for its
@@ -199,7 +259,8 @@ Domains of study will differ in how important these components are, and some,
 such as a model class, may not have certain components, such as syntax.
 The metatheory states when the interpretation holds (*well-posedness*) and
 what preserves it (*equivalence*, *adequacy*, and *convergence*).
-Details of these research themes are given in Appendix A.
+Details of these research themes are given in the Research Themes
+section at the end of this annex.
 
 ### Methodology
 
@@ -281,44 +342,7 @@ papers will work top-down; a bottom-up construction may suit agent-based
 modeling or policy research, where observed relations precede a settled
 theory.
 
-## Organization
-
-Papers pass an internal review within the working group [process TBC] and then
-the journal's ordinary external refereeing.
-We expect six to eight papers, with a session at the Society's conference
-between submission and revision.
-
-### Teams and Editors
-
-The working group's members include developers of Dynare, HARK, and the VFI
-Toolkit.
-Committed teams: [to be listed; only teams that have agreed in writing].
-The working group's papers will come from its subgroups.
-Akshay Shanker and Matthew McKay chair the working group and coordinate the
-teams and the internal review.
-The guest editors (a lead editor and at least one co-editor, neither
-submitting to the issue) are drawn from outside the working group [names,
-institutions; TBC].
-Papers are submitted through the journal's editorial system, marked for this
-special issue, and are refereed under the journal's ordinary standards; the
-guest editors handle every paper, including the comparison paper, subject to
-the journal's final editorial authority.
-
-### Timeline
-
-Calendar dates TBC on acceptance.
-
-- Call for papers [on acceptance]
-- Submissions [+9 months]
-- Internal review completed [+12 months; process TBC]
-- Referee reports [+15 months]
-- Revisions and the comparison paper [+24 months]
-
-```{raw:tex}
-\appendix
-```
-
-## Research Themes
+### Research Themes
 
 A paper addresses those of the following five research themes relevant to its
 domain of study.
@@ -374,9 +398,18 @@ are refined.
 \end{displaybox}
 ```
 
-```{raw:tex}
-\setcounter{secnumdepth}{-1}
-```
+[^cg]: Whichever domain a paper addresses, its theory and mathematics are
+taken as pre-existing: the Bellman equation is not in question, while what
+a given Dynare file or HARK model means is. A language, toolkit, or empirical-method
+paper therefore emphasizes the map from representations to the mathematical
+objects they stand for, while a model-class paper emphasizes the objects and relations
+implied by its mathematical and theoretical framework. Differences among the stated ontologies
+are results for the closing comparison to report.
+
+[^ha]: In a heterogeneous-agent model, for instance, the ontology contains the
+response of decision rules to prices, the cross-sectional distribution
+decisions induce, and the feedback of that distribution into prices, both
+as relations of the theory and as their computational counterparts.
 
 ## References
 
