@@ -12,7 +12,8 @@ abstract: |
   intended, and someone who fed the same prompts to a different AI (where version updates count as different AIs) might
   get a substantially different model, with little ability to understand whether either 
   solution was right.  Computer scientists have addressed these problems, 
-  and the consensus is that meaningful verification requires a *semantic ontology*: an AI-readable, deterministic
+  and the consensus is that meaningful verification requires a *semantic ontology*: 
+  an AI-readable, deterministic
   statement, independent of code and solver, of which economic objects
   exist, what stands for what, what is written down, and when the
   interpretation holds.
@@ -29,6 +30,42 @@ downloads:
   - file: special-issue-proposal.pdf
     title: Proposal (PDF)
 ---
+
+<!-- REVIEW (title and abstract):
+
+1. TITLE. "AI Modeling" reads three ways -- modeling of AI, modeling with AI,
+   AI that models -- and the issue's actual subject, semantic ontologies, does
+   not appear in it. Consider naming the object and letting AI be the
+   motivation rather than the headline.
+
+2. OVERCLAIM, the one a CS referee will land on. "Computer scientists have
+   addressed these problems, and the consensus is that meaningful verification
+   requires a semantic ontology" -- there is no such consensus. Verification in
+   CS mostly means model checking, type systems, proof assistants and testing,
+   not ontologies. A defensible version that still does the work: in other
+   computational fields, interchange and cross-verification have repeatedly
+   required an explicit, solver-independent statement of meaning -- then PSL,
+   Modelica, PDDL, NeuroML, which we already have.
+
+3. WEAK SOURCE. The AWS Database Blog is cited three times, including in
+   support of the claim above. A vendor blog post carrying that weight in an
+   otherwise strong bibliography is an easy thing for a referee to pick at.
+
+4. DEFINITION DRIFT. "Semantic ontology" is defined four times and the
+   versions do not line up:
+     abstract  -- exist / stands for what / written down / when the
+                  interpretation holds  (four items)
+     section 1 -- objects computed / relations enforced  (two)
+     annex     -- objects and relations / meaning / written forms  (three)
+     themes    -- ontology / denotation / syntax, plus two statements ABOUT it
+   The themes section says explicitly that well-posedness is NOT a component,
+   but the abstract folds it in as a fourth. Harmonise on the triple plus the
+   two statements-about, and use the same three words in all four places.
+
+5. WORDING. "deterministic" is doing odd work -- an ontology is explicit or
+   unambiguous, not deterministic. And "(where version updates count as
+   different AIs)" stalls the sentence; it belongs in a footnote.
+-->
 
 ## The Challenge: AI and the Meaning of Economic Models
 
@@ -48,6 +85,13 @@ As a result, without a concrete statement of the model's meaning to check agains
 computational results are hard to cross-verify, and interoperability between
 implementations becomes difficult.
 
+<!-- REVIEW (this paragraph): the recent edit weakened it. The earlier version
+     ran "costly even amongst humans, but it fails completely when AI is used
+     to write, modify, and translate modeling code" -- tighter, and with a real
+     escalation. The replacement adds a near-tautology (relying on implicit
+     convention is costly because people do not share conventions) and softens
+     "fails completely" to "is worse". Suggest keeping "among" and restoring
+     the rest. Typos in the next two lines: "situtation", and "when when". -->
 Relying on implicit professional convention alone is costly even among humans,
 because not everyone has the same understanding of conventions and implicit norms.
 The situtation is worse when when AI is used to write, modify, and
@@ -110,7 +154,53 @@ The semantic ontologies we develop will be kept in an open-source
 [GitHub repository](https://github.com/econ-ark/sce-wg-1), to which members of the community can contribute improvements
 and modifications.
 
+<!-- needs to be something here about challenges for economics, i.e. application diversity. -->
+<!-- REVIEW: the annex now carries this argument -- see "an unusual advantage
+     and an unusual obstacle" in the Semantic Ontologies section. A compressed
+     version probably belongs here too. The front matter is where an editor
+     decides, and conceding the obstacle before turning it into the result is
+     more persuasive up front than buried in an annex. -->
+
+<!-- REVIEW (the comparison paper): it is mentioned three times -- closing the
+     issue, written jointly, handled by the guest editors -- without ever
+     saying what it compares or what a reader learns from it. In den Haan et
+     al. the object was clean: same model, different methods, compare accuracy
+     and speed. Here the papers produce ontologies of DIFFERENT domains, so
+     comparison is apples to oranges unless the object is named. The annex now
+     supplies one (where two ontologies disagree they have found a point at
+     which the profession's conventions silently diverge); state it here, in
+     the main text, since this is the capstone of the issue. Footnote [^cg]
+     currently concedes the difficulty in a subordinate clause. -->
+
 ## Organization
+
+<!-- REVIEW (highest priority in the document, ahead of any wording issue):
+
+   An editor grants a special issue on four questions, and all four are
+   currently blank:
+     - who are the guest editors?      [names, institutions; TBC]
+     - who has committed?              [to be listed]
+     - what is the internal review?    [process TBC], appearing twice
+     - what are the dates?             Calendar dates TBC
+   Filling these matters more than anything else here. Naming three teams that
+   have actually agreed beats a placeholder promising more, and a named lead
+   editor is usually the difference between a proposal an editor can act on
+   and one they have to come back to.
+
+   Separately, the framing of the first sentence: "papers pass an internal
+   review within the working group and then the journal's ordinary external
+   refereeing" reads as a two-gate system the journal does not control. Worth
+   recasting as a pre-submission quality filter -- the working group declining
+   to submit weak papers -- rather than as a review stage sitting in front of
+   the journal's own.
+
+   Also missing: why teams will do this. Each paper is a formal semantics of a
+   toolkit, which is a great deal of work for one special-issue slot. The
+   answer is that the authors are the toolkit developers, who need this
+   documentation anyway and get citable infrastructure out of it -- but that
+   is currently implicit, and an editor will ask whether six to eight
+   submissions of this difficulty will really materialise.
+-->
 
 Papers pass an internal review within the working group [process TBC] and then
 the journal's ordinary external refereeing.
@@ -136,10 +226,12 @@ the journal's final editorial authority.
 Calendar dates TBC on acceptance.
 
 - Call for papers [on acceptance]
-- Submissions [+9 months]
-- Presentation at the next meeting of Computation in Economics and Finance 
-- Internal review completed [+12 months; process TBC]
-- Referee reports [+15 months]
+- Presentation at next meeting of Computation in Economics and Finance 
+  - This will be a working draft 
+  - There would be at least two special sessions devoted to the papers
+- Submission draft incorporationg CEF feedback within 2 months
+- Internal review completed [Submission+3 months; process TBC]
+- Referee reports [Review+4 months]
 - Revisions and the comparison paper [+24 months]
 
 [^example]: The sentence "a policy shock raises entrants at date $t$" is
@@ -184,6 +276,16 @@ Without a written semantic ontology, nothing says which of the theory's
 objects a given file or function call stands for, and ordinary solver code
 gives one executable realization, not a solver-independent statement of what
 the representation denotes.
+
+<!-- REVIEW (own the coinage): "semantic ontology" fuses two largely separate
+     literatures -- the ontology tradition (PSL, OWL, the Gene Ontology) and
+     programming-language semantics (Scott-Strachey, Plotkin, Hoare). The
+     formalism ladder under Methodology treats them as points on one scale,
+     which is a real and interesting claim rather than a neutral summary of
+     either field. One sentence declaring the term as ours, and saying why the
+     two traditions belong on a single axis, would stop readers from either
+     community concluding we have misread theirs. Harel and Rumpe is exactly
+     the right citation for this and is currently buried in theme 2. -->
 
 The importance of semantic ontologies for interpreting and working with
 AI-generated code and output is now broadly recognized across research
@@ -283,6 +385,14 @@ Details of these research themes are given in the
 section at the end of this annex.
 
 ### Methodology
+
+<!-- REVIEW (balance): the annex now runs longer than the proposal it annexes,
+     and an editor reads the proposal and skims the annex. The formalism ladder
+     below (graphs and diagrams -> logical axioms -> mathematical semantics) is
+     the best-read passage in the document, but it is a compact literature
+     review and could lose a third without losing an argument. That is the
+     natural place to find space for the deliverability items under
+     Organization, if length becomes a constraint. -->
 
 **Formalizing the semantic ontology.**
 A requirement for each semantic ontology paper will be that it presents a *formal* account of
