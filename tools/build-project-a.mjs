@@ -152,8 +152,8 @@ fs.writeFileSync(OUT, `<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="chrome.css">
-<link rel="stylesheet" href="proposal.css">
+<link rel="stylesheet" href="chrome.css?v=2">
+<link rel="stylesheet" href="proposal.css?v=2">
 <script>
 /* Apply a saved theme override before first paint to avoid a flash of the wrong theme. */
 (function(){try{var t=localStorage.getItem('wg1-theme');if(t==='light'||t==='dark')document.documentElement.dataset.omTheme=t;}catch(e){}})();
