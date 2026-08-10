@@ -18,6 +18,10 @@ GitHub Pages publishes the site through [`.github/workflows/publish.yml`](.githu
 - The [landing page](https://econ-ark.github.io/sce-wg-1/) comes from [`docs/index.html`](docs/index.html).
 - The [Project A page](https://econ-ark.github.io/sce-wg-1/project-a.html) and [PDF](https://econ-ark.github.io/sce-wg-1/special-issue-proposal.pdf) are generated from [`project-a/special-issue-proposal.md`](project-a/special-issue-proposal.md).
 
+## Background notes
+
+[`project-a/semantic-ontology-precedents.md`](project-a/semantic-ontology-precedents.md) collects the evidence behind the proposal's claim that other computational sciences have already met this problem: SBML and the Systems Biology Ontology, CellML, NeuroML, Modelica, the ODD protocol, the CF conventions, and EMMO. It records what each field separated, which citations are verified, and where each belongs in the proposal. It is working material, not part of the special issue, and is not published to the site.
+
 ## Building Project A
 
 Edit [`project-a/special-issue-proposal.md`](project-a/special-issue-proposal.md), not the generated HTML or PDF.
