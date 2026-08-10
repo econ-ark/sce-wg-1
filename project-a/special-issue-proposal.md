@@ -1,19 +1,18 @@
 ---
-title: Semantic Ontologies in Economics
+title: "AI Modeling in Economics: Transparency and Verification"
 subtitle: Special Issue Proposal
 authors:
   - name: Christopher Carroll
   - name: Akshay Shanker
 abstract: |
-  A computed model's meaning is largely implicit in prose, notation,
-  calibration, and code. Professional convention has helped fill the gaps.
-  But economists increasingly use large language models (AIs) to write,
-  modify, and translate modeling code, and AI output is probabilistic by
+  Economists increasingly use large language models (AIs) to write,
+  modify, and translate modeling code.  But AI output is probabilistic by
   construction.
   Unverified, such code can compute a different model from the one
-  intended, its results cannot be cross-checked or reused, and its economic
-  interpretation becomes ambiguous.
-  Verification requires a semantic ontology: an AI-readable, deterministic
+  intended, and someone who fed the same prompts to a different AI (where version updates count as different AIs) might
+  get a substantially different model, with little ability to understand whether either 
+  solution was right.  Computer scientists have addressed these problems, 
+  and the consensus is that meaningful verification requires a *semantic ontology*: an AI-readable, deterministic
   statement, independent of code and solver, of which economic objects
   exist, what stands for what, what is written down, and when the
   interpretation holds.
@@ -33,22 +32,25 @@ downloads:
 
 ## The Challenge: AI and the Meaning of Economic Models
 
-When economists compute a model, its precise *meaning* is
-distributed, much of it implicitly, across prose, notation, calibration, and
-code.
-The paper says "we solve the following model", but its equations
-underdetermine both what its code computes and what the computations mean.
+Economic theory is exact about its own objects.
+What is left implicit is the map from that theory to the things economists
+actually compute with: when a model is solved, its *meaning* is distributed
+across prose, notation, calibration, code, and tradition, and no one document
+carries it.
+The paper says "we solve the following model," but its equations
+underdetermine both what its code computes and what the computations mean.[^example]
 Only an informed reader can fill the gaps, one who knows the surrounding
-literature and has absorbed, through their professional networks, the conventions and
-traditions the paper leaves unstated.
+literature and has absorbed the conventions and
+traditions the paper is built upon.
 The same gaps confront anyone who attempts to interpret the model's findings,
 rebuild the model, or extend it.
 As a result, without a concrete statement of the model's meaning to check against,
 computational results are hard to cross-verify, and interoperability between
 implementations becomes difficult.
 
-Relying on implicit professional convention alone is costly even amongst humans,
-but it fails completely when AI is used to write, modify, and
+Relying on implicit professional convention alone is costly even among humans,
+because not everyone has the same understanding of conventions and implicit norms.
+The situtation is worse when when AI is used to write, modify, and
 translate modeling code.
 To interpret or verify AI output, we
 need a statement, independent of the code, of which economic objects are
@@ -75,13 +77,11 @@ Part 2) describe semantic ontologies have been developed, a lot of commonalities
 
 ## The Proposed Special Issue
 
-We propose a special issue that constructs semantic ontologies for the
+We propose a special issue that demonstrates the construction and use of semantic ontologies for the
 domains of computational economics: domain-specific modeling languages (for
 example, Dynare), toolkits (for example, HARK and SSJ), empirical methods
 (for example, structural modeling and estimation), and model classes (for
 example, life-cycle, real-business-cycle, and agent-based models).
-Each paper takes one domain of study, proposes a semantic ontology, and
-demonstrates it on worked examples of the team's own choosing.
 In addition to the semantic ontologies, the working group will author a
 paper and a community resource of canonical models and their
 ontologies.[^mmb]
@@ -93,23 +93,22 @@ heterogeneous-agent models.
 
 The SCE working group will submit a subset of the papers, an open call will
 invite the rest, and a comparison paper, written jointly by the participating
-teams, will close the issue.
+teams, will close the special issue.
+
+This format is familiar at the journal, whose scope includes computational
+methods: in two earlier special issues, several teams computed the same models
+and a closing comparison drew the results together
+([den Haan, Judd and Juillard 2010](#ref-denhaan2010),
+[2011](#ref-denhaan2011)).
+We keep the many teams and the closing comparison, but the teams state what
+their models and code mean rather than solving a model in common.
+What the issue produces is research infrastructure: once a model written for
+one toolkit can be read, checked, and re-solved in another, the semantic
+ontologies that made this possible outlast the papers that state them.
 
 The semantic ontologies we develop will be kept in an open-source
 [GitHub repository](https://github.com/econ-ark/sce-wg-1), to which members of the community can contribute improvements
 and modifications.
-<!-- needs to be something here about challenges for economics, i.e. application diversity. -->
-<!--
-The format is familiar at the journal, whose scope includes computational
-methods: in two earlier special issues, several teams computed the same models
-and a closing comparison drew the results together (den Haan, Judd and
-Juillard 2010, 2011).
-We keep the many teams and the closing comparison, but instead of solving
-common models the teams state what their models and code mean.
-When a model written for one toolkit can be read, checked, and re-solved in
-another, the semantic ontologies that make this possible are research
-infrastructure.
--->
 
 ## Organization
 
@@ -120,8 +119,8 @@ between submission and revision.
 
 ### Teams and Editors
 
-The working group's members include developers of Dynare, HARK, and the VFI
-Toolkit.
+The working group's members include developers of Dynare, HARK, the VFI
+Toolkit, and QuantEcon.
 Committed teams: [to be listed; only teams that have agreed in writing].
 The working group's papers will come from its subgroups.
 The guest editors (a lead editor and at least one co-editor, neither
@@ -138,22 +137,23 @@ Calendar dates TBC on acceptance.
 
 - Call for papers [on acceptance]
 - Submissions [+9 months]
+- Presentation at the next meeting of Computation in Economics and Finance 
 - Internal review completed [+12 months; process TBC]
 - Referee reports [+15 months]
 - Revisions and the comparison paper [+24 months]
 
-<!--
-[^example]: For example, the sentence "a policy shock raises entrants at date
-$t$" is satisfied by two different models, since the shock may reach the
-cross-sectional distribution at $t$ or at $t+1$, and the impulse response
-differs before any grid or solver is chosen.
-The code computes one of the two models, and nothing on the page records
-which.
-The documented counterpart: Su and Judd (2012) recast one estimator in two
-computational formulations and return identical estimates, while Dubé, Fox and
-Su (2012) show a loose inner-loop tolerance changing estimated own-price
-elasticities by roughly a factor of two.
--->
+[^example]: The sentence "a policy shock raises entrants at date $t$" is
+satisfied by two different models, since the shock may reach the
+cross-sectional distribution at $t$ or at $t+1$, and the impulse responses
+differ before any grid or solver is chosen.
+The code computes one of the two, and nothing on the page records which.
+Where implementations have actually been compared, both outcomes appear:
+[Su and Judd (2012)](#ref-su2012) recast one estimator in two computational
+formulations and recover identical estimates, while
+[Dubé, Fox and Su (2012)](#ref-dube2012) find a loose inner-loop tolerance
+moving estimated own-price elasticities by roughly a factor of two.
+The first is the case a semantic ontology certifies; the second is the case it
+catches.
 
 [^mmb]: The nearest precedent in economics, the Macroeconomic Model Data Base
 ([Wieland et al. 2012](#ref-wieland2012)), compares models under common variables, common shocks,
@@ -194,20 +194,40 @@ meaning to a model representation.
 Industry has met the same need from the opposite direction, reconstructing
 never-written conceptual models of the business from its data and business
 processes ([AWS Database Blog 2026](#ref-aws2026)).
-Compared with all of these, economics is well placed: the relations among a
-domain of study's objects are the theory itself, which is well-defined in economics.
-What remains unstated is the map from the representations economists compute
-with (model files, toolkit calls, estimation specifications) to that
-theory, and the conditions under which the map holds.
+Compared with all of these, economics starts from an unusual advantage and an
+unusual obstacle.
+The advantage is that the relations among a domain of study's objects are the
+theory itself, and economics states its theory explicitly; what is missing is
+only the map from the representations economists compute with (model files,
+toolkit calls, estimation specifications) to that theory, and the conditions
+under which the map holds.
+The obstacle is that every field above could standardize against a fixed point
+its discipline had already settled — Modelica's component equations answer to
+conservation laws no physicist disputes — and economics has no comparable
+fixed point.
+Competing equilibrium concepts, unsettled timing conventions, and toolkits
+built on incompatible primitives are the ordinary condition of the field
+rather than defects to be tidied away, and an ontology that presumed them away
+would describe no one's practice.
+The consequence is not that the exercise is hopeless but that it changes
+character: the ontologies must be *stated* rather than discovered, each team
+committing to the conventions its own domain assumes.
+Where two teams' ontologies then disagree, they have located a point at which
+the profession's conventions silently diverge — a result of the issue rather
+than a failure of it, and the substance of the closing comparison.
 Stating these maps, domain by domain, is the work this issue proposes.
 
 
 ### Research Domains and Themes
 
 **Domains of study.**
-Each paper in the special issue will address one *domain of study*.
+Most papers in the special issue will address one *domain of study*.
 Domains of study can include a modeling language, a toolkit, an empirical
-method, a model class, or a combination of these.[^cg]
+method, a model class, or a combination of these.  Some will be illustrations 
+of the use of the semantic ontologies to compare existing models to each other.
+We anticipate that there may be a few other closely-related papers; for example, one 
+working group participant is eager to write a guide for economists for
+how to use the `lean' programming language for development of both code and theory.[^cg]
 
 ```{raw:tex}
 \begin{displaybox}[breakable]{Domains of study}
@@ -250,8 +270,7 @@ the domain-of-study footnote), for review.
 -->
 
 **Research themes.**
-Each paper will construct a semantic ontology for its
-domain of study, and second, establish the ontology's *metatheory*. 
+The papers developing a semantic ontology will establish the ontology's *metatheory*. 
 There are three components to each semantic ontology: what is assumed to exist
 (the *ontology*), what stands for and relates to what (the *denotation*), and
 what is written down (the *syntax*).
@@ -266,8 +285,8 @@ section at the end of this annex.
 ### Methodology
 
 **Formalizing the semantic ontology.**
-A requirement for each paper will be that it presents a *formal* account of
-the semantic ontology of its domain of study.
+A requirement for each semantic ontology paper will be that it presents a *formal* account of
+the ontology of its domain of study.
 However, the researchers choose the formalism in which they state these
 components.
 
@@ -457,6 +476,24 @@ Programming Language." In *Automated Deduction — CADE 28*, Lecture Notes in
 Artificial Intelligence 12699. Springer, 625–635.
 [[link]](https://link.springer.com/chapter/10.1007%2F978-3-030-79876-5_37)
 
+(ref-denhaan2010)=
+den Haan, W. J., K. L. Judd, and M. Juillard (2010). "Computational suite of
+models with heterogeneous agents: Incomplete markets and aggregate
+uncertainty." *Journal of Economic Dynamics and Control* 34(1), 1–3.
+[[link]](https://www.sciencedirect.com/science/article/abs/pii/S0165188909001286)
+
+(ref-denhaan2011)=
+den Haan, W. J., K. L. Judd, and M. Juillard (2011). "Computational suite of
+models with heterogeneous agents II: Multi-country real business cycle
+models." *Journal of Economic Dynamics and Control* 35(2), 175–177.
+[[link]](https://www.sciencedirect.com/science/article/abs/pii/S0165188910002149)
+
+(ref-dube2012)=
+Dubé, J.-P., J. T. Fox, and C.-L. Su (2012). "Improving the Numerical
+Performance of Static and Dynamic Aggregate Discrete Choice Random
+Coefficients Demand Estimation." *Econometrica* 80(5), 2231–2267.
+[[link]](https://hdl.handle.net/10.3982%2FECTA8585)
+
 (ref-fox2003)=
 Fox, M., and D. Long (2003). "PDDL2.1: An Extension to PDDL for Expressing
 Temporal Planning Domains." *Journal of Artificial Intelligence Research* 20,
@@ -546,6 +583,11 @@ Scott, D., and C. Strachey (1971). "Toward a mathematical semantics for
 computer languages." *Proceedings of the Symposium on Computers and Automata*,
 Polytechnic Institute of Brooklyn, 19–46.
 [[link]](https://ncatlab.org/nlab/files/ScottStrachey-MathematicalSemantics.pdf)
+
+(ref-su2012)=
+Su, C.-L., and K. L. Judd (2012). "Constrained Optimization Approaches to
+Estimation of Structural Models." *Econometrica* 80(5), 2213–2230.
+[[link]](https://hdl.handle.net/10.3982%2FECTA7925)
 
 (ref-uschold1996)=
 Uschold, M., and M. Grüninger (1996). "Ontologies: principles, methods and
