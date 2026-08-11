@@ -488,9 +488,8 @@ graph ([Hogan et al. 2021](#ref-hogan2021)).
 These *graphs and diagrams* name the model's objects but place few
 restrictions on what they mean.
 
-Writing the ontology as *logical axioms* fixes more: the axioms rule out
-interpretations of the objects much as parameter restrictions rule out
-models.
+*Logical axioms* fix more: they rule out interpretations of the
+objects much as parameter restrictions rule out models.
 The axioms can be stated in any formal logic.
 In the older tradition this meant first-order logic
 ([Gruber 1993](#ref-gruber1993)), and in much current practice it means a
@@ -498,9 +497,9 @@ description logic such as the Semantic Web's Web Ontology Language (OWL)
 ([Baader et al. 2017](#ref-baader2017);
 [W3C OWL Working Group 2012](#ref-owl2012)).
 
-The most is fixed by the *mathematical semantics* developed for programming
-languages, which attach an explicit mathematical meaning to every written
-form.
+The *mathematical semantics* developed for programming languages fixes
+the most meaning: it attaches an explicit mathematical object to every
+written form.
 Denotational semantics assigns each form an object in the ordered
 structures of domain theory ([Scott and Strachey 1971](#ref-scott1971)).
 Initial-algebra semantics takes meaning to be the unique homomorphism from
