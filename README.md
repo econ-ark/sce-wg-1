@@ -56,5 +56,7 @@ The repository and issue tracker are public. Membership is by invitation. Use th
 
 ## Contacts
 
-The group is co-chaired by Akshay Shanker (ashanker1984@gmail.com) and
-Matt McKay ([github.com/mmcky](https://github.com/mmcky)).
+The group is co-chaired by Matt McKay (QuantEcon;
+[github.com/mmcky](https://github.com/mmcky)) and Akshay Shanker
+(Econ-ARK; a.shanker@unsw.edu.au ·
+[github.com/akshayshanker](https://github.com/akshayshanker)).
