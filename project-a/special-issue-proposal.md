@@ -34,19 +34,20 @@ downloads:
     title: Proposal (PDF)
 ---
 
-<!-- REVIEW (title and abstract):
+<!-- TODO (Chris) — REVIEW (title):
 
-STILL OPEN.
-
-1. TITLE. "AI Modeling" reads three ways -- modeling of AI, modeling with AI,
+[For CDC] "AI Modeling" reads three ways -- modeling of AI, modeling with AI,
    AI that models -- and the issue's actual subject, semantic ontologies, does
    not appear in it. Consider naming the object and letting AI be the
    motivation rather than the headline. Two starting points: "Semantic
    Ontologies for Computational Economics: Making Model Meaning Verifiable",
    or, keeping the present framing but disambiguating, "AI-Assisted Modeling
    in Economics: Transparency and Verification".
+-->
 
-2. ANNEX ALIGNMENT, created by the abstract rewrite below. The abstract now
+<!-- DONE — REVIEW (abstract rewrite and annex alignment):
+
+ANNEX ALIGNMENT, created by the abstract rewrite below. The abstract now
    names SBML/SBO, CellML, NeuroML, Modelica and ODD; the annex's exemplar
    paragraph still leads with manufacturing's PSL and cites the AWS blog. The
    two lists should be the same list. See semantic-ontology-precedents.md in
@@ -55,6 +56,22 @@ STILL OPEN.
    propose, maintained as two separate processes for our reason, for twenty
    years. That file also carries the CF-conventions/CMIP finding, which is a
    better precedent for the closing comparison paper than den Haan et al.
+   DONE (AAS, 11 Aug 2026): the annex's exemplar paragraph now carries the
+   abstract's list, led by SBML/SBO with the separate-processes point;
+   PSL is demoted to a closing clause alongside PDDL2.1; the AWS blog
+   survives only in Methodology's bottom-up paragraph. Removing AWS from
+   the main-text citation cluster exposed an unsupported causal claim
+   ("use has grown rapidly because without them AI outputs remain
+   probabilistic") -- reworded to the checkable "established scientific
+   practice", the same repair the abstract received. CF/CMIP added where
+   the closing comparison is introduced (Hassell et al. 2017; den Haan et
+   al. stays as the format precedent at the journal); ODD added at
+   Methodology's no-syntax point (Grimm et al. 2020). Six references
+   pasted from semantic-ontology-precedents.md; Bock-Gruninger removed as
+   uncited. Deferred pending citable references, per that file's own
+   note: EMMO (Methodology, description-logic rung) and a direct CellML
+   citation -- CellML is cited via the Physiome repository paper (Yu et
+   al. 2011) until the CellML 2.0 reference is pinned down.
 
 TAKEN, recorded here so the reasoning is not lost:
 
@@ -105,21 +122,21 @@ ambiguity silently, and returns fluent code bearing no trace that a choice was
 made; asked again, it may settle it differently.
 To interpret or verify AI output, we
 need a statement, independent of the code, of which economic objects are
-computed and which relations among them are enforced; these statements are called
+computed and which relations among them are enforced; we will call such statements
 *semantic ontologies*.
-Outside economics, the use of semantic ontologies has grown rapidly,
-because without them, AI outputs remain probabilistic, and prone to error and misunderstanding 
-([Grüninger and Menzel 2003](#ref-gruninger2003);
+Outside economics such statements are established practice: systems
+biology, engineering, and neuroscience each maintain one
+([Hucka et al. 2003](#ref-hucka2003);
 [Modelica Association 2023](#ref-modelica2023);
-[Gleeson et al. 2010](#ref-gleeson2010);
-[AWS Database Blog 2026](#ref-aws2026); see the *Semantic Ontologies*
+[Gleeson et al. 2010](#ref-gleeson2010); see the *Semantic Ontologies*
 section of the annex).
 With semantic ontologies, translating models between toolkits, and even
 generating new modeling research, become operations a language model can
 carry out and be checked on cheaply, rather than manual recoding.
 
 
-<!--
+<!-- TODO (Chris) — undeveloped sketch: decide whether to write these two
+paragraphs or drop them.
 Part 1) relate to existing semantic ontologies in economics (ie, bELLMAN project)
 Part 2) describe semantic ontologies have been developed, a lot of commonalities, but also some differences. Could lead toa synthesized ontologies for domains of overlap.
 -->
@@ -136,11 +153,21 @@ example, life-cycle, real-business-cycle, and agent-based models).
 In addition to the semantic ontologies, the working group will author a
 paper and a community resource of canonical models and their
 ontologies.[^mmb]
-<!-- Matt: this is a key passage, please put it in your words. -->
+
 The special issue will also include related contributions by the working
 group that use the stated ontologies to compare different modeling
 strategies for the same problem, for instance agent-based models against
 heterogeneous-agent models.
+
+Economics comes to this task with an unusual advantage — the theory already
+states the objects and relations an ontology must record, so what remains is
+the map from model files and toolkit calls to the theory — and an unusual
+obstacle: no settled equilibrium concept or timing convention exists to
+standardize against.
+Each team will therefore state the conventions its own domain assumes, and
+where two teams' ontologies disagree they will have located a point where the
+profession's conventions silently diverge — the substance of the closing
+comparison paper.
 
 The SCE working group will submit a subset of the papers, an open call will
 invite the rest, and a comparison paper, written jointly by the participating
@@ -153,6 +180,10 @@ and a closing comparison drew the results together
 [2011](#ref-denhaan2011)).
 We keep the many teams and the closing comparison, but the teams state what
 their models and code mean rather than solving a model in common.
+Climate modeling supplies the precedent for the comparison itself: the
+CF conventions fix what each quantity in model output means
+([Hassell et al. 2017](#ref-hassell2017)), and that shared standard is
+what makes the recurring CMIP model intercomparisons possible.
 What the issue produces is research infrastructure: once a model written for
 one toolkit can be read, checked, and re-solved in another, the semantic
 ontologies that made this possible outlast the papers that state them.
@@ -161,14 +192,16 @@ The semantic ontologies we develop will be kept in an open-source
 [GitHub repository](https://github.com/econ-ark/sce-wg-1), to which members of the community can contribute improvements
 and modifications.
 
-<!-- needs to be something here about challenges for economics, i.e. application diversity. -->
-<!-- REVIEW: the annex now carries this argument -- see "an unusual advantage
+<!-- DONE — REVIEW: the annex now carries this argument -- see "an unusual advantage
      and an unusual obstacle" in the Semantic Ontologies section. A compressed
      version probably belongs here too. The front matter is where an editor
      decides, and conceding the obstacle before turning it into the result is
-     more persuasive up front than buried in an annex. -->
+     more persuasive up front than buried in an annex.
+     DONE (AAS, 11 Aug 2026): compressed into the paragraph after the section's
+     opening paragraph ("Economics comes to this task..."); the annex keeps the
+     full version with the Modelica example. -->
 
-<!-- REVIEW (the comparison paper): it is mentioned three times -- closing the
+<!-- DONE — REVIEW (the comparison paper): it is mentioned three times -- closing the
      issue, written jointly, handled by the guest editors -- without ever
      saying what it compares or what a reader learns from it. In den Haan et
      al. the object was clean: same model, different methods, compare accuracy
@@ -177,12 +210,14 @@ and modifications.
      supplies one (where two ontologies disagree they have found a point at
      which the profession's conventions silently diverge); state it here, in
      the main text, since this is the capstone of the issue. Footnote [^cg]
-     currently concedes the difficulty in a subordinate clause. -->
+     currently concedes the difficulty in a subordinate clause.
+     DONE (AAS, 11 Aug 2026): the comparison object is now stated in the main
+     text, in the closing sentence of the same paragraph. -->
 
 ## Organization
 
-<!-- REVIEW (highest priority in the document, ahead of any wording issue):
-
+<!-- TODO (Chris) — REVIEW (highest priority in the document, ahead of any wording issue):
+  %% AAS leaving the below for Chris to settle (11 Aug 2026)
    An editor grants a special issue on four questions, and all four are
    currently blank:
      - who are the guest editors?      [names, institutions; TBC]
@@ -271,10 +306,15 @@ standardizes comparison, not meaning.
 
 The goal of the semantic ontologies we propose is to codify formally the
 meaning of computational models.
-For our purposes, a semantic ontology consists of the objects and
-relations within the domain of study, the meaning of those objects and relations, and
-the written forms that record them (syntax: a file, a model write-up, a
-specification).[^ha]
+For our purposes, a semantic ontology has three components: what is
+assumed to exist in the domain of study (the *ontology*), what stands
+for what (the *denotation*), and what is written down (the *syntax*: a
+file, a model write-up, a specification).[^ha]
+The three components are exactly what any language definition must
+contain — a semantic domain, a semantic mapping, and a syntax
+([Harel and Rumpe 2004](#ref-harel2004)) — and the formalisms for
+stating them, surveyed under Methodology, come from both the ontology
+tradition and the mathematical semantics of programming languages.
 Theory supplies part of the semantic ontology (a general-equilibrium
 model's objects are precisely defined), but the semantic ontology must
 collect these definitions, map them concretely to computational and written
@@ -284,7 +324,7 @@ objects a given file or function call stands for, and ordinary solver code
 gives one executable realization, not a solver-independent statement of what
 the representation denotes.
 
-<!-- REVIEW (own the coinage): "semantic ontology" fuses two largely separate
+<!-- DONE — REVIEW (own the coinage): "semantic ontology" fuses two largely separate
      literatures -- the ontology tradition (PSL, OWL, the Gene Ontology) and
      programming-language semantics (Scott-Strachey, Plotkin, Hoare). The
      formalism ladder under Methodology treats them as points on one scale,
@@ -292,17 +332,48 @@ the representation denotes.
      either field. One sentence declaring the term as ours, and saying why the
      two traditions belong on a single axis, would stop readers from either
      community concluding we have misread theirs. Harel and Rumpe is exactly
-     the right citation for this and is currently buried in theme 2. -->
+     the right citation for this and is currently buried in theme 2.
+     DONE (AAS, 11 Aug 2026): resolved by grounding, not declaration.
+     The definition sentence now states the triple in the document's own
+     canonical words (exist / stands for what / written down, naming the
+     ontology, denotation, and syntax components — replacing "the
+     written forms that record them"), and one sentence follows it: the
+     components are exactly the semantic domain, semantic mapping, and
+     syntax a language definition must contain, cited parenthetically to
+     Harel and Rumpe 2004 and verified against the source (p. 65: "any
+     language definition must consist of the syntax, semantic domain and
+     semantic mapping"; p. 67: the semantic domain "specifies the very
+     concepts that exist in the universe of discourse" — their words for
+     our ontology component). Explicit ownership ("the term is ours")
+     was drafted and removed at AAS's direction — "For our purposes"
+     already marks the usage; the two-traditions history was cut as
+     treatise register in a proposal. Theme 2's Harel-and-Rumpe citation
+     stays, supporting the denotation maps locally. 
+     
+     DONE AAS 11 Aug 2026-->
 
-The importance of semantic ontologies for interpreting and working with
-AI-generated code and output is now broadly recognized across research
-fields and in industry.
-Manufacturing's Process Specification Language ([Grüninger and Menzel 2003](#ref-gruninger2003); [Bock and Grüninger 2005](#ref-bock2005)), Modelica for physical systems ([Fritzson and Engelson 1998](#ref-fritzson1998); [Modelica Association 2023](#ref-modelica2023)), planning's PDDL2.1 ([Fox and Long 2003](#ref-fox2003)), and neuroscience's
-NeuroML ([Gleeson et al. 2010](#ref-gleeson2010)) each attach an explicit, solver-independent
-meaning to a model representation.
-Industry has met the same need from the opposite direction, reconstructing
-never-written conceptual models of the business from its data and business
-processes ([AWS Database Blog 2026](#ref-aws2026)).
+Other computational sciences already state their models' meaning
+separately from their computational implementations. 
+Systems biology comes closest to what this issue proposes: SBML fixes
+the written form of biochemical-network models
+([Hucka et al. 2003](#ref-hucka2003)), the Systems Biology Ontology
+states what the components of such a model mean
+([Courtot et al. 2011](#ref-courtot2011)), and the community has
+maintained the two separately for over twenty years so that meaning
+can evolve without breaking syntax.
+Physiology curates CellML models with biophysical annotation in the
+Physiome repository ([Yu et al. 2011](#ref-yu2011)); neuroscience's
+NeuroML gives data-driven neuron and network models a common
+description ([Gleeson et al. 2010](#ref-gleeson2010)); Modelica
+attaches declarative equation semantics to physical-system models
+([Fritzson and Engelson 1998](#ref-fritzson1998);
+[Modelica Association 2023](#ref-modelica2023)); and ecology's ODD
+protocol standardizes the description of agent-based models
+([Grimm et al. 2006](#ref-grimm2006)).
+Manufacturing's Process Specification Language
+([Grüninger and Menzel 2003](#ref-gruninger2003)) and planning's
+PDDL2.1 ([Fox and Long 2003](#ref-fox2003)) answer the same need for
+processes and plans.
 Compared with all of these, economics starts from an unusual advantage and an
 unusual obstacle.
 The advantage is that the relations among a domain of study's objects are the
@@ -373,9 +444,8 @@ how to use the `lean' programming language for development of both code and theo
 \end{displaybox}
 ```
 
-<!--
-AAS to AAS: I am not sure about the model-class emphasis sentence (now in
-the domain-of-study footnote), for review.
+<!-- TODO (Chris) — from AAS: I am not sure about the model-class emphasis
+sentence (now in the domain-of-study footnote); please review.
 -->
 
 **Research themes.**
@@ -393,7 +463,7 @@ section at the end of this annex.
 
 ### Methodology
 
-<!-- REVIEW (balance): the annex now runs longer than the proposal it annexes,
+<!-- TODO (Chris) — REVIEW (balance): the annex now runs longer than the proposal it annexes,
      and an editor reads the proposal and skims the annex. The formalism ladder
      below (graphs and diagrams -> logical axioms -> mathematical semantics) is
      the best-read passage in the document, but it is a compact literature
@@ -459,6 +529,10 @@ A team whose domain has one (a modeling language or a toolkit) can use any
 of the mathematical semantics; a team whose ontology has no syntax (a model
 class, or an empirical method before its specification is constructed) can
 axiomatize the ontology in a logic or record it as a graph.
+Ecology's ODD protocol, a description standard for agent-based models
+maintained across two decades, shows that a domain without a syntax
+can still be described precisely enough that others can rebuild its
+models ([Grimm et al. 2020](#ref-grimm2020)).
 Declarative languages make the mathematical route easiest: a Dynare or Dolo
 file states the model itself rather than a procedure for solving it, so the
 file is already the kind of written form a semantic map can interpret.
@@ -577,15 +651,15 @@ Berardi, D., D. Calvanese, and G. De Giacomo (2005). "Reasoning on UML Class
 Diagrams." *Artificial Intelligence* 168(1–2), 70–118.
 [[link]](https://www.inf.unibz.it/~calvanese/papers/bera-calv-degi-AIJ-2005.pdf)
 
-(ref-bock2005)=
-Bock, C., and M. Grüninger (2005). "PSL: A Semantic Domain for Flow Models."
-*Software and Systems Modeling* 4(2), 209–231.
-[[link]](https://www.nist.gov/publications/psl-semantic-domain-flow-models)
-
 (ref-chen1976)=
 Chen, P. P. (1976). "The Entity-Relationship Model — Toward a Unified View of
 Data." *ACM Transactions on Database Systems* 1(1), 9–36.
 [[link]](https://dl.acm.org/doi/10.1145%2F320434.320440)
+
+(ref-courtot2011)=
+Courtot, M., N. Juty, C. Knüpfer, et al. (2011). "Controlled vocabularies and
+semantics in systems biology." *Molecular Systems Biology* 7, 543.
+[[link]](https://hdl.handle.net/10.1038%2Fmsb.2011.77)
 
 (ref-demoura2021)=
 de Moura, L., and S. Ullrich (2021). "The Lean 4 Theorem Prover and
@@ -636,6 +710,19 @@ Goguen, J. A., J. W. Thatcher, E. G. Wagner, and J. B. Wright (1977).
 24(1), 68–95.
 [[link]](https://dl.acm.org/doi/10.1145%2F321992.321997)
 
+(ref-grimm2006)=
+Grimm, V., U. Berger, F. Bastiansen, et al. (2006). "A standard protocol for
+describing individual-based and agent-based models." *Ecological Modelling*
+198(1–2), 115–126.
+[[link]](https://hdl.handle.net/10.1016%2Fj.ecolmodel.2006.04.023)
+
+(ref-grimm2020)=
+Grimm, V., S. F. Railsback, C. E. Vincenot, et al. (2020). "The ODD Protocol
+for Describing Agent-Based and Other Simulation Models: A Second Update to
+Improve Clarity, Replication, and Structural Realism." *Journal of Artificial
+Societies and Social Simulation* 23(2), 7.
+[[link]](https://www.jasss.org/23/2/7.html)
+
 (ref-gruber1993)=
 Gruber, T. R. (1993). "A translation approach to portable ontology
 specifications." *Knowledge Acquisition* 5(2), 199–220.
@@ -662,6 +749,13 @@ Harel, D., and B. Rumpe (2004). "Meaningful modeling: what's the semantics of
 'semantics'?" *Computer* 37(10), 64–72.
 [[link]](https://www.se-rwth.de/staff/rumpe/publications20042008/Meaningful-Modeling-Whats-the-Semantics-of-Semantics.pdf)
 
+(ref-hassell2017)=
+Hassell, D., J. Gregory, J. Blower, B. N. Lawrence, and K. E. Taylor (2017).
+"A data model of the Climate and Forecast metadata conventions (CF-1.6) with a
+software implementation (cf-python v2.1)." *Geoscientific Model Development*
+10(12), 4619–4646.
+[[link]](https://hdl.handle.net/10.5194%2Fgmd-10-4619-2017)
+
 (ref-hoare1969)=
 Hoare, C. A. R. (1969). "An axiomatic basis for computer programming."
 *Communications of the ACM* 12(10), 576–580.
@@ -671,6 +765,12 @@ Hoare, C. A. R. (1969). "An axiomatic basis for computer programming."
 Hogan, A., E. Blomqvist, M. Cochez, C. d'Amato, G. de Melo, et al. (2021).
 "Knowledge Graphs." *ACM Computing Surveys* 54(4), article 71.
 [[link]](https://dl.acm.org/doi/10.1145%2F3447772)
+
+(ref-hucka2003)=
+Hucka, M., A. Finney, H. M. Sauro, et al. (2003). "The systems biology markup
+language (SBML): a medium for representation and exchange of biochemical
+network models." *Bioinformatics* 19(4), 524–531.
+[[link]](https://academic.oup.com/bioinformatics/article/19/4/524/218599)
 
 (ref-lambek1986)=
 Lambek, J., and P. J. Scott (1986). *Introduction to Higher Order Categorical
@@ -721,3 +821,8 @@ Wieland, V., T. Cwik, G. J. Müller, S. Schmidt, and M. Wolters (2012). "A new
 comparative approach to macroeconomic modeling and policy analysis." *Journal
 of Economic Behavior & Organization* 83(3), 523–541.
 [[link]](https://hdl.handle.net/10.1016%2Fj.jebo.2012.01.006)
+
+(ref-yu2011)=
+Yu, T., C. M. Lloyd, D. P. Nickerson, et al. (2011). "The Physiome Model
+Repository 2." *Bioinformatics* 27(5), 743–744.
+[[link]](https://academic.oup.com/bioinformatics/article/27/5/743/262367)
