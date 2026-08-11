@@ -12,8 +12,8 @@ abstract: |
   one, can yield a substantially different implementation, with no independent
   standard against which to judge either.
   Other computational sciences met this problem before AI made it acute, and
-  each answered it the same way: by stating a model's meaning separately from
-  any program that realizes it. Systems biology has SBML and its Systems
+  each answered it the same way: a written statement of the model's meaning,
+  separate from any implementation. Systems biology has SBML and its Systems
   Biology Ontology, physiology CellML, neuroscience NeuroML, engineering
   Modelica, and ecology the ODD protocol for agent-based models.
   We call such a statement a *semantic ontology*: an explicit, machine-readable
@@ -98,7 +98,7 @@ Economic theory is exact about its own objects.
 What is left implicit is the map from that theory to the things economists
 actually compute with: when a model is solved, its *meaning* is distributed
 across prose, notation, calibration, code, and tradition, and no one document
-carries it.
+states it.
 The paper says "we solve the following model," but its equations
 underdetermine both what its code computes and what the computations mean.[^example]
 Only an informed reader can fill the gaps, one who knows the surrounding
@@ -107,19 +107,19 @@ traditions the paper is built upon.
 The same gaps confront anyone who attempts to interpret the model's findings,
 rebuild the model, or extend it.
 As a result, without a concrete statement of the model's meaning to check against,
-computational results are hard to cross-verify, and interoperability between
-implementations becomes difficult.
+computational results are hard to cross-verify, and models are hard to move
+between implementations.
 
 Relying on implicit professional convention is costly even among humans:
 conventions are absorbed rather than stated, so anyone outside the tradition
 that produced a model must reconstruct them or guess.
-It fails outright when AI is used to write, modify, and translate modeling
+It fails outright when an AI writes, modifies, or translates modeling
 code -- not because a language model lacks the tradition, but because it has
-absorbed all of them at once.
+absorbed every tradition at once.
 Where an economist knows which subfield's conventions govern the model in front
 of them, an AI interpolates across conventions that conflict, settles the
 ambiguity silently, and returns fluent code bearing no trace that a choice was
-made; asked again, it may settle it differently.
+made; asked again, it may settle the ambiguity differently.
 To interpret or verify AI output, we
 need a statement, independent of the code, of which economic objects are
 computed and which relations among them are enforced; we will call such statements
@@ -130,9 +130,10 @@ biology, engineering, and neuroscience each maintain one
 [Modelica Association 2023](#ref-modelica2023);
 [Gleeson et al. 2010](#ref-gleeson2010); see the *Semantic Ontologies*
 section of the annex).
-With semantic ontologies, translating models between toolkits, and even
-generating new modeling research, become operations a language model can
-carry out and be checked on cheaply, rather than manual recoding.
+With semantic ontologies, a language model can translate a model between
+toolkits, and even draft new modeling research, with the output checked
+cheaply against the stated meaning; without them, translation is manual
+recoding.
 
 
 <!-- TODO (Chris) — undeveloped sketch: decide whether to write these two
@@ -150,19 +151,18 @@ domains of computational economics: domain-specific modeling languages (for
 example, Dynare), toolkits (for example, HARK and SSJ), empirical methods
 (for example, structural modeling and estimation), and model classes (for
 example, life-cycle, real-business-cycle, and agent-based models).
-In addition to the semantic ontologies, the working group will author a
-paper and a community resource of canonical models and their
+In addition to the semantic ontologies, the working group will write a
+paper and assemble a community resource of canonical models and their
 ontologies.[^mmb]
 
-The special issue will also include related contributions by the working
-group that use the stated ontologies to compare different modeling
-strategies for the same problem, for instance agent-based models against
-heterogeneous-agent models.
+The working group will also contribute papers that use the stated
+ontologies to compare modeling strategies for the same problem — for
+instance, agent-based against heterogeneous-agent models.
 
 Economics comes to this task with an unusual advantage — the theory already
 states the objects and relations an ontology must record, so what remains is
 the map from model files and toolkit calls to the theory — and an unusual
-obstacle: no settled equilibrium concept or timing convention exists to
+obstacle: no settled equilibrium concept or timing convention to
 standardize against.
 Each team will therefore state the conventions its own domain assumes, and
 where two teams' ontologies disagree they will have located a point where the
@@ -179,18 +179,18 @@ and a closing comparison drew the results together
 ([den Haan, Judd and Juillard 2010](#ref-denhaan2010),
 [2011](#ref-denhaan2011)).
 We keep the many teams and the closing comparison, but the teams state what
-their models and code mean rather than solving a model in common.
+their models and code mean rather than solve a model in common.
 Climate modeling supplies the precedent for the comparison itself: the
 CF conventions fix what each quantity in model output means
 ([Hassell et al. 2017](#ref-hassell2017)), and that shared standard is
 what makes the recurring CMIP model intercomparisons possible.
-What the issue produces is research infrastructure: once a model written for
-one toolkit can be read, checked, and re-solved in another, the semantic
-ontologies that made this possible outlast the papers that state them.
+The issue produces research infrastructure: once a model written for
+one toolkit can be read, checked, and re-solved in another, the
+ontologies outlast the papers.
 
-The semantic ontologies we develop will be kept in an open-source
-[GitHub repository](https://github.com/econ-ark/sce-wg-1), to which members of the community can contribute improvements
-and modifications.
+The semantic ontologies will be kept in an open-source
+[GitHub repository](https://github.com/econ-ark/sce-wg-1), to which the
+community can contribute.
 
 <!-- DONE — REVIEW: the annex now carries this argument -- see "an unusual advantage
      and an unusual obstacle" in the Semantic Ontologies section. A compressed
@@ -251,8 +251,8 @@ between submission and revision.
 
 ### Teams and Editors
 
-The working group's members include developers of Dynare, HARK, the VFI
-Toolkit, and QuantEcon.
+The working group's members include developers of Dynare (Sebastien Villememont), HARK (Chris Carroll and Akshay Shanker), the VFI
+Toolkit (Robert Kirkby), GDSE (Dan Cao) and QuantEcon (Matt McKay).
 Committed teams: [to be listed; only teams that have agreed in writing].
 The working group's papers will come from its subgroups.
 The guest editors (a lead editor and at least one co-editor, neither
@@ -268,10 +268,10 @@ the journal's final editorial authority.
 Calendar dates TBC on acceptance.
 
 - Call for papers [on acceptance]
-- Presentation at next meeting of Computation in Economics and Finance 
-  - This will be a working draft 
-  - There would be at least two special sessions devoted to the papers
-- Submission draft incorporationg CEF feedback within 2 months
+- Presentation at the next Computing in Economics and Finance meeting
+  - This will be a working draft
+  - There will be at least two special sessions devoted to the papers
+- Submission draft incorporating CEF feedback within 2 months
 - Internal review completed [Submission+3 months; process TBC]
 - Referee reports [Review+4 months]
 - Revisions and the comparison paper [+24 months]
@@ -284,8 +284,8 @@ The code computes one of the two, and nothing on the page records which.
 Where implementations have actually been compared, both outcomes appear:
 [Su and Judd (2012)](#ref-su2012) recast one estimator in two computational
 formulations and recover identical estimates, while
-[Dubé, Fox and Su (2012)](#ref-dube2012) find a loose inner-loop tolerance
-moving estimated own-price elasticities by roughly a factor of two.
+[Dubé, Fox and Su (2012)](#ref-dube2012) find that a loose inner-loop
+tolerance moves estimated own-price elasticities by roughly a factor of two.
 The first is the case a semantic ontology certifies; the second is the case it
 catches.
 

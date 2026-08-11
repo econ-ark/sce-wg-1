@@ -1,12 +1,12 @@
 # SCE Working Group 1: Language and Formal Semantics
 
-Working Group 1 of the Society for Computational Economics develops formal descriptions of dynamic economic models and the methods used to solve and estimate them. The group was formed at CEF 2026 in Venice and works with [Econ-ARK](https://econ-ark.org) and [QuantEcon](https://quantecon.org).
+Working Group 1 of the Society for Computational Economics develops formal descriptions of dynamic economic models and their solution and estimation methods. The group was formed at CEF 2026 in Venice and works with [Econ-ARK](https://econ-ark.org) and [QuantEcon](https://quantecon.org).
 
 [Working group website](https://econ-ark.github.io/sce-wg-1/)
 
 ## Projects
 
-- **[Project A: The Semantics of Economic Models](https://econ-ark.github.io/sce-wg-1/project-a.html).** Authors write papers developing semantic ontologies for toolkits, methods, and model classes. The papers are intended for a proposed journal special issue.
+- **[Project A: The Semantics of Economic Models](https://econ-ark.github.io/sce-wg-1/project-a.html).** Authors write papers that develop semantic ontologies for toolkits, methods, and model classes. The papers are intended for a proposed journal special issue.
 - **[Project B: A Community Library of Baseline Models](https://quantecon.github.io/community-library/).** The library collects documented implementations of baseline economic models in several toolkits.
 
 Project B is coordinated by Matt McKay and hosted by [QuantEcon](https://quantecon.org).
@@ -56,5 +56,5 @@ The repository and issue tracker are public. Membership is by invitation. Use th
 
 ## Contacts
 
-- Akshay Shanker
-- Matt McKay
+The group is co-chaired by Akshay Shanker (ashanker1984@gmail.com) and
+Matt McKay ([github.com/mmcky](https://github.com/mmcky)).
