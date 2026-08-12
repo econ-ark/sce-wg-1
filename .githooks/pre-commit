@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Refuses to commit confidential working notes into this public repository.
+#
+# Enable once per clone:
+#     git config core.hooksPath .githooks
+#
+# Why a hook and not just .gitignore: .gitignore is advisory. `git add -f` beats
+# it, an editor's "stage all" can beat it, and a name pasted into an existing
+# tracked file was never covered by it at all. This repository is public and its
+# history is permanent, so a single careless commit publishes irreversibly --
+# rewriting history does not unpublish anything already fetched or mirrored.
+#
+# Two checks:
+#   1. no *.private.md file may be committed, however it was staged;
+#   2. no staged content may carry the confidentiality marker (spelled out in
+#      $marker below, deliberately not written here in one piece -- a file
+#      containing the literal string cannot be committed, and that includes
+#      this one). This catches a note pasted into a tracked file, which
+#      .gitignore never covered.
+#      HTML comments are not a hiding place: the build strips them from the
+#      page, git keeps them in the source.
+set -euo pipefail
+
+fail=0
+
+private=$(git diff --cached --name-only --diff-filter=AM | grep -E '\.private\.md$' || true)
+if [ -n "$private" ]; then
+  echo "pre-commit: refusing to commit confidential notes into a public repository:" >&2
+  printf '  %s\n' $private >&2
+  echo "  These belong outside the history. Unstage with:  git restore --staged <file>" >&2
+  fail=1
+fi
+
+# -I skips binary files. The marker is spelled in two pieces so this hook does
+# not trip over its own source when it is itself staged.
+marker="CONFI""DENTIAL"
+tainted=$(git diff --cached -I -U0 --diff-filter=AM -G"$marker" --name-only || true)
+if [ -n "$tainted" ]; then
+  echo "pre-commit: staged content carries the $marker marker:" >&2
+  printf '  %s\n' $tainted >&2
+  echo "  Move that passage into a *.private.md file, which is never committed." >&2
+  fail=1
+fi
+
+if [ "$fail" = 1 ]; then
+  echo >&2
+  echo "  Deliberate override (think first -- this repository is public):" >&2
+  echo "    git commit --no-verify" >&2
+  exit 1
+fi

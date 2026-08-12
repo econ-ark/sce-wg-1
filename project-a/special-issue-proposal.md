@@ -1,5 +1,5 @@
 ---
-title: "AI Modeling in Economics: Transparency and Verification"
+title: "AI-Assisted Modeling in Economics: Transparency and Verification"
 subtitle: Special Issue Proposal
 authors:
   - name: Christopher Carroll
@@ -16,7 +16,7 @@ abstract: |
   separate from any implementation. Systems biology has SBML and its Systems
   Biology Ontology, physiology CellML, neuroscience NeuroML, engineering
   Modelica, and ecology the ODD protocol for agent-based models.
-  We call such a statement a *semantic ontology*: an explicit, machine-readable
+  We call such a statement a 'semantic ontology': an explicit, machine-readable
   account, independent of code and solver, of which economic objects exist,
   what stands for what, and what is written down, together with the conditions
   under which that interpretation holds.
@@ -34,71 +34,13 @@ downloads:
     title: Proposal (PDF)
 ---
 
-<!-- TODO (Chris) — REVIEW (title):
-
-[For CDC] "AI Modeling" reads three ways -- modeling of AI, modeling with AI,
-   AI that models -- and the issue's actual subject, semantic ontologies, does
-   not appear in it. Consider naming the object and letting AI be the
-   motivation rather than the headline. Two starting points: "Semantic
-   Ontologies for Computational Economics: Making Model Meaning Verifiable",
-   or, keeping the present framing but disambiguating, "AI-Assisted Modeling
-   in Economics: Transparency and Verification".
--->
-
-<!-- DONE — REVIEW (abstract rewrite and annex alignment):
-
-ANNEX ALIGNMENT, created by the abstract rewrite below. The abstract now
-   names SBML/SBO, CellML, NeuroML, Modelica and ODD; the annex's exemplar
-   paragraph still leads with manufacturing's PSL and cites the AWS blog. The
-   two lists should be the same list. See semantic-ontology-precedents.md in
-   this directory for the verified citations and where each one belongs; SBML
-   with SBO is the case to lead on, being the same syntax/denotation split we
-   propose, maintained as two separate processes for our reason, for twenty
-   years. That file also carries the CF-conventions/CMIP finding, which is a
-   better precedent for the closing comparison paper than den Haan et al.
-   DONE (AAS, 11 Aug 2026): the annex's exemplar paragraph now carries the
-   abstract's list, led by SBML/SBO with the separate-processes point;
-   PSL is demoted to a closing clause alongside PDDL2.1; the AWS blog
-   survives only in Methodology's bottom-up paragraph. Removing AWS from
-   the main-text citation cluster exposed an unsupported causal claim
-   ("use has grown rapidly because without them AI outputs remain
-   probabilistic") -- reworded to the checkable "established scientific
-   practice", the same repair the abstract received. CF/CMIP added where
-   the closing comparison is introduced (Hassell et al. 2017; den Haan et
-   al. stays as the format precedent at the journal); ODD added at
-   Methodology's no-syntax point (Grimm et al. 2020). Six references
-   pasted from semantic-ontology-precedents.md; Bock-Gruninger removed as
-   uncited. Deferred pending citable references, per that file's own
-   note: EMMO (Methodology, description-logic rung) and a direct CellML
-   citation -- CellML is cited via the Physiome repository paper (Yu et
-   al. 2011) until the CellML 2.0 reference is pinned down.
-
-TAKEN, recorded here so the reasoning is not lost:
-
-  - The abstract claimed a consensus among computer scientists that
-    verification requires a semantic ontology. No such consensus exists;
-    verification in CS mostly means model checking, type systems, proof
-    assistants and testing. Replaced with a claim about what four fields
-    actually built, which is checkable and supports the same conclusion.
-  - "AI-readable, deterministic" -> "explicit, machine-readable". An ontology
-    is unambiguous, not deterministic.
-  - The parenthetical about version updates is folded into the sentence.
-  - DEFINITION DRIFT is resolved in the abstract: three components (exist /
-    stands for what / written down) with well-posedness attached by "together
-    with", marking it a statement ABOUT the ontology rather than a fourth
-    component -- which is what the themes section says. Section 1's two-part
-    gloss is still looser than the annex's three; worth a look.
-  - The AWS blog no longer carries the load-bearing claim. It should survive
-    only in the annex's bottom-up paragraph, where a blog is adequate support.
--->
 
 ## The Challenge: AI and the Meaning of Economic Models
 
 Economic theory is exact about its own objects.
 What is left implicit is the map from that theory to the things economists
 actually compute with: when a model is solved, its *meaning* is distributed
-across prose, notation, calibration, code, and tradition, and no one document
-states it.
+across prose, notation, calibration, code, and tradition.
 The paper says "we solve the following model," but its equations
 underdetermine both what its code computes and what the computations mean.[^example]
 Only an informed reader can fill the gaps, one who knows the surrounding
@@ -114,9 +56,9 @@ Relying on implicit professional convention is costly even among humans:
 conventions are absorbed rather than stated, so anyone outside the tradition
 that produced a model must reconstruct them or guess.
 It fails outright when an AI writes, modifies, or translates modeling
-code -- not because a language model lacks the tradition, but because it has
-absorbed every tradition at once.
-Where an economist knows which subfield's conventions govern the model in front
+code -- not because a language model knows no tradition, but because it has
+absorbed every tradition at once (even when they may conflict).
+Where an economist may know which subfield's conventions govern the model in front
 of them, an AI interpolates across conventions that conflict, settles the
 ambiguity silently, and returns fluent code bearing no trace that a choice was
 made; asked again, it may settle the ambiguity differently.
@@ -132,17 +74,8 @@ biology, engineering, and neuroscience each maintain one
 section of the annex).
 With semantic ontologies, a language model can translate a model between
 toolkits, and even draft new modeling research, with the output checked
-cheaply against the stated meaning; without them, translation is manual
-recoding.
-
-
-<!-- TODO (Chris) — undeveloped sketch: decide whether to write these two
-paragraphs or drop them.
-Part 1) relate to existing semantic ontologies in economics (ie, bELLMAN project)
-Part 2) describe semantic ontologies have been developed, a lot of commonalities, but also some differences. Could lead toa synthesized ontologies for domains of overlap.
--->
-
-
+cheaply against the stated meaning; without them, there's no guarantee 
+that the AI understood the model properly or produced what the user intended.
 
 ## The Proposed Special Issue
 
@@ -159,11 +92,11 @@ The working group will also contribute papers that use the stated
 ontologies to compare modeling strategies for the same problem — for
 instance, agent-based against heterogeneous-agent models.
 
+
 Economics comes to this task with an unusual advantage — the theory already
 states the objects and relations an ontology must record, so what remains is
 the map from model files and toolkit calls to the theory — and an unusual
-obstacle: no settled equilibrium concept or timing convention to
-standardize against.
+obstacle: no settled timing convention to standardize against.
 Each team will therefore state the conventions its own domain assumes, and
 where two teams' ontologies disagree they will have located a point where the
 profession's conventions silently diverge — the substance of the closing
@@ -192,72 +125,36 @@ The semantic ontologies will be kept in an open-source
 [GitHub repository](https://github.com/econ-ark/sce-wg-1), to which the
 community can contribute.
 
-<!-- DONE — REVIEW: the annex now carries this argument -- see "an unusual advantage
-     and an unusual obstacle" in the Semantic Ontologies section. A compressed
-     version probably belongs here too. The front matter is where an editor
-     decides, and conceding the obstacle before turning it into the result is
-     more persuasive up front than buried in an annex.
-     DONE (AAS, 11 Aug 2026): compressed into the paragraph after the section's
-     opening paragraph ("Economics comes to this task..."); the annex keeps the
-     full version with the Modelica example. -->
-
-<!-- DONE — REVIEW (the comparison paper): it is mentioned three times -- closing the
-     issue, written jointly, handled by the guest editors -- without ever
-     saying what it compares or what a reader learns from it. In den Haan et
-     al. the object was clean: same model, different methods, compare accuracy
-     and speed. Here the papers produce ontologies of DIFFERENT domains, so
-     comparison is apples to oranges unless the object is named. The annex now
-     supplies one (where two ontologies disagree they have found a point at
-     which the profession's conventions silently diverge); state it here, in
-     the main text, since this is the capstone of the issue. Footnote [^cg]
-     currently concedes the difficulty in a subordinate clause.
-     DONE (AAS, 11 Aug 2026): the comparison object is now stated in the main
-     text, in the closing sentence of the same paragraph. -->
 
 ## Organization
 
-<!-- TODO (Chris) — REVIEW (highest priority in the document, ahead of any wording issue):
-  %% AAS leaving the below for Chris to settle (11 Aug 2026)
-   An editor grants a special issue on four questions, and all four are
-   currently blank:
-     - who are the guest editors?      [names, institutions; TBC]
-     - who has committed?              [to be listed]
-     - what is the internal review?    [process TBC], appearing twice
-     - what are the dates?             Calendar dates TBC
-   Filling these matters more than anything else here. Naming three teams that
-   have actually agreed beats a placeholder promising more, and a named lead
-   editor is usually the difference between a proposal an editor can act on
-   and one they have to come back to.
 
-   Separately, the framing of the first sentence: "papers pass an internal
-   review within the working group and then the journal's ordinary external
-   refereeing" reads as a two-gate system the journal does not control. Worth
-   recasting as a pre-submission quality filter -- the working group declining
-   to submit weak papers -- rather than as a review stage sitting in front of
-   the journal's own.
-
-   Also missing: why teams will do this. Each paper is a formal semantics of a
-   toolkit, which is a great deal of work for one special-issue slot. The
-   answer is that the authors are the toolkit developers, who need this
-   documentation anyway and get citable infrastructure out of it -- but that
-   is currently implicit, and an editor will ask whether six to eight
-   submissions of this difficulty will really materialise.
--->
-
-Papers pass an internal review within the working group [process TBC] and then
-the journal's ordinary external refereeing.
+Before a paper is submitted, it is read within the working group by the authors
+of two other papers, against a checklist drawn from the research themes in the
+annex.
+The object is coherence across the issue rather than quality control: a referee
+assesses a paper on its own and has no way to see whether the ontologies use
+the same terms in the same senses, or state their conditions at comparable
+levels of rigour, which is what the closing comparison paper depends on.
+These reviews are advisory.
+They reach the guest editors as context, and the working group can decline to
+submit a paper but cannot accept one.
+Papers then pass through the journal's ordinary external refereeing, which
+decides.
 We expect six to eight papers, with a session at the Society's conference
 between submission and revision.
 
 ### Teams and Editors
 
-The working group's members include developers of Dynare (Sebastien Villememont), HARK (Chris Carroll and Akshay Shanker), the VFI
+The working group's members include developers of Dynare (Sébastien Villemot), HARK (Chris Carroll and Akshay Shanker), the VFI
 Toolkit (Robert Kirkby), GDSE (Dan Cao) and QuantEcon (Matt McKay).
 Committed teams: [to be listed; only teams that have agreed in writing].
 The working group's papers will come from its subgroups.
 The guest editors (a lead editor and at least one co-editor, neither
-submitting to the issue) are drawn from outside the working group [names,
-institutions; TBC].
+submitting to the issue) are drawn from outside the working group.
+Their names go to the journal separately rather than in this document, which
+circulates: a prospective guest editor should hear of a nomination from the
+journal, not from a draft.
 Papers are submitted through the journal's editorial system, marked for this
 special issue, and are refereed under the journal's ordinary standards; the
 guest editors handle every paper, including the comparison paper, subject to
@@ -272,7 +169,7 @@ Calendar dates TBC on acceptance.
   - This will be a working draft
   - There will be at least two special sessions devoted to the papers
 - Submission draft incorporating CEF feedback within 2 months
-- Internal review completed [Submission+3 months; process TBC]
+- Internal review completed [Submission+3 months]
 - Referee reports [Review+4 months]
 - Revisions and the comparison paper [+24 months]
 
@@ -324,33 +221,6 @@ objects a given file or function call stands for, and ordinary solver code
 gives one executable realization, not a solver-independent statement of what
 the representation denotes.
 
-<!-- DONE — REVIEW (own the coinage): "semantic ontology" fuses two largely separate
-     literatures -- the ontology tradition (PSL, OWL, the Gene Ontology) and
-     programming-language semantics (Scott-Strachey, Plotkin, Hoare). The
-     formalism ladder under Methodology treats them as points on one scale,
-     which is a real and interesting claim rather than a neutral summary of
-     either field. One sentence declaring the term as ours, and saying why the
-     two traditions belong on a single axis, would stop readers from either
-     community concluding we have misread theirs. Harel and Rumpe is exactly
-     the right citation for this and is currently buried in theme 2.
-     DONE (AAS, 11 Aug 2026): resolved by grounding, not declaration.
-     The definition sentence now states the triple in the document's own
-     canonical words (exist / stands for what / written down, naming the
-     ontology, denotation, and syntax components — replacing "the
-     written forms that record them"), and one sentence follows it: the
-     components are exactly the semantic domain, semantic mapping, and
-     syntax a language definition must contain, cited parenthetically to
-     Harel and Rumpe 2004 and verified against the source (p. 65: "any
-     language definition must consist of the syntax, semantic domain and
-     semantic mapping"; p. 67: the semantic domain "specifies the very
-     concepts that exist in the universe of discourse" — their words for
-     our ontology component). Explicit ownership ("the term is ours")
-     was drafted and removed at AAS's direction — "For our purposes"
-     already marks the usage; the two-traditions history was cut as
-     treatise register in a proposal. Theme 2's Harel-and-Rumpe citation
-     stays, supporting the denotation maps locally. 
-     
-     DONE AAS 11 Aug 2026-->
 
 Other computational sciences already state their models' meaning
 separately from their computational implementations. 
@@ -444,9 +314,6 @@ how to use the `lean' programming language for development of both code and theo
 \end{displaybox}
 ```
 
-<!-- TODO (Chris) — from AAS: I am not sure about the model-class emphasis
-sentence (now in the domain-of-study footnote); please review.
--->
 
 **Research themes.**
 The papers developing a semantic ontology will establish the ontology's *metatheory*. 
@@ -463,13 +330,6 @@ section at the end of this annex.
 
 ### Methodology
 
-<!-- TODO (Chris) — REVIEW (balance): the annex now runs longer than the proposal it annexes,
-     and an editor reads the proposal and skims the annex. The formalism ladder
-     below (graphs and diagrams -> logical axioms -> mathematical semantics) is
-     the best-read passage in the document, but it is a compact literature
-     review and could lose a third without losing an argument. That is the
-     natural place to find space for the deliverability items under
-     Organization, if length becomes a constraint. -->
 
 **Formalizing the semantic ontology.**
 A requirement for each semantic ontology paper will be that it presents a *formal* account of

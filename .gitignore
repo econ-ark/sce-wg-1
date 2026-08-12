@@ -7,6 +7,14 @@ jedc-prop/_build/
 .DS_Store
 node_modules/
 
+# Backstop only. This repository is public and its history is permanent, so
+# anything committed is published irreversibly -- including HTML comments, which
+# the build strips from the page but git keeps in the source. Confidential
+# working notes are therefore kept outside this directory altogether rather than
+# ignored inside it; this pattern and .githooks/pre-commit exist to catch a copy
+# that lands here by accident, not to make the repository a place to keep one.
+*.private.md
+
 # The assembled Pages tree, if you reproduce the workflow's assemble step
 # locally. CI builds it on a runner and never commits it.
 site/
