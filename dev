@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# Starts the live preview: rebuilds the Project A page when its markdown changes
+# and reloads the browser. See "Writing with a live preview" in README.md.
+#
+#   ./dev                 install deps if needed, serve, open a browser
+#   ./dev --port 8080     start from a specific port
+#   ./dev --kill          take the port back from whatever is holding it
+#   ./dev --no-open       don't touch the browser
+#
+# Works from any directory: everything below is resolved against this file's
+# location, not the shell's working directory. That is the whole point — the
+# build instructions leave you in tools/, one level below where a naive
+# `--directory docs` resolves, which fails as a wall of 404s rather than an error.
+set -euo pipefail
+
+ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PORT=8000
+KILL=0
+OPEN=1
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --port) PORT="${2:?--port needs a number}"; shift 2 ;;
+    --kill) KILL=1; shift ;;
+    --no-open) OPEN=0; shift ;;
+    -h|--help) sed -n '2,8p' "${BASH_SOURCE[0]}" | cut -c3-; exit 0 ;;
+    *) echo "unknown option: $1  (try --help)" >&2; exit 2 ;;
+  esac
+done
+
+command -v node >/dev/null || { echo "node is not installed — see https://nodejs.org" >&2; exit 1; }
+command -v npm  >/dev/null || { echo "npm is not installed — it ships with node" >&2; exit 1; }
+
+holder() { lsof -nP -iTCP:"$1" -sTCP:LISTEN -t 2>/dev/null | head -1; }
+
+# Dependencies live in tools/node_modules and are gitignored, so a fresh clone
+# has none. Installing here keeps `./dev` the only command a new author needs.
+if [ ! -d "$ROOT/tools/node_modules" ]; then
+  echo "installing build dependencies (first run only)…"
+  npm --prefix "$ROOT/tools" install --silent
+fi
+
+if pid="$(holder "$PORT")" && [ -n "$pid" ]; then
+  # argv with argv[0]'s directory stripped: "Python -m http.server 8000 --directory docs"
+  # identifies a forgotten server far better than a bare executable name does.
+  what="$(ps -o args= -p "$pid" 2>/dev/null | awk '{sub(/.*\//, "", $1); print}' | cut -c1-64)"
+  what="${what:-pid $pid}"
+  if [ "$KILL" = 1 ]; then
+    echo "port $PORT held by $what (pid $pid) — stopping it"
+    kill "$pid" 2>/dev/null || true
+    for _ in 1 2 3 4 5 6 7 8 9 10; do
+      [ -z "$(holder "$PORT")" ] && break
+      sleep 0.2
+    done
+    [ -n "$(holder "$PORT")" ] && { echo "pid $pid did not exit; try 'kill -9 $pid'" >&2; exit 1; }
+  else
+    # Stepping aside beats killing something the user may want: a stray server is
+    # usually forgotten, but it might be another project. --kill is the override.
+    start="$PORT"
+    while [ -n "$(holder "$PORT")" ] && [ "$PORT" -lt $((start + 20)) ]; do
+      PORT=$((PORT + 1))
+    done
+    [ -n "$(holder "$PORT")" ] && { echo "no free port near $start" >&2; exit 1; }
+    echo "port $start is held by $what (pid $pid) — using $PORT instead"
+    echo "  ./dev --kill   would reclaim $start"
+  fi
+fi
+
+URL="http://localhost:$PORT/"
+
+if [ "$OPEN" = 1 ]; then
+  # Opened from a subshell that waits for the first successful response: opening
+  # immediately races the server and lands on a browser error page.
+  (
+    for _ in $(seq 1 50); do
+      if curl -fsS -o /dev/null --max-time 1 "$URL" 2>/dev/null; then
+        if command -v open >/dev/null; then open "$URL"
+        elif command -v xdg-open >/dev/null; then xdg-open "$URL" >/dev/null 2>&1
+        fi
+        exit 0
+      fi
+      sleep 0.2
+    done
+  ) &
+fi
+
+# exec, so ^C reaches the server directly and its log is this script's log.
+exec npm --prefix "$ROOT/tools" run dev -- --port "$PORT"

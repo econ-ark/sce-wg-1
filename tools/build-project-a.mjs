@@ -22,7 +22,18 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = process.env.WG1_ROOT || path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = process.env.WG1_ROOT || path.resolve(HERE, '..');
+
+/* The pinned mystmd, resolved from this package rather than from PATH.
+   `npm run build` puts node_modules/.bin on PATH and so finds the pinned
+   version; `node build-project-a.mjs`, which this file's own header documents
+   as an equivalent entry point, does not -- and silently picks up whatever
+   `myst` a global install has left there. That produced PDFs from mystmd 1.8.3
+   locally while CI used the pinned 1.10.1, which is exactly the kind of
+   version-dependent output this project exists to argue against. */
+const LOCAL_MYST = path.join(HERE, 'node_modules', '.bin', 'myst');
+const MYST = fs.existsSync(LOCAL_MYST) ? LOCAL_MYST : 'myst';
 const SRC = path.join(ROOT, 'project-a/special-issue-proposal.md');
 const OUT = path.join(ROOT, 'docs/project-a.html');
 const PDF_SRC = path.join(ROOT, 'project-a/special-issue-proposal.pdf');
@@ -34,11 +45,14 @@ const PDF_OUT = path.join(ROOT, 'docs/special-issue-proposal.pdf');
    unavailable; the previously built PDF is then copied through unchanged. */
 const skipPdf = process.argv.includes('--no-pdf');
 if (!skipPdf) {
-  /* mystmd is a dependency of this package, so `npm run build` finds it on PATH
-     without a global install. A failure here is fatal: letting it through would
-     publish a page whose download link points at a stale or missing PDF. */
+  /* A failure here is fatal: letting it through would publish a page whose
+     download link points at a stale or missing PDF. */
+  if (MYST === 'myst') {
+    console.warn('! tools/node_modules is missing, so the PDF will be built with whatever\n' +
+      '  `myst` is on PATH rather than the pinned version. Run `npm install` in tools/.');
+  }
   try {
-    execFileSync('myst', ['build', 'special-issue-proposal.md', '--pdf'],
+    execFileSync(MYST, ['build', 'special-issue-proposal.md', '--pdf'],
       { cwd: path.join(ROOT, 'project-a'), stdio: 'inherit' });
   } catch (err) {
     console.error(`\n${SRC}: \`myst build --pdf\` failed — ${err.message}\n` +
@@ -77,7 +91,18 @@ let fm;
 try {
   fm = yaml.load(fmBlock[1]);
 } catch (err) {
-  console.error(`${SRC}: could not parse the YAML frontmatter — ${err.message}`);
+  /* A colon-space inside an unquoted scalar is the frontmatter error worth naming,
+     because "Main title: Subtitle" is the ordinary shape of a paper's title and
+     YAML reads the second colon as a second key. The parser's own message points
+     at the column without saying what to do about it. */
+  const culprit = fmBlock[1].split('\n')
+    .find((l) => /^[a-z_]+:\s+[^"'>|\s][^\n]*:\s/i.test(l));
+  console.error(`${SRC}: could not parse the YAML frontmatter — ${err.message}` +
+    (culprit
+      ? `\n\nThis line contains a second ": ", which YAML reads as another key:\n\n` +
+        `  ${culprit.trim()}\n\nQuote the value:\n\n` +
+        `  ${culprit.replace(/^([a-z_]+):\s+(.*)$/i, (_, k, v) => `${k}: "${v.replace(/"/g, '\\"')}"`).trim()}\n`
+      : ''));
   process.exit(1);
 }
 for (const key of ['title', 'abstract']) {
