@@ -147,7 +147,7 @@ between submission and revision.
 ### Teams and Editors
 
 The working group's members include developers of Dynare (Sébastien Villemot), HARK (Chris Carroll and Akshay Shanker), the VFI
-Toolkit (Robert Kirkby), GDSE (Dan Cao) and QuantEcon (Matt McKay).
+Toolkit (Robert Kirkby), GDSGE (Dan Cao) and QuantEcon (Matt McKay).
 Committed teams: [to be listed; only teams that have agreed in writing].
 The working group's papers will come from its subgroups.
 The guest editors (a lead editor and at least one co-editor, neither
