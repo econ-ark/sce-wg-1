@@ -13,9 +13,13 @@ abstract: |
   standard against which to judge either.
   Other computational sciences met this problem before AI made it acute, and
   each answered it the same way: a written statement of the model's meaning,
-  separate from any implementation. Systems biology has SBML and its Systems
-  Biology Ontology, physiology CellML, neuroscience NeuroML, engineering
-  Modelica, and ecology the ODD protocol for agent-based models.
+  separate from any implementation. Systems biology has
+  [SBML](https://sbml.org) and its
+  [Systems Biology Ontology](https://github.com/EBI-BioModels/SBO),
+  physiology [CellML](https://www.cellml.org), neuroscience
+  [NeuroML](https://neuroml.org), engineering
+  [Modelica](https://modelica.org), and ecology the
+  [ODD protocol](https://www.jasss.org/23/2/7.html) for agent-based models.
   We call such a statement a 'semantic ontology': an explicit, machine-readable
   account, independent of code and solver, of which economic objects exist,
   what stands for what, and what is written down, together with the conditions
@@ -117,10 +121,10 @@ Climate modeling supplies the precedent for the comparison itself: the
 CF conventions fix what each quantity in model output means
 ([Hassell et al. 2017](#ref-hassell2017)), and that shared standard is
 what makes the recurring CMIP model intercomparisons possible.
+
 The issue produces research infrastructure: once a model written for
 one toolkit can be read, checked, and re-solved in another, the
 ontologies outlast the papers.
-
 The semantic ontologies will be kept in an open-source
 [GitHub repository](https://github.com/econ-ark/sce-wg-1), to which the
 community can contribute.
@@ -173,23 +177,28 @@ Calendar dates TBC on acceptance.
 - Referee reports [Review+4 months]
 - Revisions and the comparison paper [+24 months]
 
-[^example]: The sentence "a policy shock raises entrants at date $t$" is
-satisfied by two different models, since the shock may reach the
-cross-sectional distribution at $t$ or at $t+1$, and the impulse responses
-differ before any grid or solver is chosen.
-The code computes one of the two, and nothing on the page records which.
-Where implementations have actually been compared, both outcomes appear:
+[^example]: A made-up example, from no particular model or paper: consider that the
+sentence "a policy shock raises entrants at date $t$" is satisfied by two
+different models, because the shock may reach the cross-sectional
+distribution at $t$ or at $t+1$. 
+The ambiguity becomes a problem when the code computes one of the two timing
+conventions and nothing in the paper records which.
+Both halves of the underdetermination are documented.
 [Su and Judd (2012)](#ref-su2012) recast one estimator in two computational
-formulations and recover identical estimates, while
+formulations and recover identical estimates, so the two programs compute the
+same object; a semantic ontology makes that equivalence a stated, checkable
+claim.
 [Dubé, Fox and Su (2012)](#ref-dube2012) find that a loose inner-loop
-tolerance moves estimated own-price elasticities by roughly a factor of two.
-The first is the case a semantic ontology certifies; the second is the case it
-catches.
+tolerance moves estimated own-price elasticities by roughly a factor of two,
+so the code has quietly stopped computing the estimator the paper defines; a
+stated ontology, by naming the object computed and the conditions under which
+an approximation counts as computing it, makes such a divergence detectable
+rather than silent.
 
 [^mmb]: The nearest precedent in economics, the Macroeconomic Model Data Base
 ([Wieland et al. 2012](#ref-wieland2012)), compares models under common variables, common shocks,
-and a menu of common policy rules while each model keeps its own equations; it
-standardizes comparison, not meaning.
+and a menu of common policy rules while each model keeps its own equations. 
+However the database does not standardize the semantic meaning of the models. 
 
 ```{raw:tex}
 \clearpage
