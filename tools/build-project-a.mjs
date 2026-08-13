@@ -158,8 +158,14 @@ const nav = headings.map((h) => `<a href="#${slug(h)}" class="nav-link">${esc(h)
 const authors = (fm.authors || [])
   .map((a) => `<strong style="font-weight:600;">${esc(a.name)}</strong>`)
   .join(' and ');
-const abstract = String(fm.abstract || '').trim().replace(/\s*\n\s*/g, ' ');
-const summary = abstract.slice(0, 200);
+/* The abstract is MyST markdown like the body -- it carries links to the
+   external standards it names (SBML, CellML, ...) -- so it is rendered rather
+   than escaped. The meta description stays plain text, with each link reduced
+   to its own words. */
+const abstractSrc = String(fm.abstract || '').trim().replace(/\s*\n\s*/g, ' ');
+const abstractText = abstractSrc.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1');
+const summary = abstractText.slice(0, 200);
+const abstractHtml = mystToHtml(mystParse(abstractSrc));
 
 fs.writeFileSync(OUT, `<!DOCTYPE html>
 <html lang="en">
@@ -218,7 +224,7 @@ fs.writeFileSync(OUT, `<!DOCTYPE html>
 
     <section class="doc-row abstract">
       <div class="doc-label"><h2>Abstract</h2></div>
-      <div class="doc-body"><p>${esc(abstract)}</p></div>
+      <div class="doc-body">${abstractHtml}</div>
     </section>
 
     <div class="doc-row">
