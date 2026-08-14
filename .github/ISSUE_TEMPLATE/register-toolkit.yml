@@ -12,6 +12,7 @@ body:
     attributes:
       label: Toolkit
       description: Name, and a link to its repository or documentation.
+      placeholder: QuantEcon.py — https://github.com/QuantEcon/QuantEcon.py
     validations:
       required: true
 
@@ -27,7 +28,7 @@ body:
     id: contact
     attributes:
       label: Who to contact
-      description: Name and email or GitHub handle.
+      description: Name and GitHub handle — this issue is public.
     validations:
       required: true
 
