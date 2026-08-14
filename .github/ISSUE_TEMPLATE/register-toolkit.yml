@@ -1,0 +1,49 @@
+name: Register a toolkit
+description: Register a toolkit for the Community Library of Baseline Models.
+title: "Register: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Registering is an agreement in principle — nothing here is binding. The library is described in full at <https://quantecon.github.io/community-library/>.
+
+  - type: input
+    id: toolkit
+    attributes:
+      label: Toolkit
+      description: Name, and a link to its repository or documentation.
+    validations:
+      required: true
+
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      placeholder: Python · Julia · MATLAB · Octave
+    validations:
+      required: true
+
+  - type: input
+    id: contact
+    attributes:
+      label: Who to contact
+      description: Name and email or GitHub handle.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: models
+    attributes:
+      label: Baseline models your toolkit can solve
+      description: One is enough. Tick what you can, or say more in the notes.
+      options:
+        - label: Aiyagari · Krusell–Smith
+        - label: Two-asset HANK
+        - label: Small New Keynesian DSGE
+        - label: Agent-based macro
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Optional — a model you would like to see in the set, or a question.
