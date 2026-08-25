@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SCE Working Group 1 | Language and Formal Semantics</title>
-<meta name="description" content="Working Group 1 of the Society for Computational Economics studies formal representations of dynamic economic models and their computational solutions.">
-<meta property="og:title" content="SCE Working Group 1 | Language and Formal Semantics">
-<meta property="og:description" content="Working Group 1 of the Society for Computational Economics studies formal representations of dynamic economic models and their computational solutions.">
+<title>SCE Working Group 1 | Language and Semantics</title>
+<meta name="description" content="Working Group 1 of the Society for Computational Economics develops formal specifications of dynamic economic models and their solution and estimation methods.">
+<meta property="og:title" content="SCE Working Group 1 | Language and Semantics">
+<meta property="og:description" content="Working Group 1 of the Society for Computational Economics develops formal specifications of dynamic economic models and their solution and estimation methods.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://econ-ark.github.io/sce-wg-1/">
 <link rel="canonical" href="https://econ-ark.github.io/sce-wg-1/">
@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="chrome.css?v=2">
+<link rel="stylesheet" href="chrome.css?v=3">
 <script>
 /* Apply a saved theme override before first paint to avoid a flash of the wrong theme. */
 (function(){try{var t=localStorage.getItem('wg1-theme');if(t==='light'||t==='dark')document.documentElement.dataset.omTheme=t;}catch(e){}})();
@@ -25,13 +25,14 @@
 <div style="min-height:100vh; background:var(--bg); color:var(--ink);">
   <div style="max-width:1000px; margin:0 auto; padding:0 24px;">
 
-    <nav style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:28px 0; border-bottom:1px solid var(--line);">
-      <span style="font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.06em; color:var(--ink);">SCE&nbsp;·&nbsp;WG1</span>
+    <nav style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:28px 0; border-bottom:1px solid var(--accent);">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.06em; color:var(--accent);">SCE&nbsp;·&nbsp;WG1</span>
       <div style="display:flex; gap:28px; flex-wrap:wrap; align-items:center;">
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#how" class="nav-link">Organization</a>
         <a href="#milestones" class="nav-link">Milestones</a>
         <a href="#contacts" class="nav-link">Contacts</a>
+        <a href="https://github.com/econ-ark/sce-wg-1" class="nav-link" title="Group repository on GitHub" aria-label="Group repository on GitHub" style="display:inline-flex; align-items:center;"><svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
         <button type="button" id="theme-toggle" class="theme-toggle" title="Switch between light and dark" aria-label="Switch between light and dark">
           <svg class="i-light" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.9 1.9M19.1 4.9l-1.8 1.8M6.7 17.3l-1.9 1.9"/></svg>
           <svg class="i-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
@@ -41,46 +42,46 @@
     </nav>
 
     <header style="padding:88px 0 72px;">
-      <p style="margin:0 0 20px; font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Society for Computational Economics · Working Group 1</p>
-      <h1 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:clamp(38px, 5.5vw, 58px); line-height:1.08; letter-spacing:-0.01em; max-width:17ch; text-wrap:pretty;">Language and formal semantics</h1>
-      <p style="margin:28px 0 0; font-size:19px; line-height:1.55; color:var(--muted); max-width:72ch; text-wrap:pretty;">Working Group 1 develops formal descriptions of dynamic economic models and their solution and estimation methods.</p>
+      <p style="margin:0 0 20px; font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Society for Computational Economics · Working Group 1</p>
+      <h1 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:clamp(38px, 5.5vw, 58px); line-height:1.08; letter-spacing:-0.01em; max-width:17ch; text-wrap:pretty;">Language and semantics</h1>
+      <p style="margin:28px 0 0; font-size:19px; line-height:1.55; color:var(--muted); max-width:72ch; text-wrap:pretty;">Working Group 1 develops formal specifications of dynamic economic models and their solution and estimation methods.</p>
       <p style="margin:36px 0 0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; line-height:1.7; color:var(--muted);">Formed at CEF 2026 in Venice · Partners: <a href="https://econ-ark.org">Econ-ARK</a> and <a href="https://quantecon.org">QuantEcon</a></p>
     </header>
 
     <section id="problem" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
       <div style="flex:1 1 150px; max-width:190px;">
-        <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">01 · Why</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">01 · Why</span>
       </div>
       <div style="flex:999 1 400px; min-width:0; display:grid; gap:28px;">
         <div>
           <h2 style="margin:0 0 12px; font-family:'Newsreader',serif; font-weight:500; font-size:26px; line-height:1.2;">The challenge: Verification and interoperability</h2>
-          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">Structural economists have no standard way to represent a dynamic model together with its computational solution. Most implementations rely on hand-crafted solver code with implicit assumptions, so checking that the code solves the intended model is costly, and moving a model between toolkits requires manual translation. The rapid adoption of large language models compounds the problem: AI output is probabilistic by construction, and code an AI writes or translates can compute a model different from the one intended, with no independent standard against which to check it. Verification and interoperability alike require rigorous descriptions of dynamic models and of their solution and estimation methods, separate from any implementation.</p>
+          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">Computational economics lacks a widely adopted specification for expressing dynamic models consistently across implementations, including their economic objects, conventions, and solution or estimation methods. Moving a model between implementations often requires manual reconstruction, so it is difficult to establish whether two implementations encode the same model and target the same solution. The rapid adoption of large language models compounds the problem: AI output is probabilistic by construction, and code an AI writes or translates can compute a model different from the one intended. Without an independent specification of model meaning — a semantics — the difference cannot be detected. Verification and interoperability alike require rigorous specifications of dynamic models and of their solution and estimation methods, separate from any implementation.</p>
         </div>
         <div>
           <h2 style="margin:0 0 12px; font-family:'Newsreader',serif; font-weight:500; font-size:26px; line-height:1.2;">Vision</h2>
-          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">We want economists of different backgrounds to easily interpret, compare, modify, and build implementations of dynamic economic models across toolkits — and to tell whether two implementations represent the same model. To that end, the group seeks formal, community-driven <em>languages and semantics</em>, for existing toolkits and for areas within dynamic economic modeling. We do not prescribe a single formalization or language: each community states the conventions its own domain assumes, in the form that suits its practice.</p>
+          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">We want economists of different backgrounds, and machines, to easily interpret, compare, modify, and build implementations of dynamic economic models across toolkits — and to tell whether two implementations represent the same model. To that end, the group develops formal, community-written languages and semantic specifications for existing toolkits and domains of dynamic economic modeling. While we do not prescribe a single formalization or language, we aim for interoperability across different implementations and domains.</p>
         </div>
       </div>
     </section>
 
     <section id="projects" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
       <div style="flex:1 1 150px; max-width:190px;">
-        <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">02 · Projects</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">02 · Projects</span>
       </div>
       <div style="flex:999 1 400px; min-width:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(270px, 1fr)); gap:20px;">
         <article style="display:flex; flex-direction:column; gap:14px; border:1px solid var(--line); background:var(--surface); padding:28px 26px;">
-          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Project A</span>
-          <h3 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:23px; line-height:1.25; text-wrap:pretty;"><a href="project-a.html" class="card-link">The Semantics of Economic Models</a></h3>
-          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">Authors write papers that develop semantic ontologies for toolkits, methods, and model classes: explicit, machine-readable accounts of what a model file means, independent of code and solver. Each account gives a reader, human or AI, a standard against which an implementation can be checked.</p>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Project A</span>
+          <h3 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:23px; line-height:1.25; text-wrap:pretty;"><a href="project-a.html" class="card-link">Semantics of Economic Models</a></h3>
+          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">This project develops semantic ontologies for toolkits, methods, and model classes, with the aim of publishing in a <em>journal special issue</em>. A semantic ontology identifies the economic and mathematical objects and relations in a model, states how model representations denote them, and records the conditions under which that interpretation holds. Each ontology provides a specification that humans and machines can use to build and compare implementations.</p>
           <div style="display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid var(--line);">
             <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1.6; color:var(--muted);">→ Proposed journal special issue</p>
             <a href="project-a.html" class="card-more">Read proposal and guidelines →</a>
           </div>
         </article>
         <article style="display:flex; flex-direction:column; gap:14px; border:1px solid var(--line); background:var(--surface); padding:28px 26px;">
-          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Project B</span>
-          <h3 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:23px; line-height:1.25; text-wrap:pretty;"><a href="https://quantecon.github.io/community-library/" class="card-link">Community Library of Baseline Models</a></h3>
-          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">Contributors implement and document baseline economic models in several toolkits. Economists can then compare how different toolkits and solvers represent and solve a standard model.</p>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">Project B</span>
+          <h3 style="margin:0; font-family:'Newsreader',serif; font-weight:500; font-size:23px; line-height:1.25; text-wrap:pretty;"><a href="https://quantecon.github.io/community-library/" class="card-link">Baseline Model&nbsp;Library</a></h3>
+          <p style="margin:0; font-size:15.5px; line-height:1.6; color:var(--muted); text-wrap:pretty; flex:1;">This project implements and documents baseline economic models, solved in several toolkits. The baselines provide shared reference models for comparing implementations, numerical methods, and results across toolkits.</p>
           <div style="display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid var(--line);">
             <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1.6; color:var(--muted);">→ In progress · provides examples for Project A</p>
             <a href="https://quantecon.github.io/community-library/" class="card-more">Visit the library ↗</a>
@@ -91,12 +92,13 @@
 
     <section id="how" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
       <div style="flex:1 1 150px; max-width:190px;">
-        <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">03 · Organization</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">03 · Organization</span>
       </div>
       <div style="flex:999 1 400px; min-width:0; display:grid; gap:24px;">
         <div>
-          <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Meetings</h3>
-          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">The full group meets once each quarter, on Zoom. The co-chairs will coordinate meeting invitations through the member email list. Once the group is underway, members can also form project subgroups that set their own schedules.</p>
+          <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Meetings and communication</h3>
+          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">The full group meets once each quarter, on Zoom. The co-chairs will send meeting invitations through the member email list. Once the group is underway, members can also form project subgroups that set their own schedules.</p>
+          <p style="margin:10px 0 0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">Between meetings, discussion will take place on the <a href="https://github.com/econ-ark/sce-wg-1">group repository</a>, in its issues and discussion threads, and every member is invited as a collaborator.</p>
         </div>
         <div>
           <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Membership</h3>
@@ -104,7 +106,7 @@
         </div>
         <div>
           <h3 style="margin:0 0 6px; font-family:'Newsreader',serif; font-weight:500; font-size:19px;">Code of conduct</h3>
-          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">Members agree to a short code of conduct covering meetings, joint work, repositories, and the mailing list.</p>
+          <p style="margin:0; font-size:16.5px; line-height:1.65; text-wrap:pretty;">Members agree to a short <a href="code-of-conduct.html">code of conduct</a> covering meetings, joint work, repositories, and the mailing list.</p>
         </div>
       </div>
     </section>
@@ -117,7 +119,7 @@
 
     <section id="milestones" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
       <div style="flex:1 1 150px; max-width:190px;">
-        <h2 style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">04 · Milestones</h2>
+        <h2 style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">04 · Milestones</h2>
       </div>
       <div style="flex:999 1 400px; min-width:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:32px 0;">
         <div style="position:relative; border-top:1px solid var(--line); padding:20px 20px 0 0;">
@@ -150,10 +152,10 @@
 
     <section id="contacts" style="display:flex; flex-wrap:wrap; gap:20px 56px; padding:64px 0; border-top:1px solid var(--line);">
       <div style="flex:1 1 150px; max-width:190px;">
-        <h2 style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">05 · Contacts</h2>
+        <h2 style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">05 · Contacts</h2>
       </div>
       <div style="flex:999 1 400px; min-width:0; display:grid; gap:12px;">
-        <p style="margin:0; font-size:16.5px; line-height:1.65;">The group is co-chaired by Matt McKay (QuantEcon) and Akshay Shanker (Econ-ARK).</p>
+        <p style="margin:0; font-size:16.5px; line-height:1.65;">Matt McKay (QuantEcon) and Akshay Shanker (Econ-ARK) co-chair the group.</p>
         <!-- TODO: replace the GitHub link with Matt's email address once confirmed. -->
         <p style="margin:0; font-size:16.5px; line-height:1.65;">Matt McKay (QuantEcon) · <a href="https://github.com/mmcky"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true" style="vertical-align:-2px; margin-right:4px;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>mmcky</a></p>
         <p style="margin:0; font-size:16.5px; line-height:1.65;">Akshay Shanker (Econ-ARK) · <a href="mailto:a.shanker@unsw.edu.au">a.shanker@unsw.edu.au</a> · <a href="https://github.com/akshayshanker"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true" style="vertical-align:-2px; margin-right:4px;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>akshayshanker</a></p>
@@ -164,10 +166,9 @@
       <div style="display:flex; flex-wrap:wrap; gap:10px 32px;">
         <a href="https://econ-ark.github.io/cef_venice_2026/" class="foot-link">CEF 2026 pre-conference</a>
         <a href="https://github.com/econ-ark/sce-wg-1" class="foot-link">Group repository</a>
-        <span class="foot-tbd">Mailing list ⟨tbd⟩</span>
-        <span class="foot-tbd">Code of conduct ⟨tbd⟩</span>
+        <a href="code-of-conduct.html" class="foot-link">Code of conduct</a>
       </div>
-      <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted);">© 2026 SCE Working Group on Language and Formal Semantics</p>
+      <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted);">© 2026 SCE Working Group on Language and Semantics</p>
     </footer>
 
   </div>

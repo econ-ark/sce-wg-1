@@ -21,10 +21,10 @@ a:hover{color:var(--ink);}
 
 /* --- Nav, cards, footer ------------------------------------------------- */
 /* Hover states can't live in inline styles, so nav/footer link colors are classed. */
-.nav-home{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.06em;color:var(--ink);text-decoration:none;}
-.nav-home:hover{color:var(--accent);}
-.nav-link{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);text-decoration:none;}
-.nav-link:hover{color:var(--accent);}
+.nav-home{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:0.06em;color:var(--accent);text-decoration:none;}
+.nav-home:hover{color:var(--ink);}
+.nav-link{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;color:var(--accent);text-decoration:none;}
+.nav-link:hover{color:var(--ink);}
 .nav-link-join{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--accent);text-decoration:none;}
 .nav-link-join:hover{color:var(--ink);}
 .card-link{color:var(--ink);text-decoration-color:var(--line);}

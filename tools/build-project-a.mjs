@@ -183,7 +183,7 @@ fs.writeFileSync(OUT, `<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="chrome.css?v=2">
+<link rel="stylesheet" href="chrome.css?v=3">
 <link rel="stylesheet" href="proposal.css?v=2">
 <script>
 /* Apply a saved theme override before first paint to avoid a flash of the wrong theme. */
@@ -197,7 +197,7 @@ fs.writeFileSync(OUT, `<!DOCTYPE html>
 <div style="min-height:100vh; background:var(--bg); color:var(--ink);">
   <div style="max-width:1000px; margin:0 auto; padding:0 24px;">
 
-    <nav style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:28px 0; border-bottom:1px solid var(--line);">
+    <nav style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:28px 0; border-bottom:1px solid var(--accent);">
       <a href="./" class="nav-home">SCE&nbsp;·&nbsp;WG1</a>
       <div style="display:flex; gap:28px; flex-wrap:wrap; align-items:center;">
         ${nav}
@@ -242,7 +242,7 @@ ${article}
     </div>
 
     <footer style="display:flex; flex-wrap:wrap; gap:12px 40px; justify-content:space-between; align-items:baseline; padding:44px 0 56px; border-top:1px solid var(--line);">
-      <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--muted);">SCE Working Group 1 · Language and Formal Semantics</p>
+      <p style="margin:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--muted);">SCE Working Group 1 · Language and Semantics</p>
       <div style="display:flex; flex-wrap:wrap; gap:12px 28px;">
         <a href="./" class="foot-link">Working group</a>
         <a href="https://quantecon.github.io/community-library/" class="foot-link">Project B</a>
