@@ -1,0 +1,67 @@
+name: Model families and the meeting
+description: Suggest a model family, comment on a proposed one, or give feedback on the meeting and the current direction.
+title: "Model family: "
+labels: ["model-family"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A **model family** is one baseline model with a shared description (the model, its calibration, and what each solution reports), solved by many toolkits and methods side by side. [Buffer-stock saving](https://github.com/QuantEcon/community-library/pull/5) is the first; four more are proposed on the [library's site](https://quantecon.github.io/community-library/#library).
+
+        This issue is public, and GitHub records your username with it. Questions and ideas welcome; apart from the first question, every question is optional.
+
+  - type: dropdown
+    id: subject
+    attributes:
+      label: What is this about?
+      options:
+        - "A new model family"
+        - "Buffer-stock saving"
+        - "Aiyagari · Krusell–Smith"
+        - "A two-asset HANK model"
+        - "A small New Keynesian DSGE model"
+        - "A baseline agent-based macro model"
+        - "How model families are structured"
+        - "The meeting, or the overall direction"
+    validations:
+      required: true
+
+  - type: input
+    id: family
+    attributes:
+      label: Model family
+      description: For a new family, its name and the paper it is anchored on.
+      placeholder: Huggett (1993), an incomplete-markets exchange economy
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters
+      description: Why the library should include it, or what you would change, and what comparing its solutions would teach.
+
+  - type: textarea
+    id: pin_down
+    attributes:
+      label: What the shared description should pin down
+      description: For example the calibration, the objects each solution reports, or conventions that toolkits handle differently.
+
+  - type: input
+    id: toolkits
+    attributes:
+      label: Toolkits that could solve it
+      description: Names, separated by commas.
+
+  - type: dropdown
+    id: help_write
+    attributes:
+      label: Would you help write its shared description?
+      options:
+        - "Yes"
+        - "Maybe"
+        - "No"
+
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Feedback on the meeting and the current direction
+      description: Any comments on the first full-group meeting (1 October 2026), or on the current direction and set of ideas.

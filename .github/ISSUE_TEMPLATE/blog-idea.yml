@@ -1,0 +1,57 @@
+name: Suggest a blog post
+description: Add a topic to the list of possible blog posts, and tell us whether a working-group blog interests you.
+title: "Blog idea: "
+labels: ["blog-idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We are building a list of possible blog posts we could publish as shared knowledge for the group, on topics of interest to its members such as Lean, and gauging interest in the idea of a blog. Suggest a topic, and say whether you would like to write it.
+
+        This issue is public, and GitHub records your username with it.
+
+  - type: input
+    id: title
+    attributes:
+      label: Working title
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: A few sentences on what the post would cover, and why it would interest the group.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: author
+    attributes:
+      label: Who would write it?
+      options:
+        - "I would like to write it"
+        - "I would co-write it"
+        - "Just an idea; someone else could write it"
+
+  - type: input
+    id: coauthors
+    attributes:
+      label: Co-authors
+      description: GitHub usernames, with the @, of anyone who has agreed to write it with you.
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: Papers, code or posts it would build on.
+
+  - type: dropdown
+    id: interest
+    attributes:
+      label: A working-group blog
+      description: Would a blog of shared knowledge be useful to you?
+      options:
+        - "Yes, I would read it"
+        - "Yes, and I would contribute"
+        - "Not sure"
