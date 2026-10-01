@@ -1,50 +1,115 @@
 name: Register a toolkit
-description: Register a toolkit for the Community Library of Baseline Models.
-title: "Register: "
+description: Add a toolkit or library to the first round of the Community Library's directory. An agreement in principle; nothing here is binding.
+title: "Toolkit: "
+labels: ["toolkit"]
 body:
   - type: markdown
     attributes:
       value: |
-        Registering is an agreement in principle — nothing here is binding. The library is described in full at <https://quantecon.github.io/community-library/>.
+        **This is public information.** Your answers appear in this public issue, and will be used to compile the first round of the [QuantEcon Community Library](https://quantecon.github.io/community-library/)'s directory of toolkits. GitHub records your username with the issue, so please don't include email addresses.
+
+        Registering is an agreement in principle; nothing here is binding. One issue per toolkit; you can edit it later. Apart from the toolkit's name and repository, every question is optional.
 
   - type: input
     id: toolkit
     attributes:
       label: Toolkit
-      description: Name, and a link to its repository or documentation.
-      placeholder: QuantEcon.py — https://github.com/QuantEcon/QuantEcon.py
+      description: Its name, as it should appear in the directory.
+      placeholder: ExampleKit
     validations:
       required: true
 
   - type: input
-    id: language
+    id: repository
     attributes:
-      label: Language
-      placeholder: Python · Julia · MATLAB · Octave
+      label: Repository or download page
+      description: Where to get the code.
+      placeholder: https://github.com/example/examplekit
     validations:
       required: true
 
   - type: input
-    id: contact
+    id: documentation
     attributes:
-      label: Who to contact
-      description: Name and GitHub handle — this issue is public.
-    validations:
-      required: true
+      label: Documentation
+      description: If it lives somewhere other than the repository.
 
   - type: checkboxes
-    id: models
+    id: languages
     attributes:
-      label: Baseline models your toolkit can solve
-      description: One is enough. Tick what you can, or say more in the notes.
+      label: Languages
+      description: Every language people can use it from.
       options:
-        - label: Aiyagari · Krusell–Smith
-        - label: Two-asset HANK
-        - label: Small New Keynesian DSGE
-        - label: Agent-based macro
+        - label: Python
+        - label: Julia
+        - label: MATLAB
+        - label: Octave
+        - label: R
+        - label: C or C++
+        - label: Other (say which under Notes)
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What it does
+      description: One or two sentences for the directory, as you would like them to read.
+
+  - type: dropdown
+    id: notebooks
+    attributes:
+      label: Notebooks that explain the toolkit
+      description: Do you have notebooks or tutorials that explain the toolkit, and could they be contributed to the library?
+      options:
+        - "Yes, and they could be contributed"
+        - "Yes, but they are not ready to contribute"
+        - "Not yet"
+
+  - type: textarea
+    id: notebook_links
+    attributes:
+      label: Links to those notebooks
+      description: If you have them.
+
+  - type: dropdown
+    id: showcase
+    attributes:
+      label: A showcase model
+      description: Would you contribute a showcase model that demonstrates the toolkit, on a problem of your choosing that it was built for?
+      options:
+        - "Yes"
+        - "Maybe"
+        - "Not now"
+
+  - type: input
+    id: showcase_model
+    attributes:
+      label: Which showcase model?
+      description: If you have one in mind.
+
+  - type: checkboxes
+    id: template_problem
+    attributes:
+      label: A template problem
+      description: The working group is assembling reference models. A template problem would be reviewed by the committee and opened for comments, and could lead to a published article.
+      options:
+        - label: I would be interested in providing a template problem to the committee, to act as a reference model.
+
+  - type: textarea
+    id: template_problem_details
+    attributes:
+      label: Which template problem?
+      description: If you are interested, the model you have in mind and the paper it builds on.
+
+  - type: checkboxes
+    id: maintainer
+    attributes:
+      label: Confirmation
+      options:
+        - label: I maintain this toolkit or can speak for its project.
+          required: true
 
   - type: textarea
     id: notes
     attributes:
       label: Notes
-      description: Optional — a model you would like to see in the set, or a question.
+      description: Anything else, such as what the toolkit is strongest at.
