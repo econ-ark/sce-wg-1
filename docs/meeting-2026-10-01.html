@@ -1063,11 +1063,11 @@ display:block!important;
 <p><span class="k">Blog posts</span></p>
 <p>We’re considering posts on topics of interest to the group, such as Lean.</p>
 <p><span class="tag">Ideas welcome</span></p>
-<p><span class="small">Send ideas and nominations through the survey.</span></p>
+<p><span class="small">Suggest a topic, or offer to write one, through the blog-idea form.</span></p>
 </div>
 </div>
 <aside class="notes">
-<p>We want to work async first. The group spans many time zones, so most of the work happens between meetings, in the group repository on GitHub, where every member is invited as a collaborator. The full group meets once a quarter on Zoom, town-hall style. Between the town halls, members can meet regionally or by topic, and project subgroups can set their own schedules. We’re also considering blog posts on topics of interest to the group, such as Lean; ideas and nominations are welcome through the survey. Then hand over to Akshay for Project A.</p>
+<p>We want to work async first. The group spans many time zones, so most of the work happens between meetings, in the group repository on GitHub, where every member is invited as a collaborator. The full group meets once a quarter on Zoom, town-hall style. Between the town halls, members can meet regionally or by topic, and project subgroups can set their own schedules. We’re also considering blog posts on topics of interest to the group, such as Lean; ideas and nominations are welcome through the blog-idea form on GitHub. Then hand over to Akshay for Project A.</p>
 <style type="text/css">
 span.MJX_Assistive_MathML {
 position:absolute!important;
@@ -1148,13 +1148,13 @@ display:block!important;
 <p>On the group site, <span class="mono"><a href="https://econ-ark.github.io/sce-wg-1/#presentations" target="_blank" rel="noopener" data-preview-link="false">econ-ark.github.io/sce-wg-1</a></span></p>
 </div>
 <div class="col">
-<p><span class="k">Survey</span></p>
-<p><span class="survey-on"><span class="mono"></span></span> <span class="survey-off">Link in the meeting chat</span></p>
+<p><span class="k">Forms</span></p>
+<p>Register a toolkit, discuss model families or suggest a blog post: New issue in <span class="mono"><a href="https://github.com/econ-ark/sce-wg-1/issues/new/choose" target="_blank" rel="noopener" data-preview-link="false">econ-ark/sce-wg-1</a></span></p>
 </div>
 </div>
 <p><span class="thanks">Thank you.</span></p>
 <aside class="notes">
-<p>Open questions for the remaining time. Between meetings, the conversation continues in the group repository on GitHub. Both sets of slides are linked from the group site. The survey link goes in the chat: it registers toolkits and collects ideas and nominations.</p>
+<p>Open questions for the remaining time. Between meetings, the conversation continues in the group repository on GitHub. Both sets of slides are linked from the group site. The forms are under New issue in the group repository: register a toolkit, discuss model families, or suggest a blog post.</p>
 <style type="text/css">
 span.MJX_Assistive_MathML {
 position:absolute!important;
@@ -2527,28 +2527,6 @@ window.QuartoSupport = function () {
 
         // Quarto appends a MathJax <style> block to speaker notes; there is no maths.
         document.querySelectorAll('.reveal aside.notes > style').forEach(function (el) { el.remove(); });
-
-        // Survey link on the closing slide: keep the link when survey-url is set,
-        // otherwise "Link in the meeting chat". Quarto prints ?meta:survey-url when
-        // the key is missing, so that counts as unset.
-        var on = document.querySelector('.reveal .survey-on');
-        var off = document.querySelector('.reveal .survey-off');
-        if (on) {
-          var mono = on.querySelector('.mono');
-          var url = mono ? mono.textContent.trim() : '';
-          if (!url || url.charAt(0) === '?') { on.remove(); }
-          else {
-            if (off) off.remove();
-            var a = document.createElement('a');
-            a.href = /^[a-z][a-z0-9+.-]*:/i.test(url) ? url : 'https://' + url;
-            a.textContent = url.replace(/^https?:\/\//i, '').replace(/\/$/, '');
-            a.target = '_blank';
-            a.rel = 'noopener';
-            a.setAttribute('data-preview-link', 'false');
-            mono.textContent = '';
-            mono.appendChild(a);
-          }
-        }
       })();
     </script>
     
