@@ -361,10 +361,12 @@ style: |-
 .lbl { color: var(--ark-blue); font-weight: 500; }
 </style>
 
-## AI and Semantic Ontologies
+## Understanding AI 
 
 <div class="stack">
 <div>
+
+</br> 
 
 <span class="lbl">Premise.</span> AI can now write code, translate papers to code and modify our models (Wu et al. 2022).
 
@@ -378,18 +380,26 @@ style: |-
 </div>
 <div>
 
-<span class="lbl">Both are questions about <span class="c-red">**semantics**</span>.</span> 
+---
+## Semantics
+
+<span class="lbl">Both are questions about meaning, or <span class="c-red">**semantics**</span>.</span> 
 - Meaning is a relation between a piece of text and <span class="c-red"> some thing </span> outside language.
-- A system trained on text alone cannot learn that relation (Bender and Koller 2020). 
-- A large language model approximates the map from text to meaning statistically rather than structurally. 
+- A system trained on text alone cannot contain the relationship of the text to meaning (Bender and Koller 2020). 
+- A large language model appeats to approximate the map from text to meaning statistically rather than structurally. 
 
 </div>
 <div>
 
+---
+## Semantic ontology 
+
+
+
 <span class="lbl">We can write meaning down in a form a machine reads, as a <span class="c-red">semantic ontology</span>.</span> 
 - A semantic ontology is a machine-readable account of objects, their types and the valid relations between them. 
-- It is a structural model of the model, in the economist's sense that its objects and relations are those of the mathematics itself. 
-- AI can be trained on a semantic ontology, or can answer from what the ontology's programs compute, as when it writes a model in Lean and answers from the kernel's verdict. Seven such uses are listed in the <a href="#how-an-ai-works-with-a-semantic-ontology" class="c-red">appendix</a>.
+- Structural model of the model. 
+- AI can be trained on a semantic ontology, or can answer from the ontology's program outputs, as when it writes a model in Lean and answers from the kernel's output. Other ways AI can work with ontologies are listed in the <a href="#how-an-ai-works-with-a-semantic-ontology" class="c-red">appendix</a>.
 
 </div>
 </div>
@@ -423,7 +433,7 @@ style: |-
 
 <div class="sp-s"></div>
 
-- The statement alone does not give a machine enough information to build $\mathbb{T}$.
+- By itself, the statement  does not give a machine enough information to build $\mathbb{T}$.
 - An economist can nonetheless write code for $\mathbb{T}$ from the statement alone, by using their implicit understanding of Dynamic Programming.
 - A semantic ontology makes that implicit understanding explicit. 
 
@@ -432,20 +442,22 @@ style: |-
 table { font-size: 16.5px; margin: 0.4em 0 0 0; width: 100% !important; }
 th, td { padding: 0.5em 0.8em 0.5em 0; vertical-align: top; }
 th:first-child, td:first-child { width: 24%; }
-th:nth-child(2), td:nth-child(2) { width: 44%; }
+th:nth-child(2), td:nth-child(2) { width: 76%; }
 td code { font-size: 14px; }
 </style>
 
-## Syntax omits meaning: binding, parameters, types and the operator
+## Missing Meaning Problem
 
-<div class="sub">A parser is how text is read on the computer. It splits an equation such as <code>v = u(c) + beta * w</code> into a tree by grammar rules alone, that is, by rules about the arrangement of its symbols. The parse produces a syntax tree before it is compiled into code, but parsing the text above describing the Buffer stock saving model misses the semantics. <a href="#the-parse-tree-of-a-written-statement" class="c-red">See Appendix for more detail on parse trees.</a></div>
+<div class="sub">Parsing the text describing the Buffer stock saving model misses semantics. <a href="#the-parse-tree-of-a-written-statement" class="c-red">See Appendix for more detail on parse trees.</a></div>
 
-| Missing meaning| In the buffer-stock statement | Supplied today by |
-|---|---|---|
-| Which variables are bound, and where | The maximization binds $c_t$, while the expectation binds $y_{t+1}$. The left-hand side binds $m_t$ by defining $v_t$ as a function of $m_t$, which leaves $m_t$ free inside the right-hand side. | The reader, who keeps the three binders apart. |
-| Parameters | The paper defines $u$, $R$, $\beta$ and the law of $y_{t+1}$ elsewhere, in no fixed place. Of these, only $\beta$ and $R$ are numbers, since $u$ is a function and the law is a measure. | The paper's assumptions, in prose. |
-| Symbol types | The value function $v_t$ maps $\mathbb{R}_{++}$ to $\mathbb{R}$, with $m_t$ a point of its domain. The tree records both as names with no type. | The paper's assumptions, in prose. |
-| An equation between functions | For each $m_t$ the Bellman equation equates two numbers. Over all $m_t$ it is one equation between functions, $v_t=\mathbb{T}\,v_{t+1}$, in which $\mathbb{T}$ maps $v_{t+1}$ to $v_t$. | The reader, who knows that a Bellman equation defines an operator. |
+</br>
+
+| Missing meaning| In the buffer-stock statement |
+|---|---|
+| Which variables are bound, and where | The maximization binds $c_t$, while the expectation binds $y_{t+1}$. The left-hand side binds $m_t$ by defining $v_t$ as a function of $m_t$, which leaves $m_t$ free inside the right-hand side. |
+| Parameters | The paper defines $u$, $R$, $\beta$ and the law of $y_{t+1}$ elsewhere, in no fixed place. Only $\beta$ and $R$ are numbers, $u$ is a function and the law is a measure - this is not immediately apparent from the statement. |
+| Symbol types | The value function $v_t$ maps $\mathbb{R}_{++}$ to $\mathbb{R}$, and $m_t$ a point of in its domain. The tree records both symbols but not the fact that $v_{t}(m_{t})$ is a function evaluation at a variable of a particular type. |
+| An equation between functions | For each $m_t$ the Bellman equation equates two numbers. Over all $m_t$ it is one equation between functions, $v_t=\mathbb{T}\,v_{t+1}$, in which $\mathbb{T}$ maps $v_{t+1}$ to $v_t$. |
 
 
 
@@ -454,18 +466,18 @@ td code { font-size: 14px; }
 table { font-size: 16.5px; margin: 0.4em 0 0 0; width: 100% !important; }
 th, td { padding: 0.5em 0.8em 0.5em 0; vertical-align: top; }
 th:first-child, td:first-child { width: 24%; }
-th:nth-child(2), td:nth-child(2) { width: 44%; }
+th:nth-child(2), td:nth-child(2) { width: 76%; }
 td code { font-size: 14px; }
 </style>
 
-## Syntax omits meaning: variables versus functions, and the law of a shock
+## Missing Meaning Problem
 
-| Missing meaning | In the buffer-stock statement | Supplied today by |
-|---|---|---|
-| Whether a symbol is a variable or a function | The symbol $m_t$, defined by $m_t=R\,k_t+y_t$, is i) the path of one household's resources, ii) the function $(k,y)\mapsto Rk+y$ composed inside the operator, and iii) the random variable whose law is the cross-sectional distribution. A paper writes one symbol for all three readings, whereas code must represent them as three objects of different types. | The reader, who infers from each sentence which reading is meant. |
-| The law behind a parameter | The statement fixes $\log y_t\sim N(\mu_y,\sigma_y^2)$. In the shorter form $y\sim\mathrm{LogNormal}(\mu_y,\sigma_y)$, $\mu_y$ denotes the mean of $\log y$ under one convention and the mean of $y$ under another, which makes two calibrations with the same numbers two different models. | The conventions of a subfield. |
+| Missing meaning | In the buffer-stock statement |
+|---|---|
+| Whether a symbol is a variable, a function, or a random variable | The symbol $m_t$, defined by $m_t=R\,k_t+y_t$, is i) the path of one household's resources, ii) the function $(k,y)\mapsto Rk+y$ composed inside the operator, and iii) the random variable whose law is the cross-sectional distribution. A paper writes one symbol for all three meanings, whereas code must represent them as three objects of different types "doing" different things. |
+| Shock law | The statement fixes $\log y_t\sim N(\mu_y,\sigma_y^2)$. In the shorter form $y\sim\mathrm{LogNormal}(\mu_y,\sigma_y)$, $\mu_y$ denotes the mean of $\log y$ under one convention and the mean of $y$ under another. |
 
-<div class="footnote">The LogNormal convention: Project Bellman (the author's project, slide 19), reference page "Shock distributions".</div>
+<div class="footnote">The LogNormal convention: Project Bellman (the author's project, slide 20), reference page "Shock distributions".</div>
 
 ---
 
@@ -473,16 +485,16 @@ td code { font-size: 14px; }
 table { font-size: 16.5px; margin: 0.4em 0 0 0; width: 100% !important; }
 th, td { padding: 0.5em 0.8em 0.5em 0; vertical-align: top; }
 th:first-child, td:first-child { width: 24%; }
-th:nth-child(2), td:nth-child(2) { width: 44%; }
+th:nth-child(2), td:nth-child(2) { width: 76%; }
 td code { font-size: 14px; }
 </style>
 
 ## Syntax omits meaning: timing and information
 
-| Missing meaning | In a written statement | Supplied today by |
-|---|---|---|
-| Timing stated in words | "A policy shock raises entrants at date $t$." If the entrants change $y_t$ in equilibrium, the sentence is consistent with a model in which prices respond at $t$ and with one in which they respond only at $t+1$. | The reader, from the surrounding prose. |
-| What the household knows when it decides | If the return $R_t$ is random, persistent and drawn before the decision, the household's expectation of $R_{t+1}$ depends on whether it observes $R_t$ or only $m_t=R_t\,k_t+y_t$ when it decides. | The reader, from the paper's account of timing. |
+| Missing meaning |In the buffer-stock statement  |
+|---|---|
+| Implications of timing stated in words | "A policy shock raises entrants at date $t$." If the entrants change $y_t$ in equilibrium, the sentence is consistent with a model in which prices respond at $t$ and with one in which they respond only at $t+1$. |
+| What the household knows when it decides | If the return $R_t$ is random, persistent and drawn before the decision, the household's expectation of $R_{t+1}$ depends on whether it observes $R_t$ or only $m_t=R_t\,k_t+y_t$ when it decides. |
 
 <div class="footnote">The timing example: Project A proposal, footnote 1.</div>
 
@@ -496,9 +508,11 @@ td code { font-size: 14px; }
 
 <div class="answer">
 
-- Because of the omissions on slides 6 to 8, one well-formed statement could admit two or more different readings on the computer, as [slides 37 to 39](#what-the-expectation-integrates) in the appendix show.
-- Most of those readings do not arise in practice, because an economist sees at once which one is meant.
-- The timing of events, and what the household knows at each decision, nevertheless confuse economists themselves in many papers.
+- One well-formed statement could admit two or more different readings of the parse tree. [Appendix slides](#what-the-expectation-integrates) gives examples of false agreement.
+- False agreement does not usually arise when a human interprets the model. E.g., an economist has been taught to know that $m_t$ when stated in $v(m_t)$ is defining the evaluation of $v$, and is not an asset path across a population of market resources.
+- Although...interpreting the timing of events, and what the individual knows at each decision, nevertheless confuse economists themselves. 
+
+The problem is when we rely on AI's statistical interpretation of text, we can never be sure that AI understands the model correctly; even if it appears to do so "most" of the time. 
 
 </div>
 
@@ -535,17 +549,17 @@ th, td { padding: 0.4em 0.8em 0.4em 0; vertical-align: top; }
 th:first-child, td:first-child { width: 22%; }
 </style>
 
-## The pigs and the model
+## The semantics is not enough  
 
-<div class="sub">What would it take to understand the joke? Semantics is not enough. Semantics is a function from symbols to a domain, whereas the ontology is the system of kinds and relations that the symbols are about (Guizzardi and Guarino 2024, §2.1) -- the joke here is about the system.</div>
+<div class="sub">What would it take to understand the joke? Semantics is not enough. Semantics is a function from symbols to a domain, whereas the ontology is the system of kinds and relations that the symbols are about (Guizzardi and Guarino 2024, §2.1). The joke here arises from the system, not the semantics.</div>
 
-| | The pigs | The model |
+| | The pigs | Buffer stock model |
 |---|---|---|
 | The written form | $\mathit{ham},\ \mathit{bacon},\ \mathit{sausages}$ | $m,\ y,\ \mathbb{E},\ v,\ \mathbb{T}$ in the paper's Bellman equation |
-| The formal semantics, the function $\llbracket\cdot\rrbracket$ from symbols to the domain | $\llbracket\mathit{ham}\rrbracket,\ \llbracket\mathit{bacon}\rrbracket,\ \llbracket\mathit{sausages}\rrbracket\in\mathsf{Food}$, the dictionary's reading | $\llbracket\text{Bellman equation}\rrbracket=\mathbb{T}$, some operator, with the space it acts on, the scope of each binder and the law of $y$ unstated |
-| What that semantics leaves open | whether the three words name foods for pigs or foods from pigs | the six readings of slides 37 to 39 |
+| The formal semantics, the function $\llbracket\cdot\rrbracket$ from symbols to the domain | $\llbracket\mathit{ham}\rrbracket,\ \llbracket\mathit{bacon}\rrbracket,\ \llbracket\mathit{sausages}\rrbracket\in\mathsf{Food}$, the dictionary look-up | $\llbracket\text{Bellman equation}\rrbracket=\mathbb{T}$, some operator, with the space it acts on, the scope of each binder and the law of $y$ unstated |
+| What that semantics leaves open | whether the three words name foods for pigs or foods from pigs | which variable each of $\max$ and $\mathbb{E}$ binds, whether $v$ is a function and on which space, the law of $y$, when $y$ is drawn, and what the household knows when it chooses |
 | The ontology, the kinds and relations, written as typed symbols, each with a signature, what it takes and what it returns | $\mathit{Maurice}:\mathsf{Pig}$<br>$\mathit{madeOf}:\mathsf{Ham}\to\mathsf{Pork}$<br>$\mathit{from}:\mathsf{Pork}\to\mathsf{Pig}$ | $v:\mathbb{R}_{++}\to\mathbb{R}$, $\ y:\mathbb{R}_{++}$ with law $\nu_y$<br>$\mathbb{T}:(\mathbb{R}_{++}\to\mathbb{R})\to(\mathbb{R}_{++}\to\mathbb{R})$<br>$\mathbb{T}=\max_{c}\circ\,\mathbb{E}_{y}$, the expectation taken first |
-| False agreement | two pigs who agree that the words name foods, one meaning foods for pigs and the other foods from pigs, and never go to the library | two readers who accept the Bellman equation and compute different objects |
+| False agreement | Two pigs who agree that the words name foods, one meaning foods for pigs and the other foods from pigs, and never go to the library | Two readers who accept the Bellman equation but disagree on timing  of price response to shocks.|
 
 <div class="footnote">Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, &sect;2.1 for the cartoon and semantics as a function, &sect;3.4 for false agreement.</div>
 
@@ -556,25 +570,6 @@ th:first-child, td:first-child { width: 22%; }
 .stack p { margin: 0; }
 .lbl { color: var(--ark-blue); font-weight: 500; }
 </style>
-
-## Two readings of one paper
-
-<div class="stack">
-<div>
-
-<span class="lbl">Economists today.</span> An economist fills what a paper leaves out from <span class="c-red">implicit context</span>, which is sometimes hard to find. Two economists who fill it differently disagree about what the paper's results mean.
-
-</div>
-<div>
-
-<span class="lbl">A machine that writes or translates code.</span> The machine reads the paper's text, which admits more than one reading. The model must therefore be <span class="c-red">written down as one object</span>, because a reading hidden in generated code can be checked only line by line.
-
-</div>
-</div>
-
-<div class="footnote">Two readers who accept one text and compute different objects: Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, &sect;3.4.</div>
-
----
 
 
 <style scoped>
@@ -589,7 +584,7 @@ A semantic ontology is the mathematics of the model, with the types, binders and
 
 </div>
 
-- An economist supplies the missing meaning from implicit context, the conventions of a subfield and the paper's surrounding prose (slides 6 to 8).
+- An economist supplies the missing meaning from implicit context, the conventions of a subfield and the paper's surrounding prose (slides 8 to 10).
 - An AI may *seem* to supply the same meaning, although it draws on the statistics of its training data rather than on a deterministic set of rules.
   - The reading it returns is stochastic, and producing it is expensive, since the AI must search the paper and similar papers for context.
 
@@ -605,30 +600,22 @@ A semantic ontology is the mathematics of the model, with the types, binders and
 .lbl { color: var(--ark-blue); font-weight: 500; }
 </style>
 
-## How Dynare reads a model file
+## What does DYNARE do?
 
-<div class="sub">A semantic ontology takes the upper path: Υ (upsilon) sends the file to its meaning ⟦file⟧, the model as a typed object, and Ρ (rho) attaches a numerical method to that object. Dynare takes the lower path in one program, so no ⟦file⟧ exists for a checker to read.</div>
+Without semantic ontologies, how does DYNARE work?
+
+<div class="sub">Both routes parse the file into a tree that holds syntax only, and both end in solver code. An ideal declarative language first builds ⟦file⟧, the model as a typed object, by Υ (upsilon), and then attaches a numerical method to it by Ρ (rho). Dynare applies Ρ to the tree directly, so its Υ is never written and the interpretation is attached implicitly, inside the numerical implementation.</div>
 
 <div class="center">
 
-![w:960](assets/dynare-skip.svg)
+![w:860](assets/dynare-skip.svg)
 
 </div>
 
 <div class="stack">
 <div>
 
-<span class="lbl">The meaning of a <code>.mod</code> file.</span> It is <span class="c-red">what the program does with the file</span>, as the README of Dynare's preprocessor, the program that reads the file, says: "The Dynare Preprocessor defines the Dynare model language."
-
-</div>
-<div>
-
-<span class="lbl">Why it works.</span> Because Dynare solves one model class with one solver, its users learn the manual's conventions <span class="c-red">once</span>.
-
-</div>
-<div>
-
-<span class="lbl">The conventions.</span> The manual, not the file, states that every equation holds in expectation at $t$, that a variable's date is the period in which it is decided, and that the solver approximates $\mathbb{E}_t\, f(y_{t+1},y_t,y_{t-1},u_t)=0$ by a Taylor expansion about the deterministic steady state, in the manual's notation, where $f$ stacks the model's equations, $y_t$ is the vector of endogenous variables and $u_t$ the vector of shocks.
+<span class="lbl">The meaning of a <code>.mod</code> file.</span> It is <span class="c-red">what the program does with the file</span>: "The Dynare Preprocessor defines the Dynare model language" (the preprocessor's README).
 
 </div>
 </div>
@@ -637,41 +624,33 @@ A semantic ontology is the mathematics of the model, with the types, binders and
 
 ---
 <style scoped>
-.stack > div { padding: 0 0 0.9em 0; font-size: 19px; line-height: 1.45; }
+.stack > div { padding: 0 0 1em 0; font-size: 21px; line-height: 1.5; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
-.stack code { font-size: 15px; }
 .lbl { color: var(--ark-blue); font-weight: 500; }
 </style>
 
-## What Dynare's fused reading costs
-
-<div class="sub">A meaning that exists only inside one program has four consequences.</div>
+## What an AI needs beyond Dynare
 
 <div class="stack">
 <div>
 
-<span class="lbl">No object to compare across toolkits.</span> A language written directly as a program has one semantics only, in Oliveira and Löh's words "in this case, evaluation". A model moved to HARK or to the sequence-space Jacobian toolkit has its meaning re-derived from the manual, so that the two readings can be compared <span class="c-red">only through their outputs</span>.
+<span class="lbl">Dynare does what it was built for.</span> One program, one solver and one set of conventions, learned once, have given economists the right numbers from a short file since Juillard (1996).
 
 </div>
 <div>
 
-<span class="lbl">Two models, one spelling.</span> `k` in a production function is capital decided this period unless `predetermined_variables k` is declared elsewhere in the file, in which case it is last period's capital. The equation alone <span class="c-red">does not say which model was meant</span>, the case that the row "Timing stated in words" of slide 8 describes.
+<span class="lbl">Its meaning is tied to its numerics.</span> The model has no statement apart from the perturbation solver, so a model moved to HARK or to the sequence-space Jacobian toolkit can be compared with it <span class="c-red">only through the numbers</span>.
 
 </div>
 <div>
 
-<span class="lbl">A fixed vocabulary.</span> The file declares for each symbol only a role (endogenous, exogenous or parameter), with every expression a scalar. Because value functions, distributions and policy operators are not symbols of the language, the objects of a heterogeneous-agent model <span class="c-red">have no name</span> in it.
-
-</div>
-<div>
-
-<span class="lbl">No check of meaning.</span> An AI-written file is checked for syntax, for as many equations as endogenous variables, for a steady state and for the Blanchard and Kahn conditions, <span class="c-red">not for what it means</span>. Under a semantic ontology a model file denotes the problem it poses, not the solver's output.
+<span class="lbl">An AI writing new code needs more.</span> Its file is checked for syntax, for one equation per variable and for a steady state, <span class="c-red">not for what it means</span>. New code, for a new model or another toolkit, needs the model stated apart from any solver, where a checker can read and refuse it.
 
 </div>
 </div>
 
-<div class="footnote">Adjemian et al. (2026), <em>Dynare: Reference Manual, Version 7</em>, version 7.2: §4.2 (declarations and <code>predetermined_variables</code>), §4.3 (scalar expressions), §4.5 (the model block, one equation per endogenous variable), §4.10 (<code>steady</code>) and §4.11 (<code>check</code>) &middot; Oliveira and Löh (2012), "Abstract syntax graphs for domain specific languages", §2.1, as quoted in the bellman-ddsl wiki, declarative language &middot; a model file denotes the problem it poses: Elliott (2009), "Denotational design with type class morphisms" &middot; the toolkits: Project A proposal, the paragraph on toolkits; Auclert, Bardóczy, Rognlie and Straub (2021), <em>Econometrica</em> 89(5), 2375–2408.</div>
+<div class="footnote">Juillard (1996), CEPREMAP Working Paper 9602 &middot; Adjemian et al. (2026), <em>Dynare: Reference Manual, Version 7</em>, 7.2: §4.5 (the model block), §4.10 (<code>steady</code>), §4.11 (<code>check</code>) &middot; Auclert, Bardóczy, Rognlie and Straub (2021), <em>Econometrica</em> 89(5), 2375–2408.</div>
 
 ---
 
@@ -702,7 +681,7 @@ $$
 </div>
 <div>
 
-<span class="lbl">The domain of meaning.</span> The objects we model, sorted into <span class="c-red">kinds</span> with relations between them: state spaces, laws, value functions and operators, as the kinds of slide 12 are Pig, Ham and Pork.
+<span class="lbl">The domain of meaning.</span> The objects we model, sorted into <span class="c-red">kinds</span> with relations between them: state spaces, laws, value functions and operators, as the kinds of slide 14 are Pig, Ham and Pork.
 
 </div>
 <div>
@@ -717,10 +696,9 @@ $$
 ---
 <style scoped>
 .center img { margin: 0 auto; display: block; }
-.stack > div { padding: 0 0 0.6em 0; font-size: 19px; line-height: 1.45; }
-.stack > div:last-child { padding-bottom: 0; }
-.stack p { margin: 0; }
-.stack code { font-size: 15px; }
+.terms { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.6em; margin: 0.9em 0 0 0; font-size: 18px; line-height: 1.42; }
+.terms p { margin: 0; }
+.terms code { font-size: 14.5px; }
 .lbl { color: var(--ark-blue); font-weight: 500; }
 </style>
 
@@ -730,11 +708,11 @@ $$
 
 <div class="center">
 
-![w:900](assets/stage-file-form.svg)
+![w:1060](assets/stage-file-form.svg)
 
 </div>
 
-<div class="stack">
+<div class="terms">
 <div>
 
 <span class="lbl">Perches.</span> The three information sets of the period: <span class="c-red">arrival</span> `!arvl`, <span class="c-red">decision</span> `!dcsn` and <span class="c-red">continuation</span> `!cntn`.
@@ -752,41 +730,36 @@ $$
 </div>
 </div>
 
-<div class="footnote">Bellman-SYM, Stages §§1–4 (the documentation example, in the letters k, m, a of the calculus); Bellman calculus, Stages and perches §1 (bellman-ddsl/docs) &middot; the law line fixes the convention that slide 7 left to a subfield.</div>
+<div class="footnote">Bellman-SYM, Stages §§1–4 (the documentation example, in the letters k, m, a of the calculus); Bellman calculus, Stages and perches §1 (bellman-ddsl/docs) &middot; the law line fixes the convention that slide 9 left to a subfield.</div>
 
 ---
 <style scoped>
-.stack > div { padding: 0 0 0.85em 0; font-size: 19px; line-height: 1.45; }
-.stack > div:last-child { padding-bottom: 0; }
-.stack p { margin: 0; }
-.stack code { font-size: 15px; }
-.lbl { color: var(--ark-blue); font-weight: 500; }
-.katex-display { margin: 0.3em 0 0.1em 0 !important; font-size: 0.92em; }
-.link { font-size: 19px; line-height: 1.45; margin: 1em 0 0 0; }
+table { font-size: 16.5px; margin: 0.3em 0 0.9em 0; width: 100% !important; }
+th, td { padding: 0.38em 0.8em 0.38em 0; vertical-align: top; }
+th:first-child, td:first-child { width: 52%; }
+td code { font-size: 13.5px; }
+.link { font-size: 18px; line-height: 1.42; margin: 0.6em 0 0 0; }
 </style>
 
 ## Economics: what the stage file refuses or makes visible
 
-<div class="stack">
-<div>
+<div class="sub">Υ (upsilon) reads each field and block of the file as a typed object. The elaborator, the program that constructs those objects, refuses a line that the types do not admit and names the rule.</div>
 
-<span class="lbl">Under Υ (upsilon), a value field denotes a function and a block denotes an operator.</span>
-$$\texttt{V[>]}\ \mapsto\ v_\succ:\mathbb{R}_+\to\mathbb{R},\qquad \text{the choice block}\ \mapsto\ \mathbb{T}_\succ:\mathsf{V}_\succ\to\mathsf{V},\qquad \text{the expectation block}\ \mapsto\ \mathbb{T}_\prec:\mathsf{V}\to\mathsf{V}_\prec$$
+| The file writes | Under Υ it denotes |
+|---|---|
+| `V[>] : ℝ @ !vlu` at the continuation perch | $v_\succ:\mathbb{R}_+\to\mathbb{R}$, a function of savings, never a number |
+| the choice block `[id=cntn_to_dcsn]` with `policy` | $\mathbb{T}_\succ:\mathsf{V}_\succ\to\mathsf{V}$, the choice operator |
+| the expectation block `[id=dcsn_to_arvl]` | $\mathbb{T}_\prec:\mathsf{V}\to\mathsf{V}_\prec$, the expectation operator |
 
-</div>
-<div>
+| A line that | The elaborator |
+|---|---|
+| reads the shock beside its expectation, `V[<] = E_{y}(V) + y` | <span class="c-red">refuses</span> it under `shock-reintroduced`, since $y$ is not known at arrival |
+| lists a continuation value at the decision perch | <span class="c-red">refuses</span> it under `field-perch`, since the value is a function of savings |
+| puts the mean of the shock in the transition, `m = R*k + exp(μ_y + σ_y^2/2)` | <span class="c-green">accepts</span> it, and the different model stands visible on that line |
+| writes a second `β` in the expectation block | <span class="c-green">accepts</span> it, and the second `β` stands visible on its own line |
+| would impose a stationary closure $v_{t+1}=v_t$ | has no line for it, since `V[>]` comes from the next period or the terminal boundary |
 
-<span class="lbl"><span class="c-red">Refused</span>, with the rule named.</span> A shock beside its expectation, `V[<] = E_{y}(V) + y`, since $y$ is not yet known at arrival. A continuation value listed at the decision perch, since it is a function of savings.
-
-</div>
-<div>
-
-<span class="lbl"><span class="c-green">Visible</span>, as a line of the file.</span> The mean of the shock in the transition. A second `β` in the expectation block. A stationary closure $v_{t+1}=v_t$, which no file writes, since `V[>]` comes from the next period or the terminal boundary.
-
-</div>
-</div>
-
-<div class="link"><a href="#the-bellman-calculus-in-full" class="c-red">The appendix (slides 40 to 50) gives the file in full, what it denotes, each refusal with its rule and the run behind it, and the period and trellis files.</a></div>
+<div class="link"><a href="#the-bellman-calculus-in-full" class="c-red">The appendix, slides 40 to 50, gives the full file, each refusal with its rule, and the period and trellis files.</a></div>
 
 <div class="footnote">The reference on refusals, rules shock-reintroduced and field-perch; Bellman-SYM, Field equations §5, Perch tagging rules §3, Periods §§2–3, Trellises §2; the runs of <code>elaborate_text</code> of 13 October 2026 listed on the appendix slides.</div>
 
@@ -965,7 +938,7 @@ td code { font-size: 13.5px; }
 
 ## The five cases against the three parts of a semantic ontology
 
-<div class="sub">Each row places one case against the three parts of slide 18, the typed symbols of the written form, the domain of meaning and the map between them, and names in the last column the program that checks the map.</div>
+<div class="sub">Each row places one case against the three parts of slide 19, the typed symbols of the written form, the domain of meaning and the map between them, and names in the last column the program that checks the map.</div>
 
 | Case | Typed symbols | Domain | Map | Checker |
 |---|---|---|---|---|
@@ -987,14 +960,14 @@ td code { font-size: 14px; }
 
 ## The stage file against the same three parts
 
-<div class="sub">The stage file of slide 42, the deck's own written form, is read here against the columns of the table on slide 26.</div>
+<div class="sub">The stage file of slide 42, the deck's own written form, is read here against the columns of the table on slide 27.</div>
 
 | Part | In the Bellman-SYM stage file |
 |---|---|
 | Typed symbols | the fields and the blocks, each with a type and a perch, and the declared law of the shock (slide 42) |
-| Domain | state spaces, laws, value functions and the operators between them (slide 18) |
-| Map | the perch tags `@ !arvl`, `@ !dcsn` and `@ !cntn`, the role tags `!ctrl` and `!vlu` and the law line (slide 42), interpreted by Υ (upsilon), the checked interpretation of slide 36, as the objects of slide 18 |
-| Checker | the elaborator (slide 45), which constructs the typed object or refuses the file, naming the rule the file breaks and the line; and the comparator, a program that compares two elaborated files up to renaming and reports, for each kind of item, agreement, difference or an undecided residue, the items it can neither match nor reject (slide 30) |
+| Domain | state spaces, laws, value functions and the operators between them (slide 19) |
+| Map | the perch tags `@ !arvl`, `@ !dcsn` and `@ !cntn`, the role tags `!ctrl` and `!vlu` and the law line (slide 42), interpreted by Υ (upsilon), the checked interpretation of slide 36, as the objects of slide 19 |
+| Checker | the elaborator (slide 45), which constructs the typed object or refuses the file, naming the rule the file breaks and the line; and the comparator, a program that compares two elaborated files up to renaming and reports, for each kind of item, agreement, difference or an undecided residue, the items it can neither match nor reject (slide 31) |
 | Run on the file of slide 42 | The elaborator constructed the object from the file and refused the line `E_{y}(V) + y`, with `y` listed among the block's inputs, under `shock-reintroduced`.<br>The comparator read the file and the documentation example, with b and w for k and m, as one object under that renaming. |
 
 <div class="footnote">Bellman-SYM, Stages §5 (checked interpretation) &middot; bellman-ddsl wiki, Υ §1 (the elaborator) and judge §4 (the comparator) &middot; the runs: <code>elaborate_text</code> of <code>bellman.factory.elaboration</code> and <code>compare</code> of <code>meaning_map_training.compare</code>, 13 October 2026, on the stage file of slide 42 and on Bellman-SYM's documentation example (Stages §4).</div>
@@ -1062,7 +1035,7 @@ $$\text{written form}\ \xrightarrow{\ \ \Upsilon\ \ }\ \underbrace{\mathbb{T}_\p
 </div>
 <div>
 
-<span class="lbl">A different law of the shock.</span> Two files that differ in the law of $y$ denote, under Υ, two objects that differ in $\nu_y$ and agree elsewhere. The comparator's report then lists, for each kind of item, agreement, difference or an undecided residue, as slide 27 says.
+<span class="lbl">A different law of the shock.</span> Two files that differ in the law of $y$ denote, under Υ, two objects that differ in $\nu_y$ and agree elsewhere. The comparator's report then lists, for each kind of item, agreement, difference or an undecided residue, as slide 28 says.
 
 </div>
 </div>
@@ -1093,7 +1066,7 @@ $$\text{written form}\ \xrightarrow{\ \ \Upsilon\ \ }\ \underbrace{\mathbb{T}_\p
 </div>
 <div>
 
-<span class="lbl">In the community library the name is a link.</span> In the community library of Project B, the Community Library of Baseline Models (slide 32) an implementation names its model by a link to the shared model description and an optional metadata entry, `model: "BST"`, the library's short name for the buffer-stock model, and only the numbers of slide 32 test the implementation.
+<span class="lbl">In the community library the name is a link.</span> In the community library of Project B, the Community Library of Baseline Models (slide 33) an implementation names its model by a link to the shared model description and an optional metadata entry, `model: "BST"`, the library's short name for the buffer-stock model, and only the numbers of slide 33 test the implementation.
 
 </div>
 </div>
@@ -1125,12 +1098,12 @@ $$\text{written form}\ \xrightarrow{\ \ \Upsilon\ \ }\ \underbrace{\mathbb{T}_\p
 </div>
 <div>
 
-<span class="lbl">What a comparison of numbers tests.</span> Because parsing, interpretation, method assignment, calibration and execution must all agree for a result to approximate the declared problem, agreement between two implementations is evidence about Ρ (rho). Reproducing a published number, by contrast, tests one implementation. A misreading of the model is caught by the comparator of slide 30, whereas an error in the code is caught only here, by the numbers.
+<span class="lbl">What a comparison of numbers tests.</span> Because parsing, interpretation, method assignment, calibration and execution must all agree for a result to approximate the declared problem, agreement between two implementations is evidence about Ρ (rho). Reproducing a published number, by contrast, tests one implementation. A misreading of the model is caught by the comparator of slide 31, whereas an error in the code is caught only here, by the numbers.
 
 </div>
 <div>
 
-<span class="lbl">What makes the test well posed.</span> The stated kind says which object both implementations claim to approximate. Without it, a library can be compared only number by number, a comparison in which the agreement of two numbers does not exclude the false agreement of slide 13.
+<span class="lbl">What makes the test well posed.</span> The stated kind says which object both implementations claim to approximate. Without it, a library can be compared only number by number, a comparison in which the agreement of two numbers does not exclude the false agreement of slide 14.
 
 </div>
 </div>
@@ -1139,28 +1112,12 @@ $$\text{written form}\ \xrightarrow{\ \ \Upsilon\ \ }\ \underbrace{\mathbb{T}_\p
 
 ---
 
-<style scoped>
-.answer { font-size: 26px; line-height: 1.5; margin: 0.6em 0 0 0; }
-</style>
-
-## What a semantic ontology is
-
-<div class="answer">
-
-A semantic ontology is the mathematics of the model, with the types, binders and laws that the Bellman equation leaves to the reader, stated in a machine-readable file. The Bellman equation of slide 5 admits, beside its intended reading, the readings of slides 37 to 39, whereas the typed file of slide 42 states exactly one object. A different reading would be a different line of the file, which under Υ (upsilon) denotes a different object and which the comparator therefore reports as a difference.
-
-</div>
-
-<div class="footnote">Slides 5, 30, 37 to 39 and 42 of this deck &middot; Project A proposal, the paragraph that defines a semantic ontology.</div>
-
----
-
 <!-- _class: divider -->
 
 # Appendix
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 6](#syntax-omits-meaning-binding-parameters-types-and-the-operator)' -->
+<!-- _header: 'Appendix &middot; [return to slide 8](#missing-meaning-problem)' -->
 <style scoped>
 .cols { grid-template-columns: 1fr 1fr; gap: 1.6em; align-items: center; }
 .stack > div { padding: 0 0 0.9em 0; font-size: 19px; line-height: 1.45; }
@@ -1206,7 +1163,7 @@ Parsing a written statement into a tree, as every compiler first does, shows wha
 <div class="footnote">The tree is Python's abstract syntax tree, <code>ast.parse("v = u(c) + beta * w")</code>.</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 6](#syntax-omits-meaning-binding-parameters-types-and-the-operator)' -->
+<!-- _header: 'Appendix &middot; [return to slide 8](#missing-meaning-problem)' -->
 <style scoped>
 .cols { grid-template-columns: 1.05fr 1fr; gap: 1.4em; align-items: center; }
 .cols .katex-display { margin: 0.2em 0 0.2em 0 !important; font-size: 0.9em; }
@@ -1243,7 +1200,7 @@ $$\begin{aligned}
 
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 9](#multiple-possible-parsed-meanings)' -->
+<!-- _header: 'Appendix &middot; [return to slide 11](#multiple-possible-parsed-meanings)' -->
 <style scoped>
 .box { border: 1px solid var(--ark-line-2); border-left: 4px solid var(--ark-blue); border-radius: 4px; background: #ffffff; padding: 0.65em 1.1em 0.6em 1.1em; margin: 0 0 1.1em 0; font-size: 19px; line-height: 1.45; }
 .box:last-child { margin-bottom: 0; }
@@ -1279,7 +1236,7 @@ Since $\mathbb{E}\max\ge\max\mathbb{E}$, the reading on the right overstates the
 <div class="footnote">Jensen's inequality and the precautionary motive: Kimball (1990), "Precautionary saving in the small and in the large", <em>Econometrica</em> 58(1), 53–73.</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 9](#multiple-possible-parsed-meanings)' -->
+<!-- _header: 'Appendix &middot; [return to slide 11](#multiple-possible-parsed-meanings)' -->
 <style scoped>
 .box { border: 1px solid var(--ark-line-2); border-left: 4px solid var(--ark-blue); border-radius: 4px; background: #ffffff; padding: 0.65em 1.1em 0.6em 1.1em; margin: 0 0 1.1em 0; font-size: 19px; line-height: 1.45; }
 .box:last-child { margin-bottom: 0; }
@@ -1306,7 +1263,7 @@ The borrowing limit acts at $a=0$, a point at which a function of resources is n
 </div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 9](#multiple-possible-parsed-meanings)' -->
+<!-- _header: 'Appendix &middot; [return to slide 11](#multiple-possible-parsed-meanings)' -->
 <style scoped>
 .box { border: 1px solid var(--ark-line-2); border-left: 4px solid var(--ark-blue); border-radius: 4px; background: #ffffff; padding: 0.65em 1.1em 0.6em 1.1em; margin: 0 0 1.1em 0; font-size: 19px; line-height: 1.45; }
 .box:last-child { margin-bottom: 0; }
@@ -1341,7 +1298,7 @@ A stationarity condition that the statement never makes replaces the backward re
 # The Bellman calculus in full
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 <style scoped>
 .stack > div { padding: 0 0 0.9em 0; font-size: 19px; line-height: 1.45; }
 .stack > div:last-child { padding-bottom: 0; }
@@ -1382,7 +1339,7 @@ A stationarity condition that the statement never makes replaces the backward re
 <div class="footnote">Bellman-SYM, Stages §§1–4, Field equations §1 and Period syntax §1; Bellman calculus, Stages and perches §1 (bellman-ddsl/docs).</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 <style scoped>
 section { padding-top: 40px; }
 h2 { margin-bottom: 0.3em; }
@@ -1393,7 +1350,7 @@ h2 { margin-bottom: 0.3em; }
 
 ## The stage file of the buffer-stock problem
 
-<div class="sub">The figure shows the stage file, the written form of slide 18, in the language Bellman-SYM.</div>
+<div class="sub">The figure shows the stage file, the written form of slide 19, in the language Bellman-SYM.</div>
 
 <div class="center">
 
@@ -1403,14 +1360,14 @@ h2 { margin-bottom: 0.3em; }
 
 <div class="gloss">
 
-Three kinds of mark appear in the figure: `!arvl`, `!dcsn` and `!cntn` for the perches, `!ctrl` and `!vlu` for a control and a value, and `[id=…]` for the name of a block. The line `y ~ LogNormal(μ_y, σ_y)` declares the law of the shock. The language's reference on shock distributions defines `LogNormal(μ_y, σ_y)` as the law under which $\log y\sim N(\mu_y,\sigma_y^2)$, which fixes for every file the convention that slide 7 left to a subfield. `V[>]` at the continuation perch is the stage's input, supplied from outside the stage.
+Three kinds of mark appear in the figure: `!arvl`, `!dcsn` and `!cntn` for the perches, `!ctrl` and `!vlu` for a control and a value, and `[id=…]` for the name of a block. The line `y ~ LogNormal(μ_y, σ_y)` declares the law of the shock. The language's reference on shock distributions defines `LogNormal(μ_y, σ_y)` as the law under which $\log y\sim N(\mu_y,\sigma_y^2)$, which fixes for every file the convention that slide 9 left to a subfield. `V[>]` at the continuation perch is the stage's input, supplied from outside the stage.
 
 </div>
 
 <div class="footnote">Bellman-SYM's documentation example (bellman-ddsl docs, Stages §4) in the letters k, m, a of the calculus, the perch marks written inside the type declarations, as The Bellman-SYM language §1.1 writes them &middot; LogNormal: the reference on shock distributions.</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 <style scoped>
 .cols { grid-template-columns: 1fr 1.35fr; gap: 1.6em; align-items: start; }
 .cols pre { font-size: 15px; line-height: 1.5; margin: 0.3em 0 0 0; }
@@ -1445,7 +1402,7 @@ y ~ LogNormal(μ_y, σ_y)
 </div>
 <div class="small">
 
-The file declares each parameter with its set. The lowercase ρ of the utility function is the curvature of utility, not Ρ (rho), the map of slide 15 that attaches a numerical method.
+The file declares each parameter with its set. The lowercase ρ of the utility function is the curvature of utility, not Ρ (rho), the map of slide 16 that attaches a numerical method.
 
 A calibration file beside the stage file supplies the values of the parameters.
 
@@ -1457,7 +1414,7 @@ The declarations `c : ℝ₊₊` and `a : ℝ₊` together with the line `a = m 
 <div class="footnote">The file: Bellman-SYM's documentation example (bellman-ddsl docs, Stages §4) in the letters k, m, a of the calculus &middot; the preamble: Stages §§2, 4 and 5 and the wiki entry calibration &middot; the feasible set: Stages §3, From syntax to a mathematical problem §3.</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 <style scoped>
 section { padding-top: 40px; }
 h2 { margin-bottom: 0.3em; }
@@ -1475,12 +1432,12 @@ h2 { margin-bottom: 0.3em; }
 
 </div>
 
-<div class="gloss">The arrival block, where <em>y</em> is drawn before the decision, fixes the date at which the shock enters the law of <em>m</em>. The file fixes the household's own shock only. An aggregate policy shock of the kind on slide 8 is no part of this stage.</div>
+<div class="gloss">The arrival block, where <em>y</em> is drawn before the decision, fixes the date at which the shock enters the law of <em>m</em>. The file fixes the household's own shock only. An aggregate policy shock of the kind on slide 10 is no part of this stage.</div>
 
 <div class="footnote">The operators follow the Bellman calculus, Illustrative example §2 and Fields, functions and types §4 (bellman-ddsl/docs). The calculus writes 𝖬<sub>p</sub> for the probability measures on the state space X<sub>p</sub> (Fields, functions and types §4), whereas the deck writes 𝒫 so that the letter M names only the forward operators. The dating of the shock: Bellman-SYM, Perch tagging rules §3.</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 <style scoped>
 .stack > div { padding: 0.45em 0 0.5em 0; border-top: 1px solid var(--ark-line); font-size: 19px; line-height: 1.45; }
 .stack > div:first-child { border-top: none; padding-top: 0.1em; }
@@ -1512,7 +1469,7 @@ Since an arrival value may depend only on what is known at arrival, where $y$ is
 <div class="footnote">Bellman-SYM, Field equations §5, Perch tagging rules §3; the reference on refusals, rules shock-reintroduced (the line refused on 13 October 2026 with <em>y</em> listed among the block's inputs, whereas with <em>y</em> unlisted the rule signature-complete refuses it first) and transition-without-expectation (the mean inside the transition); the mean as a parameter in the transition elaborated the same day; Periods §3.1; bellman-ddsl wiki, Υ §1 (the elaborator).</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 <style scoped>
 .stack > div { padding: 0.45em 0 0.5em 0; border-top: 1px solid var(--ark-line); font-size: 19px; line-height: 1.45; }
 .stack > div:first-child { border-top: none; padding-top: 0.1em; }
@@ -1544,7 +1501,7 @@ A realized $\hat m_t$, having no form in the file, never enters the backward ope
 <div class="footnote">Bellman-SYM, Stages §§2–4 and Appendix C (a field denotes a function of the state of its perch); the reference on refusals, rule field-perch, with its example of <code>V[&gt;]</code> listed on a side marked <code>!dcsn</code>; Bellman calculus, Introduction §§1–2 and Illustrative example §1 (bellman-ddsl/docs).</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 <style scoped>
 .stack > div { padding: 0.45em 0 0.5em 0; border-top: 1px solid var(--ark-line); font-size: 19px; line-height: 1.45; }
 .stack > div:first-child { border-top: none; padding-top: 0.1em; }
@@ -1576,7 +1533,7 @@ the only composition the types admit within the stage.
 <div class="footnote">Bellman-SYM, Stages §§2–4, Field equations §§1 and 5, Periods §§2–3, the wiki entry connector; Bellman calculus, Introduction §§1–2; a file with β in the expectation block and one with the policy objective <code>𝑢(c) + V[&gt;]</code> both elaborated on 13 October 2026; the closure: Stages §4; Laibson (1997), "Golden eggs and hyperbolic discounting", <em>Quarterly Journal of Economics</em> 112(2), 443–477.</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 <style scoped>
 .stack > div { padding: 0.45em 0 0.5em 0; border-top: 1px solid var(--ark-line); font-size: 19px; line-height: 1.45; }
 .stack > div:first-child { border-top: none; padding-top: 0.1em; }
@@ -1601,7 +1558,7 @@ the only composition the types admit within the stage.
 <div class="footnote">Bellman-SYM, Stages §4 (the closure) and Trellises §2 (the terminal value as boundary data); Bellman calculus, Introduction §§1–2.</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 <style scoped>
 .cols { grid-template-columns: 1fr 1.25fr; gap: 1.6em; align-items: start; }
 .cols pre { font-size: 14px; line-height: 1.4; margin: 0.4em 0 0.8em 0; }
@@ -1641,7 +1598,7 @@ inter_connectors:
 
 The period lists one stage and no within-period connector. The trellis, the sequence of a model's periods counted backward from the terminal one, repeats the period fifty times. The inter-period connector `{a: k}` states that the savings `a` that leave one period are the assets `k` that enter the next, with no calculation. Since a stage file has no time index and is listed by name, one file serves every period that lists it.
 
-The terminal period's `V[>]` is boundary data that neither file states and that Ρ (rho) receives when it constructs the numerical problem. A bequest motive is a stage of the terminal period, as the durables model of the language's documentation writes it, which the comparator of slide 30 therefore reads. Only the continuation value after the last decision, zero for that model, stays outside the files, which makes two trellises that differ only in that constant one object to the comparator. A stationary closure has no entry in either file, since the horizon is the number of periods the trellis lists.
+The terminal period's `V[>]` is boundary data that neither file states and that Ρ (rho) receives when it constructs the numerical problem. A bequest motive is a stage of the terminal period, as the durables model of the language's documentation writes it, which the comparator of slide 31 therefore reads. Only the continuation value after the last decision, zero for that model, stays outside the files, which makes two trellises that differ only in that constant one object to the comparator. A stationary closure has no entry in either file, since the horizon is the number of periods the trellis lists.
 
 </div>
 </div>
@@ -1649,7 +1606,7 @@ The terminal period's `V[>]` is boundary data that neither file states and that 
 <div class="footnote">Bellman-SYM, Periods §§1–2, Trellises §§1.1, 2 and 4 (the backward count, a stage file carries no index, the inter-period connector, the terminal value as boundary data), The Bellman factory §3.5 (the bequest is a stage); a two-period trellis of the file of slide 42 joined by <code>{a: k}</code> elaborated on 13 October 2026; bellman-ddsl wiki, judge §4 (the comparator's items); Bellman calculus, Periods and the trellis §4.</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 20](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
+<!-- _header: 'Appendix &middot; [return to slide 21](#economics-what-the-stage-file-refuses-or-makes-visible)' -->
 ## The Bellman calculus and the Bellman operator
 
 The paper's operator and the stage operator compose the same two parts, the expectation $\mathbb{T}_\prec$ and the choice $\mathbb{T}_\succ$:
@@ -1675,7 +1632,7 @@ The elaborator refuses the readings that the file's types and blocks do not admi
 # How an AI works with a semantic ontology
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 2](#ai-and-semantic-ontologies)' -->
+<!-- _header: 'Appendix &middot; [return to slide 4](#semantic-ontology)' -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -1725,7 +1682,7 @@ The elaborator refuses the readings that the file's types and blocks do not admi
 <div class="footnote">Wu, Jiang, Li, Rabe, Staats, Jamnik and Szegedy (2022), "Autoformalization with large language models", <em>NeurIPS 2022</em>, 32353–32368 &middot; Hubert, Mehta, Sartran et al. (2025), <em>Nature</em> 651, 607–613 &middot; First, Rabe, Ringer and Brun (2023), "Baldur: whole-proof generation and repair with large language models", <em>ESEC/FSE 2023</em>, 1229–1241 &middot; Poesia et al. (2022), "Synchromesh", <em>ICLR 2022</em>; Geng, Josifoski, Peyrard and West (2023), "Grammar-constrained decoding for structured NLP tasks without finetuning", <em>EMNLP 2023</em>, 10932–10952 &middot; Li, Wu, Li, Wei, Yang, Zhang and Ma (2024), "Autoformalize mathematical statements by symbolic equivalence and semantic consistency", <em>NeurIPS 2024</em>, 53598–53625; Allamanis, Panthaplackel and Yin (2024), "Unsupervised evaluation of code LLMs with round-trip correctness", <em>ICML 2024</em>, PMLR 235, 1050–1066 &middot; Matsya's architect mode: bellman-ddsl, terminology, 9 October 2026.</div>
 
 ---
-<!-- _header: 'Appendix &middot; [return to slide 2](#ai-and-semantic-ontologies)' -->
+<!-- _header: 'Appendix &middot; [return to slide 4](#semantic-ontology)' -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
