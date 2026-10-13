@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 84 1100 226" width="1100" height="226" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="hb" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0.8 L9,5 L0,9.2 z" fill="#1f476b"/>
+    </marker>
+    <marker id="hr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0.8 L9,5 L0,9.2 z" fill="#c41230"/>
+    </marker>
+  </defs>
+
+  <!-- upper path: file -> T -> numbers -->
+  <line x1="222" y1="156" x2="447" y2="156" stroke="#1f476b" stroke-width="1.8" marker-end="url(#hb)"/>
+  <text x="335" y="116" text-anchor="middle" font-size="30" font-weight="500" fill="#1f476b">Υ</text>
+  <text x="335" y="140" text-anchor="middle" font-size="15" fill="#1f476b">the interpretation</text>
+  <line x1="652" y1="156" x2="877" y2="156" stroke="#1f476b" stroke-width="1.8" marker-end="url(#hb)"/>
+  <text x="765" y="116" text-anchor="middle" font-size="24" fill="#1f476b">Ρ</text>
+  <text x="765" y="140" text-anchor="middle" font-size="15" fill="#1f476b">the numerical construction</text>
+
+  <!-- lower path: Dynare, one program, a bypass that never touches T -->
+  <path d="M120,194 V250 a14,14 0 0 0 14,14 H966 a14,14 0 0 0 14,-14 V204" fill="none" stroke="#c41230" stroke-width="1.8" marker-end="url(#hr)"/>
+  <text x="550" y="246" text-anchor="middle" font-size="14" fill="#c41230">no ⟦file⟧ on this path</text>
+  <text x="550" y="294" text-anchor="middle" font-size="19" fill="#c41230">Dynare: the preprocessor, then the perturbation solver, in one program</text>
+
+  <!-- nodes -->
+  <rect x="20" y="120" width="200" height="74" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
+  <text x="120" y="152" text-anchor="middle" font-size="21" fill="#212529">model file</text>
+  <text x="120" y="178" text-anchor="middle" font-size="14.5" fill="#676470">a .mod file, or a stage file</text>
+
+  <rect x="450" y="120" width="200" height="74" rx="6" fill="#1f476b" stroke="#1f476b" stroke-width="1.4"/>
+  <text x="550" y="153" text-anchor="middle" font-size="22" fill="#ffffff">⟦file⟧</text>
+  <text x="550" y="178" text-anchor="middle" font-size="14.5" fill="#cfd8e2">the model as a typed object</text>
+
+  <rect x="880" y="120" width="200" height="74" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
+  <text x="980" y="152" text-anchor="middle" font-size="21" fill="#212529">numbers</text>
+  <text x="980" y="178" text-anchor="middle" font-size="14.5" fill="#676470">ĝ, impulse responses, v̂, ĉ</text>
+</svg>
