@@ -566,7 +566,7 @@ th, td { padding: 0.45em 0.7em 0.45em 0; }
 </div>
 <div>
 
-**One domain can support several ontologies.** In computational economics, one ontology may describe model assumptions for comparison; another may classify numerical methods for solver selection.
+**One domain can support several ontologies.** In computational economics, separate ontologies may describe Bellman problems, specify the data inputs to estimation, state numerical assumptions in solvers, or define relations among countries, goods and trade flows.
 
 </div>
 <div>
