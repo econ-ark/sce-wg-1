@@ -407,10 +407,10 @@ style: |-
 </div>
 <div>
 
-<span class="lbl">Semantics.</span> *We* need to understand *what* AI is doing:
-1. Do we and AI agree on the *meaning* of a paper, a model or a model description?
-2. Can we inspect and verify what AI understands?
-3. Can we ask AI to solve the problems we want solved efficiently?
+<span class="lbl">Semantics.</span> We need a common structure to understand *what* AI "understands":
+1. Ensure we and AI agree on the *meaning* of a paper, a model or a model description.
+2. Automatically inspect and verify AI outputs.
+3. Efficiently scale and expand the set of problems AI can solve. 
 </div>
 <div>
 
@@ -431,12 +431,25 @@ style: |-
 
 </br> 
 
-A large language model appears to approximate meaning statistically rather than structurally. 
-- Without an explicit map of meaning, we cannot address 1.-3. above. 
+A large language model fills in the meaning statistically rather than structurally. 
+
+<style scoped>
+.callout.ai-example {
+  max-width: 900px;
+  font-size: 18px;
+  line-height: 1.4;
+  padding: 0.55em 0.8em;
+  margin: 0.7em 0 0;
+}
+</style>
+
+<div class="callout ai-example"><strong>Example from AI training.</strong> With NVIDIA’s TensorFloat-32 (TF32) mode, multiplying a matrix by the identity can change its entries because inputs are rounded first. Inputs and outputs still use 32-bit floating-point numbers (<code>float32</code>). AI-generated code must specify the arithmetic mode as well as the data type.</div>
 
 </div>
 <div>
 
+
+<div class="footnote"><a href="https://docs.pytorch.org/docs/2.14/notes/numerical_accuracy.html">PyTorch, “Numerical accuracy”, TF32 section</a> &middot; Stosic and Micikevicius (NVIDIA, 2021), <a href="https://developer.nvidia.com/blog/accelerating-ai-training-with-tf32-tensor-cores/">“Accelerating AI Training with NVIDIA TF32 Tensor Cores”</a>.</div>
 
 ---
 
@@ -446,13 +459,15 @@ A large language model appears to approximate meaning statistically rather than 
 
 Meaning of objects is not enough. 
 
-<span class="lbl">Ontology.</span> To "understand", we need a structure of relations between object types of different *types* 
+<span class="lbl">Ontology.</span> To "understand", we need a structure of relations between objects of different *types* 
 
-<span class="lbl">Semantic Ontology.</span> Machine-readable account of objects, their types and the valid relations between them. 
+<span class="lbl">Semantic Ontology.</span> **Machine-readable account of objects, their types and the valid relations between them.**
 
  </br> 
 
-Structural model of valid model. 
+--- 
+
+How AI can use a semantic ontology:
 - AI can be trained on a semantic ontology, or can answer from the ontology's program outputs
 - For example: AI writes model in Lean and answers from the Lean kernel's output. 
 - Other ways AI can work with sematnic ontologies are listed in the <a href="#how-an-ai-works-with-a-semantic-ontology" class="c-red">appendix</a>.
@@ -461,6 +476,61 @@ Structural model of valid model.
 </div>
 
 <div class="footnote">The premise: Project A proposal, abstract &middot; Bender and Koller (2020), "Climbing towards NLU: on meaning, form, and understanding in the age of data", <em>ACL 2020</em>, 5185–5198 &middot; Wu et al. (2022), "Autoformalization with large language models", <em>NeurIPS 2022</em> &middot; Hubert, Mehta, Sartran et al. (2025), "Olympiad-level formal mathematical reasoning with reinforcement learning", <em>Nature</em>, 12 November 2025.</div>
+
+--- 
+<!-- Evidence · Shared state and actions -->
+
+## Motivating example from robotics
+
+<p class="small">Nam et al. (2026), accepted at NeurIPS 2026.</p>
+
+OntoPlan combines a language model with planning software for simulated indoor robot tasks. Both use the same ontology of objects, locations and action rules.
+
+<span class="lbl">Illustrative task.</span> Move a toothbrush from a cabinet to another room.
+
+<style scoped>
+th:first-child { width: 25%; }
+</style>
+
+| Step | Shared record |
+|:---|:---|
+| Initial state | The toothbrush is in the cabinet. |
+| Pick up | The robot holds the toothbrush; the cabinet no longer contains it. |
+| Move to another room | The toothbrush's recorded location changes with the robot. |
+
+<div class="callout">The ontology keeps the AI and planning software working from the same updated state.</div>
+
+<div class="footnote">Nam et al. (2026), <a href="https://arxiv.org/html/2610.07649v1">OntoPlan</a>, Appendix A, Table 7. The task illustrates the paper’s state updates.</div>
+
+---
+
+<!-- Evidence · AI planning with the same information -->
+
+## Ontology-based planning achieved 89% task success
+
+The same study compared three AI planning systems on 150 simulated robot tasks. All received the same scene facts and action rules and used GPT-4o.
+
+| System | Success rate |
+|:---|:---|
+| OntoPlan | **88.7% (133/150)** |
+| SayPlan | 27% |
+| DELTA | 13% |
+
+OntoPlan retrieves relevant facts, constructs plans and records the consequences of actions. DELTA already had formal action rules and software that constructs plans.
+
+<div class="footnote">Nam et al. (2026), <a href="https://arxiv.org/html/2610.07649v1">OntoPlan</a>, §§4–5 and Appendix E. Results evaluate the ontology together with fact retrieval and planning software.</div>
+
+---
+
+<!-- Evidence · Scale and manufacturing reuse -->
+
+## Shared descriptions reduce repeated work
+
+<span class="lbl">Scale.</span> From small to large scenes, OntoPlan's largest AI input per task grew **1.06×** when retrieving relevant facts, versus **8.13×** with all facts supplied as text, without a statistically significant difference in task success.
+
+<span class="lbl">Reuse.</span> From an existing factory ontology and descriptions of machine operations, a converter produced **267 planning actions in about 15 seconds**; generated recovery plans were executed on factory equipment.
+
+<div class="footnote">Nam et al. (2026), <a href="https://arxiv.org/html/2610.07649v1">OntoPlan</a>, Table 6; input size counts tokens, the text units read by the language model. Malburg, Klein and Bergmann (2023), <a href="https://doi.org/10.1016/j.engappai.2023.106727"><em>Engineering Applications of Artificial Intelligence</em> 126, 106727</a>, §5; conversion reuses a previously constructed ontology and machine-operation descriptions.</div>
 
 
 ---
