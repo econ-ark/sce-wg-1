@@ -35,6 +35,7 @@ style: |-
     background: var(--ark-bg);
     padding: 58px 84px 88px 84px;
     justify-content: flex-start;
+    place-content: start;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -338,7 +339,38 @@ style: |-
   section.title .title-authors { font-size: 23px; font-weight: 400; color: #cfe0ee; margin: 0.8em 0 0 0; }
   section.title .title-authors u { text-decoration-thickness: 1px; text-underline-offset: 3px; }
   /* Section divider (_class: divider): navy field, white heading. Subsection divider (_class: divider sub): soft grey field, blue heading, grey line naming the section. */
-  section.divider { background: var(--ark-blue); }
+  section.divider { background: var(--ark-blue); place-content: center; }
+  section.roomy { padding-top: 72px; }
+  section.roomy h2 { margin-bottom: 1.15em; }
+  section.roomy p { margin-bottom: 1.2em; }
+  section.roomy li { margin-bottom: 0.75em; }
+  section.roomy ul, section.roomy ol { margin: 0.6em 0 1.2em 0; }
+  section.roomy table { margin: 1.1em 0 1.2em 0; }
+  section.roomy .callout, section.roomy .alert { margin: 1.3em 0; }
+  section.roomy .stack > div { padding-bottom: 1.2em !important; }
+  section.roomy .sp-m { height: 40px; }
+  section.airy { padding-top: 92px; }
+  section.airy h2 { margin-bottom: 1.6em; }
+  section.airy p { margin-bottom: 1.6em; }
+  section.airy li { margin-bottom: 1em; }
+  section.airy ul, section.airy ol { margin: 0.8em 0 1.6em 0; }
+  section.airy table { margin: 1.4em 0 1.5em 0; }
+  section.airy .callout, section.airy .alert { margin: 1.6em 0; }
+  section.airy .stack > div { padding-bottom: 1.6em !important; }
+  section.airy .sp-m { height: 56px; }
+  section.airy2 { padding-top: 112px; }
+  section.airy2 h2 { margin-bottom: 2em; }
+  section.airy2 p { margin-bottom: 2.1em; }
+  section.airy2 li { margin-bottom: 1.3em; }
+  section.airy2 ul, section.airy2 ol { margin: 1em 0 2em 0; }
+  section.airy2 table { margin: 1.8em 0 1.9em 0; }
+  section.airy2 .callout, section.airy2 .alert { margin: 2em 0; }
+  section.airy2 .stack > div { padding-bottom: 2.1em !important; }
+  section.airy2 .sp-m { height: 72px; }
+  section.airy table { font-size: 19px !important; }
+  section.airy th, section.airy td { padding-top: 0.6em !important; padding-bottom: 0.6em !important; }
+  section.airy2 table { font-size: 20px !important; }
+  section.airy2 th, section.airy2 td { padding-top: 0.8em !important; padding-bottom: 0.8em !important; }
   section.divider::before { background: var(--ark-yellow); }
   section.divider::after { color: #ffffff; opacity: 0.7; }
   section.divider h1 { font-size: 44px; line-height: 1.2; max-width: 82%; margin: 0; color: #ffffff; }
@@ -392,87 +424,65 @@ style: |-
 
 # <span class="bn">Semantic ontologies</span>
 
-## Primer for SCE-WG1
+## Primer for SCE WG1
 
-<p class="title-authors"><u> Matt Mackay & Akshay Shanker</u></p>
+<p class="title-authors"><u> Matt McKay & Akshay Shanker</u></p>
 
 
 ---
 
-<!-- slide 2 · Understanding AI -->
-
-<style scoped>
-.stack > div { padding: 0 0 0.9em 0; font-size: 19px; line-height: 1.45; }
-.stack > div:last-child { padding-bottom: 0; }
-.stack p { margin: 0; }
-.stack code { font-size: 15px; }
-</style>
+<!-- slide 2 · Communicating with AI -->
+<!-- _class: airy2 -->
 
 ## Communicating with AI
 
-<div>
+<span class="lbl">AI.</span> AI can now write code, solve hard mathematical problems and translate papers into code.
 
-</br> 
-
-<span class="lbl">AI.</span> AI can now write code, solve hard math problems and translate papers to code.
-
-</div>
-<div>
-
-<span class="lbl">Humans.</span> We need a common structure to understand *what* AI "understands":
-1. **Agreement on the *meaning*** of a paper, a model or a model description.
-2. **Inspect and verify** AI outputs.
-3. Efficiently **scale and expand** the set of problems AI can solve.
-</div>
-<div>
-
+<span class="lbl">Humans.</span> We need a shared structure for what an AI "understands", in order to:
+1. **agree on the meaning** of a paper, a model or a model description;
+2. **inspect and verify** what the AI produces;
+3. **extend** the set of problems the AI can solve.
 
 ---
 
-<!-- slide 3 · Semantics ≠ Text -->
+<!-- slide 3 · Semantics ≠ text -->
+<!-- _class: airy -->
 
-## Semantics ≠ Text
+## Meaning as a relation to a domain
 
-<div>
-
-</br> 
-
-<span class="lbl">Semantics.</span> Meaning is a relation between a piece of text and <span class="c-red"> some thing </span> (domain) outside language.
+<span class="lbl">Semantics.</span> Meaning is a relation between a piece of text and <span class="c-red">something outside language</span>, its domain.
  
-<span class="lbl">Missing meaning.</span> A system trained only on text cannot contain the relationship of the text to meaning (Bender and Koller 2020). 
+<span class="lbl">Missing meaning.</span> A system trained only on form, such as text, has no way to learn the relation between the text and its meaning (Bender and Koller 2020).
 
-</br> 
+<div class="sp-m"></div>
 
-A large language model fills in the meaning statistically, without any explicit inspectable structure.
-
-</div>
-<div>
-
+A large language model fills in the meaning statistically, from regularities in its training text, with no explicit structure that a reader can inspect.
 
 <div class="footnote">Bender and Koller (2020), <a href="https://aclanthology.org/2020.acl-main.463/">“Climbing towards NLU”</a>, ACL.</div>
 
+
 ---
 
-<!-- slide 4 · Semantic Ontology -->
+<!-- slide 4 · Semantic ontology -->
+<!-- _class: airy2 -->
 
-## Semantic Ontology 
+## Semantic ontology
 
-Meaning of objects is not enough. 
+Knowing what each symbol refers to is not enough.
 
-<span class="lbl">Ontology.</span> To "understand", we need a structure of relations between objects of different *types* 
+<span class="lbl">Ontology.</span> To understand a statement, we also need the relations between objects of different kinds.
 
-<span class="lbl">Semantic Ontology.</span> **Machine-readable account of <span class="c-red">objects</span>, their <span class="c-red">types</span> and the valid relations between them.**
+<span class="lbl">Semantic ontology.</span> **A semantic ontology is a machine-readable account of <span class="c-red">objects</span>, the <span class="c-red">kinds</span> they belong to and the valid relations between them.**
 
-<span class="c-red">Signatures</span> state the argument types of relations and the input and output types of operations.
+<span class="c-red">Signatures</span> state the types of a relation's arguments and the input and output types of an operation.
 
- </br> 
-
---- 
+---
 
 <!-- slide 5 · Three parts to a semantic ontology -->
+<!-- _class: roomy -->
 
 <style scoped>
-.stack > div { padding: 0 0 1em 0; font-size: 21px; line-height: 1.5; }
+.stack > div { padding: 0 0 0.8em 0; font-size: 21px; line-height: 1.5; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
 .katex-display { margin: 0.2em 0 1em 0 !important; font-size: 1.05em; }
@@ -487,17 +497,17 @@ $$
 <div class="stack">
 <div>
 
-<span class="lbl">1. The written form.</span> Machine-readable symbols, each with a <span class="c-red">type</span> and a <span class="c-red">signature</span> ($v : X \to \mathbb{R}$).
+<span class="lbl">1. The written form.</span> The written form consists of machine-readable symbols, each with a <span class="c-red">type</span> and a <span class="c-red">signature</span>, such as $v : X \to \mathbb{R}$. In this deck a type labels a symbol in the written form, whereas a kind sorts the objects in the domain.
 
 </div>
 <div>
 
-<span class="lbl">2. The domain of meaning.</span> The objects we model, such as state spaces, laws, value functions and operators, are sorted into <span class="c-red">kinds</span> with relations between them.
+<span class="lbl">2. The domain of meaning.</span> The objects we model, such as state spaces, probability laws, value functions and operators, are sorted into <span class="c-red">kinds</span> with relations between them.
 
 </div>
 <div>
 
-<span class="lbl">3. The map Υ (upsilon).</span> Υ maps each typed symbol to an object of the matching kind. A program <span class="c-red">checks</span> that the assigned object has the required kind.
+<span class="lbl">3. The map Υ (upsilon).</span> Υ maps each typed symbol to an object of the matching kind. A program, called the checker in this deck, <span class="c-red">checks</span> that the assigned object has the required kind. For a stage file the checker is the elaborator (slide 24), for an OWL ontology a reasoner (slide 6).
 
 </div>
 </div>
@@ -512,9 +522,9 @@ $$
 }
 </style>
 
-<div class="callout ai-example"><strong>Example from AI training.</strong> With NVIDIA’s TensorFloat-32 (TF32) mode, a matrix of 32-bit floating-point numbers (<code>float32</code>) can change even when multiplied by the identity, because inputs are rounded first. A shared numerical ontology makes the <strong>written form</strong> (type and arithmetic settings), <strong>domain of meaning</strong> (machine values and rounded operations) and <strong>Υ</strong> (the interpretation map) explicit, giving humans and AI tools the same arithmetic assumptions to follow.</div>
+<div class="callout ai-example"><strong>Example from AI training.</strong> Under NVIDIA’s TensorFloat-32 (TF32) mode, a matrix of 32-bit floating-point numbers (<code>float32</code>) can change when multiplied by the identity, because the inputs are rounded before the multiplication. An ontology of the arithmetic would state the <strong>written form</strong> (the declared type and the arithmetic setting), the <strong>domain of meaning</strong> (the machine values and the rounded operations) and <strong>Υ</strong> (which setting the symbols are read under), so that humans and AI tools compute under the same arithmetic assumptions.</div>
 
-<div class="footnote">Harel and Rumpe (2004), "Meaningful modeling: what's the semantics of 'semantics'?", <em>Computer</em> 37(10), 64–72, for the three parts &middot; Bellman calculus, Introduction §1 (bellman-ddsl/docs) &middot; in this deck a type belongs to the written form and a kind to the domain; Guizzardi and Guarino (2024) write "type" for what the deck calls a kind. &middot; <a href="https://docs.pytorch.org/docs/2.14/notes/numerical_accuracy.html">PyTorch, “Numerical accuracy”, TF32 section</a> &middot; Stosic and Micikevicius (NVIDIA, 2021), <a href="https://developer.nvidia.com/blog/accelerating-ai-training-with-tf32-tensor-cores/">“Accelerating AI Training with NVIDIA TF32 Tensor Cores”</a>.</div>
+<div class="footnote">Harel and Rumpe (2004), "Meaningful modeling: what's the semantics of 'semantics'?", <em>Computer</em> 37(10), 64–72, for the three parts &middot; Bellman calculus, Introduction §1 (bellman-ddsl/docs) &middot; in this deck a type belongs to the written form and a kind to the domain; Guizzardi and Guarino (2024) write "type" for what the deck calls a kind, and keep "kind" for a narrower notion. &middot; <a href="https://docs.pytorch.org/docs/2.14/notes/numerical_accuracy.html">PyTorch, “Numerical accuracy”, TF32 section</a> &middot; Stosic and Micikevicius (NVIDIA, 2021), <a href="https://developer.nvidia.com/blog/accelerating-ai-training-with-tf32-tensor-cores/">“Accelerating AI Training with NVIDIA TF32 Tensor Cores”</a>.</div>
 
 
 ---
@@ -523,31 +533,32 @@ $$
 
 ## Ways to represent and use an ontology
 
-**Formal mathematics is one way to express an ontology.**
+Formal mathematics is one way to write an ontology down, though the mathematics as usually written leaves its conventions implicit (slides 19–21). The table lists the forms in use.
 
 <style scoped>
-table { font-size: 20px; line-height: 1.4; margin: 0.45em 0 0.7em; }
+table { font-size: 17px; line-height: 1.35; margin: 0.35em 0 0.5em; }
 th:first-child { width: 27%; }
 th:nth-child(2) { width: 39%; }
 th:nth-child(3) { width: 34%; }
-th, td { padding: 0.45em 0.7em 0.45em 0; }
-.callout { font-size: 18px; line-height: 1.4; margin: 0.6em 0 0; padding: 0.55em 0.8em; }
+th, td { padding: 0.38em 0.7em 0.38em 0; }
+.callout { font-size: 17px; line-height: 1.4; margin: 0.5em 0 0; padding: 0.5em 0.8em; }
 table code, .callout code { font-size: 16px; white-space: nowrap; }
-.form-note { font-size: 18px; line-height: 1.4; margin: 0.55em 0 0; }
+.form-note { font-size: 16px; line-height: 1.35; margin: 0.45em 0 0; }
 </style>
 
 | Form or use | What it makes explicit | Examples in this deck |
 |:---|:---|:---|
-| **Typed mathematical theory, including algebra** | Types, operation signatures and laws. | Math-in-the-Middle; Bellman calculus; Lean (mathlib). |
-| **Ontology axioms (OWL)** | `SubClassOf(:Household :EconomicAgent)`<br>Every household is an economic agent. | OntoPlan’s OWL ontology. |
-| **Graph representation** | Object identifiers, declared types and relations. | OntoPlan’s scene graph, represented in RDF. |
-| **Annotations to models or data** | Links from variables or objects to ontology terms. | SemGen models; NVIDIA’s scene objects. |
+| **Typed mathematical theory** | Types, the signatures of operations and the laws they satisfy. | Math-in-the-Middle (slide 9); the Bellman calculus, which Bellman-SYM writes down (slide 23); mathlib, the library of the proof assistant Lean. |
+| **Ontology axioms, in OWL** | A checkable statement about classes (OWL’s word for kinds) or named individuals. In OWL, the ontology language of the W3C, the web standards body, `SubClassOf(:Bond :TradableDebtInstrument)` states that every bond is a tradable debt instrument. | FIBO, the finance ontology (slide 43); OntoPlan (slide 13). |
+| **Graph** | Object identifiers, their types and the relations between them, each statement a triple of subject, predicate and object, as in RDF, the W3C’s graph model. | OntoPlan’s world model, the facts about a simulated environment stored as RDF triples (slide 13). |
+| **Annotations on models or data** | Links from variables or objects to the terms of an ontology. | SemGen’s biological models (slide 9); NVIDIA’s scene objects (slide 8). |
 
-<div class="callout"><strong>Illustrative economic example.</strong> Given <code>ClassAssertion(:Household :h)</code> (h is a household), OWL reasoning software can infer <code>ClassAssertion(:EconomicAgent :h)</code>.</div>
+<div class="callout"><strong>What an axiom does.</strong> Given the axiom above and <code>ClassAssertion(:Bond :b)</code>, that b is a bond, a reasoner, the program that draws consequences from axioms, infers <code>ClassAssertion(:TradableDebtInstrument :b)</code>.</div>
 
-<p class="form-note"><strong>These forms can be combined.</strong> OWL axioms and annotations can be represented in RDF. Υ interprets the written symbols in the domain of meaning.</p>
+<p class="form-note">The forms combine, since OWL axioms and annotations can both be stored as RDF graphs. In every form, Υ interprets the written symbols in the domain of meaning.</p>
 
-<div class="footnote"><a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), §§2–3</a> &middot; <a href="https://leanprover-community.github.io/mathlib-overview.html">Lean/mathlib overview</a> &middot; W3C: <a href="https://www.w3.org/TR/owl2-overview/#Ontologies">OWL 2 overview</a> and <a href="https://www.w3.org/TR/rdf11-concepts/#data-model">RDF graph model</a>; <a href="https://www.w3.org/TR/owl2-primer/">OWL 2 Primer, §§3, 4.1–4.2</a> (syntax and inference) &middot; <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026), §3.1</a> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), §2</a> &middot; <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA, semantic labels</a>. RDF represents statements as subject–relation–object triples. The OWL snippets use Functional-Style Syntax; the “:” prefix denotes an illustrative economics vocabulary.</div>
+<div class="footnote"><a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), §§2–3</a> &middot; <a href="https://leanprover-community.github.io/mathlib-overview.html">Lean/mathlib overview</a> &middot; W3C: <a href="https://www.w3.org/TR/owl2-overview/#Ontologies">OWL 2 overview</a> and <a href="https://www.w3.org/TR/rdf11-concepts/#data-model">RDF graph model</a>; <a href="https://www.w3.org/TR/owl2-primer/">OWL 2 Primer, §§3, 4.1–4.2</a> (syntax and inference) &middot; <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026), §3.1</a> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), §2</a> &middot; <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA, semantic labels</a>. RDF represents statements as subject–predicate–object triples, the predicate naming a relation. The OWL snippets use Functional-Style Syntax, with “:” abbreviating FIBO’s namespace.</div>
+
 
 ---
 
@@ -556,7 +567,7 @@ table code, .callout code { font-size: 16px; white-space: nowrap; }
 ## The scope depends on the field and the task
 
 <style scoped>
-.stack > div { padding: 0 0 0.75em; font-size: 21px; line-height: 1.5; }
+.stack > div { padding: 0 0 0.8em 0; font-size: 21px; line-height: 1.5; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
 .callout { font-size: 21px; line-height: 1.45; margin-top: 0.9em; }
@@ -580,13 +591,14 @@ table code, .callout code { font-size: 16px; white-space: nowrap; }
 </div>
 </div>
 
-<div class="callout"><strong>WG1’s task.</strong> Define the scope for computational economics: which objects, relations and operations should our ontologies describe, and which tasks should they support?</div>
+<div class="callout"><strong>WG1’s task.</strong> Define the scope for computational economics by deciding which objects, relations and operations our ontologies should describe and which tasks they should support.</div>
 
 <div class="footnote">On choosing an ontology’s domain, purpose and scope: Noy and McGuinness (2001), <a href="https://protege.stanford.edu/publications/ontology_development/ontology101-noy-mcguinness.html"><em>Ontology Development 101</em></a>, §3, Step 1. The computational-economics uses above are illustrative.</div>
 
+
 ---
 
-<!-- Semantic ontologies and formal methods in AI -->
+<!-- slide 8 · Semantic ontologies and formal methods in AI -->
 
 ## Semantic ontologies and formal methods in AI
 
@@ -601,44 +613,46 @@ td:last-child { font-size: 14px; line-height: 1.4; }
 
 | Use | Published finding | Source |
 |:---|:---|:---|
-| AI training data (NVIDIA) | NVIDIA labels Omniverse objects with Wikidata identifiers through OpenUSD’s semantic-label schema. The labels supply object categories for AI training data. | <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA specification</a><br><a href="https://openusd.org/dev/api/usd_semantics_overview.html">OpenUSD schema</a> |
-| Robot planning (OntoPlan) | OntoPlan achieved **89% task success**, versus **27%** for SayPlan, with the same scene facts. | <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026)</a><br>NeurIPS (accepted) |
-| Robot experience (KnowRob) | KnowRob used an ontology to retrieve grasp positions and forces from recorded robot actions. | <a href="https://www.open-ease.org/papers/beetz18knowrob.pdf">Beetz et al. (2018)</a><br>ICRA |
-| AI program translation | Retraining AI to emit numerical expressions for software evaluation raised C-to-assembly translation test accuracy from **3.8% to 92.6% on 21,104 functions**. | <a href="https://aclanthology.org/2024.findings-emnlp.55/">Zhang et al. (2024)</a><br>EMNLP Findings |
+| AI training data (NVIDIA) | NVIDIA’s Omniverse simulation platform labels scene objects with identifiers from Wikidata, a public knowledge base, through the semantic-label schema of the OpenUSD scene format. The labels give AI training data its object categories. | <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA specification</a><br><a href="https://openusd.org/dev/api/usd_semantics_overview.html">OpenUSD schema</a> |
+| Robot planning (OntoPlan) | OntoPlan achieved **89% task success**, against **27%** for SayPlan, a comparison system given the same scene facts. | <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026)</a><br>NeurIPS (accepted) |
+| Robot experience (KnowRob) | The KnowRob knowledge system used an ontology to retrieve grasp poses and forces from recorded robot actions. | <a href="https://www.open-ease.org/papers/beetz18knowrob.pdf">Beetz et al. (2018)</a><br>ICRA |
+| AI program translation | Training a code model to emit symbolic expressions for numeric constants, which a rule-based interpreter converts to IEEE-754 values, raised the share of C functions whose generated assembly passed input–output tests from **3.8% to 92.6% on 21,104 functions**. | <a href="https://aclanthology.org/2024.findings-emnlp.55/">Zhang et al. (2024)</a><br>EMNLP Findings |
 | AI theorem proving (LeanDojo) | Retrieving existing Lean library results raised proof success from **23.2% to 26.3% on 2,000 theorems** requiring results not used in training. | <a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/4441469427094f8873d0fecb0c4e1cee-Abstract-Datasets_and_Benchmarks.html">Yang et al. (2023)</a><br>NeurIPS |
-| Numerical checking (SMT-LIB) | SMT-LIB defines numerical types, operations and rounding modes that reasoning software uses to check floating-point computations. | <a href="https://smt-lib.org/papers/BTRW15.pdf">Brain et al. (2015)</a><br>IEEE ARITH |
+| Numerical checking (SMT-LIB) | SMT-LIB, a standard input language for automated reasoners, defines floating-point types, operations and rounding modes, so that a reasoner can check a floating-point computation. | <a href="https://smt-lib.org/papers/BTRW15.pdf">Brain et al. (2015)</a><br>IEEE ARITH |
 
 <div class="footnote">Reported AI gains concern the combined systems described in each paper.</div>
 
+
 ---
 
-<!-- Evidence · Shared models and operational uses -->
+<!-- slide 9 · Evidence – shared models and operational uses -->
 
 ## Evidence: shared models and operational uses
 
 <style scoped>
-table { width: 100% !important; table-layout: fixed; font-size: 18px; margin: 0.4em 0 0; }
+table { width: 100% !important; table-layout: fixed; font-size: 17px; margin: 0.4em 0 0; }
 th:first-child { width: 23%; }
 th:nth-child(2) { width: 61%; }
 th:nth-child(3) { width: 16%; }
-th, td { padding: 0.4em 0.7em 0.4em 0; }
+th, td { padding: 0.34em 0.7em 0.34em 0; }
 td:last-child { font-size: 14px; line-height: 1.4; }
 </style>
 
 | Use | Published finding | Source |
 |:---|:---|:---|
 | Factory planning | Software converted an existing factory ontology and machine-operation descriptions into **267 planning actions in about 15 seconds**. | <a href="https://doi.org/10.1016/j.engappai.2023.106727">Malburg et al. (2023)</a><br>Eng. Appl. AI |
-| Assembly planning (Ford) | Ford’s deployed assembly-planning AI used ontologies to interpret work instructions and share knowledge across applications. | <a href="https://ojs.aaai.org/index.php/AAAI/article/view/19071">Rychtyckyj et al. (2016)</a><br>IAAI |
-| Materials data (MDS-Onto) | MDS-Onto defines terms for X-ray and solar-energy measurements; software uses these terms to generate data templates and machine-readable datasets. | <a href="https://doi.org/10.1038/s41597-025-04938-5">Rajamohan et al. (2025)</a><br>Scientific Data |
+| Assembly planning (Ford) | Ford’s deployed assembly-planning AI used an ontology to interpret vehicle-build instructions and to share that knowledge with other applications. | <a href="https://ojs.aaai.org/index.php/AAAI/article/view/19071">Rychtyckyj et al. (2016)</a><br>IAAI |
+| Materials data (MDS-Onto) | MDS-Onto defines terms for X-ray and solar-energy measurements, which software uses to generate data templates and machine-readable datasets. | <a href="https://doi.org/10.1038/s41597-025-04938-5">Rajamohan et al. (2025)</a><br>Scientific Data |
 | Model composition (SemGen) | SemGen used ontology terms to match variables by biological meaning and combine models in different formats. | <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019)</a><br>Bioinformatics |
-| Arterial-model assembly | Software used ontology annotations and conservation rules to assemble an **86-vessel arterial model from three templates**. | <a href="https://doi.org/10.1371/journal.pcbi.1008859">Shahidi et al. (2021)</a><br>PLOS Comput. Biol. |
+| Arterial-model assembly | SemGen merged semantically annotated bond-graph modules, whose junction laws conserve mass and energy, into an **86-vessel arterial model from three templates**. | <a href="https://doi.org/10.1371/journal.pcbi.1008859">Shahidi et al. (2021)</a><br>PLOS Comput. Biol. |
 | Biological inference (GO-CAM) | Gene Ontology uses logical rules to infer additional labels for gene functions and distributes them in standard releases. | <a href="https://doi.org/10.1038/s41588-019-0500-1">Thomas et al. (2019)</a><br>Nature Genetics |
-| Mathematical software | A shared mathematical ontology let SageMath, GAP and Singular perform different steps of one polynomial calculation. | <a href="https://doi.org/10.1007/978-3-319-72453-9_14">Kohlhase et al. (2017)</a><br>MACIS |
+| Mathematical software | A shared mathematical ontology, Math-in-the-Middle, let three computer-algebra systems, SageMath, GAP and Singular, each perform a step of one polynomial calculation. | <a href="https://doi.org/10.1007/978-3-319-72453-9_14">Kohlhase et al. (2017)</a><br>MACIS |
 
-<div class="footnote">Factory conversion reuses an existing ontology; arterial-model assembly combines semantic annotations with physical constraints.</div>
+<div class="footnote">Factory conversion reuses an existing ontology. Arterial-model assembly combines semantic annotations with physical constraints.</div>
 
 
 ---
+
 <!-- slide 10 · Case studies (divider) -->
 
 <!-- _class: divider -->
@@ -648,7 +662,7 @@ td:last-child { font-size: 14px; line-height: 1.4; }
 
 ---
 
-<!-- Case study 1 · OntoPlan (divider) -->
+<!-- slide 11 · OntoPlan – robot task planning (divider) -->
 
 <!-- _class: divider sub -->
 
@@ -656,15 +670,16 @@ td:last-child { font-size: 14px; line-height: 1.4; }
 
 # OntoPlan: robot task planning
 
+
 ---
 
-<!-- Evidence · Shared state and actions -->
+<!-- slide 12 · Motivating example from robotics -->
 
 ## Motivating example from robotics
 
 <p class="small">Nam et al. (2026), accepted at NeurIPS 2026.</p>
 
-OntoPlan combines a language model with planning software for simulated indoor robot tasks. The ontology defines object types, relations and inference rules; a matching action model specifies what actions change.
+OntoPlan combines a language model with planning software for indoor robot tasks in symbolic simulation. Its ontology defines object types, relations and inference rules, while a matching action model specifies what each action changes.
 
 <span class="lbl">Illustrative task.</span> Move a toothbrush from a cabinet to another room.
 
@@ -674,18 +689,19 @@ th:first-child { width: 25%; }
 
 | Model component | Toothbrush example |
 |:---|:---|
-| Objects and types | The toothbrush and cabinet have type **Artifact** (physical object); the room has type **Space**. |
+| Objects and types | The toothbrush and the cabinet have type **Artifact** (physical object), while the room has type **Space**. |
 | Relation | The toothbrush is inside the cabinet. |
 | Action effect | After pickup, the toothbrush is held by the robot’s hand and is no longer inside the cabinet. |
 | Inference rule | A carried object is in the same room as the robot. |
 
-<div class="callout">The AI and planning software use the same objects, types and updated relations.</div>
+<div class="callout">The language model and the planning software work from the same objects, types and updated relations.</div>
 
 <div class="footnote">Nam et al. (2026), <a href="https://arxiv.org/html/2610.07649v1">OntoPlan</a>, §3.1 and Appendix A, Table 7. The task illustrates the paper’s state updates.</div>
 
+
 ---
 
-<!-- Evidence · OntoPlan ontology from the paper -->
+<!-- slide 13 · OntoPlan’s ontology defines object types and rules -->
 
 ## OntoPlan’s ontology defines object types and rules
 
@@ -706,18 +722,20 @@ th:first-child { width: 25%; }
 
 <figure class="ontology-figure">
 <img src="assets/ontoplan-figure2-ontology.png" alt="OntoPlan Figure 2, upper ontology panel: object types at left and symmetry, inverse, transitivity and property-chain rules at right.">
-<figcaption><strong>Written form.</strong> The diagram shows type names and logical rules. <strong>Domain of meaning.</strong> These describe the simulated rooms, robots, objects and relations. <strong>Υ.</strong> It interprets <code>Space</code> as the set of spaces and <code>carries</code> as the relation between a robot and its carried objects.</figcaption>
+<figcaption><strong>Written form.</strong> The diagram shows type names and logical rules. <strong>Domain of meaning.</strong> The names and rules describe the simulated rooms, robots, objects and relations. <strong>Υ.</strong> It interprets <code>Space</code> as the set of spaces and <code>carries</code> as the relation between a robot and the objects it carries.</figcaption>
 </figure>
 
 <div class="footnote">Nam et al. (2026), <a href="https://arxiv.org/html/2610.07649v1">OntoPlan</a>, Figure 2, ontology layer (cropped). The <a href="https://github.com/namhyeongwoo/OntoPlan/blob/main/figures/world_model.png">full figure</a> also shows rooms, objects and their states. Υ is this deck’s notation for interpretation.</div>
 
+
 ---
 
-<!-- Evidence · AI planning with the same information -->
+<!-- slide 14 · Ontology-based planning achieved 89% task success -->
+<!-- _class: airy -->
 
 ## Ontology-based planning achieved 89% task success
 
-The same study compared three AI planning systems on 150 simulated robot tasks. All received the same scene facts and action rules and used GPT-4o.
+The same study compared three AI planning systems on 150 simulated robot tasks. All used GPT-4o, the same scene facts and the same 16 primitive actions, and their plans were checked against the same preconditions and effects.
 
 | System | Success rate |
 |:---|:---|
@@ -725,13 +743,15 @@ The same study compared three AI planning systems on 150 simulated robot tasks. 
 | SayPlan | 27% |
 | DELTA | 13% |
 
-OntoPlan retrieves relevant facts, constructs plans and records the consequences of actions. DELTA already had formal action rules and software that constructs plans.
+OntoPlan retrieves the relevant facts, constructs the plan and records the consequences of each action. DELTA also had formal action rules and plan-constructing software, which means that formal rules alone do not account for OntoPlan's gain.
 
 <div class="footnote">Nam et al. (2026), <a href="https://arxiv.org/html/2610.07649v1">OntoPlan</a>, §§4–5 and Appendix E. Results evaluate the ontology together with fact retrieval and planning software.</div>
 
+
 ---
 
-<!-- Evidence · OntoPlan scaling -->
+<!-- slide 15 · OntoPlan kept AI inputs small as scenes grew -->
+<!-- _class: airy2 -->
 
 ## OntoPlan kept AI inputs small as scenes grew
 
@@ -742,9 +762,9 @@ Within OntoPlan, the authors compared selecting relevant facts with supplying al
 | Relevant facts selected from the ontology | **1.06×** |
 | All scene facts supplied as text | **8.13×** |
 
-Task success was 89% with selected facts and 87% with all facts; the difference was not statistically significant.
+Task success was 89% with selected facts and 87% with all facts, a difference that was not statistically significant.
 
-<div class="footnote">Nam et al. (2026), <a href="https://arxiv.org/html/2610.07649v1">OntoPlan</a>, Table 6. Ratios compare large with small scenes; input size counts tokens (text units) in the largest single call per task.</div>
+<div class="footnote">Nam et al. (2026), <a href="https://arxiv.org/html/2610.07649v1">OntoPlan</a>, Table 6. Ratios compare large with small scenes. Input size counts tokens (text units) in the largest single call per task.</div>
 
 
 ---
@@ -760,11 +780,12 @@ Task success was 89% with selected facts and 87% with all facts; the difference 
 
 ---
 
-<!-- slide 17 · Mathematical Description of a Model -->
+<!-- slide 17 · A mathematical description of a model -->
+<!-- _class: roomy -->
 
-## Mathematical Description of a Model
+## A mathematical description of a model
 
-We want to show that machine reading a mathematical description of a model misses meaning. Consider an excerpt of a written statement of the buffer-stock saving model:
+This case shows that a machine reading a mathematical description of a model misses part of its meaning. Consider an excerpt from a written statement of the buffer-stock saving model:
 
 > Each period the household arrives with assets $k_t$, receives income $y_t$ and earns the gross return $R\,k_t$ on those assets, where $R$ is the gross interest factor. Market resources are then $m_t=R\,k_t+y_t$. Income is i.i.d. with $\log y_t\sim N(\mu_y,\sigma_y^2)$. The household chooses consumption $c_t\in(0,m_t]$, leaving $k_{t+1}=m_t-c_t$, to solve the Bellman equation
 > $$v_t(m_t)=\max_{0<c_t\le m_t}\;\Big\{u(c_t)+\beta\,\mathbb{E}_t\,v_{t+1}\big(R\,(m_t-c_t)+y_{t+1}\big)\Big\}.$$
@@ -776,24 +797,24 @@ We want to show that machine reading a mathematical description of a model misse
 ---
 
 <!-- slide 18 · Context -->
+<!-- _class: roomy -->
 
-## Context 
+## Context
 
-</br>
+<span class="lbl">Implicit context.</span> Economists write code that implements $\mathbb{T}$ from their own understanding of dynamic programming, which the statement leaves implicit.
 
-<span class="lbl">Implicit context</span> Economist write code to implement $\mathbb{T}$ by using their implicit understanding of Dynamic Programming. 
-
-</br>
+<div class="sp-m"></div>
 
 By itself, machine reading the statement does not give enough information to build $\mathbb{T}$.
-- The challenge is fundamental, since a machine parses text into a syntax tree by explicit rules, whereas the tree, without added structure on its symbols, does not capture the meaning of the model. <a href="#the-parse-tree-of-a-written-statement" class="c-red">See the appendix on parse trees.</a>
+- The difficulty is not one of parsing. A machine parses the statement, that is, splits it by grammar rules alone into a parse tree of its symbols, whereas the tree, with no structure added to its symbols, records nothing of the model's meaning. <a href="#the-parse-tree-of-a-written-statement" class="c-red">See the appendix on parse trees.</a>
 
 - A semantic ontology makes that <span class="c-red">implicit understanding explicit</span>.
 
 
 ---
 
-<!-- slide 19 · Missing Meaning Problem -->
+<!-- slide 19 · The missing-meaning problem -->
+<!-- _class: roomy -->
 
 <style scoped>
 table { font-size: 16.5px; margin: 0.4em 0 0 0; width: 100% !important; }
@@ -803,23 +824,22 @@ th:nth-child(2), td:nth-child(2) { width: 76%; }
 td code { font-size: 14px; }
 </style>
 
-## Missing Meaning Problem
+## The missing-meaning problem
 
-A non-exhaustive list of meanings that are missed in parsing the text describing the buffer-stock saving model.
+The tables on this slide and the next two list some of the meaning that a parse of the buffer-stock statement misses.
 
-</br>
-
-| Missing meaning| In the buffer-stock statement |
+| Missing meaning | In the buffer-stock statement |
 |---|---|
-| Variable bindings | The maximization binds $c_t$, while the expectation binds $y_{t+1}$. The left-hand side binds $m_t$ by defining $v_t$ as a function of $m_t$, which leaves $m_t$ free inside the right-hand side. |
-| Parameters | The paper defines $u$, $R$, $\beta$ and the law of $y_{t+1}$ elsewhere, in no fixed place. Only $\beta$ and $R$ are numbers, $u$ is a function and the law is a measure - this is not immediately apparent from the statement. |
-| Symbol types | The value function $v_t$ maps $\mathbb{R}_{++}$ to $\mathbb{R}$, and $m_t$ a point of in its domain. The tree records both symbols but not the fact that $v_{t}(m_{t})$ is a function evaluation at a variable of a particular type. |
+| Variable bindings | The maximisation binds $c_t$, while the expectation binds $y_{t+1}$. The left-hand side binds $m_t$ by defining $v_t$ as a function of $m_t$, which leaves $m_t$ free inside the right-hand side. |
+| Parameters | The paper defines $u$, $R$, $\beta$ and the law of $y_{t+1}$ elsewhere, in no fixed place. Of these, only $\beta$ and $R$ are numbers, while $u$ is a function and the law is a probability measure, a difference the statement does not show. |
+| Symbol types | The value function $v_t$ maps $\mathbb{R}_{++}$ to $\mathbb{R}$, with $m_t$ a point of its domain. The tree records both symbols but not that $v_{t}(m_{t})$ evaluates a function at a point of a particular type. |
 | An equation between functions | For each $m_t$ the Bellman equation equates two numbers. Over all $m_t$ it is one equation between functions, $v_t=\mathbb{T}\,v_{t+1}$, in which $\mathbb{T}$ maps $v_{t+1}$ to $v_t$. |
 
 
 ---
 
-<!-- slide 20 · Missing Meaning Problem -->
+<!-- slide 20 · The missing-meaning problem -->
+<!-- _class: airy2 -->
 
 <style scoped>
 table { font-size: 16.5px; margin: 0.4em 0 0 0; width: 100% !important; }
@@ -829,19 +849,20 @@ th:nth-child(2), td:nth-child(2) { width: 76%; }
 td code { font-size: 14px; }
 </style>
 
-## Missing Meaning Problem
+## The missing-meaning problem
 
 | Missing meaning | In the buffer-stock statement |
 |---|---|
-| Whether a symbol is a variable, a function, or a random variable | The symbol $m_t$, defined by $m_t=R\,k_t+y_t$, is i) the path of one household's resources, ii) the function $(k,y)\mapsto Rk+y$ composed inside the operator, and iii) the random variable whose law is the cross-sectional distribution. A paper writes one symbol for all three meanings, whereas code must represent them as three objects of different types "doing" different things. |
+| Whether a symbol is a variable, a function, or a random variable | The symbol $m_t$, defined by $m_t=R\,k_t+y_t$, is i) the path of one household's resources, ii) the function $(k,y)\mapsto Rk+y$ composed inside the operator, and iii) the random variable whose law is the cross-sectional distribution. A paper writes one symbol for all three meanings, whereas code must represent them as three objects of different types with different uses. |
 | Shock law | The statement fixes $\log y_t\sim N(\mu_y,\sigma_y^2)$. In the shorter form $y\sim\mathrm{LogNormal}(\mu_y,\sigma_y)$, $\mu_y$ denotes the mean of $\log y$ under one convention and the mean of $y$ under another. |
 
-<div class="footnote">The LogNormal convention: Project Bellman (the author's project, slide 23), reference page "Shock distributions".</div>
+<div class="footnote">The LogNormal convention: Project Bellman (the authors' project, slide 23), reference page "Shock distributions".</div>
 
 
 ---
 
-<!-- slide 21 · Missing Meaning Problem -->
+<!-- slide 21 · The missing-meaning problem -->
+<!-- _class: airy2 -->
 
 <style scoped>
 table { font-size: 16.5px; margin: 0.4em 0 0 0; width: 100% !important; }
@@ -851,11 +872,11 @@ th:nth-child(2), td:nth-child(2) { width: 76%; }
 td code { font-size: 14px; }
 </style>
 
-## Missing Meaning Problem
+## The missing-meaning problem
 
 | Missing meaning |In the buffer-stock statement  |
 |---|---|
-| Implications of timing stated in words | "A policy shock raises entrants at date $t$." If the entrants change $y_t$ in equilibrium, the sentence is consistent with a model in which prices respond at $t$ and with one in which they respond only at $t+1$. |
+| Implications of timing stated in words | In a model with entry, beyond the excerpt of slide 17, the sentence "A policy shock raises entrants at date $t$" is satisfied by two different models, because the shock may reach the cross-sectional distribution at $t$ or at $t+1$, while nothing in the paper records which one the code computes. |
 | What the household knows when it decides | If the return $R_t$ is random, persistent and drawn before the decision, the household's expectation of $R_{t+1}$ depends on whether it observes $R_t$ or only $m_t=R_t\,k_t+y_t$ when it decides. |
 
 <div class="footnote">The timing example: Project A proposal, footnote 1.</div>
@@ -864,9 +885,10 @@ td code { font-size: 14px; }
 ---
 
 <!-- slide 22 · Multiple possible parsed meanings -->
+<!-- _class: airy -->
 
 <style scoped>
-.stack > div { padding: 0 0 1em 0; font-size: 21px; line-height: 1.5; }
+.stack > div { padding: 0 0 0.8em 0; font-size: 21px; line-height: 1.5; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
 </style>
@@ -876,7 +898,7 @@ td code { font-size: 14px; }
 <div class="stack">
 <div>
 
-<span class="lbl">Several readings.</span> One well-formed statement admits two or more readings of its parse tree. <a href="#what-the-expectation-integrates" class="c-red">The appendix</a> gives examples of false agreement.
+<span class="lbl">Several readings.</span> One well-formed statement admits two or more readings of its parse tree. <a href="#what-the-expectation-integrates" class="c-red">The appendix</a> gives examples of false agreement, in which two readers accept the same statement and compute different models.
 
 </div>
 <div>
@@ -886,12 +908,12 @@ td code { font-size: 14px; }
 </div>
 <div>
 
-<span class="lbl">Timing and information.</span> Even so, the timing of events, and what the individual knows at each decision, confuse economists themselves.
+<span class="lbl">Timing and information.</span> Even so, the timing of events and what the household knows at each decision confuse economists themselves.
 
 </div>
 <div>
 
-<span class="lbl">AI readers.</span> When we rely on an AI's statistical reading of the text, we can <span class="c-red">never be sure</span> that it understands the model correctly, even if it appears to most of the time.
+<span class="lbl">AI readers.</span> When we rely on an AI's statistical reading of the text, we <span class="c-red">cannot be sure</span> that it has read the model correctly, even when its reading appears correct most of the time.
 
 </div>
 </div>
@@ -899,7 +921,7 @@ td code { font-size: 14px; }
 
 ---
 
-<!-- slide 23 · The ontology: one stage of the buffer-stock model -->
+<!-- slide 23 · The ontology – one stage of the buffer-stock model -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -910,7 +932,7 @@ td code { font-size: 14px; }
 
 ## The ontology: one stage of the buffer-stock model
 
-<div class="sub">The Bellman-SYM stage file is the <strong>written form</strong>; its <strong>domain of meaning</strong> contains state spaces, probability laws, value functions and operators. <strong>Υ</strong> maps each declaration and block to the mathematical object it denotes.</div>
+<div class="sub">The stage file, which writes one stage (the decision problem of one period) in Bellman-SYM, the model language of Project Bellman (the authors’ project), is the <strong>written form</strong>. Its <strong>domain of meaning</strong> contains state spaces, probability laws, value functions and operators. <strong>Υ</strong> maps each declaration and block to the mathematical object it denotes.</div>
 
 <div class="center">
 
@@ -921,22 +943,22 @@ td code { font-size: 14px; }
 <div class="terms">
 <div>
 
-<span class="lbl">Perches.</span> The three information sets of the period: <span class="c-red">arrival</span> `!arvl`, <span class="c-red">decision</span> `!dcsn` and <span class="c-red">continuation</span> `!cntn`.
+<span class="lbl">Perches.</span> A perch is one of the three information sets of the stage: <span class="c-red">arrival</span> `!arvl`, <span class="c-red">decision</span> `!dcsn` and <span class="c-red">continuation</span> `!cntn`.
 
 </div>
 <div>
 
-<span class="lbl">Fields.</span> A state or a value declared at a perch with its set, as in `m : ℝ₊₊ @ !dcsn`.
+<span class="lbl">Fields.</span> A field is a state or a value declared at a perch together with its set, as in `m : ℝ₊₊ @ !dcsn`. The role tags `!ctrl` and `!vlu` mark a chosen variable and a value.
 
 </div>
 <div>
 
-<span class="lbl">Blocks.</span> The equations between two perches: the transition with the shock, the choice, and the expectation.
+<span class="lbl">Blocks.</span> A block holds the equations between two perches: the transition with the shock, whose law line `y ~ LogNormal(μ_y, σ_y)` declares its distribution, the choice in the `[id=policy]` block, and the expectation.
 
 </div>
 </div>
 
-<div class="footnote">Bellman-SYM, Stages §§1–4 (the documentation example, in the letters k, m, a of the calculus); Bellman calculus, Stages and perches §1 (bellman-ddsl/docs) &middot; the law line fixes the convention that slide 20 left to a subfield.</div>
+<div class="footnote">Bellman-SYM, Stages §§1–4: the documentation example, whose b and w are written here as the calculus’s k and m (Bellman calculus, Stages and perches §1, bellman-ddsl/docs) &middot; the law line fixes the convention that slide 20 left to a subfield.</div>
 
 
 ---
@@ -953,28 +975,28 @@ td code { font-size: 13.5px; }
 
 ## What the ontology checks and makes explicit
 
-<div class="sub">Υ (upsilon) reads each field and block of the file as a typed object. The elaborator, the program that constructs those objects, refuses a line that the types do not admit and names the rule.</div>
+<div class="sub">Under Υ (upsilon), each field and block of the file denotes a typed object. The role tag `!vlu` marks a value. The marks `[>]` and `[<]` give the continuation and arrival values, written $v_\succ$ and $v_\prec$ below. $\mathsf{V}$, $\mathsf{V}_\succ$ and $\mathsf{V}_\prec$ denote the spaces of value functions at the decision, continuation and arrival perches. The elaborator, the program that constructs those objects, refuses a line that the types do not admit and names the rule.</div>
 
-| The file writes | Under Υ it denotes |
+| Line in the file | Under Υ it denotes |
 |---|---|
 | `V[>] : ℝ @ !vlu` at the continuation perch | $v_\succ:\mathbb{R}_+\to\mathbb{R}$, a function of savings, never a number |
-| the choice block `[id=cntn_to_dcsn]` with `policy` | $\mathbb{T}_\succ:\mathsf{V}_\succ\to\mathsf{V}$, the choice operator |
+| the choice block `[id=cntn_to_dcsn]` with its `[id=policy]` block | $\mathbb{T}_\succ:\mathsf{V}_\succ\to\mathsf{V}$, the choice operator |
 | the expectation block `[id=dcsn_to_arvl]` | $\mathbb{T}_\prec:\mathsf{V}\to\mathsf{V}_\prec$, the expectation operator |
 
 | A line that | The elaborator |
 |---|---|
-| reads the shock beside its expectation, `V[<] = E_{y}(V) + y` | <span class="c-red">refuses</span> it under `shock-reintroduced`, since $y$ is not known at arrival |
+| adds the shock outside its own expectation, `V[<] = E_{y}(V) + y` | <span class="c-red">refuses</span> it under `shock-reintroduced`, since $y$ is not known at arrival |
 | lists a continuation value at the decision perch | <span class="c-red">refuses</span> it under `field-perch`, since the value is a function of savings |
-| puts the mean of the shock in the transition, `m = R*k + exp(μ_y + σ_y^2/2)` | <span class="c-green">accepts</span> it, and the different model stands visible on that line |
-| writes a second `β` in the expectation block | <span class="c-green">accepts</span> it, and the second `β` stands visible on its own line |
-| would impose a stationary closure $v_{t+1}=v_t$ | has no line for it, since `V[>]` comes from the next period or the terminal boundary |
+| puts the mean of the shock in the transition, `m = R*k + exp(μ_y + σ_y^2/2)` | <span class="c-green">accepts</span> it, leaving the different model visible on that line |
+| writes a second `β` in the expectation block | <span class="c-green">accepts</span> it, leaving the second `β` visible on its own line |
+| would impose a stationary closure $v_{t+1}=v_t$ | has no line for it, since `V[>]` comes from the next period or the terminal value |
 
 <div class="footnote">The reference on refusals, rules shock-reintroduced and field-perch; Bellman-SYM, Field equations §5, Perch tagging rules §3, Periods §§2–3, Trellises §2; the runs of <code>elaborate_text</code> of 13 October 2026.</div>
 
 
 ---
 
-<!-- slide 25 · The pig in the library (divider) -->
+<!-- slide 25 · Pig goes to the library (divider) -->
 
 <!-- _class: divider sub -->
 
@@ -1005,21 +1027,19 @@ h2 { margin-bottom: 0.5em; }
 
 ---
 
-<!-- slide 27 · The semantics is not enough -->
+<!-- slide 27 · The set-theoretic semantics is not enough -->
 
 ## The set-theoretic semantics is not enough
 
 What must a reader know to understand the joke?
 
-</br>
-
-<span class="lbl">Set-theoretic semantics.</span> A function from each word to a subset of a domain $D$ of individuals gives $\llbracket\mathit{ham}\rrbracket,\ \llbracket\mathit{bacon}\rrbracket,\ \llbracket\mathit{sausages}\rrbracket\subseteq D$. Such a mapping, the paper says, "would not do Maurice here any good".
+<span class="lbl">Set-theoretic semantics.</span> A function from each word to a subset of a set $D$ of individuals gives the denotations $\llbracket\mathit{ham}\rrbracket,\ \llbracket\mathit{bacon}\rrbracket,\ \llbracket\mathit{sausages}\rrbracket\subseteq D$, the sets of things each word applies to. Such a mapping, Guizzardi and Guarino (2024) say, "would not do Maurice here any good".
 
 <span class="lbl">Ontology.</span> The kinds and relations the words are about form a separate system, which the paper states as three facts. Ham, bacon and sausage are food products constituted by pork. Pork comes from a pig. Maurice is a pig.
 - In the deck's notation: $\mathit{Maurice}:\mathsf{Pig}$, $\ \mathsf{Ham}\sqsubseteq\exists\mathit{constitutedBy}.\mathsf{Pork}$ (every ham is constituted by some pork), $\ \mathsf{Pork}\sqsubseteq\exists\mathit{dependsOn}.\mathsf{Pig}$ (every quantity of pork comes from some pig).
-- The library holds this. The dictionary does not.
+- The library holds these three facts, which a dictionary does not.
 
-</br>
+<div class="sp-m"></div>
 
 The joke here arises from the system of kinds and relations, <span class="c-red">not from the set-theoretic semantics</span>.
 
@@ -1040,9 +1060,10 @@ p { font-size: 19px; margin: 0 0 0.35em 0; }
 
 <div class="fig"><img src="assets/maurice-learns.svg" alt="Above a horizontal line, the words ham, bacon, sausages and Maurice with their set-theoretic denotations and no connection between them. Below the line, the ontology: the kinds Ham, Bacon, Sausage, Pork and Pig, the individual Maurice, and the relations constitutedBy, dependsOn and instantiation, with the path between kinds from Ham through Pork to Pig in red, a green instantiation arrow from Maurice to Pig, and dashed arrows from each word above the line to its entity below it."></div>
 
-The words above are the <strong>written form</strong>; the kinds, individuals and relations represented below form the <strong>domain of meaning</strong>. The dashed arrows show <strong>Υ</strong>, which assigns each word its meaning; the solid arrows state relations without identifying Maurice as the source of any particular ham.
+Above the line stand the words, the <strong>written form</strong>. Below it stand the kinds, individuals and relations, the <strong>domain of meaning</strong>. The dashed arrows are <strong>Υ</strong>, which assigns each word its meaning. The solid arrows state relations between kinds and do not identify Maurice as the source of any particular ham.
 
 <div class="footnote">Guizzardi and Guarino (2024), &sect;2.1: "Mapping the words 'ham', 'bacon' and 'sausages' to subsets of a semantic domain would not do Maurice here any good"; the three facts (1)&ndash;(3); real-world semantics "maps symbols to the entities (types, relations, objects, events, aspects) that are part of this ontology".</div>
+
 
 ---
 
@@ -1059,11 +1080,11 @@ ul { margin: 0 0 0.3em 0; }
 li { margin: 0 0 0.05em 0; }
 </style>
 
-## Semantics and Ontology
+## Semantics and ontology
 
-<span class="lbl">Set.</span> A set-theoretic semantics maps each word to a subset of a domain $D$ of individuals, $\llbracket\mathit{ham}\rrbracket\subseteq D$, and nothing more.
+<span class="lbl">Semantics.</span> A set-theoretic semantics maps each word to a subset of a set $D$ of individuals, $\llbracket\mathit{ham}\rrbracket\subseteq D$, and nothing more.
 
-<span class="lbl">Type.</span> The ontology is a separate system of kinds, individuals and relations, written as typed symbols.
+<span class="lbl">Ontology.</span> The ontology is a separate system of kinds, individuals and relations, written as typed symbols.
 - Kinds: $\mathsf{Pig},\ \mathsf{Pork},\ \mathsf{Ham},\ \mathsf{Bacon},\ \mathsf{Sausage}$. The word $\mathit{ham}$ names the kind $\mathsf{Ham}$, whose instances are the individual hams.
 - Individual: $\mathit{Maurice}:\mathsf{Pig}$. A typed symbol pairs a symbol with the kind of what it names. Here the colon is the instantiation relation, which holds between the individual Maurice and the kind $\mathsf{Pig}$.
 - Relations: $\mathit{constitutedBy}$, a relation from $\mathsf{Ham}$ to $\mathsf{Pork}$, and $\mathit{dependsOn}$, a relation from $\mathsf{Pork}$ to $\mathsf{Pig}$. Each holds between individuals of its two kinds and is not a function from one kind to the other. The kind-level facts $\mathsf{Ham}\sqsubseteq\exists\mathit{constitutedBy}.\mathsf{Pork}$ and $\mathsf{Pork}\sqsubseteq\exists\mathit{dependsOn}.\mathsf{Pig}$ say that every ham is constituted by some pork and that every quantity of pork comes from some pig.
@@ -1074,9 +1095,9 @@ li { margin: 0 0 0.05em 0; }
 | Semantics, $\llbracket\cdot\rrbracket$ into a set | $\llbracket\mathit{ham}\rrbracket,\ \llbracket\mathit{bacon}\rrbracket,\ \llbracket\mathit{sausages}\rrbracket\subseteq D$ | $\llbracket\text{Bellman equation}\rrbracket=\mathbb{T}$, some operator |
 | Left open | foods for pigs, or foods from pigs | which variable $\max$ chooses and which $\mathbb{E}$ averages over, the space of $v$, the law and timing of $y$ |
 | Ontology, typed statements | $\mathit{Maurice}:\mathsf{Pig}$, $\mathsf{Ham}\sqsubseteq\exists\mathit{constitutedBy}.\mathsf{Pork}$, $\mathsf{Pork}\sqsubseteq\exists\mathit{dependsOn}.\mathsf{Pig}$ | $v:\mathbb{R}_{++}\to\mathbb{R}$, $\ y:\mathbb{R}_{++}$ with law $\nu_y$, $\ \mathbb{T}:(\mathbb{R}_{++}\to\mathbb{R})\to(\mathbb{R}_{++}\to\mathbb{R})$ |
-| False agreement | two pigs agree that the words name foods, one meaning foods for pigs and the other foods from pigs | two readers accept the Bellman equation and disagree on the timing of the price response to a shock |
+| False agreement | two pigs agree that the words name foods, one meaning foods for pigs and the other foods from pigs | two readers accept the Bellman equation and disagree on the timing of the response to a shock (slide 21) |
 
-<div class="footnote">Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, &sect;2.1 (semantics as a function; an ontology as "a specific theory about the kinds of entity and their ties"; types, individuals and instantiation, where the paper's word for a kind is "type"; the facts (1) and (2) are stated there in words and written above in the deck's notation), &sect;3.4 (false agreement).</div>
+<div class="footnote">Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, &sect;2.1 (semantics as a function; an ontology as "a specific theory about the kinds of entity and their ties"; types, individuals and instantiation, where &sect;2.1 writes "the type Pig" for what the deck calls a kind and &sect;3 keeps "kind" for a type whose instances keep their identity; the facts (1) and (2) are stated there in words and written above in the deck's notation), &sect;3.4 (false agreement).</div>
 
 
 ---
@@ -1093,9 +1114,11 @@ li { margin: 0 0 0.05em 0; }
 
 <p class="section-context">Dynare and other tools already turn model descriptions into computed results.</p>
 
+
 ---
 
 <!-- slide 31 · What Dynare and other modelling tools do -->
+<!-- _class: roomy -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -1107,7 +1130,7 @@ li { margin: 0 0 0.05em 0; }
 
 ## What Dynare and other modelling tools do
 
-<div class="sub">Dynare and Dolo read model descriptions and apply numerical methods; programs in R or Stata can call numerical routines. The lower route summarizes this computation using a tool’s language and modelling rules.</div>
+<div class="sub">Dynare and Dolo read a model description and apply a numerical method to it, as a program in R or Stata calls a numerical routine. In the figure, the lower route is this computation, carried out in the tool’s own language and modelling rules.</div>
 
 <div class="center">
 
@@ -1118,21 +1141,22 @@ li { margin: 0 0 0.05em 0; }
 <div class="stack">
 <div>
 
-<span class="lbl">With a shared economic interpretation.</span> The upper route states the interpretation separately: Υ maps the written model to a typed model object, ⟦file⟧; Ρ (rho) attaches a numerical method.
+<span class="lbl">With a shared economic interpretation.</span> The upper route states the interpretation separately. Υ maps the written model to a typed model object, ⟦file⟧, to which Ρ (rho) then attaches a numerical method.
 
 </div>
 </div>
 
-<div class="footnote">Conceptual routes in this deck’s notation: Υ denotes a separately stated, shared economic interpretation. Compilers can already perform semantic checks; Dynare represents equations separately from solution commands. <a href="https://clang.llvm.org/docs/CommandGuide/clang.html#description">Clang documentation</a> &middot; <a href="https://www.dynare.org/manual/the-model-file.html#model-declaration">Dynare manual</a> &middot; <a href="https://www.econforge.org/dolo.py/">Dolo documentation</a> &middot; Bellman calculus, Introduction §1.</div>
+<div class="footnote">Conceptual routes in this deck’s notation: Υ denotes a separately stated, shared economic interpretation. Compilers can already perform semantic checks. Dynare represents equations separately from solution commands. <a href="https://clang.llvm.org/docs/CommandGuide/clang.html#description">Clang documentation</a> &middot; <a href="https://www.dynare.org/manual/the-model-file.html#model-declaration">Dynare manual</a> &middot; <a href="https://www.econforge.org/dolo.py/">Dolo documentation</a> &middot; Bellman calculus, Introduction §1.</div>
 
 
 ---
 
 <!-- slide 32 · What AI needs beyond code compilation -->
+<!-- _class: airy -->
 
 <style scoped>
 p { font-size: 21px; line-height: 1.45; }
-.stack > div { padding: 0 0 0.8em; font-size: 21px; line-height: 1.45; }
+.stack > div { padding: 0 0 0.8em 0; font-size: 21px; line-height: 1.45; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
 .callout { font-size: 20px; line-height: 1.4; margin-top: 0.9em; padding: 0.65em 0.9em; }
@@ -1160,9 +1184,9 @@ Successful compilation or execution does not establish agreement with the intend
 </div>
 </div>
 
-<div class="callout"><strong>Example.</strong> Shared definitions distinguish assets chosen today from resources after tomorrow’s income shock, even when both use floating-point numbers.</div>
+<div class="callout"><strong>Example.</strong> Shared definitions distinguish assets chosen today from resources after tomorrow’s income shock, even though both are stored as floating-point numbers.</div>
 
-<div class="footnote">Υ interprets the declared symbols as economic objects; reviewing their implementation is a separate task. Proposed requirements for AI model generation and translation. Precedent for shared definitions and mappings: <a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), MACIS, §§2–5</a>.</div>
+<div class="footnote">Υ interprets the declared symbols as economic objects. Reviewing their implementation is a separate task. Proposed requirements for AI model generation and translation. Precedent for shared definitions and mappings: <a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), MACIS, §§2–5</a>.</div>
 
 
 ---
@@ -1173,9 +1197,11 @@ Successful compilation or execution does not establish agreement with the intend
 
 # The community library
 
+
 ---
 
 <!-- slide 34 · One model, several numerical implementations -->
+<!-- _class: roomy -->
 
 ## One model, several numerical implementations
 
@@ -1187,21 +1213,23 @@ th, td { padding: 0.5em 0.8em 0.5em 0; }
 .callout { font-size: 20px; line-height: 1.45; margin-top: 0.8em; }
 </style>
 
-The library asks each toolkit to implement a shared model and calibration, with its own solution method and runnable tutorial.
+QuantEcon’s community library asks each toolkit to implement a shared model and calibration with its own solution method, in a runnable tutorial.
 
 | Part of a contribution | Buffer-stock example |
 |:---|:---|
-| Common economics | Equations, timing, shock laws, normalization and calibration. |
+| Common economics | Equations, timing, shock laws, normalisation and calibration. |
 | Implementation choices | Solution method, shock approximation, grids, interpolation and software version. |
-| Comparison quantities | Consumption, target resources, MPCs and model conditions. |
+| Comparison quantities | Consumption, target resources, marginal propensities to consume and the seven model conditions listed in the submission guide. |
 
-<div class="callout">The starting point is the buffer-stock description and HARK tutorial in <a href="https://github.com/QuantEcon/community-library/pull/5">PR #5</a>, under review.</div>
+<div class="callout">The starting point is the buffer-stock description and the tutorial in the HARK toolkit, submitted as <a href="https://github.com/QuantEcon/community-library/pull/5">pull request #5</a> (a proposed addition to the library’s repository), open with changes requested.</div>
 
-<div class="footnote"><a href="https://quantecon.github.io/community-library/">Community Library</a> &middot; <a href="https://github.com/akshayshanker/community-library/blob/e0452585392965c41f90a98a77a94b185f3501e7/models/buffer-stock/README.md">Buffer-stock submission guide</a>. The result tables, metadata format and tolerances are optional draft conventions; reporting requirements remain under discussion. Status checked 15 October 2026.</div>
+<div class="footnote"><a href="https://quantecon.github.io/community-library/">Community Library</a> &middot; <a href="https://github.com/akshayshanker/community-library/blob/e0452585392965c41f90a98a77a94b185f3501e7/models/buffer-stock/README.md">Buffer-stock submission guide</a>. The result tables, metadata format and tolerances are optional draft conventions. Reporting requirements remain under discussion. Status checked 15 October 2026.</div>
+
 
 ---
 
 <!-- slide 35 · Link toolkit variables to shared model definitions -->
+<!-- _class: airy2 -->
 
 ## Link toolkit variables to shared model definitions
 
@@ -1216,17 +1244,19 @@ p { font-size: 21px; line-height: 1.5; }
 |:---|:---|
 | SemGen | Ontology annotations matched biological quantities across different model formats. |
 | Math-in-the-Middle | Symbols from SageMath, GAP and Singular were mapped to shared mathematical definitions. |
-| BioModels | Curators annotated model entities and reproduced published simulations. |
+| BioModels, a curated database of biological models | Curators annotated model entities and reproduced published simulations. |
 
-**Proposed for the library.** Link each implementation’s variables and operations to agreed economic definitions. These links align written terms; **Υ interprets the terms as economic objects.**
+**Proposed for the library.** Link each implementation’s variables and operations to agreed economic definitions. The links align the written terms. Interpreting those terms as economic objects is what **Υ** does.
 
 <div class="footnote"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), <em>Bioinformatics</em>, §§2–5</a> &middot; <a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), MACIS, §§2–5</a> &middot; <a href="https://pubmed.ncbi.nlm.nih.gov/31701150/">Malik-Sheriff et al. (2020), <em>Nucleic Acids Research</em></a>. The library extension is proposed; the papers establish the precedents.</div>
+
 
 ---
 
 <!-- slide 36 · Define the quantity before comparing the numbers -->
+<!-- _class: roomy -->
 
-## Define the quantity before comparing the numbers
+## Two estimates of one defined quantity
 
 <style scoped>
 p { font-size: 21px; line-height: 1.45; }
@@ -1236,27 +1266,29 @@ th, td { padding: 0.45em 0.8em 0.45em 0; }
 .callout { font-size: 20px; line-height: 1.45; margin-top: 0.75em; }
 </style>
 
-In the buffer-stock draft, **target resources** are where expected next-period resources equal current resources, measured relative to permanent income.
+In the buffer-stock description, **target resources** are the level of resources, measured relative to permanent income, at which expected next-period resources equal current resources.
 
-| Positive values in each shock approximation | Saved HARK estimate of target resources |
+| Points in the income-shock approximation, besides the zero-income point | Saved HARK estimate of target resources |
 |:---|:---|
 | 7 | **1.3910** |
 | 21 | **1.3994** |
 
 The same model and calibration give different numerical estimates when the shock approximation changes.
 
-<div class="callout"><strong>Proposed extension.</strong> Each result would declare its model version, quantity definition, normalization and numerical settings. Reviewers would check these declarations against the code and numerical results.</div>
+<div class="callout"><strong>Proposed extension.</strong> Each result would declare its model version, quantity definition, normalisation and numerical settings. Reviewers would check these declarations against the code and numerical results.</div>
 
 <div class="footnote"><a href="https://github.com/akshayshanker/community-library/blob/e0452585392965c41f90a98a77a94b185f3501e7/projects/HARK/BST/checks/sensitivity.md">Saved HARK sensitivity study, §3</a> &middot; <a href="https://github.com/akshayshanker/community-library/blob/e0452585392965c41f90a98a77a94b185f3501e7/models/buffer-stock/model-description.md">Quantity definition, §1</a>. Both calculations retain the same additional zero-income outcome and asset grid. These are saved estimates, not a new computation.</div>
+
 
 ---
 
 <!-- slide 37 · Use the library to test WG1’s common definitions -->
+<!-- _class: airy2 -->
 
 ## Use the library to test WG1’s common definitions
 
 <style scoped>
-.stack > div { padding: 0 0 0.75em; font-size: 21px; line-height: 1.45; }
+.stack > div { padding: 0 0 0.8em 0; font-size: 21px; line-height: 1.45; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
 .callout { font-size: 20px; line-height: 1.45; margin-top: 0.8em; }
@@ -1265,7 +1297,7 @@ The same model and calibration give different numerical estimates when the shock
 <div class="stack">
 <div>
 
-**Proposed pilot.** Start with the full buffer-stock description and HARK contribution, then add a second toolkit.
+**Proposed pilot.** Start with the full buffer-stock description and the HARK contribution before adding a second toolkit.
 
 </div>
 <div>
@@ -1280,9 +1312,10 @@ The same model and calibration give different numerical estimates when the shock
 </div>
 </div>
 
-<div class="callout">The library supplies the worked examples; the results help WG1 decide which definitions and checks to share.</div>
+<div class="callout">The library supplies the worked examples from which WG1 can decide which definitions and checks to share.</div>
 
-<div class="footnote">Proposed pilot, not an existing library feature. The annotations restate supplied facts. The full buffer-stock model includes permanent and transitory shocks; the earlier Bellman stage illustration is simplified.</div>
+<div class="footnote">Proposed pilot, not an existing library feature. The annotations restate supplied facts. The full buffer-stock model includes permanent and transitory shocks. The earlier Bellman stage illustration is simplified.</div>
+
 
 ---
 
@@ -1329,12 +1362,12 @@ The same model and calibration give different numerical estimates when the shock
 <div class="stack">
 <div>
 
-<span class="lbl">Excludes.</span> A missing annotation read as the absence of a function (the open-world assumption), a NOT read as an inconclusive result, and a term read by its name rather than by its definition and relations, since a label must be unique and a definition must always denote the same referents (OBO Foundry principles 12 and 19).
+<span class="lbl">Excludes.</span> The ontology excludes three misreadings. A missing annotation may not be read as the absence of a function, under the open-world assumption, which treats an absent statement as unknown rather than false. A NOT qualifier, which records that a gene lacks a function, may not be read as an inconclusive result. A term may not be read by its name rather than by its definition and relations, since a label must be unique and a definition must always denote the same referents (principles 12 and 19 of the OBO Foundry, the body that sets the rules for biomedical ontologies).
 
 </div>
 <div>
 
-<span class="lbl">For economics.</span> A model's object is named by a <span class="c-red">term with a definition and relations</span>, not by a variable name. The role tags `!ctrl` and `!vlu` and the law line of a stage file play that part, as the `sboTerm` of the Systems Biology Ontology does for a rate law in SBML.
+<span class="lbl">For economics.</span> A model's object is named by a <span class="c-red">term with a definition and relations</span>, not by a variable name. The role tags `!ctrl` and `!vlu` and the law line of a stage file play that part, as the `sboTerm` of the Systems Biology Ontology does for a rate law in SBML, the exchange format for biochemical models.
 
 </div>
 </div>
@@ -1367,12 +1400,12 @@ The same model and calibration give different numerical estimates when the shock
 <div class="stack">
 <div>
 
-<span class="lbl">Excludes.</span> A model confused with the system it models, and a model variable confused with the physical quantity it stands for: the relation `models` joins a model to its system, and `correspondsToQuantity` pairs a variable with a quantity, as a declared domain excludes the deck's <span class="c-red">function on the wrong space</span>.
+<span class="lbl">Excludes.</span> The ontology excludes a model confused with the system it models and a model variable confused with the physical quantity it stands for. The relation `models` joins a model to its system, while `correspondsToQuantity` pairs a variable with a quantity, as a declared domain excludes the deck's <span class="c-red">function on the wrong space</span> (slide 50).
 
 </div>
 <div>
 
-<span class="lbl">For economics.</span> OntoCAPE is the nearest case to Project A, an ontology of models themselves: model variables, equation systems and solution strategies are kinds in its modules, so that a process model and its solver are distinct typed objects, as Υ and Ρ keep a model apart from its numerical method.
+<span class="lbl">For economics.</span> OntoCAPE is the nearest case to Project A because it is an ontology of models themselves. Model variables, equation systems and solution strategies are kinds in its modules (its sub-ontologies), so that a process model and its solver are distinct typed objects, as Υ and Ρ keep a model apart from its numerical method.
 
 </div>
 </div>
@@ -1405,12 +1438,12 @@ The same model and calibration give different numerical estimates when the shock
 <div class="stack">
 <div>
 
-<span class="lbl">Excludes.</span> A quantity name read as any of several kinds: a SWEET class fixes the kind by its definition and by its place among realms, quantities and phenomena. The CF standard names, published as SKOS concepts with their canonical units on the NERC vocabulary server, settle the same question for a netCDF variable such as `temp`, which is <span class="c-red">the law behind a parameter</span> and <span class="c-red">timing stated in words</span> in the deck's terms.
+<span class="lbl">Excludes.</span> The ontology excludes a quantity name read as any of several kinds, since a SWEET class fixes the kind by its definition and by its place among realms (SWEET's divisions of the Earth system), quantities and phenomena. The Climate and Forecast (CF) standard names, published with their canonical units as SKOS concepts (the W3C's format for agreed lists of terms) on the NERC vocabulary server, settle the same question for a variable such as `temp` in a netCDF data file (a format for climate data). In the deck's terms this is the question of <span class="c-red">the shock law</span> (slide 20) and of <span class="c-red">timing stated in words</span> (slide 21).
 
 </div>
 <div>
 
-<span class="lbl">For economics.</span> The comparison paper of the special issue that Project A proposes needs a vocabulary of this kind: which object each team reports, a value or a marginal value function, on which state and under which timing (den Haan, Judd and Juillard 2010, 2011).
+<span class="lbl">For economics.</span> The comparison paper of the special issue that Project A proposes needs a vocabulary of this kind: which object each team reports, a value or a marginal value function, on which state and under which timing, as in the comparison projects that den Haan, Judd and Juillard (2010, 2011) introduced.
 
 </div>
 </div>
@@ -1424,7 +1457,7 @@ The same model and calibration give different numerical estimates when the shock
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
-.stack > div { padding: 0 0 0.8em 0; font-size: 19px; line-height: 1.45; }
+.stack > div { padding: 0 0 0.6em 0; font-size: 18px; line-height: 1.4; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
 .stack code { font-size: 15px; }
@@ -1436,19 +1469,19 @@ The same model and calibration give different numerical estimates when the shock
 
 <div class="center">
 
-![w:1000](assets/case-fibo.svg)
+![w:920](assets/case-fibo.svg)
 
 </div>
 
 <div class="stack">
 <div>
 
-<span class="lbl">Excludes.</span> An issuer read as the obligor of a bond, and a notional amount read as a principal: each is a defined class or property, and the 2023 revision of the Swaps ontology separated the nominal from the notional amount, which its change note says "were confused". In the deck's terms, <span class="c-red">a function on the wrong space</span> and <span class="c-red">the law behind a parameter</span>.
+<span class="lbl">Excludes.</span> The ontology excludes an issuer read as the obligor (the party that owes the payments) of a bond and a notional amount read as a principal, since each is a defined class or property (OWL's word for a relation). The 2023 revision of the Swaps ontology separated the nominal from the notional amount, which its change note says "were confused". In the deck's terms these are <span class="c-red">a function on the wrong space</span> (slide 50) and <span class="c-red">the shock law</span> (slide 20).
 
 </div>
 <div>
 
-<span class="lbl">For economics.</span> FIBO is finance's own ontology, with the Bureau of Economic Analysis, the Bureau of Labor Statistics, the CFTC and the Office of Financial Research among its contributors, and the 2026 rule under the Financial Data Transparency Act records it among the standards that commenters proposed. Project A's ontology names the objects of a model as FIBO names the parties and terms of a contract.
+<span class="lbl">For economics.</span> FIBO is finance's own ontology, with the Bureau of Economic Analysis, the Bureau of Labor Statistics, the CFTC and the Office of Financial Research among its contributors. The 2026 rule under the Financial Data Transparency Act records it among the standards that commenters proposed. Project A's ontology names the objects of a model as FIBO names the parties and terms of a contract.
 
 </div>
 </div>
@@ -1481,12 +1514,12 @@ The same model and calibration give different numerical estimates when the shock
 <div class="stack">
 <div>
 
-<span class="lbl">Excludes.</span> Any reading of the axioms other than the one the Direct Semantics fixes: "the correct answer to any such question is predetermined by the formal semantics", whatever reasoner computes it (Primer §2). Nor is a missing statement read as false, or two names as two individuals.
+<span class="lbl">Excludes.</span> The language excludes any reading of the axioms other than the one fixed by the Direct Semantics, OWL's official rule for what its statements mean, under which "the correct answer to any such question is predetermined by the formal semantics", whatever reasoner computes it (Primer §2). It also forbids reading a missing statement as false and reading two names as two individuals.
 
 </div>
 <div>
 
-<span class="lbl">For economics.</span> This is the three-part definition <span class="c-red">in full</span>: classes, properties and individuals as typed symbols, an interpretation as the domain, and a map whose consistency and entailments a reasoner decides. A stage file's Υ plays the part of the Direct Semantics, and the elaborator the part of the reasoner.
+<span class="lbl">For economics.</span> This is the three-part definition <span class="c-red">in full</span>: classes, properties and individuals as typed symbols, an interpretation as the domain, and a map whose consistency (that the axioms do not contradict one another) and entailments (what follows from them) a reasoner decides. A stage file's Υ plays the part of the Direct Semantics, and the elaborator the part of the reasoner.
 
 </div>
 </div>
@@ -1549,11 +1582,12 @@ td code { font-size: 14px; }
 ---
 
 <!-- slide 47 · The parse tree of a written statement -->
+<!-- _class: airy2 -->
 
 <!-- _header: 'Appendix &middot; [return to slide 18](#context)' -->
 <style scoped>
 .cols { grid-template-columns: 1fr 1fr; gap: 1.6em; align-items: center; }
-.stack > div { padding: 0 0 0.9em 0; font-size: 19px; line-height: 1.45; }
+.stack > div { padding: 0 0 0.8em 0; font-size: 19px; line-height: 1.45; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
 </style>
@@ -1605,9 +1639,9 @@ Parsing a written statement into a tree, as every compiler first does, shows wha
 .cap { font-size: 18px; line-height: 1.45; margin: 0.4em 0 0 0; }
 </style>
 
-## From the syntax tree to the semantic graph
+## From the parse tree to the semantic graph
 
-In the model, $v$ is not a number obtained by adding $\beta w$ to $u(c)$. That $v_t=\mathbb{T}\,v_{t+1}$ sends a function to a function appears only once the binders, types and declarations on the right are attached to the tree, the dotted lines in the figure.
+In the model, $v$ is not a number obtained by adding $\beta w$ to $u(c)$. That $v_t=\mathbb{T}\,v_{t+1}$ sends a function to a function appears only once the binders, types and declarations on the right are attached to the tree by the dotted lines in the figure, which turn the tree into the semantic graph.
 
 <div class="cols">
 <div>
@@ -1631,7 +1665,7 @@ $$\begin{aligned}
 </div>
 </div>
 
-<div class="footnote">Bellman-SYM, Project Bellman's model language, parses a file into such a tree, builds the semantic graph from it by a checked interpretation, which the calculus calls Υ (upsilon), and discards the tree (Bellman calculus, Introduction §2; Bellman-SYM, Stages §5).</div>
+<div class="footnote">Bellman-SYM, Project Bellman's model language, parses a file into such a tree, builds the semantic graph from it by a checked interpretation, which the calculus calls Υ (upsilon), and discards the tree (Bellman calculus, Introduction §§1–2; Bellman-SYM, Stages §5).</div>
 
 
 ---
@@ -1664,18 +1698,19 @@ Since Jensen's inequality gives $\mathbb{E}_t\,v(R(m-c)+y')\le v(R(m-c)+\mathbb{
 </div>
 <div class="box">
 
-<span class="lbl">The expectation moved through the maximization.</span>
+<span class="lbl">The expectation moved through the maximisation.</span>
 $$\max_c\big\{u(c)+\beta\,\mathbb{E}_t\,v_{t+1}(\cdot)\big\}\qquad\text{read as}\qquad \mathbb{E}_t\max_c\big\{u(c)+\beta\,v_{t+1}(\cdot)\big\}.$$
 Since $\mathbb{E}\max\ge\max\mathbb{E}$, the reading on the right overstates the value and lets consumption respond to income that has not yet been drawn.
 
 </div>
 
-<div class="footnote">Jensen's inequality and the precautionary motive: Kimball (1990), "Precautionary saving in the small and in the large", <em>Econometrica</em> 58(1), 53–73.</div>
+<div class="footnote">The precautionary motive: Kimball (1990), "Precautionary saving in the small and in the large", <em>Econometrica</em> 58(1), 53–73. Jensen's inequality is a standard result.</div>
 
 
 ---
 
 <!-- slide 50 · A number for a function, and a function on the wrong space -->
+<!-- _class: airy -->
 
 <!-- _header: 'Appendix &middot; [return to slide 22](#multiple-possible-parsed-meanings)' -->
 <style scoped>
@@ -1752,7 +1787,7 @@ A stationarity condition that the statement never makes replaces the backward re
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
-.stack > div { padding: 0 0 0.6em 0; font-size: 17.5px; line-height: 1.42; }
+.stack > div { padding: 0 0 0.4em 0; font-size: 16px; line-height: 1.36; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
 .stack code { font-size: 14px; }
@@ -1762,50 +1797,51 @@ A stationarity condition that the statement never makes replaces the backward re
 
 <div class="center">
 
-![w:860](assets/ai-loop.svg)
+![w:700](assets/ai-loop.svg)
 
 </div>
 
 <div class="stack">
 <div>
 
-<span class="lbl">Autoformalization.</span> The AI translates the paper into the written form, and the checker accepts or refuses the result (Wu et al. 2022; AlphaProof, Hubert et al. 2025, which learned by reinforcement with Lean's kernel as the verifier).
+<span class="lbl">Autoformalization.</span> The AI translates the paper into the written form, which the checker accepts or refuses (Wu et al. 2022, where the checker decided syntactic correctness and people judged faithfulness; AlphaProof, Hubert et al. 2026, which learned by reinforcement with Lean's kernel, the core program that checks each proof step, as the verifier).
 
 </div>
 <div>
 
-<span class="lbl">Refuse and repair.</span> The checker's refusal, with its rule named, is the AI's next prompt, as a proof assistant's error message is in Baldur (First et al. 2023). The elaborator's rules `shock-reintroduced` and `field-perch` are messages of this kind.
+<span class="lbl">Refuse and repair.</span> The checker's refusal, with its rule named, is the AI's next prompt, as the error message of a proof assistant (a program that checks proofs) is in Baldur, a proof-repair system (First et al. 2023). The elaborator's rules `shock-reintroduced` and `field-perch` are messages of this kind.
 
 </div>
 <div>
 
-<span class="lbl">Constrained generation.</span> The AI's output is restricted at decoding time to the grammar of the written form, so that only its meaning remains to be checked (Poesia et al. 2022; Geng et al. 2023).
+<span class="lbl">Constrained generation.</span> The AI's output is restricted, as the AI produces each word of its output, to the grammar of the written form, so that only its meaning remains to be checked (Poesia et al. 2022; Geng et al. 2023).
 
 </div>
 <div>
 
-<span class="lbl">Compute, then answer.</span> From the accepted file the ontology's programs compute, Υ the object and Ρ the numbers, or the kernel the proof, and the AI's answer to the user is built from that output rather than from its own guess.
+<span class="lbl">Compute, then answer.</span> From the accepted file the ontology's programs compute Υ's object and Ρ's numbers (or, for a proof, the kernel checks it), so that the AI's answer to the user is built from that output rather than from its own guess.
 
 </div>
 <div>
 
-<span class="lbl">Round trip.</span> A second program writes the accepted object back into prose, and a judge compares that prose with the paper (Li et al. 2024; Allamanis et al. 2024). Matsya's architect mode runs this loop with the elaborator and two judges.
+<span class="lbl">Round trip.</span> A second program writes the accepted object back into prose for a judge, a program or a second AI, to compare with the paper (Li et al. 2024), or regenerates the object for comparison with the original (Allamanis et al. 2024). Matsya, the project's assistant service, runs the first loop with the elaborator and two judges and the second with its comparator.
 
 </div>
 </div>
 
-<div class="footnote">Wu, Jiang, Li, Rabe, Staats, Jamnik and Szegedy (2022), "Autoformalization with large language models", <em>NeurIPS 2022</em>, 32353–32368 &middot; Hubert, Mehta, Sartran et al. (2025), <em>Nature</em> 651, 607–613 &middot; First, Rabe, Ringer and Brun (2023), "Baldur: whole-proof generation and repair with large language models", <em>ESEC/FSE 2023</em>, 1229–1241 &middot; Poesia et al. (2022), "Synchromesh", <em>ICLR 2022</em>; Geng, Josifoski, Peyrard and West (2023), "Grammar-constrained decoding for structured NLP tasks without finetuning", <em>EMNLP 2023</em>, 10932–10952 &middot; Li, Wu, Li, Wei, Yang, Zhang and Ma (2024), "Autoformalize mathematical statements by symbolic equivalence and semantic consistency", <em>NeurIPS 2024</em>, 53598–53625; Allamanis, Panthaplackel and Yin (2024), "Unsupervised evaluation of code LLMs with round-trip correctness", <em>ICML 2024</em>, PMLR 235, 1050–1066 &middot; Matsya's architect mode: bellman-ddsl, terminology, 9 October 2026.</div>
+<div class="footnote">Wu, Jiang, Li, Rabe, Staats, Jamnik and Szegedy (2022), "Autoformalization with large language models", <em>NeurIPS 2022</em>, 32353–32368 &middot; Hubert, Mehta, Sartran et al. (2026), <em>Nature</em> 651, 607–613, published online 12 November 2025 &middot; First, Rabe, Ringer and Brun (2023), "Baldur: whole-proof generation and repair with large language models", <em>ESEC/FSE 2023</em>, 1229–1241 &middot; Poesia et al. (2022), "Synchromesh", <em>ICLR 2022</em>; Geng, Josifoski, Peyrard and West (2023), "Grammar-constrained decoding for structured NLP tasks without finetuning", <em>EMNLP 2023</em>, 10932–10952 &middot; Li, Wu, Li, Wei, Yang, Zhang and Ma (2024), "Autoformalize mathematical statements by symbolic equivalence and semantic consistency", <em>NeurIPS 2024</em>, 53598–53625; Allamanis, Panthaplackel and Yin (2024), "Unsupervised evaluation of code LLMs with round-trip correctness", <em>ICML 2024</em>, PMLR 235, 1050–1066 &middot; Matsya's architect mode: bellman-ddsl, terminology, 9 October 2026.</div>
 
 
 ---
 
 <!-- slide 54 · The AI reads from the ontology -->
+<!-- _class: airy -->
 
 <!-- _header: 'Appendix &middot; [return to slide 4](#semantic-ontology)' -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
-.stack > div { padding: 0 0 0.6em 0; font-size: 19px; line-height: 1.42; }
+.stack > div { padding: 0 0 0.8em 0; font-size: 19px; line-height: 1.45; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
 .stack code { font-size: 14px; }
@@ -1816,19 +1852,19 @@ A stationarity condition that the statement never makes replaces the backward re
 <div class="stack">
 <div>
 
-<span class="lbl">Retrieval over typed objects.</span> The AI answers from terms, definitions and relations retrieved from the ontology, each with a stated meaning, rather than from passages of text (Pan et al. 2024; Edge et al. 2024). Matsya's retrieval over the project's typed documents is this.
+<span class="lbl">Retrieval over a knowledge graph.</span> The AI answers from a graph of entities and relations rather than from passages alone (surveyed in Pan et al. 2024; GraphRAG, Edge et al. 2024, which answers from summaries of entity clusters). Matsya retrieves passages of the project's documents with their sections, links and tags, and reads the typed object itself when a question names a stage file.
 
 </div>
 <div>
 
-<span class="lbl">Training on generated pairs.</span> The ontology generates pairs of a file and its prose, or the comparator labels two files as one object or as two, and the AI is trained on the pairs. AlphaProof's roughly one million natural-language problems, auto-formalized into about 80 million formal statements, are the largest instance, and the project's comparator module, <code>meaning_map_training</code>, is named for this use.
+<span class="lbl">Training on generated pairs.</span> The ontology's programs generate pairs of a file and its prose, or the comparator labels two files as one object or as two, so that a model can be trained on the pairs. AlphaProof's roughly one million natural-language problems, auto-formalised into about 80 million formal statements, are the largest instance. The project's comparator module, <code>meaning_map_training.compare</code>, labels such pairs, while the package's own training revises Matsya's instruction texts and settings against the round trip, with the language models' weights fixed.
 
 </div>
 <div>
 
-<span class="lbl">What separates the two groups.</span> In the five uses of the previous slide the checker, not the AI, decides what the file means, so the AI's reading can be inspected. In these two the AI's reading improves but stays statistical, which is why they do not replace the checker.
+<span class="lbl">What separates the two groups.</span> In the five uses of the previous slide the checker, not the AI, decides what the file means, which makes the AI's reading inspectable. In these two the AI's reading improves but stays statistical, which is why they do not replace the checker.
 
 </div>
 </div>
 
-<div class="footnote">Pan, Luo, Wang, Chen, Wang and Wu (2024), "Unifying large language models and knowledge graphs: a roadmap", <em>IEEE Transactions on Knowledge and Data Engineering</em> 36(7), 3580–3599 &middot; Edge et al. (2024), "From local to global: a graph RAG approach to query-focused summarization", arXiv:2404.16130 &middot; Hubert, Mehta, Sartran et al. (2025), <em>Nature</em> 651, 607–613, on the auto-formalized training problems &middot; <code>meaning_map_training.compare</code>: bellman-ddsl.</div>
+<div class="footnote">Pan, Luo, Wang, Chen, Wang and Wu (2024), "Unifying large language models and knowledge graphs: a roadmap", <em>IEEE Transactions on Knowledge and Data Engineering</em> 36(7), 3580–3599 &middot; Edge et al. (2024), "From local to global: a graph RAG approach to query-focused summarization", arXiv:2404.16130 &middot; Hubert, Mehta, Sartran et al. (2026), <em>Nature</em> 651, 607–613, on the auto-formalised training problems &middot; <code>meaning_map_training.compare</code>: bellman-ddsl.</div>
