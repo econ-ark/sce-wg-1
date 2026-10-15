@@ -531,19 +531,23 @@ th:first-child { width: 27%; }
 th:nth-child(2) { width: 39%; }
 th:nth-child(3) { width: 34%; }
 th, td { padding: 0.45em 0.7em 0.45em 0; }
-.callout { font-size: 20px; line-height: 1.4; margin: 0.65em 0 0; padding: 0.6em 0.9em; }
+.callout { font-size: 18px; line-height: 1.4; margin: 0.6em 0 0; padding: 0.55em 0.8em; }
+table code, .callout code { font-size: 16px; white-space: nowrap; }
+.form-note { font-size: 18px; line-height: 1.4; margin: 0.55em 0 0; }
 </style>
 
 | Form or use | What it makes explicit | Examples in this deck |
 |:---|:---|:---|
 | **Typed mathematical theory, including algebra** | Types, operation signatures and laws. | Math-in-the-Middle; Bellman calculus; Lean (mathlib). |
-| **Ontology axioms** | Formal statements taken as given about the domain, for example “Every household is an economic agent.” | OntoPlan, using the ontology language OWL. |
+| **Ontology axioms (OWL)** | `SubClassOf(:Household :EconomicAgent)`<br>Every household is an economic agent. | OntoPlan’s OWL ontology. |
 | **Graph representation** | Object identifiers, declared types and relations. | OntoPlan’s scene graph, represented in RDF. |
 | **Annotations to models or data** | Links from variables or objects to ontology terms. | SemGen models; NVIDIA’s scene objects. |
 
-<div class="callout"><strong>These forms can be combined:</strong> an OWL ontology can be represented as an RDF graph, and annotations can also be RDF statements. In every case, <strong>Υ interprets the written symbols in the domain of meaning.</strong></div>
+<div class="callout"><strong>Illustrative economic example.</strong> Given <code>ClassAssertion(:Household :h)</code> (h is a household), OWL reasoning software can infer <code>ClassAssertion(:EconomicAgent :h)</code>.</div>
 
-<div class="footnote"><a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), §§2–3</a> &middot; <a href="https://leanprover-community.github.io/mathlib-overview.html">Lean/mathlib overview</a> &middot; W3C: <a href="https://www.w3.org/TR/owl2-overview/#Ontologies">OWL 2 overview</a> and <a href="https://www.w3.org/TR/rdf11-concepts/#data-model">RDF graph model</a>; <a href="https://www.w3.org/TR/owl2-primer/">OWL 2 Primer, §§3, 4.2</a> (axioms and inference) &middot; <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026), §3.1</a> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), §2</a> &middot; <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA, semantic labels</a>. RDF represents statements as subject–relation–object triples. The household example is illustrative.</div>
+<p class="form-note"><strong>These forms can be combined.</strong> OWL axioms and annotations can be represented in RDF. Υ interprets the written symbols in the domain of meaning.</p>
+
+<div class="footnote"><a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), §§2–3</a> &middot; <a href="https://leanprover-community.github.io/mathlib-overview.html">Lean/mathlib overview</a> &middot; W3C: <a href="https://www.w3.org/TR/owl2-overview/#Ontologies">OWL 2 overview</a> and <a href="https://www.w3.org/TR/rdf11-concepts/#data-model">RDF graph model</a>; <a href="https://www.w3.org/TR/owl2-primer/">OWL 2 Primer, §§3, 4.1–4.2</a> (syntax and inference) &middot; <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026), §3.1</a> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), §2</a> &middot; <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA, semantic labels</a>. RDF represents statements as subject–relation–object triples. The OWL snippets use Functional-Style Syntax; the “:” prefix denotes an illustrative economics vocabulary.</div>
 
 ---
 
