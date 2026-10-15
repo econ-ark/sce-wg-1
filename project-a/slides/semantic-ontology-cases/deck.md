@@ -535,13 +535,13 @@ th, td { padding: 0.45em 0.7em 0.45em 0; }
 | Form or use | What it makes explicit | Examples in this deck |
 |:---|:---|:---|
 | **Typed mathematical theory, including algebra** | Types, operation signatures and laws. | Math-in-the-Middle; Bellman calculus. |
-| **Logical axioms** | Classes, relations and logical constraints. | OntoPlan, using the ontology language OWL. |
+| **Ontology axioms** | Formal statements taken as given about the domain, for example “Every household is an economic agent.” | OntoPlan, using the ontology language OWL. |
 | **Graph representation** | Object identifiers, declared types and relations. | OntoPlan’s scene graph, represented in RDF. |
 | **Annotations to models or data** | Links from variables or objects to ontology terms. | SemGen models; NVIDIA’s scene objects. |
 
 <div class="callout"><strong>These forms can be combined:</strong> an OWL ontology can be represented as an RDF graph, and annotations can also be RDF statements. In every case, <strong>Υ interprets the written symbols in the domain of meaning.</strong></div>
 
-<div class="footnote"><a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), §§2–3</a> &middot; W3C: <a href="https://www.w3.org/TR/owl2-overview/#Ontologies">OWL 2 overview</a> and <a href="https://www.w3.org/TR/rdf11-concepts/#data-model">RDF graph model</a> &middot; <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026), §3.1</a> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), §2</a> &middot; <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA, semantic labels</a>. RDF represents statements as subject–relation–object triples.</div>
+<div class="footnote"><a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), §§2–3</a> &middot; W3C: <a href="https://www.w3.org/TR/owl2-overview/#Ontologies">OWL 2 overview</a> and <a href="https://www.w3.org/TR/rdf11-concepts/#data-model">RDF graph model</a>; <a href="https://www.w3.org/TR/owl2-primer/">OWL 2 Primer, §§3, 4.2</a> (axioms and inference) &middot; <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026), §3.1</a> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), §2</a> &middot; <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA, semantic labels</a>. RDF represents statements as subject–relation–object triples. The household example is illustrative.</div>
 
 ---
 
