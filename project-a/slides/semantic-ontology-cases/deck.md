@@ -561,7 +561,7 @@ th, td { padding: 0.45em 0.7em 0.45em 0; }
 <div class="stack">
 <div>
 
-**Domains of meaning vary by field.** Examples include genes and biological processes, objects and actions in robotics, and economic models, methods and data.
+**Domains of meaning vary by field.** Examples include genes and biological processes, objects and actions in robotics, and different economic models, methods, data and problems.
 
 </div>
 <div>
