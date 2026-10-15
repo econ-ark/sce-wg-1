@@ -479,7 +479,6 @@ Knowing what each symbol refers to is not enough.
 ---
 
 <!-- slide 5 · Three parts to a semantic ontology -->
-<!-- _class: roomy -->
 
 <style scoped>
 .stack > div { padding: 0 0 0.8em 0; font-size: 21px; line-height: 1.5; }
@@ -533,15 +532,15 @@ $$
 
 ## Ways to represent and use an ontology
 
-Formal mathematics is one way to write an ontology down, though the mathematics as usually written leaves its conventions implicit (slides 19–21). The table lists the forms in use.
+Formal mathematics is one way to write an ontology down, though as usually written it leaves its conventions implicit (slides 19–21).
 
 <style scoped>
-table { font-size: 17px; line-height: 1.35; margin: 0.35em 0 0.5em; }
+table { font-size: 16.5px; line-height: 1.33; margin: 0.3em 0 0.45em; }
 th:first-child { width: 27%; }
 th:nth-child(2) { width: 39%; }
 th:nth-child(3) { width: 34%; }
 th, td { padding: 0.38em 0.7em 0.38em 0; }
-.callout { font-size: 17px; line-height: 1.4; margin: 0.5em 0 0; padding: 0.5em 0.8em; }
+.callout { font-size: 16.5px; line-height: 1.38; margin: 0.45em 0 0; padding: 0.45em 0.8em; }
 table code, .callout code { font-size: 16px; white-space: nowrap; }
 .form-note { font-size: 16px; line-height: 1.35; margin: 0.45em 0 0; }
 </style>
@@ -549,15 +548,13 @@ table code, .callout code { font-size: 16px; white-space: nowrap; }
 | Form or use | What it makes explicit | Examples in this deck |
 |:---|:---|:---|
 | **Typed mathematical theory** | Types, the signatures of operations and the laws they satisfy. | Math-in-the-Middle (slide 9); the Bellman calculus, which Bellman-SYM writes down (slide 23); mathlib, the library of the proof assistant Lean. |
-| **Ontology axioms, in OWL** | A checkable statement about classes (OWL’s word for kinds) or named individuals. In OWL, the ontology language of the W3C, the web standards body, `SubClassOf(:Bond :TradableDebtInstrument)` states that every bond is a tradable debt instrument. | FIBO, the finance ontology (slide 43); OntoPlan (slide 13). |
-| **Graph** | Object identifiers, their types and the relations between them, each statement a triple of subject, predicate and object, as in RDF, the W3C’s graph model. | OntoPlan’s world model, the facts about a simulated environment stored as RDF triples (slide 13). |
+| **Ontology axioms, in OWL** | A checkable statement about classes (OWL’s word for kinds) or individuals. In OWL, the W3C’s ontology language, `SubClassOf(:Bond :TradableDebtInstrument)` states that every bond is a tradable debt instrument. | FIBO, the finance ontology (slide 43); OntoPlan (slide 13). |
+| **Graph** | Object identifiers, their types and the relations between them, as subject–predicate–object triples (RDF, the W3C’s graph model). | OntoPlan’s world model, the facts about a simulated environment stored as RDF triples (slide 13). |
 | **Annotations on models or data** | Links from variables or objects to the terms of an ontology. | SemGen’s biological models (slide 9); NVIDIA’s scene objects (slide 8). |
 
 <div class="callout"><strong>What an axiom does.</strong> Given the axiom above and <code>ClassAssertion(:Bond :b)</code>, that b is a bond, a reasoner, the program that draws consequences from axioms, infers <code>ClassAssertion(:TradableDebtInstrument :b)</code>.</div>
 
-<p class="form-note">The forms combine, since OWL axioms and annotations can both be stored as RDF graphs. In every form, Υ interprets the written symbols in the domain of meaning.</p>
-
-<div class="footnote"><a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), §§2–3</a> &middot; <a href="https://leanprover-community.github.io/mathlib-overview.html">Lean/mathlib overview</a> &middot; W3C: <a href="https://www.w3.org/TR/owl2-overview/#Ontologies">OWL 2 overview</a> and <a href="https://www.w3.org/TR/rdf11-concepts/#data-model">RDF graph model</a>; <a href="https://www.w3.org/TR/owl2-primer/">OWL 2 Primer, §§3, 4.1–4.2</a> (syntax and inference) &middot; <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026), §3.1</a> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), §2</a> &middot; <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA, semantic labels</a>. RDF represents statements as subject–predicate–object triples, the predicate naming a relation. The OWL snippets use Functional-Style Syntax, with “:” abbreviating FIBO’s namespace.</div>
+<div class="footnote"><a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), §§2–3</a> &middot; <a href="https://leanprover-community.github.io/mathlib-overview.html">Lean/mathlib overview</a> &middot; W3C: <a href="https://www.w3.org/TR/owl2-overview/#Ontologies">OWL 2 overview</a> and <a href="https://www.w3.org/TR/rdf11-concepts/#data-model">RDF graph model</a>; <a href="https://www.w3.org/TR/owl2-primer/">OWL 2 Primer, §§3, 4.1–4.2</a> (syntax and inference) &middot; <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026), §3.1</a> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), §2</a> &middot; <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA, semantic labels</a>. RDF represents statements as subject–predicate–object triples, the predicate naming a relation. OWL axioms and annotations can both be stored as RDF graphs. The OWL snippets use Functional-Style Syntax, with “:” abbreviating FIBO’s namespace.</div>
 
 
 ---
@@ -975,7 +972,7 @@ td code { font-size: 13.5px; }
 
 ## What the ontology checks and makes explicit
 
-<div class="sub">Under Υ (upsilon), each field and block of the file denotes a typed object. The role tag `!vlu` marks a value. The marks `[>]` and `[<]` give the continuation and arrival values, written $v_\succ$ and $v_\prec$ below. $\mathsf{V}$, $\mathsf{V}_\succ$ and $\mathsf{V}_\prec$ denote the spaces of value functions at the decision, continuation and arrival perches. The elaborator, the program that constructs those objects, refuses a line that the types do not admit and names the rule.</div>
+<div class="sub">Under Υ (upsilon), each field and block of the file denotes a typed object. The role tag <code>!vlu</code> marks a value. The marks <code>[&gt;]</code> and <code>[&lt;]</code> give the continuation and arrival values <em>v</em><sub>≻</sub> and <em>v</em><sub>≺</sub>, whose spaces are 𝖵<sub>≻</sub> and 𝖵<sub>≺</sub>, beside 𝖵 at the decision perch. The elaborator, the program that constructs those objects, refuses a line that the types do not admit and names the rule.</div>
 
 | Line in the file | Under Υ it denotes |
 |---|---|
@@ -1410,7 +1407,7 @@ The same model and calibration give different numerical estimates when the shock
 </div>
 </div>
 
-<div class="footnote">Morbach, Yang and Marquardt (2007), "OntoCAPE—A large-scale ontology for chemical process engineering", <em>Engineering Applications of Artificial Intelligence</em> 20(2), 147–161 &middot; Morbach, Wiesner and Marquardt (2009), <em>Computers &amp; Chemical Engineering</em> 33(10), 1546–1556 &middot; Marquardt, Morbach, Wiesner and Yang (2010), <em>OntoCAPE: A Re-Usable Ontology for Chemical Process Engineering</em>, Springer &middot; the OntoCAPE 2.0 distribution (AVT, RWTH Aachen, GPL): system.owl and mathematical_model.owl; technical reports LPT-2008-25 and LPT-2008-28; Morbach (2009), dissertation, RWTH Aachen, on the RacerPro checks.</div>
+<div class="footnote">Morbach, Yang and Marquardt (2007), "OntoCAPE—A large-scale ontology for chemical process engineering", <em>Engineering Applications of Artificial Intelligence</em> 20(2), 147–161 &middot; Morbach, Wiesner and Marquardt (2009), <em>Computers &amp; Chemical Engineering</em> 33(10), 1546–1556 &middot; Marquardt, Morbach, Wiesner and Yang (2010), <em>OntoCAPE: A Re-Usable Ontology for Chemical Process Engineering</em>, Springer &middot; the OntoCAPE 2.0 distribution (AVT, RWTH Aachen, GPL): system.owl and mathematical_model.owl; technical reports LPT-2008-25 and LPT-2008-28; Morbach (2009), <em>A Reusable Ontology for Computer-Aided Process Engineering</em>, dissertation, RWTH Aachen; the AVT page for the RacerPro check.</div>
 
 
 ---
@@ -1438,7 +1435,7 @@ The same model and calibration give different numerical estimates when the shock
 <div class="stack">
 <div>
 
-<span class="lbl">Excludes.</span> The ontology excludes a quantity name read as any of several kinds, since a SWEET class fixes the kind by its definition and by its place among realms (SWEET's divisions of the Earth system), quantities and phenomena. The Climate and Forecast (CF) standard names, published with their canonical units as SKOS concepts (the W3C's format for agreed lists of terms) on the NERC vocabulary server, settle the same question for a variable such as `temp` in a netCDF data file (a format for climate data). In the deck's terms this is the question of <span class="c-red">the shock law</span> (slide 20) and of <span class="c-red">timing stated in words</span> (slide 21).
+<span class="lbl">Excludes.</span> The ontology excludes a quantity name read as any of several kinds, since a SWEET class fixes the kind by its definition and by its place among realms (SWEET's divisions of the Earth system), quantities and phenomena. The Climate and Forecast (CF) standard names, published as SKOS concepts (the W3C's format for agreed lists of terms) on the NERC vocabulary server, each linked to its canonical unit, settle the same question for a variable such as `temp` in a netCDF data file (a format for climate data). In the deck's terms this is the question of <span class="c-red">the shock law</span> (slide 20) and of <span class="c-red">timing stated in words</span> (slide 21).
 
 </div>
 <div>
@@ -1486,7 +1483,7 @@ The same model and calibration give different numerical estimates when the shock
 </div>
 </div>
 
-<div class="footnote">EDM Council, FIBO (spec.edmcouncil.org/fibo), release Q2 2026 (14 July 2026), MIT licence; the development-process page on consistency; onto-viewer's consistency checker (Openllet and HermiT) &middot; OMG specifications EDMC-FIBO/FND 1.2, BE 1.1, FBC 1.0 and IND 1.0 (2017–2018) &middot; Bennett (2013), "The financial industry business ontology: best practice for big data", <em>Journal of Banking Regulation</em> 14(3–4), 255–268 &middot; Allemang, Garbacz, Grądzki, Kendall and Trypuz (2021), <em>FOIS 2021</em>, 112–126 &middot; Financial Data Transparency Act Joint Data Standards, 91 FR 38246 (25 June 2026) &middot; GoodRelations, the ontology schema.org absorbed in 2012: Hepp (2008), <em>EKAW 2008</em>, LNCS 5268, 329–346.</div>
+<div class="footnote">EDM Council, FIBO (spec.edmcouncil.org/fibo), release Q2 2026 (14 July 2026), MIT licence; the development-process page on consistency; onto-viewer's consistency checker (Openllet and HermiT) &middot; OMG specifications EDMC-FIBO/FND 1.2, BE 1.1, FBC 1.0 and IND 1.0 (2017–2018) &middot; Bennett (2013), "The financial industry business ontology: best practice for big data", <em>Journal of Banking Regulation</em> 14(3–4), 255–268 &middot; Allemang, Garbacz, Grądzki, Kendall and Trypuz (2021), <em>FOIS 2021</em>, 112–126 &middot; Financial Data Transparency Act Joint Data Standards, 91 FR 38246 (25 June 2026) &middot; GoodRelations, the ontology schema.org integrated in 2012: Hepp (2008), <em>EKAW 2008</em>, LNCS 5268, 329–346.</div>
 
 
 ---
@@ -1524,7 +1521,7 @@ The same model and calibration give different numerical estimates when the shock
 </div>
 </div>
 
-<div class="footnote">W3C (2012), <em>OWL 2 Web Ontology Language</em>, Recommendations of 11 December 2012: Document Overview §2.3; Direct Semantics §§2.2–2.5; Profiles §§1 and 5; Primer §§2, 4 and 9 &middot; Baader, Calvanese, McGuinness, Nardi and Patel-Schneider (eds.) (2007), <em>The Description Logic Handbook</em>, 2nd ed., Cambridge University Press &middot; HermiT: Glimm, Horrocks, Motik, Stoilos and Wang (2014), <em>Journal of Automated Reasoning</em> 53(3), 245–269; ELK: Kazakov, Krötzsch and Simančík (2014), <em>Journal of Automated Reasoning</em> 53(1), 1–61.</div>
+<div class="footnote">W3C (2012), <em>OWL 2 Web Ontology Language</em>, Recommendations of 11 December 2012: Document Overview §2.3; Direct Semantics §§2.2–2.5; Profiles §§1 and 5; Primer §§2, 4, 5 and 9 &middot; Baader, Calvanese, McGuinness, Nardi and Patel-Schneider (eds.) (2007), <em>The Description Logic Handbook</em>, 2nd ed., Cambridge University Press &middot; HermiT: Glimm, Horrocks, Motik, Stoilos and Wang (2014), <em>Journal of Automated Reasoning</em> 53(3), 245–269; ELK: Kazakov, Krötzsch and Simančík (2014), <em>Journal of Automated Reasoning</em> 53(1), 1–61.</div>
 
 
 ---
@@ -1544,10 +1541,10 @@ td code { font-size: 13.5px; }
 
 | Ontology | Written form | Domain of meaning | Map Υ | Checker |
 |---|---|---|---|---|
-| Gene Ontology | the GO terms, each by ID | kinds of molecular function, biological process and cellular component | the term in a GAF annotation | the ELK reasoner on the ontology at every commit |
+| Gene Ontology | the GO terms, each by ID | kinds of molecular function, biological process and cellular component | the term in a GAF annotation | the ELK reasoner, on every pull request and push to master |
 | OntoCAPE | OWL classes and relations in 62 modules | models, systems, materials and quantities | the axioms, `models` and `hasModelVariable` | the RacerPro reasoner |
-| SWEET and the CF names | OWL classes, and SKOS concepts for the CF names | Earth-science quantities, realms and phenomena | the class, or the standard name on a variable | any OWL tool; the CF checker against the NVS table |
-| FIBO | OWL classes and properties | contracts, instruments and parties | the class asserted of a record | two OWL 2 reasoners on every release |
+| SWEET and the CF names | OWL classes, and SKOS concepts for the CF names | Earth-science quantities, realms and phenomena | the class, or the standard name on a variable | any OWL tool; the CF checker against the standard-name table at cfconventions.org |
+| FIBO | OWL classes and properties | contracts, instruments and parties | the class asserted of a record | a consistency check by Openllet or HermiT, whichever answers first |
 | OWL 2 | classes, properties and individuals | an interpretation: a set with relations on it | the Direct Semantics | a reasoner: consistency and entailment |
 
 <div class="footnote">Harel and Rumpe (2004), <em>Computer</em> 37(10), 64–72, for the three parts &middot; the sources of each ontology are on its slide: Ashburner et al. (2000) and the Gene Ontology Consortium (2026); Morbach, Yang and Marquardt (2007); Raskin and Pan (2005) and the NERC Vocabulary Server; the EDM Council and Bennett (2013); W3C (2012).</div>
