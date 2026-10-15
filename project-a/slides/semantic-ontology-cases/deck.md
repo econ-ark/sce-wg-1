@@ -1143,155 +1143,122 @@ Without semantic ontologies, how does DYNARE work?
 
 ---
 
-<!-- slide 32 · Kinds, individuals and the community library (divider) -->
+<!-- slide 32 · The community library (divider) -->
 
 <!-- _class: divider -->
 
-# Kinds, individuals and the community library
-
+# The community library
 
 ---
 
-<!-- slide 33 · Kind and individual -->
+<!-- slide 33 · One model, several numerical implementations -->
+
+## One model, several numerical implementations
 
 <style scoped>
-.stack > div { padding: 0 0 1em 0; font-size: 20px; line-height: 1.48; }
-.stack > div:last-child { padding-bottom: 0; }
-.stack p { margin: 0; }
-.stack code { font-size: 15.5px; }
-.katex-display { margin: 0.2em 0 1em 0 !important; font-size: 0.92em; }
-.rule { font-family: 'Newsreader', Georgia, serif; font-size: 27px; line-height: 1.3; color: var(--ark-head); margin: 0.2em 0 1em 0; }
+p { font-size: 21px; line-height: 1.5; }
+table { font-size: 20px; margin: 0.65em 0; }
+th:first-child { width: 27%; }
+th, td { padding: 0.5em 0.8em 0.5em 0; }
+.callout { font-size: 20px; line-height: 1.45; margin-top: 0.8em; }
 </style>
 
-## Kind and individual
+The library asks each toolkit to implement a shared model and calibration, with its own solution method and runnable tutorial.
 
-$$\text{written form}\ \xrightarrow{\ \ \Upsilon\ \ }\ \underbrace{\mathbb{T}_\prec\circ\mathbb{T}_\succ:\mathsf{V}_\succ\to\mathsf{V}_\prec}_{\text{the kind: the model as a mathematical object}}\ \xrightarrow{\ \ \text{Ρ}\ \ }\ \underbrace{(\hat{\mathbb{T}}_\prec\circ\hat{\mathbb{T}}_\succ)_{\text{HARK}},\ (\hat{\mathbb{T}}_\prec\circ\hat{\mathbb{T}}_\succ)_{\text{SSJ}}}_{\text{individuals: the operator with grids, quadrature and interpolation attached}}$$
+| Part of a contribution | Buffer-stock example |
+|:---|:---|
+| Common economics | Equations, timing, shock laws, normalization and calibration. |
+| Implementation choices | Solution method, shock approximation, grids, interpolation and software version. |
+| Comparison quantities | Consumption, target resources, MPCs and model conditions. |
+
+<div class="callout">The starting point is the buffer-stock description and HARK tutorial in <a href="https://github.com/QuantEcon/community-library/pull/5">PR #5</a>, under review.</div>
+
+<div class="footnote"><a href="https://quantecon.github.io/community-library/">Community Library</a> &middot; <a href="https://github.com/akshayshanker/community-library/blob/e0452585392965c41f90a98a77a94b185f3501e7/models/buffer-stock/README.md">Buffer-stock submission guide</a>. The result tables, metadata format and tolerances are optional draft conventions; reporting requirements remain under discussion. Status checked 15 October 2026.</div>
+
+---
+
+<!-- slide 34 · Link toolkit variables to shared model definitions -->
+
+## Link toolkit variables to shared model definitions
+
+<style scoped>
+table { font-size: 20px; line-height: 1.45; margin: 0.35em 0 0.9em; }
+th:first-child { width: 26%; }
+th, td { padding: 0.5em 0.8em 0.5em 0; }
+p { font-size: 21px; line-height: 1.5; }
+</style>
+
+| Published precedent | What was done |
+|:---|:---|
+| SemGen | Ontology annotations matched biological quantities across different model formats. |
+| Math-in-the-Middle | Symbols from SageMath, GAP and Singular were mapped to shared mathematical definitions. |
+| BioModels | Curators annotated model entities and reproduced published simulations. |
+
+**Proposed for the library.** Link each implementation’s variables and operations to agreed economic definitions. These links align written terms; **Υ interprets the terms as economic objects.**
+
+<div class="footnote"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), <em>Bioinformatics</em>, §§2–5</a> &middot; <a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), MACIS, §§2–5</a> &middot; <a href="https://pubmed.ncbi.nlm.nih.gov/31701150/">Malik-Sheriff et al. (2020), <em>Nucleic Acids Research</em></a>. The library extension is proposed; the papers establish the precedents.</div>
+
+---
+
+<!-- slide 35 · Define the quantity before comparing the numbers -->
+
+## Define the quantity before comparing the numbers
+
+<style scoped>
+p { font-size: 21px; line-height: 1.45; }
+table { font-size: 23px; margin: 0.5em 0 0.75em; }
+th:first-child { width: 65%; }
+th, td { padding: 0.45em 0.8em 0.45em 0; }
+.callout { font-size: 20px; line-height: 1.45; margin-top: 0.75em; }
+</style>
+
+In the buffer-stock draft, **target resources** are where expected next-period resources equal current resources, measured relative to permanent income.
+
+| Positive values in each shock approximation | Saved HARK estimate of target resources |
+|:---|:---|
+| 7 | **1.3910** |
+| 21 | **1.3994** |
+
+The same model and calibration give different numerical estimates when the shock approximation changes.
+
+<div class="callout"><strong>Proposed extension.</strong> Each result would declare its model version, quantity definition, normalization and numerical settings. Reviewers would check these declarations against the code and numerical results.</div>
+
+<div class="footnote"><a href="https://github.com/akshayshanker/community-library/blob/e0452585392965c41f90a98a77a94b185f3501e7/projects/HARK/BST/checks/sensitivity.md">Saved HARK sensitivity study, §3</a> &middot; <a href="https://github.com/akshayshanker/community-library/blob/e0452585392965c41f90a98a77a94b185f3501e7/models/buffer-stock/model-description.md">Quantity definition, §1</a>. Both calculations retain the same additional zero-income outcome and asset grid. These are saved estimates, not a new computation.</div>
+
+---
+
+<!-- slide 36 · Use the library to test WG1’s common definitions -->
+
+## Use the library to test WG1’s common definitions
+
+<style scoped>
+.stack > div { padding: 0 0 0.75em; font-size: 21px; line-height: 1.45; }
+.stack > div:last-child { padding-bottom: 0; }
+.stack p { margin: 0; }
+.callout { font-size: 20px; line-height: 1.45; margin-top: 0.8em; }
+</style>
 
 <div class="stack">
 <div>
 
-<span class="lbl">In the cartoon.</span> $\mathsf{Pig}$ is a kind and Maurice an individual of it, although the taxonomy holds no pig.
+**Proposed pilot.** Start with the full buffer-stock description and HARK contribution, then add a second toolkit.
 
 </div>
 <div>
 
-<span class="lbl">In a library of models.</span> The shared model statement with its calibration is the <span class="c-red">kind</span>. Each toolkit's implementation, with its own shock approximation, grids and interpolation, is an <span class="c-red">individual</span>, and a change of interpolation changes the approximation, not the operation.
-
-</div>
-</div>
-
-<div class="footnote">Guizzardi and Guarino (2024), &sect;2.1, types, individuals and instantiation &middot; Bellman calculus, Introduction §1 (Υ and Ρ; "changing an interpolation method produces a different numerical approximation to a specified mathematical operation") &middot; SSJ: the sequence-space Jacobian toolkit of Auclert, Bardóczy, Rognlie and Straub (2021).</div>
-
-
----
-
-<!-- slide 34 · What the library asks of an implementation -->
-
-<style scoped>
-.stack > div { padding: 0 0 1em 0; font-size: 20px; line-height: 1.48; }
-.stack > div:last-child { padding-bottom: 0; }
-.stack p { margin: 0; }
-.stack code { font-size: 15.5px; }
-.katex-display { margin: 0.2em 0 1em 0 !important; font-size: 0.92em; }
-.rule { font-family: 'Newsreader', Georgia, serif; font-size: 27px; line-height: 1.3; color: var(--ark-head); margin: 0.2em 0 1em 0; }
-</style>
-
-## What the library asks of an implementation
-
-<div class="rule">"Keep the model and calibration fixed, and choose your own prose, solution method and runnable format."</div>
-
-<div class="stack">
-<div>
-
-<span class="lbl">Fixed.</span> The model statement and its calibration, one per baseline model: the kind.
+**Task.** Ask an AI to identify comparable results and report differences in numerical settings.
 
 </div>
 <div>
 
-<span class="lbl">Free.</span> The solution method, the finite approximation of the shocks, the grids and the toolkit: Ρ (rho), the numerical construction, which each project chooses.
-
-</div>
-<div>
-
-<span class="lbl">Compared.</span> The results, against reference values and draft tolerances, with the timing convention stated once because it is "the single most common source of results that fail to line up".
+**Comparison.** Compare the AI’s answers with and without semantic annotations, using the same complete model statement, equations, calibration and run information. Record correct matches, incorrect matches and cases requiring review.
 
 </div>
 </div>
 
-<div class="footnote">The Community Library of Baseline Models, README and the buffer-stock submission guide (QuantEcon, 2026); the template brief of 11 September 2026 (reference values and tolerances) &middot; SCE WG1, model specification template, draft v0.1: "pin the economics, leave the method free"; §2 on the timing convention.</div>
+<div class="callout">The library supplies the worked examples; the results help WG1 decide which definitions and checks to share.</div>
 
-
----
-
-<!-- slide 35 · Why the kind has to be stated -->
-
-<style scoped>
-.stack > div { padding: 0 0 1em 0; font-size: 20px; line-height: 1.48; }
-.stack > div:last-child { padding-bottom: 0; }
-.stack p { margin: 0; }
-.stack code { font-size: 15.5px; }
-.katex-display { margin: 0.2em 0 1em 0 !important; font-size: 0.92em; }
-.rule { font-family: 'Newsreader', Georgia, serif; font-size: 27px; line-height: 1.3; color: var(--ark-head); margin: 0.2em 0 1em 0; }
-</style>
-
-## Why the kind has to be stated
-
-<div class="stack">
-<div>
-
-<span class="lbl">Numbers can agree while the problems differ.</span> "Krusell–Smith" denotes different models across toolkits, and two solvers can print close values for two problems. Agreement of numbers is evidence only once both implementations claim the <span class="c-red">same object</span>.
-
-</div>
-<div>
-
-<span class="lbl">A stated kind makes the test well posed.</span> The comparator reads two declarations as one object up to renaming. The numbers then test only Ρ: a <span class="c-red">misreading</span> of the model is caught by the comparator, an <span class="c-red">error in the code</span> only by the numbers.
-
-</div>
-<div>
-
-<span class="lbl">Today the link is a name.</span> An implementation names its model by a link to the shared description and the entry `model: "BST"`, which only the numbers test. In the appendix’s five reference ontologies (slides 39 to 43), a record contains a term that a checker reads. A stage file would give the library the same.
-
-</div>
-</div>
-
-<div class="footnote">bellman-ddsl, model-class relations, literature note of 1 October 2026 ("'Krusell-Smith' denotes different models across toolkits") &middot; Bellman calculus, Introduction §1: parsing, interpretation, method assignment, calibration and execution must all agree for a result to approximate the declared problem &middot; bellman-ddsl wiki, judge §4 (the comparator) &middot; the buffer-stock submission guide, the optional metadata entry.</div>
-
-
----
-
-<!-- slide 36 · The community library holds the individuals -->
-
-<style scoped>
-.stack > div { padding: 0 0 1em 0; font-size: 20px; line-height: 1.48; }
-.stack > div:last-child { padding-bottom: 0; }
-.stack p { margin: 0; }
-.stack code { font-size: 15.5px; }
-.katex-display { margin: 0.2em 0 1em 0 !important; font-size: 0.92em; }
-.rule { font-family: 'Newsreader', Georgia, serif; font-size: 27px; line-height: 1.3; color: var(--ark-head); margin: 0.2em 0 1em 0; }
-</style>
-
-## The community library holds the individuals
-
-<div class="stack">
-<div>
-
-<span class="lbl">Project B.</span> The library, hosted by QuantEcon, publishes tutorials that solve the same baseline models in different toolkits from one model statement and one calibration, so that readers can <span class="c-red">compare the results</span>. Five baseline models are proposed.
-
-</div>
-<div>
-
-<span class="lbl">The precedent.</span> BioModels holds about 2,000 models in SBML. For the 800 curated ones the curators have checked the representation against the biology, checked that simulations reproduce the publication, and attached ontology terms (Malik-Sheriff et al. 2020).
-
-</div>
-<div>
-
-<span class="lbl">The corpus is the interface.</span> Every semantics paper of Project A treats the same baseline models, and its verification experiments run on the library's implementations. The library supplies the individuals on which the ontology's checks run, and receives in return a kind that a program can check.
-
-</div>
-</div>
-
-<div class="footnote">The Community Library of Baseline Models, README (QuantEcon, 2026) &middot; Malik-Sheriff et al. (2020), "BioModels: 15 years of sharing computational models in life science", <em>Nucleic Acids Research</em> 48, D407–D415 &middot; Project A brief, "Relation to Project B".</div>
-
+<div class="footnote">Proposed pilot, not an existing library feature. The annotations restate supplied facts. The full buffer-stock model includes permanent and transitory shocks; the earlier Bellman stage illustration is simplified.</div>
 
 ---
 
@@ -1549,7 +1516,7 @@ td code { font-size: 14px; }
 | Written form | the fields and the blocks, each with a type and a perch, and the declared law of the shock (slide 23) |
 | Domain of meaning | state spaces, laws, value functions and the operators between them (slide 5) |
 | Map Υ | the perch tags `@ !arvl`, `@ !dcsn` and `@ !cntn`, the role tags `!ctrl` and `!vlu` and the law line (slide 23), interpreted by Υ (upsilon), the checked interpretation of slide 47, as the objects of slide 5 |
-| Checker | the elaborator (slide 24), which constructs the typed object or refuses the file, naming the rule the file breaks and the line; and the comparator, a program that compares two elaborated files up to renaming and reports, for each kind of item, agreement, difference or an undecided residue, the items it can neither match nor reject (slide 34) |
+| Checker | the elaborator (slide 24), which constructs the typed object or refuses the file, naming the rule the file breaks and the line; and the comparator, a program that compares two elaborated files up to renaming and reports, for each kind of item, agreement, difference or an undecided residue, the items it can neither match nor reject |
 | Run on the file of slide 23 | The elaborator constructed the object from the file and refused the line `E_{y}(V) + y`, with `y` listed among the block's inputs, under `shock-reintroduced`.<br>The comparator read the file and the documentation example, with b and w for k and m, as one object under that renaming. |
 
 <div class="footnote">Bellman-SYM, Stages §5 (checked interpretation) &middot; bellman-ddsl wiki, Υ §1 (the elaborator) and judge §4 (the comparator) &middot; the runs: <code>elaborate_text</code> of <code>bellman.factory.elaboration</code> and <code>compare</code> of <code>meaning_map_training.compare</code>, 13 October 2026, on the stage file of slide 23 and on Bellman-SYM's documentation example (Stages §4).</div>
