@@ -443,7 +443,7 @@ style: |-
 
 </br> 
 
-A large language model fills in the meaning statistically rather than structurally. 
+A large language model fills in the meaning statistically, without any explicit inspectable structure.
 
 </div>
 <div>
