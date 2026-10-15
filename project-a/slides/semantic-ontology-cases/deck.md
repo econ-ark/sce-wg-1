@@ -497,7 +497,7 @@ $$
 </div>
 <div>
 
-<span class="lbl">3. The map Υ (upsilon).</span> It sends a symbol of a given type to an object of the matching kind, and a program <span class="c-red">checks</span> that it does.
+<span class="lbl">3. The map Υ (upsilon).</span> Υ maps each typed symbol to an object of the matching kind. A program <span class="c-red">checks</span> that the assigned object has the required kind.
 
 </div>
 </div>
