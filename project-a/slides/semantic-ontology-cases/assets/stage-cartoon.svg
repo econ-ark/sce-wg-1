@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 792 326" width="792" height="326" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One stage of the buffer-stock problem: the typed stage file above, the mathematical objects it denotes below, and the meaning map Upsilon between them" style="display:block; margin:0 auto; font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;">
+<defs>
+<marker id="so-ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f476b"/></marker>
+<marker id="so-ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c41230"/></marker>
+<marker id="so-ah-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#00aeef"/></marker>
+<marker id="so-ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#39b54a"/></marker>
+</defs>
+<text x="0" y="11" font-size="11" font-weight="500" fill="#676470">Written form, the typed stage file</text>
+<g fill="#ffffff" stroke="#1f476b" stroke-width="1.5">
+<rect x="40" y="20" width="150" height="88" rx="6"/>
+<rect x="321" y="20" width="150" height="88" rx="6"/>
+<rect x="602" y="20" width="150" height="88" rx="6"/>
+</g>
+<g font-size="10.5" font-weight="500" fill="#676470" text-anchor="middle">
+<text x="115" y="37">Arrival ≺</text>
+<text x="396" y="37">Decision</text>
+<text x="677" y="37">Continuation ≻</text>
+</g>
+<g font-family="'JetBrains Mono', Menlo, 'SF Mono', monospace" font-size="12.5" fill="#212529" text-anchor="middle">
+<text x="115" y="62">k : ℝ₊ @ !arvl</text>
+<text x="115" y="84">V[&lt;] : ℝ @ !vlu</text>
+<text x="396" y="57">m : ℝ₊₊ @ !dcsn</text>
+<text x="396" y="76">c : ℝ₊₊ @ !ctrl</text>
+<text x="396" y="95">V : ℝ @ !vlu</text>
+<text x="677" y="62">a : ℝ₊ @ !cntn</text>
+<text x="677" y="84">V[&gt;] : ℝ @ !vlu</text>
+</g>
+<g stroke="#1f476b" stroke-width="1.5" marker-end="url(#so-ah-blue)">
+<line x1="191" y1="64" x2="319" y2="64"/>
+<line x1="472" y1="64" x2="600" y2="64"/>
+</g>
+<g font-family="'JetBrains Mono', Menlo, 'SF Mono', monospace" text-anchor="middle" fill="#1f476b">
+<text x="255" y="56" font-size="12">m = R*k + y</text>
+<text x="255" y="79" font-size="8.8" fill="#676470">y ~ LogNormal(μ_y, σ_y)</text>
+<text x="536" y="56" font-size="12">a = m - c</text>
+<text x="536" y="79" font-size="9.5" fill="#676470">c chosen at decision</text>
+<text x="255" y="94" font-size="8.8" fill="#9aa0a6">[id=arvl_to_dcsn]</text>
+<text x="536" y="94" font-size="8.8" fill="#9aa0a6">[id=dcsn_to_cntn]</text>
+</g>
+<g font-family="'JetBrains Mono', Menlo, 'SF Mono', monospace" font-size="11" fill="#495057" text-anchor="middle">
+<text x="115" y="128">V[&lt;] = E_{y}(V)</text>
+<text x="388" y="128" text-anchor="end">V = 𝑢(c) + β*V[&gt;]</text>
+<text x="404" y="128" text-anchor="start">c = argmax_{c}(𝑢(c) + β*V[&gt;])</text>
+<text x="752" y="128" fill="#676470" text-anchor="end">the stage's input</text>
+<text x="115" y="142" font-size="8.8" fill="#9aa0a6">[id=dcsn_to_arvl]</text>
+<text x="388" y="142" text-anchor="end" font-size="8.8" fill="#9aa0a6">[id=cntn_to_dcsn]</text>
+<text x="404" y="142" text-anchor="start" font-size="8.8" fill="#9aa0a6">[id=policy]</text>
+</g>
+<g stroke="#c41230" stroke-width="2" stroke-dasharray="1 5" stroke-linecap="round" marker-end="url(#so-ah-red)">
+<line x1="115" y1="148" x2="115" y2="178"/>
+<line x1="396" y1="148" x2="396" y2="178"/>
+<line x1="677" y1="148" x2="677" y2="178"/>
+</g>
+<g font-size="15" font-weight="500" fill="#c41230">
+<text x="126" y="165">Υ</text>
+<text x="140" y="165" font-size="9.5" font-weight="400">upsilon, the meaning map</text>
+<text x="407" y="165">Υ</text>
+<text x="688" y="165">Υ</text>
+</g>
+<rect x="0" y="182" width="792" height="144" rx="6" fill="#f8f9fa" stroke="#e9ecef"/>
+<text x="10" y="197" font-size="11" font-weight="500" fill="#676470">Meaning, read backward on value functions</text>
+<text x="782" y="197" font-size="11.5" fill="#495057" text-anchor="end" font-weight="500">𝕋<tspan baseline-shift="sub" font-size="8">≺</tspan> ∘ 𝕋<tspan baseline-shift="sub" font-size="8">≻</tspan> : V≻ → V≺, the stage operator</text>
+<g fill="#ffffff" stroke="#ced4da" stroke-width="1.2">
+<rect x="40" y="204" width="150" height="42" rx="6"/>
+<rect x="321" y="204" width="150" height="42" rx="6"/>
+<rect x="602" y="204" width="150" height="42" rx="6"/>
+</g>
+<g font-size="13" fill="#212529" text-anchor="middle">
+<text x="115" y="222"><tspan font-style="italic">v</tspan><tspan baseline-shift="sub" font-size="9">≺</tspan> : ℝ₊ → ℝ</text>
+<text x="396" y="222"><tspan font-style="italic">v</tspan> : ℝ₊₊ → ℝ</text>
+<text x="677" y="222"><tspan font-style="italic">v</tspan><tspan baseline-shift="sub" font-size="9">≻</tspan> : ℝ₊ → ℝ</text>
+</g>
+<g font-size="9.5" fill="#676470" text-anchor="middle">
+<text x="115" y="238">arrival value, in V≺</text>
+<text x="396" y="238">decision value, in V</text>
+<text x="677" y="238">continuation value, in V≻ (input)</text>
+</g>
+<line x1="600" y1="225" x2="473" y2="225" stroke="#c41230" stroke-width="1.6" marker-end="url(#so-ah-red)"/>
+<line x1="319" y1="225" x2="192" y2="225" stroke="#00aeef" stroke-width="1.6" marker-end="url(#so-ah-cyan)"/>
+<g font-size="11.5" text-anchor="middle" font-weight="500">
+<text x="536" y="216" fill="#c41230">𝕋≻ : V≻ → V</text>
+<text x="536" y="240" fill="#676470" font-size="9.5" font-weight="400">optimize over c</text>
+<text x="255" y="216" fill="#00aeef">𝕋≺ : V → V≺</text>
+<text x="255" y="240" fill="#676470" font-size="9.5" font-weight="400">integrate over y</text>
+</g>
+<text x="536" y="263" font-size="11.5" fill="#495057" text-anchor="middle">(𝕋<tspan baseline-shift="sub" font-size="8">≻</tspan> <tspan font-style="italic">v</tspan><tspan baseline-shift="sub" font-size="8">≻</tspan>)(<tspan font-style="italic">m</tspan>) = max<tspan baseline-shift="sub" font-size="8">0&lt;c≤m</tspan> { <tspan font-style="italic">u</tspan>(<tspan font-style="italic">c</tspan>) + β <tspan font-style="italic">v</tspan><tspan baseline-shift="sub" font-size="8">≻</tspan>(<tspan font-style="italic">m</tspan> − <tspan font-style="italic">c</tspan>) }</text>
+<text x="255" y="263" font-size="11.5" fill="#495057" text-anchor="middle">(𝕋<tspan baseline-shift="sub" font-size="8">≺</tspan> <tspan font-style="italic">v</tspan>)(<tspan font-style="italic">k</tspan>) = ∫ <tspan font-style="italic">v</tspan>(<tspan font-style="italic">R k</tspan> + <tspan font-style="italic">y</tspan>) ν<tspan baseline-shift="sub" font-size="8">y</tspan>(d<tspan font-style="italic">y</tspan>)</text>
+<text x="10" y="283" font-size="11" font-weight="500" fill="#676470">Meaning, read forward on distributions under a policy π</text>
+<g fill="#ffffff" stroke="#39b54a" stroke-width="1.2" stroke-dasharray="4 3">
+<rect x="40" y="290" width="150" height="28" rx="6"/>
+<rect x="321" y="290" width="150" height="28" rx="6"/>
+<rect x="602" y="290" width="150" height="28" rx="6"/>
+</g>
+<g font-size="12" fill="#212529" text-anchor="middle">
+<text x="115" y="308">laws of <tspan font-style="italic">k</tspan>, in M≺</text>
+<text x="396" y="308">laws of <tspan font-style="italic">m</tspan>, in M</text>
+<text x="677" y="308">laws of <tspan font-style="italic">a</tspan>, in M≻</text>
+</g>
+<g stroke="#39b54a" stroke-width="1.6" marker-end="url(#so-ah-green)">
+<line x1="191" y1="304" x2="319" y2="304"/>
+<line x1="472" y1="304" x2="600" y2="304"/>
+</g>
+<g font-size="11" text-anchor="middle" fill="#2e8f3a" font-weight="500">
+<text x="255" y="298">𝕄≺ : M≺ → M</text>
+<text x="536" y="298">𝕄≻,π : M → M≻</text>
+</g>
+</svg>

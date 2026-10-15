@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 792 172" width="792" height="172" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One stage of the buffer-stock problem as a typed stage file: three perches, their fields, and the blocks between them" style="display:block; margin:0 auto; font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;">
+<defs>
+<marker id="so-ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f476b"/></marker>
+<marker id="so-ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c41230"/></marker>
+<marker id="so-ah-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#00aeef"/></marker>
+<marker id="so-ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#39b54a"/></marker>
+</defs>
+<text x="0" y="11" font-size="11" font-weight="500" fill="#676470">Written form, the typed stage file</text>
+<g fill="#ffffff" stroke="#1f476b" stroke-width="1.5">
+<rect x="20" y="22" width="140" height="88" rx="6"/>
+<rect x="326" y="22" width="140" height="88" rx="6"/>
+<rect x="632" y="22" width="140" height="88" rx="6"/>
+</g>
+<g font-size="11.5" font-weight="500" fill="#676470" text-anchor="middle">
+<text x="90" y="39">Arrival</text>
+<text x="396" y="39">Decision</text>
+<text x="702" y="39">Continuation</text>
+</g>
+<g font-family="'JetBrains Mono', Menlo, 'SF Mono', monospace" font-size="12.5" fill="#212529" text-anchor="middle">
+<text x="90" y="64">k : ℝ₊ @ !arvl</text>
+<text x="90" y="86">V[&lt;] : ℝ @ !vlu</text>
+<text x="396" y="59">m : ℝ₊₊ @ !dcsn</text>
+<text x="396" y="78">c : ℝ₊₊ @ !ctrl</text>
+<text x="396" y="97">V : ℝ @ !vlu</text>
+<text x="702" y="64">a : ℝ₊ @ !cntn</text>
+<text x="702" y="86">V[&gt;] : ℝ @ !vlu</text>
+</g>
+<g stroke="#1f476b" stroke-width="1.5" marker-end="url(#so-ah-blue)">
+<line x1="161" y1="66" x2="324" y2="66"/>
+<line x1="467" y1="66" x2="630" y2="66"/>
+</g>
+<g font-family="'JetBrains Mono', Menlo, 'SF Mono', monospace" text-anchor="middle" fill="#1f476b">
+<text x="243" y="58" font-size="12">m = R*k + y</text>
+<text x="243" y="81" font-size="11" fill="#676470">y ~ LogNormal(μ_y, σ_y)</text>
+<text x="549" y="58" font-size="12">a = m - c</text>
+<text x="549" y="81" font-size="11.5" fill="#676470">c chosen at decision</text>
+<text x="243" y="99" font-size="11" fill="#9aa0a6">[id=arvl_to_dcsn]</text>
+<text x="549" y="99" font-size="11" fill="#9aa0a6">[id=dcsn_to_cntn]</text>
+</g>
+<g font-family="'JetBrains Mono', Menlo, 'SF Mono', monospace" font-size="11" fill="#495057" text-anchor="middle">
+<text x="90" y="142">V[&lt;] = E_{y}(V)</text>
+<text x="388" y="142" text-anchor="end">V = 𝑢(c) + β*V[&gt;]</text>
+<text x="404" y="142" text-anchor="start">c = argmax_{c}(𝑢(c) + β*V[&gt;])</text>
+<text x="702" y="142" fill="#676470">the stage's input</text>
+<text x="90" y="160" fill="#9aa0a6">[id=dcsn_to_arvl]</text>
+<text x="388" y="160" text-anchor="end" fill="#9aa0a6">[id=cntn_to_dcsn]</text>
+<text x="404" y="160" text-anchor="start" fill="#9aa0a6">[id=policy]</text>
+</g>
+</svg>
