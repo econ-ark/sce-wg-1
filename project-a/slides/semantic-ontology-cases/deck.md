@@ -461,7 +461,9 @@ Meaning of objects is not enough.
 
 <span class="lbl">Ontology.</span> To "understand", we need a structure of relations between objects of different *types* 
 
-<span class="lbl">Semantic Ontology.</span> **Machine-readable account of objects, their types and the valid relations between them.**
+<span class="lbl">Semantic Ontology.</span> **Machine-readable account of <span class="c-red">objects</span>, their <span class="c-red">types</span> and the valid relations between them.**
+
+<span class="c-red">Signatures</span> state the argument types of relations and the input and output types of operations.
 
  </br> 
 
