@@ -445,23 +445,11 @@ style: |-
 
 A large language model fills in the meaning statistically rather than structurally. 
 
-<style scoped>
-.callout.ai-example {
-  max-width: 900px;
-  font-size: 18px;
-  line-height: 1.4;
-  padding: 0.55em 0.8em;
-  margin: 0.7em 0 0;
-}
-</style>
-
-<div class="callout ai-example"><strong>Example from AI training.</strong> With NVIDIA’s TensorFloat-32 (TF32) mode, a matrix of 32-bit floating-point numbers (<code>float32</code>) can change even when multiplied by the identity, because inputs are rounded first. A shared numerical ontology makes the <strong>written form</strong> (type and arithmetic settings), <strong>domain of meaning</strong> (machine values and rounded operations) and <strong>Υ</strong> (the interpretation map) explicit, giving humans and AI tools the same arithmetic assumptions to follow.</div>
-
 </div>
 <div>
 
 
-<div class="footnote"><a href="https://docs.pytorch.org/docs/2.14/notes/numerical_accuracy.html">PyTorch, “Numerical accuracy”, TF32 section</a> &middot; Stosic and Micikevicius (NVIDIA, 2021), <a href="https://developer.nvidia.com/blog/accelerating-ai-training-with-tf32-tensor-cores/">“Accelerating AI Training with NVIDIA TF32 Tensor Cores”</a>.</div>
+<div class="footnote">Bender and Koller (2020), <a href="https://aclanthology.org/2020.acl-main.463/">“Climbing towards NLU”</a>, ACL.</div>
 
 ---
 
@@ -497,7 +485,7 @@ $$
 <div class="stack">
 <div>
 
-<span class="lbl">The written form.</span> Machine-readable symbols, each with a <span class="c-red">type</span> and a signature, what it takes and what it returns, as in $v : X \to \mathbb{R}$.
+<span class="lbl">The written form.</span> Machine-readable symbols, each with a <span class="c-red">type</span> and a <span class="c-red">signature</span> ($v : X \to \mathbb{R}$).
 
 </div>
 <div>
@@ -512,7 +500,19 @@ $$
 </div>
 </div>
 
-<div class="footnote">Harel and Rumpe (2004), "Meaningful modeling: what's the semantics of 'semantics'?", <em>Computer</em> 37(10), 64–72, for the three parts &middot; Bellman calculus, Introduction §1 (bellman-ddsl/docs) &middot; in this deck a type belongs to the written form and a kind to the domain; Guizzardi and Guarino (2024) write "type" for what the deck calls a kind.</div>
+<style scoped>
+.callout.ai-example {
+  max-width: 100%;
+  font-size: 18px;
+  line-height: 1.4;
+  padding: 0.55em 0.8em;
+  margin: 0.7em 0 0;
+}
+</style>
+
+<div class="callout ai-example"><strong>Example from AI training.</strong> With NVIDIA’s TensorFloat-32 (TF32) mode, a matrix of 32-bit floating-point numbers (<code>float32</code>) can change even when multiplied by the identity, because inputs are rounded first. A shared numerical ontology makes the <strong>written form</strong> (type and arithmetic settings), <strong>domain of meaning</strong> (machine values and rounded operations) and <strong>Υ</strong> (the interpretation map) explicit, giving humans and AI tools the same arithmetic assumptions to follow.</div>
+
+<div class="footnote">Harel and Rumpe (2004), "Meaningful modeling: what's the semantics of 'semantics'?", <em>Computer</em> 37(10), 64–72, for the three parts &middot; Bellman calculus, Introduction §1 (bellman-ddsl/docs) &middot; in this deck a type belongs to the written form and a kind to the domain; Guizzardi and Guarino (2024) write "type" for what the deck calls a kind. &middot; <a href="https://docs.pytorch.org/docs/2.14/notes/numerical_accuracy.html">PyTorch, “Numerical accuracy”, TF32 section</a> &middot; Stosic and Micikevicius (NVIDIA, 2021), <a href="https://developer.nvidia.com/blog/accelerating-ai-training-with-tf32-tensor-cores/">“Accelerating AI Training with NVIDIA TF32 Tensor Cores”</a>.</div>
 
 
 ---
