@@ -569,7 +569,7 @@ th, td { padding: 0.45em 0.7em 0.45em 0; }
 </div>
 <div>
 
-**Representations can also vary.** Typed mathematics, logical axioms and graphs can be combined; annotations connect existing models and data to ontology terms.
+**For an economics project.** An ontology can specify value functions and valid compositions of operators; define firm and worker types and the employment relations allowed in a graph; or link a dataset column to a shared definition of annual consumption per household and its units.
 
 </div>
 </div>
