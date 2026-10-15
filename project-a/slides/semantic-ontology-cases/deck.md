@@ -392,7 +392,7 @@ style: |-
 
 # <span class="bn">Semantic ontologies</span>
 
-## Primer: meaning of semantic ontology 
+## Primer for SCE-WG1
 
 <p class="title-authors"><u> Matt Mackay & Akshay Shanker</u></p>
 
