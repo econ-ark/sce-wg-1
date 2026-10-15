@@ -1081,7 +1081,21 @@ li { margin: 0 0 0.05em 0; }
 
 ---
 
-<!-- slide 30 · From code to numerical results -->
+<!-- slide 30 · Current modelling tools and AI (divider) -->
+
+<!-- _class: divider -->
+
+<style scoped>
+.section-context { color: #cfd8e2; font-size: 24px; line-height: 1.4; margin: 1em 0 0; max-width: 82%; }
+</style>
+
+# Current modelling tools and AI
+
+<p class="section-context">Dynare and other tools already turn model descriptions into computed results.</p>
+
+---
+
+<!-- slide 31 · What Dynare and other modelling tools do -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -1091,9 +1105,9 @@ li { margin: 0 0 0.05em 0; }
 .stack code { font-size: 14px; }
 </style>
 
-## From code to numerical results
+## What Dynare and other modelling tools do
 
-<div class="sub">Both routes parse a model file and produce numerical code. The upper route first states its economic interpretation: Υ (upsilon) maps the written model to a typed model object, ⟦file⟧; Ρ (rho) attaches a numerical method to it.</div>
+<div class="sub">Dynare and Dolo read model descriptions and apply numerical methods; programs in R or Stata can call numerical routines. The lower route summarizes this computation using a tool’s language and modelling rules.</div>
 
 <div class="center">
 
@@ -1104,17 +1118,17 @@ li { margin: 0 0 0.05em 0; }
 <div class="stack">
 <div>
 
-<span class="lbl">Beyond compilation.</span> An explicit Υ makes the model’s economic objects and relations available for checking, separately from its numerical implementation.
+<span class="lbl">With a shared economic interpretation.</span> The upper route states the interpretation separately: Υ maps the written model to a typed model object, ⟦file⟧; Ρ (rho) attaches a numerical method.
 
 </div>
 </div>
 
-<div class="footnote">Conceptual routes in this deck’s notation: Υ denotes a separately stated, shared economic interpretation. Compilers can already perform semantic checks; Dynare represents equations separately from solution commands. <a href="https://clang.llvm.org/docs/CommandGuide/clang.html#description">Clang documentation</a> &middot; <a href="https://www.dynare.org/manual/the-model-file.html#model-declaration">Dynare manual</a> &middot; Bellman calculus, Introduction §1.</div>
+<div class="footnote">Conceptual routes in this deck’s notation: Υ denotes a separately stated, shared economic interpretation. Compilers can already perform semantic checks; Dynare represents equations separately from solution commands. <a href="https://clang.llvm.org/docs/CommandGuide/clang.html#description">Clang documentation</a> &middot; <a href="https://www.dynare.org/manual/the-model-file.html#model-declaration">Dynare manual</a> &middot; <a href="https://www.econforge.org/dolo.py/">Dolo documentation</a> &middot; Bellman calculus, Introduction §1.</div>
 
 
 ---
 
-<!-- slide 31 · What AI needs beyond code compilation -->
+<!-- slide 32 · What AI needs beyond code compilation -->
 
 <style scoped>
 p { font-size: 21px; line-height: 1.45; }
@@ -1153,7 +1167,7 @@ Successful compilation or execution does not establish agreement with the intend
 
 ---
 
-<!-- slide 32 · The community library (divider) -->
+<!-- slide 33 · The community library (divider) -->
 
 <!-- _class: divider -->
 
@@ -1161,7 +1175,7 @@ Successful compilation or execution does not establish agreement with the intend
 
 ---
 
-<!-- slide 33 · One model, several numerical implementations -->
+<!-- slide 34 · One model, several numerical implementations -->
 
 ## One model, several numerical implementations
 
@@ -1187,7 +1201,7 @@ The library asks each toolkit to implement a shared model and calibration, with 
 
 ---
 
-<!-- slide 34 · Link toolkit variables to shared model definitions -->
+<!-- slide 35 · Link toolkit variables to shared model definitions -->
 
 ## Link toolkit variables to shared model definitions
 
@@ -1210,7 +1224,7 @@ p { font-size: 21px; line-height: 1.5; }
 
 ---
 
-<!-- slide 35 · Define the quantity before comparing the numbers -->
+<!-- slide 36 · Define the quantity before comparing the numbers -->
 
 ## Define the quantity before comparing the numbers
 
@@ -1237,7 +1251,7 @@ The same model and calibration give different numerical estimates when the shock
 
 ---
 
-<!-- slide 36 · Use the library to test WG1’s common definitions -->
+<!-- slide 37 · Use the library to test WG1’s common definitions -->
 
 ## Use the library to test WG1’s common definitions
 
@@ -1272,7 +1286,7 @@ The same model and calibration give different numerical estimates when the shock
 
 ---
 
-<!-- slide 37 · Appendix (divider) -->
+<!-- slide 38 · Appendix (divider) -->
 
 <!-- _class: divider -->
 
@@ -1281,7 +1295,7 @@ The same model and calibration give different numerical estimates when the shock
 
 ---
 
-<!-- slide 38 · Further examples (divider) -->
+<!-- slide 39 · Further examples (divider) -->
 
 <!-- _class: divider sub -->
 
@@ -1292,7 +1306,7 @@ The same model and calibration give different numerical estimates when the shock
 
 ---
 
-<!-- slide 39 · Biology – the Gene Ontology -->
+<!-- slide 40 · Biology – the Gene Ontology -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -1330,7 +1344,7 @@ The same model and calibration give different numerical estimates when the shock
 
 ---
 
-<!-- slide 40 · Engineering – OntoCAPE, the ontology for chemical process engineering -->
+<!-- slide 41 · Engineering – OntoCAPE, the ontology for chemical process engineering -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -1368,7 +1382,7 @@ The same model and calibration give different numerical estimates when the shock
 
 ---
 
-<!-- slide 41 · Earth science – the SWEET ontologies -->
+<!-- slide 42 · Earth science – the SWEET ontologies -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -1406,7 +1420,7 @@ The same model and calibration give different numerical estimates when the shock
 
 ---
 
-<!-- slide 42 · Finance – FIBO, the Financial Industry Business Ontology -->
+<!-- slide 43 · Finance – FIBO, the Financial Industry Business Ontology -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -1444,7 +1458,7 @@ The same model and calibration give different numerical estimates when the shock
 
 ---
 
-<!-- slide 43 · Knowledge representation – OWL 2, the language ontologies are written in -->
+<!-- slide 44 · Knowledge representation – OWL 2, the language ontologies are written in -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -1482,7 +1496,7 @@ The same model and calibration give different numerical estimates when the shock
 
 ---
 
-<!-- slide 44 · The five reference ontologies against the three parts of a semantic ontology -->
+<!-- slide 45 · The five reference ontologies against the three parts of a semantic ontology -->
 
 <style scoped>
 table { font-size: 16px; margin: 0.3em 0 0 0; width: 100% !important; }
@@ -1508,7 +1522,7 @@ td code { font-size: 13.5px; }
 
 ---
 
-<!-- slide 45 · The stage file against the same three parts -->
+<!-- slide 46 · The stage file against the same three parts -->
 
 <style scoped>
 table { font-size: 17px; margin: 0.3em 0 0 0; width: 100% !important; }
@@ -1519,13 +1533,13 @@ td code { font-size: 14px; }
 
 ## The stage file against the same three parts
 
-<div class="sub">The stage file of slide 23, the deck's own written form, is read here against the columns of the table on slide 44.</div>
+<div class="sub">The stage file of slide 23, the deck's own written form, is read here against the columns of the table on slide 45.</div>
 
 | Part | In the Bellman-SYM stage file |
 |---|---|
 | Written form | the fields and the blocks, each with a type and a perch, and the declared law of the shock (slide 23) |
 | Domain of meaning | state spaces, laws, value functions and the operators between them (slide 5) |
-| Map Υ | the perch tags `@ !arvl`, `@ !dcsn` and `@ !cntn`, the role tags `!ctrl` and `!vlu` and the law line (slide 23), interpreted by Υ (upsilon), the checked interpretation of slide 47, as the objects of slide 5 |
+| Map Υ | the perch tags `@ !arvl`, `@ !dcsn` and `@ !cntn`, the role tags `!ctrl` and `!vlu` and the law line (slide 23), interpreted by Υ (upsilon), the checked interpretation of slide 48, as the objects of slide 5 |
 | Checker | the elaborator (slide 24), which constructs the typed object or refuses the file, naming the rule the file breaks and the line; and the comparator, a program that compares two elaborated files up to renaming and reports, for each kind of item, agreement, difference or an undecided residue, the items it can neither match nor reject |
 | Run on the file of slide 23 | The elaborator constructed the object from the file and refused the line `E_{y}(V) + y`, with `y` listed among the block's inputs, under `shock-reintroduced`.<br>The comparator read the file and the documentation example, with b and w for k and m, as one object under that renaming. |
 
@@ -1534,7 +1548,7 @@ td code { font-size: 14px; }
 
 ---
 
-<!-- slide 46 · The parse tree of a written statement -->
+<!-- slide 47 · The parse tree of a written statement -->
 
 <!-- _header: 'Appendix &middot; [return to slide 18](#context)' -->
 <style scoped>
@@ -1582,7 +1596,7 @@ Parsing a written statement into a tree, as every compiler first does, shows wha
 
 ---
 
-<!-- slide 47 · From the syntax tree to the semantic graph -->
+<!-- slide 48 · From the syntax tree to the semantic graph -->
 
 <!-- _header: 'Appendix &middot; [return to slide 18](#context)' -->
 <style scoped>
@@ -1622,7 +1636,7 @@ $$\begin{aligned}
 
 ---
 
-<!-- slide 48 · What the expectation integrates -->
+<!-- slide 49 · What the expectation integrates -->
 
 <!-- _header: 'Appendix &middot; [return to slide 22](#multiple-possible-parsed-meanings)' -->
 <style scoped>
@@ -1661,7 +1675,7 @@ Since $\mathbb{E}\max\ge\max\mathbb{E}$, the reading on the right overstates the
 
 ---
 
-<!-- slide 49 · A number for a function, and a function on the wrong space -->
+<!-- slide 50 · A number for a function, and a function on the wrong space -->
 
 <!-- _header: 'Appendix &middot; [return to slide 22](#multiple-possible-parsed-meanings)' -->
 <style scoped>
@@ -1691,7 +1705,7 @@ The borrowing limit acts at $a=0$, a point at which a function of resources is n
 
 ---
 
-<!-- slide 50 · The discount and the expectation applied twice, and the recursion as a fixed point -->
+<!-- slide 51 · The discount and the expectation applied twice, and the recursion as a fixed point -->
 
 <!-- _header: 'Appendix &middot; [return to slide 22](#multiple-possible-parsed-meanings)' -->
 <style scoped>
@@ -1721,7 +1735,7 @@ A stationarity condition that the statement never makes replaces the backward re
 
 ---
 
-<!-- slide 51 · How an AI works with a semantic ontology (divider) -->
+<!-- slide 52 · How an AI works with a semantic ontology (divider) -->
 
 <!-- _class: divider sub -->
 
@@ -1732,7 +1746,7 @@ A stationarity condition that the statement never makes replaces the backward re
 
 ---
 
-<!-- slide 52 · The AI writes against the ontology -->
+<!-- slide 53 · The AI writes against the ontology -->
 
 <!-- _header: 'Appendix &middot; [return to slide 4](#semantic-ontology)' -->
 
@@ -1785,7 +1799,7 @@ A stationarity condition that the statement never makes replaces the backward re
 
 ---
 
-<!-- slide 53 · The AI reads from the ontology -->
+<!-- slide 54 · The AI reads from the ontology -->
 
 <!-- _header: 'Appendix &middot; [return to slide 4](#semantic-ontology)' -->
 
