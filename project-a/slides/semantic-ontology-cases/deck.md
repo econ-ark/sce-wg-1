@@ -1075,70 +1075,66 @@ li { margin: 0 0 0.05em 0; }
 
 ---
 
-<!-- slide 30 · What does DYNARE do? -->
+<!-- slide 30 · From code to numerical results -->
 
 <style scoped>
+p { font-size: 21px; line-height: 1.45; }
+.center { margin: 1.1em 0 1.2em; }
 .center img { margin: 0 auto; display: block; }
-.stack > div { padding: 0 0 0.6em 0; font-size: 18px; line-height: 1.42; }
-.stack > div:last-child { padding-bottom: 0; }
-.stack p { margin: 0; }
-.stack code { font-size: 14px; }
 </style>
 
-## What does DYNARE do?
+## From code to numerical results
 
-Without semantic ontologies, how does DYNARE work?
-
-<div class="sub">Both routes parse the file into a tree that holds syntax only, and both end in solver code. An ideal declarative language first builds ⟦file⟧, the model as a typed object, by Υ (upsilon), and then attaches a numerical method to it by Ρ (rho). Dynare applies Ρ to the tree directly, so its Υ is never written and the interpretation is attached implicitly, inside the numerical implementation.</div>
+Economists use model files in Dynare or Dolo, or programs in R or Stata. Numerical routines may be built into the tool or called from libraries.
 
 <div class="center">
 
-![w:860](assets/dynare-skip.svg)
+![w:1100](assets/program-to-results.svg)
 
 </div>
 
-<div class="stack">
-<div>
+Compilers and interpreters can check types and other language rules. Dynare declares equations separately from solution commands; Dolo builds a software representation of the model before applying numerical algorithms.
 
-<span class="lbl">The meaning of a <code>.mod</code> file.</span> It is <span class="c-red">what the program does with the file</span>: "The Dynare Preprocessor defines the Dynare model language" (the preprocessor's README).
-
-</div>
-</div>
-
-<div class="footnote">Υ and Ρ: Bellman calculus, Introduction §1 &middot; Dynare preprocessor README (13 October 2026); Adjemian et al. (2026), <em>Dynare: Reference Manual, Version 7</em>, §4.2, §4.3.1.1, §4.13.1; the model class: Villemot (2011), Dynare Working Paper 2, §2.1.</div>
+<div class="footnote"><a href="https://clang.llvm.org/docs/CommandGuide/clang.html#description">Clang documentation, parsing and semantic analysis</a> &middot; <a href="https://www.dynare.org/manual/the-model-file.html#model-declaration">Dynare manual, model declaration and solution commands</a> &middot; <a href="https://www.econforge.org/dolo.py/">Dolo documentation, Introduction</a>.</div>
 
 
 ---
 
-<!-- slide 31 · What an AI needs beyond Dynare -->
+<!-- slide 31 · What AI needs beyond code compilation -->
 
 <style scoped>
-.stack > div { padding: 0 0 1em 0; font-size: 21px; line-height: 1.5; }
+p { font-size: 21px; line-height: 1.45; }
+.stack > div { padding: 0 0 0.8em; font-size: 21px; line-height: 1.45; }
 .stack > div:last-child { padding-bottom: 0; }
 .stack p { margin: 0; }
+.callout { font-size: 20px; line-height: 1.4; margin-top: 0.9em; padding: 0.65em 0.9em; }
 </style>
 
-## What an AI needs beyond Dynare
+## What AI needs beyond code compilation
+
+Successful compilation or execution does not establish agreement with the intended economic model.
 
 <div class="stack">
 <div>
 
-<span class="lbl">Dynare does what it was built for.</span> One program, one solver and one set of conventions, learned once, have given economists the right numbers from a short file since Juillard (1996).
+<span class="lbl">Shared definitions.</span> Give the AI an ontology that specifies the economic objects, their units, timing and relations.
 
 </div>
 <div>
 
-<span class="lbl">Its meaning is tied to its numerics.</span> The model has no statement apart from the perturbation solver, so a model moved to HARK or to the sequence-space Jacobian toolkit can be compared with it <span class="c-red">only through the numbers</span>.
+<span class="lbl">Links to code.</span> Identify the variables and functions that implement each shared economic definition.
 
 </div>
 <div>
 
-<span class="lbl">An AI writing new code needs more.</span> Its file is checked for syntax, for one equation per variable and for a steady state, <span class="c-red">not for what it means</span>. New code, for a new model or another toolkit, needs the model stated apart from any solver, where a checker can read and refuse it.
+<span class="lbl">Checks on model agreement.</span> Check declarations against the ontology, review the links to code, and test the numerical results.
 
 </div>
 </div>
 
-<div class="footnote">Juillard (1996), CEPREMAP Working Paper 9602 &middot; Adjemian et al. (2026), <em>Dynare: Reference Manual, Version 7</em>, 7.2: §4.5 (the model block), §4.10 (<code>steady</code>), §4.11 (<code>check</code>) &middot; Auclert, Bardóczy, Rognlie and Straub (2021), <em>Econometrica</em> 89(5), 2375–2408.</div>
+<div class="callout"><strong>Example.</strong> Shared definitions distinguish assets chosen today from resources after tomorrow’s income shock, even when both use floating-point numbers.</div>
+
+<div class="footnote">Υ interprets the declared symbols as economic objects; reviewing their implementation is a separate task. Proposed requirements for AI model generation and translation. Precedent for shared definitions and mappings: <a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), MACIS, §§2–5</a>.</div>
 
 
 ---
