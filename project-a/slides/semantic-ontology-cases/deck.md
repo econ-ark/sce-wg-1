@@ -487,17 +487,17 @@ $$
 <div class="stack">
 <div>
 
-<span class="lbl">The written form.</span> Machine-readable symbols, each with a <span class="c-red">type</span> and a <span class="c-red">signature</span> ($v : X \to \mathbb{R}$).
+<span class="lbl">1. The written form.</span> Machine-readable symbols, each with a <span class="c-red">type</span> and a <span class="c-red">signature</span> ($v : X \to \mathbb{R}$).
 
 </div>
 <div>
 
-<span class="lbl">The domain of meaning.</span> The objects we model, such as state spaces, laws, value functions and operators, are sorted into <span class="c-red">kinds</span> with relations between them.
+<span class="lbl">2. The domain of meaning.</span> The objects we model, such as state spaces, laws, value functions and operators, are sorted into <span class="c-red">kinds</span> with relations between them.
 
 </div>
 <div>
 
-<span class="lbl">The map Υ (upsilon).</span> It sends a symbol of a given type to an object of the matching kind, and a program <span class="c-red">checks</span> that it does.
+<span class="lbl">3. The map Υ (upsilon).</span> It sends a symbol of a given type to an object of the matching kind, and a program <span class="c-red">checks</span> that it does.
 
 </div>
 </div>
@@ -1080,24 +1080,32 @@ li { margin: 0 0 0.05em 0; }
 <!-- slide 30 · From code to numerical results -->
 
 <style scoped>
-p { font-size: 21px; line-height: 1.45; }
-.center { margin: 1.1em 0 1.2em; }
 .center img { margin: 0 auto; display: block; }
+.stack > div { padding: 0 0 0.6em 0; font-size: 18px; line-height: 1.42; }
+.stack > div:last-child { padding-bottom: 0; }
+.stack p { margin: 0; }
+.stack code { font-size: 14px; }
 </style>
 
 ## From code to numerical results
 
-Economists use model files in Dynare or Dolo, or programs in R or Stata. Numerical routines may be built into the tool or called from libraries.
+<div class="sub">Both routes parse a model file and produce numerical code. The upper route first states its economic interpretation: Υ (upsilon) maps the written model to a typed model object, ⟦file⟧; Ρ (rho) attaches a numerical method to it.</div>
 
 <div class="center">
 
-![w:1100](assets/program-to-results.svg)
+![w:860](assets/dynare-skip.svg)
 
 </div>
 
-Compilers and interpreters can check types and other language rules. Dynare declares equations separately from solution commands; Dolo builds a software representation of the model before applying numerical algorithms.
+<div class="stack">
+<div>
 
-<div class="footnote"><a href="https://clang.llvm.org/docs/CommandGuide/clang.html#description">Clang documentation, parsing and semantic analysis</a> &middot; <a href="https://www.dynare.org/manual/the-model-file.html#model-declaration">Dynare manual, model declaration and solution commands</a> &middot; <a href="https://www.econforge.org/dolo.py/">Dolo documentation, Introduction</a>.</div>
+<span class="lbl">Beyond compilation.</span> An explicit Υ makes the model’s economic objects and relations available for checking, separately from its numerical implementation.
+
+</div>
+</div>
+
+<div class="footnote">Conceptual routes in this deck’s notation: Υ denotes a separately stated, shared economic interpretation. Compilers can already perform semantic checks; Dynare represents equations separately from solution commands. <a href="https://clang.llvm.org/docs/CommandGuide/clang.html#description">Clang documentation</a> &middot; <a href="https://www.dynare.org/manual/the-model-file.html#model-declaration">Dynare manual</a> &middot; Bellman calculus, Introduction §1.</div>
 
 
 ---

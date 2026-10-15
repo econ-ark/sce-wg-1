@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 20 1100 260" width="1100" height="260" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="hb" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0.8 L9,5 L0,9.2 z" fill="#1f476b"/></marker>
+    <marker id="hr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0.8 L9,5 L0,9.2 z" fill="#c41230"/></marker>
+    <marker id="hg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0.8 L9,5 L0,9.2 z" fill="#2c4053"/></marker>
+  </defs>
+  <!-- shared stages: file -> parse tree ... solver code -> numbers -->
+  <line x1="172" y1="217" x2="208" y2="217" stroke="#2c4053" stroke-width="1.8" marker-end="url(#hg)"/>
+  <line x1="912" y1="217" x2="948" y2="217" stroke="#2c4053" stroke-width="1.8" marker-end="url(#hg)"/>
+  <!-- an ideal declarative language: parse -> [[file]] -> solver code -->
+  <line x1="382" y1="198" x2="467" y2="118" stroke="#1f476b" stroke-width="1.8" marker-end="url(#hb)"/>
+  <text x="405" y="140" text-anchor="middle" font-size="28" font-weight="500" fill="#1f476b">Υ</text>
+  <line x1="652" y1="118" x2="737" y2="198" stroke="#1f476b" stroke-width="1.8" marker-end="url(#hb)"/>
+  <text x="716" y="140" text-anchor="middle" font-size="24" fill="#1f476b">Ρ</text>
+  <text x="560" y="44" text-anchor="middle" font-size="15" fill="#1f476b">an ideal declarative language: the model as a typed object, which a checker reads</text>
+  <!-- Dynare: parse -> solver code -->
+  <line x1="382" y1="217" x2="737" y2="217" stroke="#c41230" stroke-width="1.8" marker-end="url(#hr)"/>
+  <text x="560" y="243" text-anchor="middle" font-size="14" fill="#c41230">Direct compilation (e.g. Dynare)</text>
+  <!-- nodes -->
+  <rect x="20" y="180" width="150" height="74" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
+  <text x="95" y="212" text-anchor="middle" font-size="19" fill="#212529">model file</text>
+  <text x="95" y="237" text-anchor="middle" font-size="13" fill="#676470">.mod, or a stage file</text>
+  <rect x="210" y="180" width="170" height="74" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
+  <text x="295" y="212" text-anchor="middle" font-size="19" fill="#212529">parse tree</text>
+  <text x="295" y="237" text-anchor="middle" font-size="13" fill="#676470">syntax only</text>
+  <rect x="470" y="60" width="180" height="74" rx="6" fill="#1f476b" stroke="#1f476b" stroke-width="1.4"/>
+  <text x="560" y="93" text-anchor="middle" font-size="22" fill="#ffffff">⟦file⟧</text>
+  <text x="560" y="118" text-anchor="middle" font-size="13" fill="#cfd8e2">the model as a typed object</text>
+  <rect x="740" y="180" width="170" height="74" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
+  <text x="825" y="212" text-anchor="middle" font-size="19" fill="#212529">solver code</text>
+  <text x="825" y="237" text-anchor="middle" font-size="13" fill="#676470">a numerical method</text>
+  <rect x="950" y="180" width="130" height="74" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
+  <text x="1015" y="212" text-anchor="middle" font-size="19" fill="#212529">numbers</text>
+  <text x="1015" y="237" text-anchor="middle" font-size="13" fill="#676470">ĝ, v̂, ĉ</text>
+</svg>
