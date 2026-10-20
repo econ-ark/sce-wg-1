@@ -7,14 +7,14 @@
 <text x="36" y="146" font-size="11.5" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529" textLength="378" lengthAdjust="spacingAndGlyphs">hasModelVariable : MathematicalModel → ModelVariable</text>
 <text x="36" y="174" font-size="14" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">StateVariable, Parameter ⊑ ModelVariable</text>
 <rect x="670" y="28" width="410" height="180" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
-<text x="686" y="58" font-size="18" font-weight="500" fill="#1f476b">Kinds: about 500 classes, 200 relations</text>
+<text x="686" y="58" font-size="11.5" font-weight="500" fill="#1f476b" textLength="378" lengthAdjust="spacingAndGlyphs">Kinds: about 500 classes and 200 relations on the upper three layers</text>
 <text x="686" y="90" font-size="15.5" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">a model is a system that models another system</text>
 <text x="686" y="118" font-size="15.5" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">a mathematical model describes it in mathematics</text>
 <text x="686" y="146" font-size="15.5" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">a model variable corresponds to a physical quantity</text>
-<text x="686" y="174" font-size="15.0" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">laws of conservation and equilibrium, in a lower layer</text>
+<text x="686" y="174" font-size="13.0" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">balance laws and equilibrium constraints, in the module laws</text>
 <line x1="434" y1="118.0" x2="666" y2="118.0" stroke="#1f476b" stroke-width="1.8" marker-end="url(#h)"/>
 <text x="550.0" y="84.0" text-anchor="middle" font-size="16" fill="#1f476b">OWL DL axioms, 62 modules</text>
-<text x="550.0" y="104.0" text-anchor="middle" font-size="16" fill="#1f476b">in four layers</text>
+<text x="550.0" y="104.0" text-anchor="middle" font-size="16" fill="#1f476b">in five layers</text>
 <text x="550.0" y="142.0" text-anchor="middle" font-size="13.5" fill="#676470">consistency checked with the</text>
 <text x="550.0" y="160.0" text-anchor="middle" font-size="13.5" fill="#676470">RacerPro reasoner</text>
 </svg>

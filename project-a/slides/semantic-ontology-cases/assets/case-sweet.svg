@@ -4,10 +4,10 @@
 <text x="36" y="58" font-size="18" font-weight="500" fill="#1f476b">SWEET, Turtle source (sweetAll.ttl)</text>
 <text x="36" y="90" font-size="14" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">&lt;sweetAll&gt; a owl:Ontology ;</text>
 <text x="36" y="118" font-size="14" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">owl:versionInfo &quot;3.5.0&quot; ;</text>
-<text x="36" y="146" font-size="14" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">owl:imports 224 component ontologies</text>
-<text x="36" y="174" font-size="14" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">nine top-level concepts</text>
+<text x="36" y="146" font-size="14" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">owl:imports 222 component ontologies</text>
+<text x="36" y="174" font-size="14" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">README: nine top-level concepts</text>
 <rect x="670" y="28" width="410" height="180" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
-<text x="686" y="58" font-size="16.0" font-weight="500" fill="#1f476b">Kinds: about 11,000 classes in 225 ontologies</text>
+<text x="686" y="58" font-size="13.0" font-weight="500" fill="#1f476b">Kinds: about 10,250 classes in 225 component ontologies</text>
 <text x="686" y="90" font-size="15.5" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">space, time, Earth realms, physical quantities</text>
 <text x="686" y="118" font-size="15.5" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">phenomena and events</text>
 <text x="686" y="146" font-size="15.5" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">aligned to QUDT and to SOSA/SSN</text>
