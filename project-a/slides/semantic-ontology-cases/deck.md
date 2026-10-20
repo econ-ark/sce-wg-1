@@ -734,24 +734,24 @@ The scope remains open; WG1 could investigate these overlapping candidates.
 
 ### Data
 
-- We could link data columns to quantities such as annual household consumption, with units and timing.
-- We could specify how data transformations define empirical moments.
+- Link data columns to quantities such as annual household consumption, with units and timing.
+- Specify how data transformations define empirical moments.
 
 </div>
 <div class="scope-column">
 
 ### Model classes and problems
 
-- We could describe model classes and their solution or estimation problems.
-- We could relate models as special cases or extensions of one another.
+- Describe model classes and their solution or estimation problems.
+- Relate models as special cases or extensions of one another.
 
 </div>
 <div class="scope-column">
 
 ### Reformulation and estimation
 
-- We could state when problem reformulations preserve solutions.
-- We could relate model-implied and empirical moments through a simulated method of moments (SMM) criterion.
+- State when problem reformulations preserve solutions.
+- Relate model-implied and empirical moments through a simulated method of moments (SMM) criterion.
 
 </div>
 </div>
