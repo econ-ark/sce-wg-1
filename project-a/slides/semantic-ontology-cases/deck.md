@@ -684,34 +684,32 @@ table code, .callout code { font-size: 16px; white-space: nowrap; }
 .form-note { font-size: 16px; line-height: 1.35; margin: 0.45em 0 0; }
 </style>
 
-| Form or use | What it makes explicit | Examples in this deck |
+| Representation | How the ontology is expressed | Examples |
 |:---|:---|:---|
 | **Typed mathematical formalisms** | Types, definitions, operation signatures and laws governing the operations. | Math-in-the-Middle (slide 14); mathlib, the library of the proof assistant Lean. |
-| **Logic-based ontology languages** | Classes, individuals and relations constrained by logical axioms. For example, OWL's `SubClassOf(:Bond :TradableDebtInstrument)` states that every bond is a tradable debt instrument. | FIBO (slide 48) and OntoPlan (slide 18), in OWL; [SUMO](https://ontologyportal.org/), in SUO-KIF. |
-| **Graph** | Typed nodes connected by named relations. RDF expresses links as subject–predicate–object triples. | NVIDIA Auto Ontology (slide 8); OntoPlan’s RDF world model (slide 18). |
+| **Logic-based ontology languages** | Classes, individuals and relations constrained by logical axioms. For example, OWL's `SubClassOf(:Bond :TradableDebtInstrument)` states that every bond is a tradable debt instrument. | FIBO (slide 48) and OntoPlan (slide 23), in OWL; [SUMO](https://ontologyportal.org/), in SUO-KIF. |
+| **Graph** | Typed nodes connected by named relations. RDF expresses links as subject–predicate–object triples. | NVIDIA Auto Ontology (slide 8); OntoPlan’s RDF world model (slide 23). |
 | **Annotations on models or data** | Links from variables or objects to the terms of an ontology. | SemGen’s biological models (slide 14); NVIDIA’s scene objects (slide 13). |
-
-<div class="callout"><strong>What an axiom does.</strong> Given the axiom above and <code>ClassAssertion(:Bond :b)</code>, that b is a bond, a reasoner, the program that draws consequences from axioms, infers <code>ClassAssertion(:TradableDebtInstrument :b)</code>.</div>
 
 <div class="footnote"><a href="https://kwarc.info/people/frabe/Research/ODK_interop_17.pdf">Kohlhase et al. (2017), §§2–3</a> &middot; <a href="https://leanprover-community.github.io/mathlib-overview.html">Lean/mathlib overview</a> &middot; W3C: <a href="https://www.w3.org/TR/owl2-overview/#Ontologies">OWL 2 overview</a> and <a href="https://www.w3.org/TR/rdf11-concepts/#data-model">RDF graph model</a>; <a href="https://www.w3.org/TR/owl2-primer/">OWL 2 Primer, §§3, 4.1–4.2</a> (syntax and inference) &middot; <a href="https://arxiv.org/html/2610.07649v1">Nam et al. (2026), §3.1</a> &middot; <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6499248/">Neal et al. (2019), §2</a> &middot; <a href="https://nvidia-omniverse.github.io/usd-validation-nvidia/specs/capabilities/semantic_labels/capability-semantic_labels.html">NVIDIA, semantic labels</a>. RDF represents statements as subject–predicate–object triples, the predicate naming a relation. OWL axioms and annotations can both be stored as RDF graphs. The OWL snippets use Functional-Style Syntax, with “:” abbreviating FIBO’s namespace.</div>
 
 
 ---
 
-<!-- slide 10 · Practical Scope (subsection) -->
+<!-- slide 10 · Scope (subsection) -->
 
 <!-- _header: 'Main concepts' -->
 
 <!-- _class: divider sub -->
 
-# Practical Scope
+# Scope
 
 
 ---
 
 <!-- slide 11 · Possible semantic ontologies for economics -->
 
-<!-- _header: 'Practical Scope &middot; WG1' -->
+<!-- _header: 'Scope &middot; WG1' -->
 
 <!-- _class: airy -->
 
@@ -767,7 +765,7 @@ The scope remains open; WG1 could investigate these overlapping candidates.
 
 <!-- slide 12 · WG1's task -->
 
-<!-- _header: 'Practical Scope &middot; WG1' -->
+<!-- _header: 'Scope &middot; WG1' -->
 
 <!-- _class: airy2 -->
 
@@ -786,9 +784,9 @@ Define the scope of semantic ontologies for computational economics.
 
 <!-- slide 13 · Semantic ontologies and formal methods in AI -->
 
-<!-- _header: 'Practical Scope &middot; Evidence' -->
+<!-- _header: 'Scope &middot; Evidence' -->
 
-## Semantic ontologies and formal methods in AI
+## Examples of Semantic Ontologies
 
 <style scoped>
 table { width: 100% !important; table-layout: fixed; font-size: 18px; margin: 0.4em 0 0; }
@@ -815,9 +813,9 @@ td:last-child { font-size: 14px; line-height: 1.4; }
 
 <!-- slide 14 · Evidence – shared models and operational uses -->
 
-<!-- _header: 'Practical Scope &middot; Evidence' -->
+<!-- _header: 'Scope &middot; Evidence' -->
 
-## Evidence: shared models and operational uses
+## Examples of Semantic Ontologies
 
 <style scoped>
 table { width: 100% !important; table-layout: fixed; font-size: 17px; margin: 0.4em 0 0; }
@@ -860,9 +858,123 @@ h2 { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 26px; font-
 
 ---
 
-<!-- slide 16 · OntoPlan – robot task planning (divider) -->
+<!-- slide 16 · Pig goes to the library (divider) -->
 
 <!-- _header: 'Case study 1 of 3' -->
+
+<!-- _class: divider sub -->
+
+# Pig goes to the library
+
+
+---
+
+<!-- slide 17 · What the pig learned in the library -->
+
+<!-- _header: 'Case study 1 &middot; Pig goes to the library' -->
+
+<style scoped>
+section { padding-top: 48px; }
+h2 { margin-bottom: 0.5em; }
+</style>
+
+## What the pig learned in the library
+
+<div class="center">
+
+![h:440](assets/gauld-pigs-guizzardi-guarino-2024-fig1.jpeg)
+
+</div>
+
+<div class="footnote">&copy; Tom Gauld, reproduced in Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, Figure 1; shown here for discussion within the working group.</div>
+
+
+---
+
+<!-- slide 18 · The set-theoretic semantics is not enough -->
+
+<!-- _header: 'Case study 1 &middot; Pig goes to the library' -->
+
+## The set-theoretic semantics is not enough
+
+What must a reader know to understand the joke?
+
+<span class="lbl">Set-theoretic semantics.</span> A function from each word to a subset of a set $D$ of individuals gives the denotations $\llbracket\mathit{ham}\rrbracket,\ \llbracket\mathit{bacon}\rrbracket,\ \llbracket\mathit{sausages}\rrbracket\subseteq D$, the sets of things each word applies to. Such a mapping, Guizzardi and Guarino (2024) say, "would not do Maurice here any good".
+
+<span class="lbl">Ontology.</span> The kinds and relations the words are about form a separate system, which the paper states as three facts. Ham, bacon and sausage are food products constituted by pork. Pork comes from a pig. Maurice is a pig.
+- In the deck's notation: $\mathit{Maurice}:\mathsf{Pig}$, $\ \mathsf{Ham}\sqsubseteq\exists\mathit{constitutedBy}.\mathsf{Pork}$ (every ham is constituted by some pork), $\ \mathsf{Pork}\sqsubseteq\exists\mathit{dependsOn}.\mathsf{Pig}$ (every quantity of pork comes from some pig).
+- The library holds these three facts, which a dictionary does not.
+
+<div class="sp-m"></div>
+
+The joke here arises from the system of kinds and relations, <span class="c-red">not from the set-theoretic semantics</span>.
+
+<div class="footnote">Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, &sect;2.1: the quotation, and the three facts (1)–(3) that understanding the cartoon needs, stated there in words; the symbols are the deck's.</div>
+
+
+---
+
+<!-- slide 19 · When Maurice learns the ontology -->
+
+<!-- _header: 'Case study 1 &middot; Pig goes to the library' -->
+
+<style scoped>
+.fig { margin: 0.2em 0 0.4em 0; }
+.fig img { width: 100%; display: block; }
+p { font-size: 19px; margin: 0 0 0.35em 0; }
+</style>
+
+## When Maurice learns the ontology
+
+<div class="fig"><img src="assets/maurice-learns.svg" alt="Above a horizontal line, the words ham, bacon, sausages and Maurice with their set-theoretic denotations and no connection between them. Below the line, the ontology: the kinds Ham, Bacon, Sausage, Pork and Pig, the individual Maurice, and the relations constitutedBy, dependsOn and instantiation, with the path between kinds from Ham through Pork to Pig in red, a green instantiation arrow from Maurice to Pig, and dashed arrows from each word above the line to its entity below it."></div>
+
+Above the line stand the words, the <strong>written form</strong>. Below it stand the kinds, individuals and relations, the <strong>domain of meaning</strong>. The dashed arrows are <strong>Υ</strong>, which assigns each word its meaning. The solid arrows state relations between kinds and do not identify Maurice as the source of any particular ham.
+
+<div class="footnote">Guizzardi and Guarino (2024), &sect;2.1: "Mapping the words 'ham', 'bacon' and 'sausages' to subsets of a semantic domain would not do Maurice here any good"; the three facts (1)&ndash;(3); real-world semantics "maps symbols to the entities (types, relations, objects, events, aspects) that are part of this ontology".</div>
+
+
+---
+
+<!-- slide 20 · Semantics and ontology -->
+
+<!-- _header: 'Case study 1 &middot; Pig goes to the library' -->
+
+<style scoped>
+table { font-size: 14px; margin: 0.3em 0 0 0; width: 100% !important; }
+th, td { padding: 0.24em 0.8em 0.24em 0; vertical-align: top; }
+th:first-child, td:first-child { width: 22%; }
+p, li { font-size: 18.5px; }
+.katex { white-space: nowrap; }
+p { margin: 0 0 0.4em 0; }
+ul { margin: 0 0 0.3em 0; }
+li { margin: 0 0 0.05em 0; }
+</style>
+
+## Semantics and ontology
+
+<span class="lbl">Semantics.</span> A set-theoretic semantics maps each word to a subset of a set $D$ of individuals, $\llbracket\mathit{ham}\rrbracket\subseteq D$, and nothing more.
+
+<span class="lbl">Ontology.</span> The ontology is a separate system of kinds, individuals and relations, written as typed symbols.
+- Kinds: $\mathsf{Pig},\ \mathsf{Pork},\ \mathsf{Ham},\ \mathsf{Bacon},\ \mathsf{Sausage}$. The word $\mathit{ham}$ names the kind $\mathsf{Ham}$, whose instances are the individual hams.
+- Individual: $\mathit{Maurice}:\mathsf{Pig}$. A typed symbol pairs a symbol with the kind of what it names. Here the colon is the instantiation relation, which holds between the individual Maurice and the kind $\mathsf{Pig}$.
+- Relations: $\mathit{constitutedBy}$, a relation from $\mathsf{Ham}$ to $\mathsf{Pork}$, and $\mathit{dependsOn}$, a relation from $\mathsf{Pork}$ to $\mathsf{Pig}$. Each holds between individuals of its two kinds and is not a function from one kind to the other. The kind-level facts $\mathsf{Ham}\sqsubseteq\exists\mathit{constitutedBy}.\mathsf{Pork}$ and $\mathsf{Pork}\sqsubseteq\exists\mathit{dependsOn}.\mathsf{Pig}$ say that every ham is constituted by some pork and that every quantity of pork comes from some pig.
+
+| | The pigs | The buffer-stock model |
+|---|---|---|
+| Written form | $\mathit{ham},\ \mathit{bacon},\ \mathit{sausages}$ | $m,\ y,\ \mathbb{E},\ v,\ \mathbb{T}$ in the Bellman equation |
+| Semantics, $\llbracket\cdot\rrbracket$ into a set | $\llbracket\mathit{ham}\rrbracket,\ \llbracket\mathit{bacon}\rrbracket,\ \llbracket\mathit{sausages}\rrbracket\subseteq D$ | $\llbracket\text{Bellman equation}\rrbracket=\mathbb{T}$, some operator |
+| Left open | foods for pigs, or foods from pigs | which variable $\max$ chooses and which $\mathbb{E}$ averages over, the space of $v$, the law and timing of $y$ |
+| Ontology, typed statements | $\mathit{Maurice}:\mathsf{Pig}$, $\mathsf{Ham}\sqsubseteq\exists\mathit{constitutedBy}.\mathsf{Pork}$, $\mathsf{Pork}\sqsubseteq\exists\mathit{dependsOn}.\mathsf{Pig}$ | $v:\mathbb{R}_{++}\to\mathbb{R}$, $\ y:\mathbb{R}_{++}$ with law $\nu_y$, $\ \mathbb{T}:(\mathbb{R}_{++}\to\mathbb{R})\to(\mathbb{R}_{++}\to\mathbb{R})$ |
+| False agreement | two pigs agree that the words name foods, one meaning foods for pigs and the other foods from pigs | two readers accept the Bellman equation and disagree on the timing of the response to a shock (slide 31) |
+
+<div class="footnote">Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, &sect;2.1 (semantics as a function; an ontology as "a specific theory about the kinds of entity and their ties"; types, individuals and instantiation, where &sect;2.1 writes "the type Pig" for what the deck calls a kind and &sect;3 keeps "kind" for a type whose instances keep their identity; the facts (1) and (2) are stated there in words and written above in the deck's notation), &sect;3.4 (false agreement).</div>
+
+
+---
+
+<!-- slide 21 · OntoPlan – robot task planning (divider) -->
+
+<!-- _header: 'Case study 2 of 3' -->
 
 <!-- _class: divider sub -->
 
@@ -871,9 +983,9 @@ h2 { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 26px; font-
 
 ---
 
-<!-- slide 17 · Motivating example from robotics -->
+<!-- slide 22 · Motivating example from robotics -->
 
-<!-- _header: 'Case study 1 &middot; OntoPlan' -->
+<!-- _header: 'Case study 2 &middot; OntoPlan' -->
 
 ## Motivating example from robotics
 
@@ -901,9 +1013,9 @@ th:first-child { width: 25%; }
 
 ---
 
-<!-- slide 18 · OntoPlan’s ontology defines object types and rules -->
+<!-- slide 23 · OntoPlan’s ontology defines object types and rules -->
 
-<!-- _header: 'Case study 1 &middot; OntoPlan' -->
+<!-- _header: 'Case study 2 &middot; OntoPlan' -->
 
 ## OntoPlan’s ontology defines object types and rules
 
@@ -932,9 +1044,9 @@ th:first-child { width: 25%; }
 
 ---
 
-<!-- slide 19 · Ontology-based planning achieved 89% task success -->
+<!-- slide 24 · Ontology-based planning achieved 89% task success -->
 
-<!-- _header: 'Case study 1 &middot; OntoPlan' -->
+<!-- _header: 'Case study 2 &middot; OntoPlan' -->
 
 <!-- _class: airy -->
 
@@ -955,9 +1067,9 @@ OntoPlan retrieves the relevant facts, constructs the plan and records the conse
 
 ---
 
-<!-- slide 20 · OntoPlan kept AI inputs small as scenes grew -->
+<!-- slide 25 · OntoPlan kept AI inputs small as scenes grew -->
 
-<!-- _header: 'Case study 1 &middot; OntoPlan' -->
+<!-- _header: 'Case study 2 &middot; OntoPlan' -->
 
 <!-- _class: airy2 -->
 
@@ -977,9 +1089,9 @@ Task success was 89% with selected facts and 87% with all facts, a difference th
 
 ---
 
-<!-- slide 21 · Project Bellman (divider) -->
+<!-- slide 26 · Project Bellman (divider) -->
 
-<!-- _header: 'Case study 2 of 3' -->
+<!-- _header: 'Case study 3 of 3' -->
 
 <!-- _class: divider sub -->
 
@@ -994,9 +1106,9 @@ h2 { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 26px; font-
 
 ---
 
-<!-- slide 22 · A mathematical description of a model -->
+<!-- slide 27 · A mathematical description of a model -->
 
-<!-- _header: 'Case study 2 &middot; Buffer-stock saving' -->
+<!-- _header: 'Case study 3 &middot; Buffer-stock saving' -->
 
 <!-- _class: roomy -->
 
@@ -1013,9 +1125,9 @@ This case shows that a machine reading a mathematical description of a model mis
 
 ---
 
-<!-- slide 23 · Context -->
+<!-- slide 28 · Context -->
 
-<!-- _header: 'Case study 2 &middot; Buffer-stock saving' -->
+<!-- _header: 'Case study 3 &middot; Buffer-stock saving' -->
 
 <!-- _class: roomy -->
 
@@ -1033,9 +1145,9 @@ By itself, machine reading the statement does not give enough information to bui
 
 ---
 
-<!-- slide 24 · The missing-meaning problem -->
+<!-- slide 29 · The missing-meaning problem -->
 
-<!-- _header: 'Case study 2 &middot; Buffer-stock saving' -->
+<!-- _header: 'Case study 3 &middot; Buffer-stock saving' -->
 
 <!-- _class: roomy -->
 
@@ -1061,9 +1173,9 @@ The tables on this slide and the next two list some of the meaning that a parse 
 
 ---
 
-<!-- slide 25 · The missing-meaning problem -->
+<!-- slide 30 · The missing-meaning problem -->
 
-<!-- _header: 'Case study 2 &middot; Buffer-stock saving' -->
+<!-- _header: 'Case study 3 &middot; Buffer-stock saving' -->
 
 <!-- _class: airy2 -->
 
@@ -1082,14 +1194,14 @@ td code { font-size: 14px; }
 | Whether a symbol is a variable, a function, or a random variable | The symbol $m_t$, defined by $m_t=R\,k_t+y_t$, is i) the path of one household's resources, ii) the function $(k,y)\mapsto Rk+y$ composed inside the operator, and iii) the random variable whose law is the cross-sectional distribution. A paper writes one symbol for all three meanings, whereas code must represent them as three objects of different types with different uses. |
 | Shock law | The statement fixes $\log y_t\sim N(\mu_y,\sigma_y^2)$. In the shorter form $y\sim\mathrm{LogNormal}(\mu_y,\sigma_y)$, $\mu_y$ denotes the mean of $\log y$ under one convention and the mean of $y$ under another. |
 
-<div class="footnote">The LogNormal convention: Project Bellman (the authors' project, slide 28), reference page "Shock distributions".</div>
+<div class="footnote">The LogNormal convention: Project Bellman (the authors' project, slide 33), reference page "Shock distributions".</div>
 
 
 ---
 
-<!-- slide 26 · The missing-meaning problem -->
+<!-- slide 31 · The missing-meaning problem -->
 
-<!-- _header: 'Case study 2 &middot; Buffer-stock saving' -->
+<!-- _header: 'Case study 3 &middot; Buffer-stock saving' -->
 
 <!-- _class: airy2 -->
 
@@ -1105,7 +1217,7 @@ td code { font-size: 14px; }
 
 | Missing meaning |In the buffer-stock statement  |
 |---|---|
-| Implications of timing stated in words | In a model with entry, beyond the excerpt of slide 22, the sentence "A policy shock raises entrants at date $t$" is satisfied by two different models, because the shock may reach the cross-sectional distribution at $t$ or at $t+1$, while nothing in the paper records which one the code computes. |
+| Implications of timing stated in words | In a model with entry, beyond the excerpt of slide 27, the sentence "A policy shock raises entrants at date $t$" is satisfied by two different models, because the shock may reach the cross-sectional distribution at $t$ or at $t+1$, while nothing in the paper records which one the code computes. |
 | What the household knows when it decides | If the return $R_t$ is random, persistent and drawn before the decision, the household's expectation of $R_{t+1}$ depends on whether it observes $R_t$ or only $m_t=R_t\,k_t+y_t$ when it decides. |
 
 <div class="footnote">The timing example: Project A proposal, footnote 1.</div>
@@ -1113,9 +1225,9 @@ td code { font-size: 14px; }
 
 ---
 
-<!-- slide 27 · Multiple possible parsed meanings -->
+<!-- slide 32 · Multiple possible parsed meanings -->
 
-<!-- _header: 'Case study 2 &middot; Buffer-stock saving' -->
+<!-- _header: 'Case study 3 &middot; Buffer-stock saving' -->
 
 <!-- _class: airy -->
 
@@ -1153,9 +1265,9 @@ td code { font-size: 14px; }
 
 ---
 
-<!-- slide 28 · The ontology – one stage of the buffer-stock model -->
+<!-- slide 33 · The ontology – one stage of the buffer-stock model -->
 
-<!-- _header: 'Case study 2 &middot; Buffer-stock saving' -->
+<!-- _header: 'Case study 3 &middot; Buffer-stock saving' -->
 
 <style scoped>
 .center img { margin: 0 auto; display: block; }
@@ -1192,14 +1304,14 @@ td code { font-size: 14px; }
 </div>
 </div>
 
-<div class="footnote">Bellman-SYM, Stages §§1–4: the documentation example, whose b and w are written here as the calculus’s k and m (Bellman calculus, Stages and perches §1, bellman-ddsl/docs) &middot; the law line fixes the convention that slide 25 left to a subfield.</div>
+<div class="footnote">Bellman-SYM, Stages §§1–4: the documentation example, whose b and w are written here as the calculus’s k and m (Bellman calculus, Stages and perches §1, bellman-ddsl/docs) &middot; the law line fixes the convention that slide 30 left to a subfield.</div>
 
 
 ---
 
-<!-- slide 29 · What the ontology checks and makes explicit -->
+<!-- slide 34 · What the ontology checks and makes explicit -->
 
-<!-- _header: 'Case study 2 &middot; Buffer-stock saving' -->
+<!-- _header: 'Case study 3 &middot; Buffer-stock saving' -->
 
 <style scoped>
 table { font-size: 16.5px; margin: 0.3em 0 0.9em 0; width: 100% !important; }
@@ -1228,120 +1340,6 @@ td code { font-size: 13.5px; }
 | would impose a stationary closure $v_{t+1}=v_t$ | has no line for it, since `V[>]` comes from the next period or the terminal value |
 
 <div class="footnote">The reference on refusals, rules shock-reintroduced and field-perch; Bellman-SYM, Field equations §5, Perch tagging rules §3, Periods §§2–3, Trellises §2; the runs of <code>elaborate_text</code> of 13 October 2026.</div>
-
-
----
-
-<!-- slide 30 · Pig goes to the library (divider) -->
-
-<!-- _header: 'Case study 3 of 3' -->
-
-<!-- _class: divider sub -->
-
-# Pig goes to the library
-
-
----
-
-<!-- slide 31 · What the pig learned in the library -->
-
-<!-- _header: 'Case study 3 &middot; Pig goes to the library' -->
-
-<style scoped>
-section { padding-top: 48px; }
-h2 { margin-bottom: 0.5em; }
-</style>
-
-## What the pig learned in the library
-
-<div class="center">
-
-![h:440](assets/gauld-pigs-guizzardi-guarino-2024-fig1.jpeg)
-
-</div>
-
-<div class="footnote">&copy; Tom Gauld, reproduced in Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, Figure 1; shown here for discussion within the working group.</div>
-
-
----
-
-<!-- slide 32 · The set-theoretic semantics is not enough -->
-
-<!-- _header: 'Case study 3 &middot; Pig goes to the library' -->
-
-## The set-theoretic semantics is not enough
-
-What must a reader know to understand the joke?
-
-<span class="lbl">Set-theoretic semantics.</span> A function from each word to a subset of a set $D$ of individuals gives the denotations $\llbracket\mathit{ham}\rrbracket,\ \llbracket\mathit{bacon}\rrbracket,\ \llbracket\mathit{sausages}\rrbracket\subseteq D$, the sets of things each word applies to. Such a mapping, Guizzardi and Guarino (2024) say, "would not do Maurice here any good".
-
-<span class="lbl">Ontology.</span> The kinds and relations the words are about form a separate system, which the paper states as three facts. Ham, bacon and sausage are food products constituted by pork. Pork comes from a pig. Maurice is a pig.
-- In the deck's notation: $\mathit{Maurice}:\mathsf{Pig}$, $\ \mathsf{Ham}\sqsubseteq\exists\mathit{constitutedBy}.\mathsf{Pork}$ (every ham is constituted by some pork), $\ \mathsf{Pork}\sqsubseteq\exists\mathit{dependsOn}.\mathsf{Pig}$ (every quantity of pork comes from some pig).
-- The library holds these three facts, which a dictionary does not.
-
-<div class="sp-m"></div>
-
-The joke here arises from the system of kinds and relations, <span class="c-red">not from the set-theoretic semantics</span>.
-
-<div class="footnote">Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, &sect;2.1: the quotation, and the three facts (1)–(3) that understanding the cartoon needs, stated there in words; the symbols are the deck's.</div>
-
-
----
-
-<!-- slide 33 · When Maurice learns the ontology -->
-
-<!-- _header: 'Case study 3 &middot; Pig goes to the library' -->
-
-<style scoped>
-.fig { margin: 0.2em 0 0.4em 0; }
-.fig img { width: 100%; display: block; }
-p { font-size: 19px; margin: 0 0 0.35em 0; }
-</style>
-
-## When Maurice learns the ontology
-
-<div class="fig"><img src="assets/maurice-learns.svg" alt="Above a horizontal line, the words ham, bacon, sausages and Maurice with their set-theoretic denotations and no connection between them. Below the line, the ontology: the kinds Ham, Bacon, Sausage, Pork and Pig, the individual Maurice, and the relations constitutedBy, dependsOn and instantiation, with the path between kinds from Ham through Pork to Pig in red, a green instantiation arrow from Maurice to Pig, and dashed arrows from each word above the line to its entity below it."></div>
-
-Above the line stand the words, the <strong>written form</strong>. Below it stand the kinds, individuals and relations, the <strong>domain of meaning</strong>. The dashed arrows are <strong>Υ</strong>, which assigns each word its meaning. The solid arrows state relations between kinds and do not identify Maurice as the source of any particular ham.
-
-<div class="footnote">Guizzardi and Guarino (2024), &sect;2.1: "Mapping the words 'ham', 'bacon' and 'sausages' to subsets of a semantic domain would not do Maurice here any good"; the three facts (1)&ndash;(3); real-world semantics "maps symbols to the entities (types, relations, objects, events, aspects) that are part of this ontology".</div>
-
-
----
-
-<!-- slide 34 · Semantics and ontology -->
-
-<!-- _header: 'Case study 3 &middot; Pig goes to the library' -->
-
-<style scoped>
-table { font-size: 14px; margin: 0.3em 0 0 0; width: 100% !important; }
-th, td { padding: 0.24em 0.8em 0.24em 0; vertical-align: top; }
-th:first-child, td:first-child { width: 22%; }
-p, li { font-size: 18.5px; }
-.katex { white-space: nowrap; }
-p { margin: 0 0 0.4em 0; }
-ul { margin: 0 0 0.3em 0; }
-li { margin: 0 0 0.05em 0; }
-</style>
-
-## Semantics and ontology
-
-<span class="lbl">Semantics.</span> A set-theoretic semantics maps each word to a subset of a set $D$ of individuals, $\llbracket\mathit{ham}\rrbracket\subseteq D$, and nothing more.
-
-<span class="lbl">Ontology.</span> The ontology is a separate system of kinds, individuals and relations, written as typed symbols.
-- Kinds: $\mathsf{Pig},\ \mathsf{Pork},\ \mathsf{Ham},\ \mathsf{Bacon},\ \mathsf{Sausage}$. The word $\mathit{ham}$ names the kind $\mathsf{Ham}$, whose instances are the individual hams.
-- Individual: $\mathit{Maurice}:\mathsf{Pig}$. A typed symbol pairs a symbol with the kind of what it names. Here the colon is the instantiation relation, which holds between the individual Maurice and the kind $\mathsf{Pig}$.
-- Relations: $\mathit{constitutedBy}$, a relation from $\mathsf{Ham}$ to $\mathsf{Pork}$, and $\mathit{dependsOn}$, a relation from $\mathsf{Pork}$ to $\mathsf{Pig}$. Each holds between individuals of its two kinds and is not a function from one kind to the other. The kind-level facts $\mathsf{Ham}\sqsubseteq\exists\mathit{constitutedBy}.\mathsf{Pork}$ and $\mathsf{Pork}\sqsubseteq\exists\mathit{dependsOn}.\mathsf{Pig}$ say that every ham is constituted by some pork and that every quantity of pork comes from some pig.
-
-| | The pigs | The buffer-stock model |
-|---|---|---|
-| Written form | $\mathit{ham},\ \mathit{bacon},\ \mathit{sausages}$ | $m,\ y,\ \mathbb{E},\ v,\ \mathbb{T}$ in the Bellman equation |
-| Semantics, $\llbracket\cdot\rrbracket$ into a set | $\llbracket\mathit{ham}\rrbracket,\ \llbracket\mathit{bacon}\rrbracket,\ \llbracket\mathit{sausages}\rrbracket\subseteq D$ | $\llbracket\text{Bellman equation}\rrbracket=\mathbb{T}$, some operator |
-| Left open | foods for pigs, or foods from pigs | which variable $\max$ chooses and which $\mathbb{E}$ averages over, the space of $v$, the law and timing of $y$ |
-| Ontology, typed statements | $\mathit{Maurice}:\mathsf{Pig}$, $\mathsf{Ham}\sqsubseteq\exists\mathit{constitutedBy}.\mathsf{Pork}$, $\mathsf{Pork}\sqsubseteq\exists\mathit{dependsOn}.\mathsf{Pig}$ | $v:\mathbb{R}_{++}\to\mathbb{R}$, $\ y:\mathbb{R}_{++}$ with law $\nu_y$, $\ \mathbb{T}:(\mathbb{R}_{++}\to\mathbb{R})\to(\mathbb{R}_{++}\to\mathbb{R})$ |
-| False agreement | two pigs agree that the words name foods, one meaning foods for pigs and the other foods from pigs | two readers accept the Bellman equation and disagree on the timing of the response to a shock (slide 26) |
-
-<div class="footnote">Guizzardi and Guarino (2024), "Explanation, semantics, and ontology", <em>Data &amp; Knowledge Engineering</em> 153, 102325, &sect;2.1 (semantics as a function; an ontology as "a specific theory about the kinds of entity and their ties"; types, individuals and instantiation, where &sect;2.1 writes "the type Pig" for what the deck calls a kind and &sect;3 keeps "kind" for a type whose instances keep their identity; the facts (1) and (2) are stated there in words and written above in the deck's notation), &sect;3.4 (false agreement).</div>
 
 
 ---
@@ -1712,7 +1710,7 @@ The same model and calibration give different numerical estimates when the shock
 <div class="stack">
 <div>
 
-<span class="lbl">Excludes.</span> The ontology excludes a quantity name read as any of several kinds, since a SWEET class fixes the kind by its definition and by its place among realms (SWEET's divisions of the Earth system), quantities and phenomena. The Climate and Forecast (CF) standard names, published as SKOS concepts (the W3C's format for agreed lists of terms) on the NERC vocabulary server, each linked to its canonical unit, settle the same question for a variable such as `temp` in a netCDF data file (a format for climate data). In the deck's terms this is the question of <span class="c-red">the shock law</span> (slide 25) and of <span class="c-red">timing stated in words</span> (slide 26).
+<span class="lbl">Excludes.</span> The ontology excludes a quantity name read as any of several kinds, since a SWEET class fixes the kind by its definition and by its place among realms (SWEET's divisions of the Earth system), quantities and phenomena. The Climate and Forecast (CF) standard names, published as SKOS concepts (the W3C's format for agreed lists of terms) on the NERC vocabulary server, each linked to its canonical unit, settle the same question for a variable such as `temp` in a netCDF data file (a format for climate data). In the deck's terms this is the question of <span class="c-red">the shock law</span> (slide 30) and of <span class="c-red">timing stated in words</span> (slide 31).
 
 </div>
 <div>
@@ -1752,7 +1750,7 @@ The same model and calibration give different numerical estimates when the shock
 <div class="stack">
 <div>
 
-<span class="lbl">Excludes.</span> The ontology excludes an issuer read as the obligor (the party that owes the payments) of a bond and a notional amount read as a principal, since each is a defined class or property (OWL's word for a relation). The 2023 revision of the Swaps ontology separated the nominal from the notional amount, which its change note says "were confused". In the deck's terms these are <span class="c-red">a function on the wrong space</span> (slide 55) and <span class="c-red">the shock law</span> (slide 25).
+<span class="lbl">Excludes.</span> The ontology excludes an issuer read as the obligor (the party that owes the payments) of a bond and a notional amount read as a principal, since each is a defined class or property (OWL's word for a relation). The 2023 revision of the Swaps ontology separated the nominal from the notional amount, which its change note says "were confused". In the deck's terms these are <span class="c-red">a function on the wrong space</span> (slide 55) and <span class="c-red">the shock law</span> (slide 30).
 
 </div>
 <div>
@@ -1848,17 +1846,17 @@ td code { font-size: 14px; }
 
 ## The stage file against the same three parts
 
-<div class="sub">The stage file of slide 28, the deck's own written form, is read here against the columns of the table on slide 50.</div>
+<div class="sub">The stage file of slide 33, the deck's own written form, is read here against the columns of the table on slide 50.</div>
 
 | Part | In the Bellman-SYM stage file |
 |---|---|
-| Written form | the fields and the blocks, each with a type and a perch, and the declared law of the shock (slide 28) |
+| Written form | the fields and the blocks, each with a type and a perch, and the declared law of the shock (slide 33) |
 | Domain of meaning | state spaces, laws, value functions and the operators between them (slide 7) |
-| Map Υ | the perch tags `@ !arvl`, `@ !dcsn` and `@ !cntn`, the role tags `!ctrl` and `!vlu` and the law line (slide 28), interpreted by Υ (upsilon), the checked interpretation of slide 53, as the objects of slide 7 |
-| Checker | the elaborator (slide 29), which constructs the typed object or refuses the file, naming the rule the file breaks and the line; and the comparator, a program that compares two elaborated files up to renaming and reports, for each kind of item, agreement, difference or an undecided residue, the items it can neither match nor reject |
-| Run on the file of slide 28 | The elaborator constructed the object from the file and refused the line `E_{y}(V) + y`, with `y` listed among the block's inputs, under `shock-reintroduced`.<br>The comparator read the file and the documentation example, with b and w for k and m, as one object under that renaming. |
+| Map Υ | the perch tags `@ !arvl`, `@ !dcsn` and `@ !cntn`, the role tags `!ctrl` and `!vlu` and the law line (slide 33), interpreted by Υ (upsilon), the checked interpretation of slide 53, as the objects of slide 7 |
+| Checker | the elaborator (slide 34), which constructs the typed object or refuses the file, naming the rule the file breaks and the line; and the comparator, a program that compares two elaborated files up to renaming and reports, for each kind of item, agreement, difference or an undecided residue, the items it can neither match nor reject |
+| Run on the file of slide 33 | The elaborator constructed the object from the file and refused the line `E_{y}(V) + y`, with `y` listed among the block's inputs, under `shock-reintroduced`.<br>The comparator read the file and the documentation example, with b and w for k and m, as one object under that renaming. |
 
-<div class="footnote">Bellman-SYM, Stages §5 (checked interpretation) &middot; bellman-ddsl wiki, Υ §1 (the elaborator) and judge §4 (the comparator) &middot; the runs: <code>elaborate_text</code> of <code>bellman.factory.elaboration</code> and <code>compare</code> of <code>meaning_map_training.compare</code>, 13 October 2026, on the stage file of slide 28 and on Bellman-SYM's documentation example (Stages §4).</div>
+<div class="footnote">Bellman-SYM, Stages §5 (checked interpretation) &middot; bellman-ddsl wiki, Υ §1 (the elaborator) and judge §4 (the comparator) &middot; the runs: <code>elaborate_text</code> of <code>bellman.factory.elaboration</code> and <code>compare</code> of <code>meaning_map_training.compare</code>, 13 October 2026, on the stage file of slide 33 and on Bellman-SYM's documentation example (Stages §4).</div>
 
 
 ---
@@ -1867,7 +1865,7 @@ td code { font-size: 14px; }
 
 <!-- _class: airy2 -->
 
-<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#context">Return to slide 23</a>' -->
+<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#context">Return to slide 28</a>' -->
 <style scoped>
 .cols { grid-template-columns: 1fr 1fr; gap: 1.6em; align-items: center; }
 .stack > div { padding: 0 0 0.8em 0; font-size: 19px; line-height: 1.45; }
@@ -1915,7 +1913,7 @@ Parsing a written statement into a tree, as every compiler first does, shows wha
 
 <!-- slide 53 · From the parse tree to the semantic graph -->
 
-<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#context">Return to slide 23</a>' -->
+<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#context">Return to slide 28</a>' -->
 <style scoped>
 .cols { grid-template-columns: 1.05fr 1fr; gap: 1.4em; align-items: center; }
 .cols .katex-display { margin: 0.2em 0 0.2em 0 !important; font-size: 0.9em; }
@@ -1955,7 +1953,7 @@ $$\begin{aligned}
 
 <!-- slide 54 · What the expectation integrates -->
 
-<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#multiple-possible-parsed-meanings">Return to slide 27</a>' -->
+<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#multiple-possible-parsed-meanings">Return to slide 32</a>' -->
 <style scoped>
 .box { border: 1px solid var(--ark-line-2); border-left: 4px solid var(--ark-blue); border-radius: 4px; background: #ffffff; padding: 0.65em 1.1em 0.6em 1.1em; margin: 0 0 1.1em 0; font-size: 19px; line-height: 1.45; }
 .box:last-child { margin-bottom: 0; }
@@ -1996,7 +1994,7 @@ Since $\mathbb{E}\max\ge\max\mathbb{E}$, the reading on the right overstates the
 
 <!-- _class: airy -->
 
-<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#multiple-possible-parsed-meanings">Return to slide 27</a>' -->
+<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#multiple-possible-parsed-meanings">Return to slide 32</a>' -->
 <style scoped>
 .box { border: 1px solid var(--ark-line-2); border-left: 4px solid var(--ark-blue); border-radius: 4px; background: #ffffff; padding: 0.65em 1.1em 0.6em 1.1em; margin: 0 0 1.1em 0; font-size: 19px; line-height: 1.45; }
 .box:last-child { margin-bottom: 0; }
@@ -2026,7 +2024,7 @@ The borrowing limit acts at $a=0$, a point at which a function of resources is n
 
 <!-- slide 56 · The discount and the expectation applied twice, and the recursion as a fixed point -->
 
-<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#multiple-possible-parsed-meanings">Return to slide 27</a>' -->
+<!-- _header: 'Appendix &middot; Buffer-stock saving <a class="header-return" href="#multiple-possible-parsed-meanings">Return to slide 32</a>' -->
 <style scoped>
 .box { border: 1px solid var(--ark-line-2); border-left: 4px solid var(--ark-blue); border-radius: 4px; background: #ffffff; padding: 0.65em 1.1em 0.6em 1.1em; margin: 0 0 1.1em 0; font-size: 19px; line-height: 1.45; }
 .box:last-child { margin-bottom: 0; }
