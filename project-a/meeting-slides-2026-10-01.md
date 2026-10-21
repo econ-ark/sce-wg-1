@@ -1,5 +1,11 @@
 # Project A: four slides for the meeting of 1 October 2026
 
+> **Superseded definition.** The primer on semantic ontologies
+> (`slides/semantic-ontology-cases/deck.md`, October 2026) supersedes the
+> four-part definition on the slide "What is a semantic ontology?" below.
+> The primer uses three parts: the written form, the domain of meaning and
+> the map Υ between them. This file is kept as the record of the meeting.
+
 Draft. Five minutes. Speaker notes follow each slide in a `::: {.notes}` block,
 the form used in `presentations/meeting-2026-10-01-project-a.qmd`, so that a
 slide can be pasted into a Quarto deck unchanged. Sources for the two examples

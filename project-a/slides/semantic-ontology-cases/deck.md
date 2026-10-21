@@ -495,7 +495,7 @@ h2 { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 26px; font-
 <div class="sp-m"></div>
 
 LLMs fill in for missing meaning statistically, from regularities in training text, with no explicit structure that points to a semantic domain.
-- A semantic ontology can give an LLMs explicit **deterministic** definitions of domain objects and their relations.
+- A semantic ontology can give an LLM explicit **deterministic** definitions of domain objects and their relations.
 
 <div class="footnote">Bender and Koller (2020), <a href="https://aclanthology.org/2020.acl-main.463/">“Climbing towards NLU”</a>, ACL.</div>
 
@@ -565,6 +565,7 @@ $$
 <div class="clarification-title">Semantic ontology vs. computational implementation</div>
 <p>Interpreting one written model in a program does not, by itself, specify Υ for other models in the domain.</p>
 <p>The ontology makes Υ explicit through <strong>reusable definitions, relations and interpretation rules</strong> for its written forms, not execution steps.</p>
+<p>Later slides add a second map, Ρ (rho), which attaches a numerical method to the object that Υ denotes, so that a model stays apart from how it is solved.</p>
 </div>
 
 <div class="footnote">Noy and McGuinness (2001), <a href="https://protege.stanford.edu/publications/ontology_development/ontology101-noy-mcguinness.html">&sect;1</a> (reuse and explicit definitions) &middot; Pitts and Winskel, <a href="https://www.cl.cam.ac.uk/~gw104/dens.pdf#page=7"><em>Denotational Semantics</em>, &sect;1</a> (interpretation and execution).</div>
@@ -1304,7 +1305,7 @@ td code { font-size: 14px; }
 </div>
 </div>
 
-<div class="footnote">Bellman-SYM, Stages §§1–4: the documentation example, whose b and w are written here as the calculus’s k and m (Bellman calculus, Stages and perches §1, bellman-ddsl/docs) &middot; the law line fixes the convention that slide 30 left to a subfield.</div>
+<div class="footnote">Bellman-SYM, Stages §§1–4: the documentation example, whose b and w are written here as the calculus’s k and m (Bellman calculus, Stages and perches §1, bellman-ddsl/docs) &middot; the law line fixes the convention that slide 30 left to a subfield &middot; Bellman-SYM and bellman-ddsl are internal Project Bellman documentation, not yet public.</div>
 
 
 ---
@@ -1339,7 +1340,7 @@ td code { font-size: 13.5px; }
 | writes a second `β` in the expectation block | <span class="c-green">accepts</span> it, leaving the second `β` visible on its own line |
 | would impose a stationary closure $v_{t+1}=v_t$ | has no line for it, since `V[>]` comes from the next period or the terminal value |
 
-<div class="footnote">The reference on refusals, rules shock-reintroduced and field-perch; Bellman-SYM, Field equations §5, Perch tagging rules §3, Periods §§2–3, Trellises §2; the runs of <code>elaborate_text</code> of 13 October 2026.</div>
+<div class="footnote">The reference on refusals, rules shock-reintroduced and field-perch; Bellman-SYM, Field equations §5, Perch tagging rules §3, Periods §§2–3, Trellises §2; the internal runs of <code>elaborate_text</code> of 13 October 2026.</div>
 
 
 ---
@@ -1856,7 +1857,7 @@ td code { font-size: 14px; }
 | Checker | the elaborator (slide 34), which constructs the typed object or refuses the file, naming the rule the file breaks and the line; and the comparator, a program that compares two elaborated files up to renaming and reports, for each kind of item, agreement, difference or an undecided residue, the items it can neither match nor reject |
 | Run on the file of slide 33 | The elaborator constructed the object from the file and refused the line `E_{y}(V) + y`, with `y` listed among the block's inputs, under `shock-reintroduced`.<br>The comparator read the file and the documentation example, with b and w for k and m, as one object under that renaming. |
 
-<div class="footnote">Bellman-SYM, Stages §5 (checked interpretation) &middot; bellman-ddsl wiki, Υ §1 (the elaborator) and judge §4 (the comparator) &middot; the runs: <code>elaborate_text</code> of <code>bellman.factory.elaboration</code> and <code>compare</code> of <code>meaning_map_training.compare</code>, 13 October 2026, on the stage file of slide 33 and on Bellman-SYM's documentation example (Stages §4).</div>
+<div class="footnote">Bellman-SYM, Stages §5 (checked interpretation) &middot; bellman-ddsl wiki (internal), Υ §1 (the elaborator) and judge §4 (the comparator) &middot; the internal runs: <code>elaborate_text</code> of <code>bellman.factory.elaboration</code> and <code>compare</code> of <code>meaning_map_training.compare</code>, 13 October 2026, on the stage file of slide 33 and on Bellman-SYM's documentation example (Stages §4).</div>
 
 
 ---
@@ -2111,7 +2112,7 @@ A stationarity condition that the statement never makes replaces the backward re
 </div>
 </div>
 
-<div class="footnote">Wu, Jiang, Li, Rabe, Staats, Jamnik and Szegedy (2022), "Autoformalization with large language models", <em>NeurIPS 2022</em>, 32353–32368 &middot; Hubert, Mehta, Sartran et al. (2026), <em>Nature</em> 651, 607–613, published online 12 November 2025 &middot; First, Rabe, Ringer and Brun (2023), "Baldur: whole-proof generation and repair with large language models", <em>ESEC/FSE 2023</em>, 1229–1241 &middot; Poesia et al. (2022), "Synchromesh", <em>ICLR 2022</em>; Geng, Josifoski, Peyrard and West (2023), "Grammar-constrained decoding for structured NLP tasks without finetuning", <em>EMNLP 2023</em>, 10932–10952 &middot; Li, Wu, Li, Wei, Yang, Zhang and Ma (2024), "Autoformalize mathematical statements by symbolic equivalence and semantic consistency", <em>NeurIPS 2024</em>, 53598–53625; Allamanis, Panthaplackel and Yin (2024), "Unsupervised evaluation of code LLMs with round-trip correctness", <em>ICML 2024</em>, PMLR 235, 1050–1066 &middot; Matsya's architect mode: bellman-ddsl, terminology, 9 October 2026.</div>
+<div class="footnote">Wu, Jiang, Li, Rabe, Staats, Jamnik and Szegedy (2022), "Autoformalization with large language models", <em>NeurIPS 2022</em>, 32353–32368 &middot; Hubert, Mehta, Sartran et al. (2026), <em>Nature</em> 651, 607–613, published online 12 November 2025 &middot; First, Rabe, Ringer and Brun (2023), "Baldur: whole-proof generation and repair with large language models", <em>ESEC/FSE 2023</em>, 1229–1241 &middot; Poesia et al. (2022), "Synchromesh", <em>ICLR 2022</em>; Geng, Josifoski, Peyrard and West (2023), "Grammar-constrained decoding for structured NLP tasks without finetuning", <em>EMNLP 2023</em>, 10932–10952 &middot; Li, Wu, Li, Wei, Yang, Zhang and Ma (2024), "Autoformalize mathematical statements by symbolic equivalence and semantic consistency", <em>NeurIPS 2024</em>, 53598–53625; Allamanis, Panthaplackel and Yin (2024), "Unsupervised evaluation of code LLMs with round-trip correctness", <em>ICML 2024</em>, PMLR 235, 1050–1066 &middot; Matsya's architect mode: bellman-ddsl (internal), terminology, 9 October 2026.</div>
 
 
 ---
@@ -2150,7 +2151,7 @@ A stationarity condition that the statement never makes replaces the backward re
 </div>
 </div>
 
-<div class="footnote">Pan, Luo, Wang, Chen, Wang and Wu (2024), "Unifying large language models and knowledge graphs: a roadmap", <em>IEEE Transactions on Knowledge and Data Engineering</em> 36(7), 3580–3599 &middot; Edge et al. (2024), "From local to global: a graph RAG approach to query-focused summarization", arXiv:2404.16130 &middot; Hubert, Mehta, Sartran et al. (2026), <em>Nature</em> 651, 607–613, on the auto-formalised training problems &middot; <code>meaning_map_training.compare</code>: bellman-ddsl.</div>
+<div class="footnote">Pan, Luo, Wang, Chen, Wang and Wu (2024), "Unifying large language models and knowledge graphs: a roadmap", <em>IEEE Transactions on Knowledge and Data Engineering</em> 36(7), 3580–3599 &middot; Edge et al. (2024), "From local to global: a graph RAG approach to query-focused summarization", arXiv:2404.16130 &middot; Hubert, Mehta, Sartran et al. (2026), <em>Nature</em> 651, 607–613, on the auto-formalised training problems &middot; <code>meaning_map_training.compare</code>: bellman-ddsl (internal).</div>
 
 
 ---
