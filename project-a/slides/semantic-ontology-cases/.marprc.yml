@@ -1,0 +1,4 @@
+# Marp CLI options for this deck, read when `marp` runs from this folder:
+#   marp deck.md -o deck.pdf
+# From elsewhere, pass --allow-local-files (the logos and the cartoon are local files).
+allowLocalFiles: true
