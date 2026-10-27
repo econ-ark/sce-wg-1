@@ -659,9 +659,6 @@ $$
 
 <div class="footnote">NVIDIA Auto Ontology: <a href="https://github.com/NVIDIA/auto-ontology/blob/main/dev_tools/fixtures/seed_graph_fixture.py">customer–payment sample model</a> &middot; <a href="https://github.com/NVIDIA/auto-ontology/blob/main/auto_ontology/retrieval/text_to_sql/agents/sql_from_semantic.py">AI query generation</a> &middot; <a href="#nvidia-fp32-fused-multiply-add">FP32 operation semantics (appendix, slide 60)</a>.</div>
 
-<!-- Source correction: Cosmos-Reason1 does not substantiate the semantic-ontology account on this slide, and TF32 illustrates arithmetic rather than ontology use. The replacement follows NVIDIA's stated ontology and entity-consistency requirements without attributing this illustrative formalisation or an ontology-only performance result to NVIDIA. -->
-<!-- Review addressed: distinguish interpretation Υ from implementation. This example has two distinct sorts, Firm and Country; r is a relation from firms to countries, not executable query code. The signature checks argument kinds, not the truth of an asserted registration. -->
-<!-- Review addressed: the country example discussed in the two comments above is superseded by NVIDIA Auto Ontology's customer-payment model. The diagram and numbered points now follow slide 7; Υ remains interpretation into domain objects, distinct from the query implementation. -->
 
 
 ---
@@ -1791,7 +1788,7 @@ The same model and calibration give different numerical estimates when the shock
 <div class="stack">
 <div>
 
-<span class="lbl">Excludes.</span> The language excludes any reading of the axioms other than the one fixed by the Direct Semantics, OWL's official rule for what its statements mean, under which "the correct answer to any such question is predetermined by the formal semantics", whatever reasoner computes it (Primer §2). It also forbids reading a missing statement as false and reading two names as two individuals.
+<span class="lbl">Excludes.</span> The language excludes any reading of the axioms other than the one fixed by the Direct Semantics, OWL's official rule for what its statements mean, under which "the correct answer to any such question is predetermined by the formal semantics", whatever reasoner computes it (Primer §2). It also does not read a missing statement as false, and it does not assume that two names denote two individuals.
 
 </div>
 <div>
@@ -1801,7 +1798,7 @@ The same model and calibration give different numerical estimates when the shock
 </div>
 </div>
 
-<div class="footnote">W3C (2012), <em>OWL 2 Web Ontology Language</em>, Recommendations of 11 December 2012: Document Overview §2.3; Direct Semantics §§2.2–2.5; Profiles §§1 and 5; Primer §§2, 4, 5 and 9 &middot; Baader, Calvanese, McGuinness, Nardi and Patel-Schneider (eds.) (2007), <em>The Description Logic Handbook</em>, 2nd ed., Cambridge University Press &middot; HermiT: Glimm, Horrocks, Motik, Stoilos and Wang (2014), <em>Journal of Automated Reasoning</em> 53(3), 245–269; ELK: Kazakov, Krötzsch and Simančík (2014), <em>Journal of Automated Reasoning</em> 53(1), 1–61.</div>
+<div class="footnote">W3C (2012), <em>OWL 2 Web Ontology Language</em>, Recommendations of 11 December 2012: Document Overview §2.3; Direct Semantics §§2.2–2.5; Profiles §§1 and 5; Primer §§2, 4, 5 and 9 &middot; Baader, Calvanese, McGuinness, Nardi and Patel-Schneider (eds.) (2007), <em>The Description Logic Handbook</em>, 2nd ed., Cambridge University Press &middot; HermiT: Glimm, Horrocks, Motik, Stoilos and Wang (2014), <em>Journal of Automated Reasoning</em> 53(3), 245–269; Pellet: Sirin, Parsia, Grau, Kalyanpur and Katz (2007), "Pellet: a practical OWL-DL reasoner", <em>Journal of Web Semantics</em> 5(2), 51–53.</div>
 
 
 ---

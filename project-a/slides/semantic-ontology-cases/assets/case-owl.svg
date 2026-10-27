@@ -15,6 +15,6 @@
 <line x1="434" y1="118.0" x2="666" y2="118.0" stroke="#1f476b" stroke-width="1.8" marker-end="url(#h)"/>
 <text x="550.0" y="84.0" text-anchor="middle" font-size="16" fill="#1f476b">the Direct Semantics, W3C</text>
 <text x="550.0" y="104.0" text-anchor="middle" font-size="16" fill="#1f476b">2012</text>
-<text x="550.0" y="142.0" text-anchor="middle" font-size="13.5" fill="#676470">a reasoner, HermiT, ELK or Pellet,</text>
+<text x="550.0" y="142.0" text-anchor="middle" font-size="13.5" fill="#676470">a reasoner, HermiT or Pellet,</text>
 <text x="550.0" y="160.0" text-anchor="middle" font-size="13.5" fill="#676470">decides consistency and entailment</text>
 </svg>
