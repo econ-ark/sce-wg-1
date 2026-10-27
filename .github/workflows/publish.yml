@@ -93,6 +93,9 @@ jobs:
         working-directory: tools
         run: npm run build
 
+      - name: Include the semantic ontology primer
+        run: cp project-a/slides/semantic-ontology-cases/deck.pdf docs/semantic-ontology-primer.pdf
+
       # A regression here is silent - the page still builds, it just loses
       # content - so the things most likely to break are asserted, not eyeballed.
       # The TeX Live image ships no bash, so GitHub falls back to `sh -e {0}`

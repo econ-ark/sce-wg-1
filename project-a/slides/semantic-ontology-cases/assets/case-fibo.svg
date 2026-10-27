@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 236" width="1100" height="236" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<defs><marker id="h" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0.8 L9,5 L0,9.2 z" fill="#1f476b"/></marker></defs>
+<rect x="20" y="28" width="410" height="180" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
+<text x="36" y="58" font-size="11.5" font-weight="500" fill="#1f476b" textLength="378" lengthAdjust="spacingAndGlyphs">FIBO, OWL source (SEC/Debt/Bonds.rdf; FBC/FinancialInstruments.rdf)</text>
+<text x="36" y="90" font-size="14" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">Bond ⊑ TradableDebtInstrument</text>
+<text x="36" y="118" font-size="11.5" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">Bond ⊑ ∃hasInterestPaymentTerms.CouponPaymentTerms</text>
+<text x="36" y="146" font-size="14" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529">Issuer ⊑ ContractPrincipal</text>
+<text x="36" y="174" font-size="11.5" font-family="'JetBrains Mono', Menlo, Consolas, monospace" fill="#212529" textLength="378" lengthAdjust="spacingAndGlyphs">Issuer ⊑ ∃issues.(FinancialInstrument ⊔ CreditAgreement)</text>
+<rect x="670" y="28" width="410" height="180" rx="6" fill="#ffffff" stroke="#2c4053" stroke-width="1.4"/>
+<text x="686" y="58" font-size="18" font-weight="500" fill="#1f476b">Kinds: contracts, instruments and parties</text>
+<text x="686" y="90" font-size="14.0" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">bond: a loan in which the issuer owes the holders a debt</text>
+<text x="686" y="118" font-size="15.5" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">issuer: a role, making instruments available</text>
+<text x="686" y="146" font-size="15.5" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529">obligor: a party bound to repay a debt</text>
+<text x="686" y="174" font-size="11.5" font-family="Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#212529" textLength="378" lengthAdjust="spacingAndGlyphs">notional amount: a generally unchangeable value used in certain calculations</text>
+<line x1="434" y1="118.0" x2="666" y2="118.0" stroke="#1f476b" stroke-width="1.8" marker-end="url(#h)"/>
+<text x="550.0" y="84.0" text-anchor="middle" font-size="16" fill="#1f476b">OWL 2 DL, standardised</text>
+<text x="550.0" y="104.0" text-anchor="middle" font-size="16" fill="#1f476b">through the OMG</text>
+<text x="550.0" y="142.0" text-anchor="middle" font-size="13.5" fill="#676470">the publisher&#x27;s consistency check</text>
+<text x="550.0" y="160.0" text-anchor="middle" font-size="13.5" fill="#676470">runs Openllet and HermiT and takes</text>
+<text x="550.0" y="178.0" text-anchor="middle" font-size="13.5" fill="#676470">the first answer</text>
+</svg>
