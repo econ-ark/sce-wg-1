@@ -1,9 +1,10 @@
 # Builds and publishes the site to GitHub Pages.
 #
 # One build feeds the Pages artifact: the working-group landing page
-# (docs/index.html, hand-written) and the Project A page + PDF, generated on
+# (docs/index.html, hand-written), the Project A page + PDF, generated on
 # every run from project-a/special-issue-proposal.md by
-# tools/build-project-a.mjs. GitHub Pages holds exactly one artifact per
+# tools/build-project-a.mjs, and the semantic ontology primer, rendered on
+# every run from its Marp source. GitHub Pages holds exactly one artifact per
 # site and actions/deploy-pages replaces the whole site with it.
 #
 # Pages must be set to build from GitHub Actions:
@@ -17,8 +18,8 @@ on:
   pull_request:
   workflow_dispatch:
 
-# Raised to pages:write / id-token:write on the deploy job only, so the two
-# long build jobs and the assemble job never hold a deploy-capable token.
+# Raised to pages:write / id-token:write on the deploy job only, so the build
+# jobs and the assemble job never hold a deploy-capable token.
 permissions:
   contents: read
 
@@ -93,9 +94,6 @@ jobs:
         working-directory: tools
         run: npm run build
 
-      - name: Include the semantic ontology primer
-        run: cp project-a/slides/semantic-ontology-cases/deck.pdf docs/semantic-ontology-primer.pdf
-
       # A regression here is silent - the page still builds, it just loses
       # content - so the things most likely to break are asserted, not eyeballed.
       # The TeX Live image ships no bash, so GitHub falls back to `sh -e {0}`
@@ -138,10 +136,70 @@ jobs:
           include-hidden-files: true
           retention-days: 1
 
+  # ------------------------------------------------------------- primer ----
+  # The semantic ontology primer, rendered from
+  # project-a/slides/semantic-ontology-cases/deck.md. Marp prints through
+  # Chromium, which the TeX Live container in wg1 lacks and the plain runner
+  # ships, so the deck is built in a job of its own.
+  primer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # npx otherwise runs on whatever Node the runner image ships.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # The deck's figures are SVGs shown as images, and an SVG shown as an
+      # image cannot use the page's web fonts: Chromium sets its text in
+      # installed fonts only. The figures ask for Roboto and JetBrains Mono,
+      # which the runner lacks, and would fall back silently without them.
+      # poppler-utils provides pdffonts and pdfinfo for the check below.
+      - name: Install the figures' fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            fonts-roboto fonts-jetbrains-mono poppler-utils
+
+      # Pinned so that CI renders with the same Marp as a local build. Run from
+      # the root, where the deck's .marprc.yml is not read, so the options it
+      # sets are passed here.
+      - name: Build the primer PDF
+        run: >-
+          npx --yes @marp-team/marp-cli@4.5.1 --html --allow-local-files
+          project-a/slides/semantic-ontology-cases/deck.md
+          -o docs/semantic-ontology-primer.pdf
+
+      # A missing font does not fail the render - the text comes out in another
+      # one - so the families the deck needs are asserted: the slide text's,
+      # from its Google Fonts import, and the figures'.
+      - name: Check the primer PDF
+        run: |
+          set -eu
+          pdf=docs/semantic-ontology-primer.pdf
+          fail() { echo "::error file=project-a/slides/semantic-ontology-cases/deck.md::$1"; exit 1; }
+
+          head -c 5 "$pdf" | grep -q '%PDF-' || fail "the PDF is missing or not a PDF"
+          fonts=$(pdffonts "$pdf" | awk 'NR > 2 { sub(/^[A-Z]+\+/, "", $1); print $1 }' | sort -u)
+          for family in SourceSans3 Newsreader IBMPlexMono Roboto JetBrainsMono; do
+            echo "$fonts" | grep -q "^$family" || fail "the PDF does not embed $family"
+          done
+
+          pages=$(pdfinfo "$pdf" | awk '/^Pages:/ { print $2 }')
+          echo "ok - $pages pages, embedding:" $fonts
+
+      - name: Hand the primer to the assemble job
+        uses: actions/upload-artifact@v4
+        with:
+          name: primer
+          path: docs/semantic-ontology-primer.pdf
+          retention-days: 1
+
   # ----------------------------------------------------------- assemble ----
   # Composes the site tree, checks it, and uploads it once.
   assemble:
-    needs: [wg1]
+    needs: [wg1, primer]
     runs-on: ubuntu-latest
     steps:
       # docs/ becomes the site root: index.html (the WG1 landing page),
@@ -151,6 +209,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: wg1-pages
+          path: site
+
+      # Beside index.html and project-a.html, which link to it.
+      - name: Add the semantic ontology primer
+        uses: actions/download-artifact@v4
+        with:
+          name: primer
           path: site
 
       # Runs on the assembled tree, before the upload, so a broken link fails
