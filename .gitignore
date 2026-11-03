@@ -27,7 +27,10 @@ project-a/special-issue-proposal.pdf
 project-a/special-issue-proposal.tex
 
 # Built from project-a/slides/semantic-ontology-cases/deck.md by Marp CLI, in
-# the primer job of .github/workflows/publish.yml on every deploy. Edit the
-# markdown; a deck.pdf built beside it is a local preview.
+# the primer job of .github/workflows/publish.yml on every deploy: the PDF, and
+# the HTML slides with a copy of the deck's assets/. Edit the markdown; a
+# deck.pdf or deck.html built beside it is a local preview.
 docs/semantic-ontology-primer.pdf
+docs/semantic-ontology-primer/
 project-a/slides/semantic-ontology-cases/deck.pdf
+project-a/slides/semantic-ontology-cases/deck.html
