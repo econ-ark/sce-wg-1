@@ -1,6 +1,7 @@
 # Marp CLI options for this deck, read when `marp` runs from this folder:
 #   marp deck.md -o deck.pdf      (or `marp deck.md` for the HTML slides)
-# From elsewhere, pass --html --allow-local-files (the logos and the cartoon are local files).
+# From elsewhere, pass --html, and --allow-local-files as well for the PDF: Chromium renders the
+# PDF and reads the figures in assets/ from disk, while the HTML slides keep them as relative links.
 # The published PDF and HTML slides are built by the primer job in
 # .github/workflows/publish.yml; deck.pdf and deck.html are local previews and are not committed.
 allowLocalFiles: true

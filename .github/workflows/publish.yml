@@ -198,6 +198,7 @@ jobs:
           fail() { echo "::error file=project-a/slides/semantic-ontology-cases/deck.md::$1"; exit 1; }
 
           head -c 5 "$pdf" | grep -q '%PDF-' || fail "the PDF is missing or not a PDF"
+          [ -f "$html" ] || fail "the HTML slides are missing"
           fonts=$(pdffonts "$pdf" | awk 'NR > 2 { sub(/^[A-Z]+\+/, "", $1); print $1 }' | sort -u)
           for family in SourceSans3 Newsreader IBMPlexMono Roboto JetBrainsMono; do
             echo "$fonts" | grep -q "^$family" || fail "the PDF does not embed $family"
