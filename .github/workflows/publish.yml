@@ -3,9 +3,10 @@
 # One build feeds the Pages artifact: the working-group landing page
 # (docs/index.html, hand-written), the Project A page + PDF, generated on
 # every run from project-a/special-issue-proposal.md by
-# tools/build-project-a.mjs, and the semantic ontology primer, rendered on
-# every run from its Marp source. GitHub Pages holds exactly one artifact per
-# site and actions/deploy-pages replaces the whole site with it.
+# tools/build-project-a.mjs, and the semantic ontology primer, rendered as a
+# PDF and as HTML slides on every run from its Marp source. GitHub Pages holds
+# exactly one artifact per site and actions/deploy-pages replaces the whole
+# site with it.
 #
 # Pages must be set to build from GitHub Actions:
 # Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
@@ -138,11 +139,15 @@ jobs:
 
   # ------------------------------------------------------------- primer ----
   # The semantic ontology primer, rendered from
-  # project-a/slides/semantic-ontology-cases/deck.md. Marp prints through
-  # Chromium, which the TeX Live container in wg1 lacks and the plain runner
-  # ships, so the deck is built in a job of its own.
+  # project-a/slides/semantic-ontology-cases/deck.md as a PDF and as HTML
+  # slides. Marp prints the PDF through Chromium, which the TeX Live container
+  # in wg1 lacks and the plain runner ships, so the deck is built in a job of
+  # its own.
   primer:
     runs-on: ubuntu-latest
+    # Pinned so that CI renders with the same Marp as a local build.
+    env:
+      MARP_CLI: '@marp-team/marp-cli@4.5.1'
     steps:
       - uses: actions/checkout@v4
 
@@ -162,38 +167,59 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
             fonts-roboto fonts-jetbrains-mono poppler-utils
 
-      # Pinned so that CI renders with the same Marp as a local build. Run from
-      # the root, where the deck's .marprc.yml is not read, so the options it
-      # sets are passed here.
+      # Run from the root, where the deck's .marprc.yml is not read, so the
+      # options it sets are passed here.
       - name: Build the primer PDF
         run: >-
-          npx --yes @marp-team/marp-cli@4.5.1 --html --allow-local-files
+          npx --yes "$MARP_CLI" --html --allow-local-files
           project-a/slides/semantic-ontology-cases/deck.md
           -o docs/semantic-ontology-primer.pdf
 
+      # The same deck as HTML slides, in a folder of its own: Marp leaves the
+      # images as links relative to the deck, so its assets/ folder is copied
+      # beside the page. A browser sets the figures in the reader's installed
+      # fonts, falling back along the stacks the SVGs name.
+      - name: Build the primer slides
+        run: |
+          npx --yes "$MARP_CLI" --html \
+            project-a/slides/semantic-ontology-cases/deck.md \
+            -o docs/semantic-ontology-primer/index.html
+          cp -R project-a/slides/semantic-ontology-cases/assets docs/semantic-ontology-primer/
+
       # A missing font does not fail the render - the text comes out in another
       # one - so the families the deck needs are asserted: the slide text's,
-      # from its Google Fonts import, and the figures'.
-      - name: Check the primer PDF
+      # from its Google Fonts import, and the figures'. A missing image does not
+      # fail the HTML build either, and the two outputs should be the same deck.
+      - name: Check the primer PDF and slides
         run: |
           set -eu
           pdf=docs/semantic-ontology-primer.pdf
+          html=docs/semantic-ontology-primer/index.html
           fail() { echo "::error file=project-a/slides/semantic-ontology-cases/deck.md::$1"; exit 1; }
 
           head -c 5 "$pdf" | grep -q '%PDF-' || fail "the PDF is missing or not a PDF"
+          [ -f "$html" ] || fail "the HTML slides are missing"
           fonts=$(pdffonts "$pdf" | awk 'NR > 2 { sub(/^[A-Z]+\+/, "", $1); print $1 }' | sort -u)
           for family in SourceSans3 Newsreader IBMPlexMono Roboto JetBrainsMono; do
             echo "$fonts" | grep -q "^$family" || fail "the PDF does not embed $family"
           done
 
+          for src in $(grep -oE 'src="assets/[^"]+"' "$html" | sed 's/src="//;s/"//' | sort -u); do
+            [ -f "docs/semantic-ontology-primer/$src" ] || fail "the slides link to missing $src"
+          done
           pages=$(pdfinfo "$pdf" | awk '/^Pages:/ { print $2 }')
-          echo "ok - $pages pages, embedding:" $fonts
+          slides=$(grep -oE '<section[^>]* id="[0-9]+"' "$html" | grep -c . || true)
+          [ "$slides" -eq "$pages" ] || fail "the HTML has $slides slides but the PDF $pages pages"
+
+          echo "ok - $pages slides in both, embedding:" $fonts
 
       - name: Hand the primer to the assemble job
         uses: actions/upload-artifact@v4
         with:
           name: primer
-          path: docs/semantic-ontology-primer.pdf
+          path: |
+            docs/semantic-ontology-primer.pdf
+            docs/semantic-ontology-primer/
           retention-days: 1
 
   # ----------------------------------------------------------- assemble ----
@@ -211,7 +237,7 @@ jobs:
           name: wg1-pages
           path: site
 
-      # Beside index.html and project-a.html, which link to it.
+      # The PDF and the slides' folder, beside the pages that link to them.
       - name: Add the semantic ontology primer
         uses: actions/download-artifact@v4
         with:
