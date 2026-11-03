@@ -219,6 +219,7 @@ fs.writeFileSync(OUT, `<!DOCTYPE html>
       <div style="display:flex; flex-wrap:wrap; gap:14px 18px; align-items:center; margin-top:28px;">
         <a class="doc-link" href="special-issue-proposal.pdf">Download the proposal (PDF)</a>
         <a href="https://github.com/econ-ark/sce-wg-1/blob/main/project-a/special-issue-proposal.md" class="card-more">Markdown source →</a>
+        <a href="semantic-ontology-primer.pdf" class="card-more">Primer (PDF)</a>
       </div>
     </header>
 

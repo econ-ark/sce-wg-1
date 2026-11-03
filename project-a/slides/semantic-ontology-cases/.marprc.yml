@@ -1,4 +1,8 @@
 # Marp CLI options for this deck, read when `marp` runs from this folder:
 #   marp deck.md -o deck.pdf
-# From elsewhere, pass --allow-local-files (the logos and the cartoon are local files).
+# From elsewhere, pass --html --allow-local-files (the logos and the cartoon are local files).
+# The published PDF is built by the primer job in .github/workflows/publish.yml;
+# deck.pdf is a local preview and is not committed.
 allowLocalFiles: true
+# Marp 4.5.1 renders this deck the same without it; set to match the CI command.
+html: true
