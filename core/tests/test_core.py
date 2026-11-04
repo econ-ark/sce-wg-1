@@ -202,6 +202,17 @@ def test_the_experiment_checker_catches_what_the_validator_cannot(model):
     assert experiment.resolves("types[].rule.c", RESULTS_SCHEMA) and not experiment.resolves("types[].slope", RESULTS_SCHEMA)
 
 
+def test_the_core_names_itself(model):
+    from wg1core import identity
+    i = identity()
+    assert i["name"] == "wg1core" and i["version"] and set(i) <= {"name", "version", "commit"}
+    assert run(model, "--levels", "low") == 0
+    m = manifest(model)
+    assert m["core"]["name"] == "wg1core" and m["core"]["version"] == i["version"]
+    r = json.loads((model["out"] / "stub" / "m1" / "level-1" / "record.json").read_text())
+    assert r["recorder"]["name"] == "wg1core runner" and r["recorder"]["version"] == i["version"]
+
+
 def test_remotes_are_normalized_to_https():
     assert records.https_remote("git@github.com:owner/repo.git") == "https://github.com/owner/repo"
     assert records.https_remote("ssh://git@github.com/owner/repo.git") == "https://github.com/owner/repo"

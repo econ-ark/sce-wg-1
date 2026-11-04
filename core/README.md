@@ -17,7 +17,10 @@ uv add "wg1-core @ git+https://github.com/econ-ark/sce-wg-1@v0.1.0#subdirectory=
 ```
 
 and runs it as `uv run wg1core ...`. The package's version is in `wg1core/__init__.py` and `pyproject.toml`; the
-records name it.
+records name it and, when the package was installed from git, the commit it was installed from, read from the
+installation's own metadata, since the version alone does not identify a development commit. The package needs
+Python 3.11 or later, so that it can be installed in every adapter's environment, whose adapters read the model
+through it.
 
 ## What a model repository gives it
 

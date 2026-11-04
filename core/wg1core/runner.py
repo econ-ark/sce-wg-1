@@ -49,7 +49,7 @@ from pathlib import Path
 import jsonschema
 import yaml
 
-from . import VERSION, canonical, records
+from . import VERSION, canonical, identity, records
 from . import experiment as experiments
 
 LEVEL_NUMBER = {"low": 1, "medium": 2, "high": 3}
@@ -385,7 +385,7 @@ def cmd_run(args) -> int:
     uv = subprocess.run(["uv", "--version"], capture_output=True, text=True)
     ctx = {"model": model, "runtime": args.runtime, "run_id": out.name, "repo": records.repository(model.root),
            "where": records.machine(runtime or "none"), "uv_version": uv.stdout.strip() if uv.returncode == 0 else "uv",
-           "recorder": {"name": "wg1core runner", "version": VERSION},
+           "recorder": {**identity(), "name": "wg1core runner"},
            "experiment": {"id": exp["experiment"], "sha256": exp_hash},
            "member_hashes": {m["id"]: canonical.model_hash(canonical.load_strict(
                (exp_path.parent / m["parameter_file"]).read_text(encoding="utf-8"))) for m in exp["members"]},
@@ -424,7 +424,7 @@ def cmd_run(args) -> int:
         "toolkits": {n: {"adapter": model.rel(model.toolkits[n]["adapter"]), "environment": environment_identity(model.toolkits[n], model),
                          "code_sha256": code_sha256(model.toolkits[n], model), "threads": model.toolkits[n]["threads"]} for n in toolkits},
         "model": model_commit(model),
-        "core": {"name": "wg1core", "version": VERSION},
+        "core": identity(),
         "runtime": ctx["where"]["runtime"],
         "started": started,
         "jobs": [{"toolkit": j["toolkit"], "member": j["member"], "level": j["level"], "dir": model.rel(j["dir"]),

@@ -11,3 +11,19 @@
 """
 
 VERSION = "0.1.0"
+
+
+def identity() -> dict:
+    """The core's name, version and, when it was installed from git, the commit it was installed from, read from the
+    installation's direct_url.json (PEP 610); the version alone does not identify a development commit."""
+    out = {"name": "wg1core", "version": VERSION}
+    try:
+        import json
+        from importlib import metadata
+        text = metadata.distribution("wg1-core").read_text("direct_url.json")
+        commit = (json.loads(text).get("vcs_info") or {}).get("commit_id") if text else None
+        if commit:
+            out["commit"] = commit
+    except Exception:  # not installed as a distribution, or no direct_url.json: the version stands alone
+        pass
+    return out
