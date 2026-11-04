@@ -755,6 +755,10 @@
           "schema": {
             "type": "string",
             "minLength": 1
+          },
+          "repository": {
+            "type": "string",
+            "description": "The repository that holds the family's parameter schema when it is not this one; the generator then checks the schema file's existence only where that repository's files are present."
           }
         }
       }

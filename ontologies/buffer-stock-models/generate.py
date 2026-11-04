@@ -185,7 +185,7 @@ def check(source: dict) -> None:
     for row in source["families"]:
         for c in row["writes"]:
             need(c, {"model-class"}, f"{row['name']}/writes")
-        if not (HERE / row["schema"]).resolve().is_file():
+        if not row.get("repository") and not (HERE / row["schema"]).resolve().is_file():
             problems.append(f"{row['name']}: no schema at {row['schema']}")
     for row in source["divergences"]:
         if row["term"] not in names:
@@ -415,7 +415,7 @@ def turtle(source: dict, digest: str) -> str:
             triples.append(f"skos:note {_lit(row['note'])}")
         simple = {"symbol": "symbol", "formula": "formula", "holds": "holdsWhen", "check": "check", "tier": "tier",
                   "status": "status", "category": "category", "short": "shortName", "where": "where",
-                  "schema": "schemaDocument", "domain_note": "note", "bellman_concept": "bellmanConcept",
+                  "schema": "schemaDocument", "repository": "repository", "domain_note": "note", "bellman_concept": "bellmanConcept",
                   "state_domain": "stateDomain"}
         for key, prop in simple.items():
             if key in row:

@@ -56,7 +56,7 @@
     "text": "a name in the buffer-stock families' Bellman-SYM stage files as the language now writes it: a declared field, parameter, set or function, a perch mark, a derivative term, or the id of a block or line, which is the address of where a relation is written, not an object"
    }
   },
-  "source_digest": "sha256:5141628f045867100b88ad96a64ed8039c0a497f372b5b6b92ce495e8b9182de"
+  "source_digest": "sha256:d2e52fa84d52e51422881c2aae39a9be3c7b6bb8f8848b64a9d7576cb90513aa"
  },
  "kinds": {
   "model-class": "A class of models, defined by axioms. A model is a member when it satisfies every membership axiom.",
@@ -436,7 +436,7 @@
    "kind": "model-class",
    "name": "with-risky-asset",
    "label": "buffer-stock model with a risky asset",
-   "definition": "A buffer-stock model in which assets, or a share of them the agent chooses, earn a random return. The owner ruled on 2026-10-27 that such a model has a target; its conditions are not yet stated, and this ontology states none.",
+   "definition": "A buffer-stock model in which assets, or a share of them the agent chooses, earn a random return. Such a model is taken to have a target; its conditions are not yet stated, and this ontology states none.",
    "subclass_of": {
     "name": "buffer-stock-model",
     "id": "BSM_0000001"
@@ -540,7 +540,7 @@
    "kind": "model-class",
    "name": "natural-constraint",
    "label": "a buffer-stock model with the natural constraint in force",
-   "definition": "A buffer-stock model with no artificial constraint tighter than the natural one, so that a > −h_min, the natural constraint, is the one in force, and with both shocks' laws bounded, with strictly positive floors and finite ceilings, as BST assumes. Bounded support is a condition of membership here, by the owner's ruling of 2026-11-01.",
+   "definition": "A buffer-stock model with no artificial constraint tighter than the natural one, so that a > −h_min, the natural constraint, is the one in force, and with both shocks' laws bounded, with strictly positive floors and finite ceilings, as BST assumes. Bounded support is a condition of membership here.",
    "subclass_of": {
     "name": "buffer-stock-model",
     "id": "BSM_0000001"
@@ -789,7 +789,7 @@
    "tier": "membership",
    "status": "ruling",
    "ruled": "2026-10-31",
-   "statement": "The joint worst income, the worst transitory income with ψ at its floor, carries positive probability under the true law: p_worst > 0. The owner ruled on 2026-10-31 that the worst transitory realization must be a point mass where the natural constraint is in force; on 2026-11-01 he made the condition the joint one, since with a positive worst transitory income and a continuous ψ a point mass in ξ alone has probability zero jointly, and made the model without one a scenario of its own (natural-without-point-mass). The paper calls such an atom inessential to its proofs.",
+   "statement": "The joint worst income, the worst transitory income with ψ at its floor, carries positive probability under the true law: p_worst > 0. An earlier draft required the worst transitory realization to be a point mass where the natural constraint is in force; the condition is now the joint one, since with a positive worst transitory income and a continuous ψ a point mass in ξ alone has probability zero jointly, and made the model without one a scenario of its own (natural-without-point-mass). The paper calls such an atom inessential to its proofs.",
    "check": "p_worst > 0",
    "sources": {
     "bst": [
@@ -838,7 +838,7 @@
    "tier": "membership",
    "status": "ruling",
    "ruled": "2026-11-01",
-   "statement": "ψ ∈ [ψ_min, ψ_max] with 0 < ψ_min ≤ 1 ≤ ψ_max < ∞, and the employed draw θ ∈ [θ_min, θ_max] with 0 < θ_min ≤ 1 ≤ θ_max < ∞, as BST assumes. A hypothesis of the paper's theorems until 2026-11-01, when the owner made it a condition of membership of the natural scenarios. It excludes the untruncated lognormal, whose model with a ≥ 0 is the zero-infima scenario's.",
+   "statement": "ψ ∈ [ψ_min, ψ_max] with 0 < ψ_min ≤ 1 ≤ ψ_max < ∞, and the employed draw θ ∈ [θ_min, θ_max] with 0 < θ_min ≤ 1 ≤ θ_max < ∞, as BST assumes. A hypothesis of the paper's theorems until 2026-11-01, when it became a condition of membership of the natural scenarios. It excludes the untruncated lognormal, whose model with a ≥ 0 is the zero-infima scenario's.",
    "check": "psi_min > 0 and theta_min > 0 and psi_max < inf and theta_max < inf",
    "sources": {
     "bst": [
@@ -3131,7 +3131,7 @@
     "id": "BSM_0000076"
    },
    "holds": "vaf_pf < 1",
-   "note": "A modified condition's signifier follows its base name, as in GIC-Mod and GIC-Liv; the owner, 2026-11-01. BST writes \\PFFVAC, and the schemas' checker PF-FVAC.",
+   "note": "A modified condition's signifier follows its base name, as in GIC-Mod and GIC-Liv. BST writes \\PFFVAC, and the schemas' checker PF-FVAC.",
    "sources": {
     "bst": [
      "pffvac"
@@ -3272,7 +3272,7 @@
     "id": "BSM_0000072"
    },
    "holds": "thorn_G_liv < 1",
-   "note": "The paper writes ℒ Þ_𝒢 < 1 without saying whether Þ carries survival. The owner ruled on 2026-10-22, in econ-ark's notation registry, that the condition is ℒ Þ̊_𝒢 < 1: a survivor discounts by βℒ, so its wealth grows at Þ̊, and the cohort shrinks at ℒ. It assumes, as the paper does, that newborns' permanent income grows with aggregate productivity.",
+   "note": "The paper writes ℒ Þ_𝒢 < 1 without saying whether Þ carries survival. econ-ark's notation registry fixes the condition as ℒ Þ̊_𝒢 < 1: a survivor discounts by βℒ, so its wealth grows at Þ̊, and the cohort shrinks at ℒ. It assumes, as the paper does, that newborns' permanent income grows with aggregate productivity.",
    "sources": {
     "bst": [
      "giclivmoddefn"
@@ -3501,7 +3501,7 @@
    "kind": "property",
    "name": "buffer-stock-saving",
    "label": "buffer-stock saving",
-   "definition": "A member exhibits buffer-stock saving when it has a non-degenerate limiting solution and an individual buffer-stock target. This draft takes the individual target, as the paper's introduction does; whether the pseudo-target suffices is left to the owner.",
+   "definition": "A member exhibits buffer-stock saving when it has a non-degenerate limiting solution and an individual buffer-stock target. This draft takes the individual target, as the paper's introduction does; whether the pseudo-target suffices is left open.",
    "sources": {
     "bst": [
      "sec-intro",
@@ -4799,7 +4799,7 @@
      "holds": false
     }
    ],
-   "note": "The paper says weak return impatience \"cannot be relaxed further without an artificial liquidity constraint\", and that the condition does not become irrelevant as ℘ → 0. Read here as necessity within the paper's class. The paper gives no proof. The owner decided on 2026-11-01 that the ontology treats the claim as true until the paper proves it, and the paper's own tracker asks for that proof. A route through results the paper already has: each finite-horizon c_t is concave with c_t(0) = 0 and slope κ̄_t at zero, so c_t(m) ≤ κ̄_t m; the recursion κ̄_t⁻¹ = 1 + ℘^(1/ϱ) Þ_R κ̄_{t+1}⁻¹ needs no WRIC; and when the WRIC fails, κ̄_{T−n} ≤ 1/(n+1), so c_{T−n} → 0.",
+   "note": "The paper says weak return impatience \"cannot be relaxed further without an artificial liquidity constraint\", and that the condition does not become irrelevant as ℘ → 0. Read here as necessity within the paper's class. The paper gives no proof. The ontology treats the claim as true until the paper proves it, and the paper's own tracker asks for that proof. A route through results the paper already has: each finite-horizon c_t is concave with c_t(0) = 0 and slope κ̄_t at zero, so c_t(m) ≤ κ̄_t m; the recursion κ̄_t⁻¹ = 1 + ℘^(1/ϱ) Þ_R κ̄_{t+1}⁻¹ needs no WRIC; and when the WRIC fails, κ̄_{T−n} ≤ 1/(n+1), so c_{T−n} → 0.",
    "sources": {
     "bst": [
      "wric",
@@ -5064,7 +5064,7 @@
     "id": "BSM_0000211"
    },
    "concludes": [],
-   "note": "Without a point mass at the joint worst income, an agent who saves exactly a_Nat lands next period within x of the floor with probability of order x^k, k the number of shocks with densities at their floors (2 with a positive floor and both, 1 with one). The expected marginal value at a_Nat is finite exactly when ϱ < k, so the constraint binds near the floor only then; with ϱ > k the household saves a vanishing amount there. With the class's ϱ > 1 only k = 2 and 1 < ϱ < 2 reach the limit. The BufferStockTheory session's derivation of 2026-10-18, run for one density.",
+   "note": "Without a point mass at the joint worst income, an agent who saves exactly a_Nat lands next period within x of the floor with probability of order x^k, k the number of shocks with densities at their floors (2 with a positive floor and both, 1 with one). The expected marginal value at a_Nat is finite exactly when ϱ < k, so the constraint binds near the floor only then; with ϱ > k the household saves a vanishing amount there. With the class's ϱ > 1 only k = 2 and 1 < ϱ < 2 reach the limit. A derivation of 2026-10-18, run for one density.",
    "sources": {
     "bst": [
      "pdv"
@@ -5093,7 +5093,7 @@
      "holds": true
     }
    ],
-   "note": "At a = 0, next period's resources are ξ′ alone, and the Euler equation's right side is β̊R E[(𝒢ψ′)^(−ϱ) u′(c(ξ′))], finite under the class's E[θ^(−ϱ)] < ∞ and E[ψ^(−ϱ)] < ∞, given c(m) ≥ const · m near zero. Since u′(m) → ∞ as m ↓ 0, c = m on an interval [0, m*], at every ϱ, and the stationary population has a mass at a = 0: Ma, Stachurski and Toda's Lemma C.2, that the constraint binds in finite time with positive probability. Derived by the working group's BufferStockTheory session on 2026-11-01, with a second derivation; not run.",
+   "note": "At a = 0, next period's resources are ξ′ alone, and the Euler equation's right side is β̊R E[(𝒢ψ′)^(−ϱ) u′(c(ξ′))], finite under the class's E[θ^(−ϱ)] < ∞ and E[ψ^(−ϱ)] < ∞, given c(m) ≥ const · m near zero. Since u′(m) → ∞ as m ↓ 0, c = m on an interval [0, m*], at every ϱ, and the stationary population has a mass at a = 0: Ma, Stachurski and Toda's Lemma C.2, that the constraint binds in finite time with positive probability. Derived on 2026-11-01, with a second derivation; not run.",
    "sources": {
     "mst-2020": [
      "Lemma C.2",
@@ -5236,7 +5236,8 @@
     }
    ],
    "definition": "The schemas' family for the natural scenario with a point mass: its stage file states BST's own model, with truncated lognormals and the zero-income event; a positive benefit with a discrete ψ has no stage file yet.",
-   "schema": "../../schemas/bst/natural/parameters.schema.json"
+   "schema": "schemas/bst/natural/parameters.schema.json",
+   "repository": "https://github.com/llorracc/wg1-buffer-stock"
   },
   {
    "id": "BSM_0000226",
@@ -5266,7 +5267,8 @@
     }
    ],
    "definition": "The schemas' family for the artificial scenario, with truncated lognormals and an artificial constraint strictly above the natural one; at a_Art = 0 its members are liquidity-constrained.",
-   "schema": "../../schemas/bst/artificial/parameters.schema.json"
+   "schema": "schemas/bst/artificial/parameters.schema.json",
+   "repository": "https://github.com/llorracc/wg1-buffer-stock"
   },
   {
    "id": "BSM_0000141",

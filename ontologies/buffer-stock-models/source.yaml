@@ -65,7 +65,7 @@ ontology:
 retired:
   # A divergence withdrawn on checking.
   - BSM_0000151
-  # HAFiscal's cap on β, removed on 2026-11-01: by the owner's ruling, an implementation detail of HAFiscal's code that
+  # HAFiscal's cap on β, removed on 2026-11-01: an implementation detail of HAFiscal's code that
   # cuts off parameters too near the boundary, where the solution slows drastically; no feature of the model class.
   - BSM_0000152
   # The family rows of the retired families bst/1 and bst-markov_ui-and-agg/1, retired on 2026-11-01 when the families split by
@@ -81,8 +81,8 @@ retired:
   # unemployment model is a calibration of the buffer-stock families, and writing unemployment as a Markov state is a
   # way to solve it, not a model of its own.
   - BSM_0000228
-  # The family rows of bst-natural-no-point-mass/1 and bst-zero-infima/1, retired on 2026-11-03: the owner abolished
-  # both families as uninteresting cases. The two scenario classes stay; no family of the schemas writes them.
+  # The family rows of bst-natural-no-point-mass/1 and bst-zero-infima/1, retired on 2026-11-03: both families were
+  # withdrawn as uninteresting cases. The two scenario classes stay; no family of the schemas writes them.
   - BSM_0000225
   - BSM_0000227
   # Divergences of a toolkit from the ontology's terms, moved on 2026-11-01 to that toolkit's Rosetta Stone, since the
@@ -247,8 +247,8 @@ model-classes:
     name: with-risky-asset
     label: buffer-stock model with a risky asset
     definition: >-
-      A buffer-stock model in which assets, or a share of them the agent chooses, earn a random return. The owner ruled
-      on 2026-10-27 that such a model has a target; its conditions are not yet stated, and this ontology states none.
+      A buffer-stock model in which assets, or a share of them the agent chooses, earn a random return. Such a model is
+      taken to have a target; its conditions are not yet stated, and this ontology states none.
     subclass_of: buffer-stock-model
     reduces_to: {class: bst-model, when: "the return is riskless"}
   - id: BSM_0000147
@@ -294,7 +294,7 @@ model-classes:
     definition: >-
       A buffer-stock model with no artificial constraint tighter than the natural one, so that a > −h_min, the natural
       constraint, is the one in force, and with both shocks' laws bounded, with strictly positive floors and finite
-      ceilings, as BST assumes. Bounded support is a condition of membership here, by the owner's ruling of 2026-11-01.
+      ceilings, as BST assumes. Bounded support is a condition of membership here.
     subclass_of: buffer-stock-model
     axioms: [natural-in-force, bounded-support]
     sources: {bst: [ass-shocks, borocnstnat]}
@@ -393,8 +393,8 @@ axioms:
     ruled: "2026-10-31"
     statement: >-
       The joint worst income, the worst transitory income with ψ at its floor, carries positive probability under the
-      true law: p_worst > 0. The owner ruled on 2026-10-31 that the worst transitory realization must be a point mass
-      where the natural constraint is in force; on 2026-11-01 he made the condition the joint one, since with a positive
+      true law: p_worst > 0. An earlier draft required the worst transitory realization to be a point mass where the
+      natural constraint is in force; the condition is now the joint one, since with a positive
       worst transitory income and a continuous ψ a point mass in ξ alone has probability zero jointly, and made the
       model without one a scenario of its own (natural-without-point-mass). The paper calls such an atom inessential to
       its proofs.
@@ -419,7 +419,7 @@ axioms:
     ruled: "2026-11-01"
     statement: >-
       ψ ∈ [ψ_min, ψ_max] with 0 < ψ_min ≤ 1 ≤ ψ_max < ∞, and the employed draw θ ∈ [θ_min, θ_max] with 0 < θ_min ≤ 1 ≤
-      θ_max < ∞, as BST assumes. A hypothesis of the paper's theorems until 2026-11-01, when the owner made it a
+      θ_max < ∞, as BST assumes. A hypothesis of the paper's theorems until 2026-11-01, when it became a
       condition of membership of the natural scenarios. It excludes the untruncated lognormal, whose model with a ≥ 0 is
       the zero-infima scenario's.
     check: "psi_min > 0 and theta_min > 0 and psi_max < inf and theta_max < inf"
@@ -1290,13 +1290,13 @@ conditions:
   - {id: BSM_0000083, name: ric, label: return impatience, short: RIC, factor: patience-return-liv, holds: "thorn_R < 1", sources: {bst: [ric, ass-ric]}}
   - {id: BSM_0000084, name: wric, label: weak return impatience, short: WRIC, factor: weak-return-patience-factor, holds: "wrp < 1", sources: {bst: [wric]}}
   - {id: BSM_0000085, name: fhwc, label: finite human wealth, short: FHWC, factor: human-wealth-factor, holds: "fhw < 1", sources: {bst: [ass-fhwc, eq-fhwc2]}}
-  - {id: BSM_0000086, name: fvac-pf, label: perfect-foresight finite value of autarky, short: FVAC-PF, factor: value-of-autarky-factor-pf, holds: "vaf_pf < 1", note: "A modified condition's signifier follows its base name, as in GIC-Mod and GIC-Liv; the owner, 2026-11-01. BST writes \\PFFVAC, and the schemas' checker PF-FVAC.", sources: {bst: [pffvac]}}
+  - {id: BSM_0000086, name: fvac-pf, label: perfect-foresight finite value of autarky, short: FVAC-PF, factor: value-of-autarky-factor-pf, holds: "vaf_pf < 1", note: "A modified condition's signifier follows its base name, as in GIC-Mod and GIC-Liv. BST writes \\PFFVAC, and the schemas' checker PF-FVAC.", sources: {bst: [pffvac]}}
   - {id: BSM_0000087, name: fvac, label: finite value of autarky, short: FVAC, factor: value-of-autarky-factor, holds: "vaf < 1", sources: {bst: [fvac]}}
   - {id: BSM_0000088, name: gic, label: growth impatience, short: GIC, factor: patience-growth-liv, holds: "thorn_G < 1", sources: {bst: [gicraw]}}
   - {id: BSM_0000089, name: gic-mod, label: strong growth impatience, short: GIC-Mod, factor: patience-growth-mod, holds: "thorn_G_mod < 1", sources: {bst: [gicmod]}}
   - {id: BSM_0000090, name: gic-szeidl, label: log growth impatience, short: GIC-Szeidl, factor: patience-growth-liv, holds: "log(thorn_G) < E_log_psi", sources: {bst: [gicsdl]}}
   - {id: BSM_0000091, name: gic-harmenberg, label: Harmenberg growth impatience, short: GIC-Harmenberg, factor: patience-growth-liv, holds: "thorn_G < exp(E_psi_log_psi)", sources: {bst: [growth-impatience-implies-harmenberg-impatience]}}
-  - {id: BSM_0000092, name: gic-liv, label: mortality-adjusted growth impatience, short: GIC-Liv, factor: patience-growth-mortality-adj, holds: "thorn_G_liv < 1", note: "The paper writes ℒ Þ_𝒢 < 1 without saying whether Þ carries survival. The owner ruled on 2026-10-22, in econ-ark's notation registry, that the condition is ℒ Þ̊_𝒢 < 1: a survivor discounts by βℒ, so its wealth grows at Þ̊, and the cohort shrinks at ℒ. It assumes, as the paper does, that newborns' permanent income grows with aggregate productivity.", sources: {bst: [giclivmoddefn]}}
+  - {id: BSM_0000092, name: gic-liv, label: mortality-adjusted growth impatience, short: GIC-Liv, factor: patience-growth-mortality-adj, holds: "thorn_G_liv < 1", note: "The paper writes ℒ Þ_𝒢 < 1 without saying whether Þ carries survival. econ-ark's notation registry fixes the condition as ℒ Þ̊_𝒢 < 1: a survivor discounts by βℒ, so its wealth grows at Þ̊, and the cohort shrinks at ℒ. It assumes, as the paper does, that newborns' permanent income grows with aggregate productivity.", sources: {bst: [giclivmoddefn]}}
   - {id: BSM_0000199, name: discounted-return, label: "the discounted-return condition of Ma, Stachurski and Toda", short: MST-βR, factor: discounted-return-factor, holds: "g_beta_R < 1", note: "Their generalization of the condition βR < 1 to random discounting and returns, which the normalized problem has. It bounds the ϱ-th moment of Þ̊_𝒢/ψ, where the GIC-Mod bounds its mean.", sources: {mst-2020: ["Assumption 2.2"]}}
 
 properties:
@@ -1317,7 +1317,7 @@ properties:
     definition: >-
       A member exhibits buffer-stock saving when it has a non-degenerate limiting solution and an individual buffer-stock
       target. This draft takes the individual target, as the paper's introduction does; whether the pseudo-target
-      suffices is left to the owner.
+      suffices is left open.
     sources: {bst: [sec-intro, patience-requirements-and-the-existence-of-buffer-stock-targets]}
 
   - id: BSM_0000182
@@ -1460,7 +1460,7 @@ results:
     note: >-
       The paper says weak return impatience "cannot be relaxed further without an artificial liquidity constraint", and
       that the condition does not become irrelevant as ℘ → 0. Read here as necessity within the paper's class. The
-      paper gives no proof. The owner decided on 2026-11-01 that the ontology treats the claim as true until the paper
+      paper gives no proof. The ontology treats the claim as true until the paper
       proves it, and the paper's own tracker asks for that proof. A route through results the paper already has: each
       finite-horizon c_t is concave with c_t(0) = 0 and slope κ̄_t at zero, so c_t(m) ≤ κ̄_t m; the recursion
       κ̄_t⁻¹ = 1 + ℘^(1/ϱ) Þ_R κ̄_{t+1}⁻¹ needs no WRIC; and when the WRIC fails, κ̄_{T−n} ≤ 1/(n+1), so c_{T−n} → 0.
@@ -1578,7 +1578,7 @@ results:
       floor with probability of order x^k, k the number of shocks with densities at their floors (2 with a positive floor
       and both, 1 with one). The expected marginal value at a_Nat is finite exactly when ϱ < k, so the constraint binds
       near the floor only then; with ϱ > k the household saves a vanishing amount there. With the class's ϱ > 1 only k = 2
-      and 1 < ϱ < 2 reach the limit. The BufferStockTheory session's derivation of 2026-10-18, run for one density.
+      and 1 < ϱ < 2 reach the limit. A derivation of 2026-10-18, run for one density.
     sources: {bst: [pdv]}
   - id: BSM_0000231
     name: zero-infima-constraint-binds
@@ -1593,7 +1593,7 @@ results:
       β̊R E[(𝒢ψ′)^(−ϱ) u′(c(ξ′))], finite under the class's E[θ^(−ϱ)] < ∞ and E[ψ^(−ϱ)] < ∞, given c(m) ≥ const · m near
       zero. Since u′(m) → ∞ as m ↓ 0, c = m on an interval [0, m*], at every ϱ, and the stationary population has a mass
       at a = 0: Ma, Stachurski and Toda's Lemma C.2, that the constraint binds in finite time with positive probability.
-      Derived by the working group's BufferStockTheory session on 2026-11-01, with a second derivation; not run.
+      Derived on 2026-11-01, with a second derivation; not run.
     sources: {mst-2020: ["Lemma C.2", "Proposition 2.5"]}
 
 identities:
@@ -1664,7 +1664,8 @@ families:
     definition: >-
       The schemas' family for the natural scenario with a point mass: its stage file states BST's own model, with
       truncated lognormals and the zero-income event; a positive benefit with a discrete ψ has no stage file yet.
-    schema: ../../schemas/bst/natural/parameters.schema.json
+    schema: schemas/bst/natural/parameters.schema.json
+    repository: https://github.com/llorracc/wg1-buffer-stock
   - id: BSM_0000226
     name: bst-artificial-1
     label: "the schemas' family bst-artificial/1"
@@ -1672,7 +1673,8 @@ families:
     definition: >-
       The schemas' family for the artificial scenario, with truncated lognormals and an artificial constraint strictly
       above the natural one; at a_Art = 0 its members are liquidity-constrained.
-    schema: ../../schemas/bst/artificial/parameters.schema.json
+    schema: schemas/bst/artificial/parameters.schema.json
+    repository: https://github.com/llorracc/wg1-buffer-stock
 
 divergences:
   - id: BSM_0000141

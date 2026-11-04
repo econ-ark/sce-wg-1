@@ -20,7 +20,7 @@
     dcterms:source <https://arxiv.org/abs/1905.13045v3> ;
     dcterms:source <https://arxiv.org/abs/2012.00219v2> ;
     dcterms:source <https://github.com/llorracc/HAFiscal-QE/tree/1afdf80de4325e436a0c1c20895f754aefefd38c> ;
-    bsm:sourceDigest "sha256:5141628f045867100b88ad96a64ed8039c0a497f372b5b6b92ce495e8b9182de" .
+    bsm:sourceDigest "sha256:d2e52fa84d52e51422881c2aae39a9be3c7b6bb8f8848b64a9d7576cb90513aa" .
 
 skos:definition a owl:AnnotationProperty .
 skos:notation a owl:AnnotationProperty .
@@ -449,7 +449,7 @@ bsm:BSM_0000146
     a bsm:ModelClass ;
     rdfs:label "buffer-stock model with a risky asset"@en ;
     skos:notation "with-risky-asset" ;
-    skos:definition "A buffer-stock model in which assets, or a share of them the agent chooses, earn a random return. The owner ruled on 2026-10-27 that such a model has a target; its conditions are not yet stated, and this ontology states none."@en ;
+    skos:definition "A buffer-stock model in which assets, or a share of them the agent chooses, earn a random return. Such a model is taken to have a target; its conditions are not yet stated, and this ontology states none."@en ;
     bsm:reducesTo bsm:BSM_0000002 ;
     bsm:reductionWhen "the return is riskless" .
 
@@ -494,7 +494,7 @@ bsm:BSM_0000209
     a bsm:ModelClass ;
     rdfs:label "a buffer-stock model with the natural constraint in force"@en ;
     skos:notation "natural-constraint" ;
-    skos:definition "A buffer-stock model with no artificial constraint tighter than the natural one, so that a > −h_min, the natural constraint, is the one in force, and with both shocks' laws bounded, with strictly positive floors and finite ceilings, as BST assumes. Bounded support is a condition of membership here, by the owner's ruling of 2026-11-01."@en ;
+    skos:definition "A buffer-stock model with no artificial constraint tighter than the natural one, so that a > −h_min, the natural constraint, is the one in force, and with both shocks' laws bounded, with strictly positive floors and finite ceilings, as BST assumes. Bounded support is a condition of membership here."@en ;
     bsm:hasAxiom bsm:BSM_0000213 ;
     bsm:hasAxiom bsm:BSM_0000017 ;
     dcterms:source <https://llorracc.github.io/BufferStockTheory/#ass-shocks> ;
@@ -596,7 +596,7 @@ bsm:BSM_0000015
     a owl:NamedIndividual, bsm:Axiom ;
     rdfs:label "a point mass at the joint worst income"@en ;
     skos:notation "point-mass-at-joint-worst-income" ;
-    skos:definition "The joint worst income, the worst transitory income with ψ at its floor, carries positive probability under the true law: p_worst > 0. The owner ruled on 2026-10-31 that the worst transitory realization must be a point mass where the natural constraint is in force; on 2026-11-01 he made the condition the joint one, since with a positive worst transitory income and a continuous ψ a point mass in ξ alone has probability zero jointly, and made the model without one a scenario of its own (natural-without-point-mass). The paper calls such an atom inessential to its proofs."@en ;
+    skos:definition "The joint worst income, the worst transitory income with ψ at its floor, carries positive probability under the true law: p_worst > 0. An earlier draft required the worst transitory realization to be a point mass where the natural constraint is in force; the condition is now the joint one, since with a positive worst transitory income and a continuous ψ a point mass in ξ alone has probability zero jointly, and made the model without one a scenario of its own (natural-without-point-mass). The paper calls such an atom inessential to its proofs."@en ;
     bsm:check "p_worst > 0" ;
     bsm:tier "membership" ;
     bsm:status "ruling" ;
@@ -620,7 +620,7 @@ bsm:BSM_0000017
     a owl:NamedIndividual, bsm:Axiom ;
     rdfs:label "bounded support"@en ;
     skos:notation "bounded-support" ;
-    skos:definition "ψ ∈ [ψ_min, ψ_max] with 0 < ψ_min ≤ 1 ≤ ψ_max < ∞, and the employed draw θ ∈ [θ_min, θ_max] with 0 < θ_min ≤ 1 ≤ θ_max < ∞, as BST assumes. A hypothesis of the paper's theorems until 2026-11-01, when the owner made it a condition of membership of the natural scenarios. It excludes the untruncated lognormal, whose model with a ≥ 0 is the zero-infima scenario's."@en ;
+    skos:definition "ψ ∈ [ψ_min, ψ_max] with 0 < ψ_min ≤ 1 ≤ ψ_max < ∞, and the employed draw θ ∈ [θ_min, θ_max] with 0 < θ_min ≤ 1 ≤ θ_max < ∞, as BST assumes. A hypothesis of the paper's theorems until 2026-11-01, when it became a condition of membership of the natural scenarios. It excludes the untruncated lognormal, whose model with a ≥ 0 is the zero-infima scenario's."@en ;
     bsm:check "psi_min > 0 and theta_min > 0 and psi_max < inf and theta_max < inf" ;
     bsm:tier "membership" ;
     bsm:status "ruling" ;
@@ -1810,7 +1810,7 @@ bsm:BSM_0000086
     a owl:NamedIndividual, bsm:Condition ;
     rdfs:label "perfect-foresight finite value of autarky"@en ;
     skos:notation "fvac-pf" ;
-    skos:note "A modified condition's signifier follows its base name, as in GIC-Mod and GIC-Liv; the owner, 2026-11-01. BST writes \\PFFVAC, and the schemas' checker PF-FVAC."@en ;
+    skos:note "A modified condition's signifier follows its base name, as in GIC-Mod and GIC-Liv. BST writes \\PFFVAC, and the schemas' checker PF-FVAC."@en ;
     bsm:holdsWhen "vaf_pf < 1" ;
     bsm:shortName "FVAC-PF" ;
     bsm:hasFactor bsm:BSM_0000076 ;
@@ -1873,7 +1873,7 @@ bsm:BSM_0000092
     a owl:NamedIndividual, bsm:Condition ;
     rdfs:label "mortality-adjusted growth impatience"@en ;
     skos:notation "gic-liv" ;
-    skos:note "The paper writes ℒ Þ_𝒢 < 1 without saying whether Þ carries survival. The owner ruled on 2026-10-22, in econ-ark's notation registry, that the condition is ℒ Þ̊_𝒢 < 1: a survivor discounts by βℒ, so its wealth grows at Þ̊, and the cohort shrinks at ℒ. It assumes, as the paper does, that newborns' permanent income grows with aggregate productivity."@en ;
+    skos:note "The paper writes ℒ Þ_𝒢 < 1 without saying whether Þ carries survival. econ-ark's notation registry fixes the condition as ℒ Þ̊_𝒢 < 1: a survivor discounts by βℒ, so its wealth grows at Þ̊, and the cohort shrinks at ℒ. It assumes, as the paper does, that newborns' permanent income grows with aggregate productivity."@en ;
     bsm:holdsWhen "thorn_G_liv < 1" ;
     bsm:shortName "GIC-Liv" ;
     bsm:hasFactor bsm:BSM_0000072 ;
@@ -1984,7 +1984,7 @@ bsm:BSM_0000104
     a owl:NamedIndividual, bsm:Property ;
     rdfs:label "buffer-stock saving"@en ;
     skos:notation "buffer-stock-saving" ;
-    skos:definition "A member exhibits buffer-stock saving when it has a non-degenerate limiting solution and an individual buffer-stock target. This draft takes the individual target, as the paper's introduction does; whether the pseudo-target suffices is left to the owner."@en ;
+    skos:definition "A member exhibits buffer-stock saving when it has a non-degenerate limiting solution and an individual buffer-stock target. This draft takes the individual target, as the paper's introduction does; whether the pseudo-target suffices is left open."@en ;
     dcterms:source <https://llorracc.github.io/BufferStockTheory/#sec-intro> ;
     dcterms:source <https://llorracc.github.io/BufferStockTheory/#patience-requirements-and-the-existence-of-buffer-stock-targets> .
 
@@ -2417,7 +2417,7 @@ bsm:BSM_0000194
     a owl:NamedIndividual, bsm:Result ;
     rdfs:label "weak return impatience cannot be relaxed without an artificial constraint"@en ;
     skos:notation "wric-without-artificial-constraint" ;
-    skos:note "The paper says weak return impatience \"cannot be relaxed further without an artificial liquidity constraint\", and that the condition does not become irrelevant as ℘ → 0. Read here as necessity within the paper's class. The paper gives no proof. The owner decided on 2026-11-01 that the ontology treats the claim as true until the paper proves it, and the paper's own tracker asks for that proof. A route through results the paper already has: each finite-horizon c_t is concave with c_t(0) = 0 and slope κ̄_t at zero, so c_t(m) ≤ κ̄_t m; the recursion κ̄_t⁻¹ = 1 + ℘^(1/ϱ) Þ_R κ̄_{t+1}⁻¹ needs no WRIC; and when the WRIC fails, κ̄_{T−n} ≤ 1/(n+1), so c_{T−n} → 0."@en ;
+    skos:note "The paper says weak return impatience \"cannot be relaxed further without an artificial liquidity constraint\", and that the condition does not become irrelevant as ℘ → 0. Read here as necessity within the paper's class. The paper gives no proof. The ontology treats the claim as true until the paper proves it, and the paper's own tracker asks for that proof. A route through results the paper already has: each finite-horizon c_t is concave with c_t(0) = 0 and slope κ̄_t at zero, so c_t(m) ≤ κ̄_t m; the recursion κ̄_t⁻¹ = 1 + ℘^(1/ϱ) Þ_R κ̄_{t+1}⁻¹ needs no WRIC; and when the WRIC fails, κ̄_{T−n} ≤ 1/(n+1), so c_{T−n} → 0."@en ;
     bsm:status "stated" ;
     bsm:resultKind "remark" ;
     bsm:within bsm:BSM_0000002 ;
@@ -2513,7 +2513,7 @@ bsm:BSM_0000230
     a owl:NamedIndividual, bsm:Result ;
     rdfs:label "the natural limit is reached only when ϱ < k"@en ;
     skos:notation "natural-limit-reached-only-below-k" ;
-    skos:note "Without a point mass at the joint worst income, an agent who saves exactly a_Nat lands next period within x of the floor with probability of order x^k, k the number of shocks with densities at their floors (2 with a positive floor and both, 1 with one). The expected marginal value at a_Nat is finite exactly when ϱ < k, so the constraint binds near the floor only then; with ϱ > k the household saves a vanishing amount there. With the class's ϱ > 1 only k = 2 and 1 < ϱ < 2 reach the limit. The BufferStockTheory session's derivation of 2026-10-18, run for one density."@en ;
+    skos:note "Without a point mass at the joint worst income, an agent who saves exactly a_Nat lands next period within x of the floor with probability of order x^k, k the number of shocks with densities at their floors (2 with a positive floor and both, 1 with one). The expected marginal value at a_Nat is finite exactly when ϱ < k, so the constraint binds near the floor only then; with ϱ > k the household saves a vanishing amount there. With the class's ϱ > 1 only k = 2 and 1 < ϱ < 2 reach the limit. A derivation of 2026-10-18, run for one density."@en ;
     bsm:status "deduced" ;
     bsm:resultKind "remark" ;
     bsm:within bsm:BSM_0000211 ;
@@ -2523,7 +2523,7 @@ bsm:BSM_0000231
     a owl:NamedIndividual, bsm:Result ;
     rdfs:label "in the zero-infima scenario a ≥ 0 binds"@en ;
     skos:notation "zero-infima-constraint-binds" ;
-    skos:note "At a = 0, next period's resources are ξ′ alone, and the Euler equation's right side is β̊R E[(𝒢ψ′)^(−ϱ) u′(c(ξ′))], finite under the class's E[θ^(−ϱ)] < ∞ and E[ψ^(−ϱ)] < ∞, given c(m) ≥ const · m near zero. Since u′(m) → ∞ as m ↓ 0, c = m on an interval [0, m*], at every ϱ, and the stationary population has a mass at a = 0: Ma, Stachurski and Toda's Lemma C.2, that the constraint binds in finite time with positive probability. Derived by the working group's BufferStockTheory session on 2026-11-01, with a second derivation; not run."@en ;
+    skos:note "At a = 0, next period's resources are ξ′ alone, and the Euler equation's right side is β̊R E[(𝒢ψ′)^(−ϱ) u′(c(ξ′))], finite under the class's E[θ^(−ϱ)] < ∞ and E[ψ^(−ϱ)] < ∞, given c(m) ≥ const · m near zero. Since u′(m) → ∞ as m ↓ 0, c = m on an interval [0, m*], at every ϱ, and the stationary population has a mass at a = 0: Ma, Stachurski and Toda's Lemma C.2, that the constraint binds in finite time with positive probability. Derived on 2026-11-01, with a second derivation; not run."@en ;
     bsm:status "deduced" ;
     bsm:resultKind "remark" ;
     bsm:within bsm:BSM_0000212 ;
@@ -2593,7 +2593,8 @@ bsm:BSM_0000224
     rdfs:label "the schemas' family bst-natural/1"@en ;
     skos:notation "bst-natural-1" ;
     skos:definition "The schemas' family for the natural scenario with a point mass: its stage file states BST's own model, with truncated lognormals and the zero-income event; a positive benefit with a discrete ψ has no stage file yet."@en ;
-    bsm:schemaDocument "../../schemas/bst/natural/parameters.schema.json" ;
+    bsm:schemaDocument "schemas/bst/natural/parameters.schema.json" ;
+    bsm:repository "https://github.com/llorracc/wg1-buffer-stock" ;
     bsm:writes bsm:BSM_0000210 ;
     bsm:writes bsm:BSM_0000004 ;
     bsm:writes bsm:BSM_0000008 .
@@ -2603,7 +2604,8 @@ bsm:BSM_0000226
     rdfs:label "the schemas' family bst-artificial/1"@en ;
     skos:notation "bst-artificial-1" ;
     skos:definition "The schemas' family for the artificial scenario, with truncated lognormals and an artificial constraint strictly above the natural one; at a_Art = 0 its members are liquidity-constrained."@en ;
-    bsm:schemaDocument "../../schemas/bst/artificial/parameters.schema.json" ;
+    bsm:schemaDocument "schemas/bst/artificial/parameters.schema.json" ;
+    bsm:repository "https://github.com/llorracc/wg1-buffer-stock" ;
     bsm:writes bsm:BSM_0000007 ;
     bsm:writes bsm:BSM_0000200 ;
     bsm:writes bsm:BSM_0000004 ;
