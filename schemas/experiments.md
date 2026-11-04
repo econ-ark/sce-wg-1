@@ -1,6 +1,6 @@
 # Experiments: what every toolkit is asked to do
 
-What an experiment is and what its file holds. [`experiment.schema.json`](experiment.schema.json) is the file's
+What an experiment is and what its file holds. [`experiment.schema.json`](../core/wg1core/schemas/experiment.schema.json), in the core's package, is the file's
 validator; the harness's runner reads the file and its comparator evaluates the checks. The first experiment, the
 restrained-limit experiment, is in the buffer-stock model's repository with its tests.
 
@@ -16,7 +16,7 @@ and its Rosetta Stone says how it maps onto the family. An experiment is to the
 toolkits what CMIP's experiment protocols and data request are to climate models: one statement of what everyone runs
 and reports, so that the results can be laid side by side.
 
-- [`experiment.schema.json`](experiment.schema.json) is its validator.
+- [`experiment.schema.json`](../core/wg1core/schemas/experiment.schema.json) is its validator, part of the core's package ([`../core/`](../core/README.md)).
 - The buffer-stock model's repository holds the first experiment, and the tests of the validator and the file.
 
 ## What the harness gives a toolkit, and what it asks of it

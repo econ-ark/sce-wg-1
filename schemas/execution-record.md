@@ -1,9 +1,9 @@
 # Execution records
 
 What every build of an environment and every run of a script writes, so that a result can be traced to the exact
-state that produced it and reproduced from it. The format is [`execution-record.schema.json`](execution-record.schema.json),
+state that produced it and reproduced from it. The format is [`execution-record.schema.json`](../core/wg1core/schemas/execution-record.schema.json), in the core's package,
 the core every project shares, with a project's own fields under an `extensions` object keyed by namespace;
-[`runs.registry.schema.json`](runs.registry.schema.json) is the pattern of a canonical model repository's entry, the
+[`runs.registry.schema.json`](../core/wg1core/schemas/runs.registry.schema.json) is the pattern of a canonical model repository's entry, the
 core with that repository's fields under its namespace. The core is drafted here for REMARK, the econ-ark standard for
 reproducible projects, whose tool is to write records in this format for any cataloged repository.
 
