@@ -9,6 +9,10 @@ Working Group 1 of the Society for Computational Economics develops formal speci
 - [Project A: Semantics of Economic Models](https://econ-ark.github.io/sce-wg-1/project-a.html)
 - [Project B: Baseline Model Library](https://quantecon.github.io/community-library/)
 
+## The apparatus
+
+For the models the group takes up, [the apparatus](apparatus.md) says what the group builds, where each part lives, and how a toolkit takes part; [the vocabulary](vocabulary.md) fixes the words, and [the conventions](conventions.md) register the names the schemas coin.
+
 ## Website
 
 GitHub Pages publishes the site through [`.github/workflows/publish.yml`](.github/workflows/publish.yml) after each push to `main`. The landing page comes from [`docs/index.html`](docs/index.html); the Project A page and PDF are generated from [`project-a/special-issue-proposal.md`](project-a/special-issue-proposal.md) — build instructions are in [`project-a/README.md`](project-a/README.md).
