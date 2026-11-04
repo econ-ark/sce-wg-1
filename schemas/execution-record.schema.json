@@ -132,7 +132,7 @@
       "properties": {
         "path": {
           "type": "string",
-          "description": "The directory, relative to the repository's root: binder/ for a REMARK, harness/adapters/<toolkit>/env/ for the fork's toolkits."
+          "description": "The directory, relative to the repository's root: binder/ for a REMARK, harness/adapters/<toolkit>/env/ for a model repository's toolkits."
         },
         "kind": {
           "type": "string",
@@ -434,7 +434,7 @@
           "$ref": "#/$defs/Recorder"
         },
         "run": {
-          "description": "The invocation this execution belongs to, when a tool runs many scripts at once, as the fork's runner runs the jobs of an experiment.",
+          "description": "The invocation this execution belongs to, when a tool runs many scripts at once, as a model repository's runner runs the jobs of an experiment.",
           "type": "object",
           "additionalProperties": false,
           "required": [
