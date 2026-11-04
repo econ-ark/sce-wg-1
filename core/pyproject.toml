@@ -5,6 +5,8 @@ name = "wg1-core"
 version = "0.1.0"
 description = "SCE Working Group 1's core: the runner, the execution records, the canonical serialization and hash, the shock laws and the experiment checker that a canonical model's repository pins"
 readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 requires-python = ">=3.12"
 dependencies = [
   "jsonschema",

@@ -6,6 +6,8 @@ file, of an execution record and of a registry entry as its data. The apparatus 
 [`../apparatus.md`](../apparatus.md); the documents of what it implements are [`../schemas/experiments.md`](../schemas/experiments.md),
 [`../schemas/execution-record.md`](../schemas/execution-record.md) and [`../schemas/shock-laws.md`](../schemas/shock-laws.md).
 
+The package is under the Apache License 2.0 (`LICENSE`), as HARK is.
+
 ## Pinning it
 
 A model repository adds the package at a tag of this repository, with uv's subdirectory syntax:
