@@ -1,0 +1,465 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "The source of the ontology of probability distributions",
+  "description": "Validates source.yaml. Draft; see README.md. The generator checks what JSON Schema cannot: that names are unique, that references resolve, and that each formula is in the formula syntax and names only what its place allows.",
+  "type": "object",
+  "required": ["ontology", "retired", "measures", "operators", "properties", "constraints", "families"],
+  "additionalProperties": false,
+  "properties": {
+    "ontology": { "$ref": "#/$defs/Ontology" },
+    "retired": {
+      "description": "Identifiers that have left the ontology. None may be used again.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/Id" },
+      "uniqueItems": true
+    },
+    "measures": { "type": "array", "items": { "$ref": "#/$defs/Measure" } },
+    "operators": { "type": "array", "items": { "$ref": "#/$defs/Operator" } },
+    "properties": { "type": "array", "items": { "$ref": "#/$defs/Property" } },
+    "constraints": { "type": "array", "items": { "$ref": "#/$defs/Constraint" } },
+    "families": { "type": "array", "items": { "$ref": "#/$defs/Family" } }
+  },
+
+  "$defs": {
+    "Id": {
+      "description": "An opaque, permanent identifier.",
+      "type": "string",
+      "pattern": "^PD_[0-9]{7}$"
+    },
+    "Name": {
+      "description": "A row's name in the source: lower case, words joined by hyphens. References between rows are by name.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    },
+    "CoordinateName": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" },
+    "Text": { "type": "string", "minLength": 1 },
+    "Formula": {
+      "description": "An expression in the formula syntax of formulas.py.",
+      "type": "string",
+      "minLength": 1
+    },
+    "Uri": { "type": "string", "pattern": "^https?://" },
+
+    "Ontology": {
+      "type": "object",
+      "required": ["title", "version", "namespace", "prefix", "license", "formats", "prefixes", "sources"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "$ref": "#/$defs/Text" },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.]+)?$"
+        },
+        "namespace": { "allOf": [{ "$ref": "#/$defs/Uri" }, { "pattern": "/$" }] },
+        "prefix": { "type": "string", "pattern": "^[a-z]+$" },
+        "license": { "$ref": "#/$defs/Uri" },
+        "formats": {
+          "description": "The written forms a chart can name, each with what it is.",
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/Name" },
+          "additionalProperties": { "$ref": "#/$defs/Text" }
+        },
+        "prefixes": {
+          "description": "Prefixes for the targets of cross-references.",
+          "type": "object",
+          "propertyNames": { "type": "string", "pattern": "^[a-z]+$" },
+          "additionalProperties": { "$ref": "#/$defs/Uri" }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "version", "iri", "license", "citation"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/$defs/Text" },
+              "version": { "$ref": "#/$defs/Text" },
+              "iri": { "$ref": "#/$defs/Uri" },
+              "license": { "$ref": "#/$defs/Uri" },
+              "citation": { "$ref": "#/$defs/Text" }
+            }
+          }
+        }
+      }
+    },
+
+    "Measure": {
+      "description": "A measure named because families are built from it.",
+      "type": "object",
+      "required": ["id", "name", "label", "stated_set", "notation", "density", "support", "definition"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/Id" },
+        "name": { "$ref": "#/$defs/Name" },
+        "label": { "$ref": "#/$defs/Text" },
+        "stated_set": { "$ref": "#/$defs/Text" },
+        "notation": { "$ref": "#/$defs/Text" },
+        "density": {
+          "description": "The density with respect to Lebesgue measure, a formula in z.",
+          "$ref": "#/$defs/Formula"
+        },
+        "support": {
+          "type": "object",
+          "required": ["lower", "upper"],
+          "additionalProperties": false,
+          "properties": { "lower": { "$ref": "#/$defs/Formula" }, "upper": { "$ref": "#/$defs/Formula" } }
+        },
+        "definition": { "$ref": "#/$defs/Text" }
+      }
+    },
+
+    "Operator": {
+      "description": "A map from measures to measures. A named case of another operator names it in case_of and gives its map.",
+      "type": "object",
+      "required": ["id", "name", "label", "arguments", "definition"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/Id" },
+        "name": { "$ref": "#/$defs/Name" },
+        "label": { "$ref": "#/$defs/Text" },
+        "case_of": { "$ref": "#/$defs/Name" },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "meaning"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/$defs/CoordinateName" },
+              "meaning": { "$ref": "#/$defs/Text" }
+            }
+          }
+        },
+        "map": {
+          "description": "For a case of the pushforward: the map, a formula in z and the arguments.",
+          "$ref": "#/$defs/Formula"
+        },
+        "set": {
+          "description": "For a case of conditioning: the set, a condition in z and the arguments.",
+          "$ref": "#/$defs/Formula"
+        },
+        "written_as": {
+          "description": "Per format, how the operator applied to its arguments is written.",
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/Name" },
+          "additionalProperties": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/WrittenForm" } }
+        },
+        "definition": { "$ref": "#/$defs/Text" }
+      }
+    },
+
+    "Property": {
+      "description": "A map from a measure to a value.",
+      "type": "object",
+      "required": ["id", "name", "label", "definition"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/Id" },
+        "name": { "$ref": "#/$defs/Name" },
+        "label": { "$ref": "#/$defs/Text" },
+        "definition": { "$ref": "#/$defs/Text" }
+      }
+    },
+
+    "Constraint": {
+      "description": "A property set equal to, or bounded by, a value. A constraint on a family defines a subfamily.",
+      "type": "object",
+      "required": ["id", "name", "label", "property", "relation", "value", "definition"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/Id" },
+        "name": { "$ref": "#/$defs/Name" },
+        "label": { "$ref": "#/$defs/Text" },
+        "property": { "$ref": "#/$defs/Name" },
+        "relation": { "enum": ["=", "<", "<=", ">", ">="] },
+        "value": { "$ref": "#/$defs/Formula" },
+        "definition": { "$ref": "#/$defs/Text" }
+      }
+    },
+
+    "Family": {
+      "oneOf": [{ "$ref": "#/$defs/RootFamily" }, { "$ref": "#/$defs/Subfamily" }]
+    },
+
+    "RootFamily": {
+      "description": "A named map from a parameter space into measures, with one canonical chart.",
+      "type": "object",
+      "required": ["id", "name", "label", "stated_set", "definition", "measure", "canonical_chart", "charts", "properties"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/Id" },
+        "name": { "$ref": "#/$defs/Name" },
+        "label": { "$ref": "#/$defs/Text" },
+        "stated_set": { "$ref": "#/$defs/Text" },
+        "definition": { "$ref": "#/$defs/Text" },
+        "measure": {
+          "description": "The measure in the operator notation of the README, in the canonical coordinates.",
+          "$ref": "#/$defs/Text"
+        },
+        "built_from": { "$ref": "#/$defs/BuiltFrom" },
+        "state": {
+          "description": "For a kernel: the state argument, a position from 1 to range, which the properties may name.",
+          "type": "object",
+          "required": ["name", "symbol", "meaning", "range"],
+          "additionalProperties": false,
+          "properties": {
+            "name": { "$ref": "#/$defs/CoordinateName" },
+            "symbol": { "$ref": "#/$defs/Text" },
+            "meaning": { "$ref": "#/$defs/Text" },
+            "range": { "$ref": "#/$defs/Formula" }
+          }
+        },
+        "where": {
+          "description": "Auxiliary quantities, in order, each a formula in the canonical coordinates and the quantities before it; the properties, the construction's arguments and the reductions may use them.",
+          "$ref": "#/$defs/Definitions"
+        },
+        "canonical_chart": { "$ref": "#/$defs/Name" },
+        "charts": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/Chart" } },
+        "properties": { "$ref": "#/$defs/FamilyProperties" },
+        "boundaries": { "type": "array", "items": { "$ref": "#/$defs/Boundary" } },
+        "reductions": { "type": "array", "items": { "$ref": "#/$defs/Reduction" } }
+      }
+    },
+
+    "Definitions": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/CoordinateName" },
+      "additionalProperties": { "$ref": "#/$defs/Formula" }
+    },
+
+    "Subfamily": {
+      "description": "The members of a family that satisfy constraints. Its charts are the reduced parameterizations the constraints induce, converting to the parent's canonical chart.",
+      "type": "object",
+      "required": ["id", "name", "label", "subfamily_of", "constraints", "definition", "charts"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/Id" },
+        "name": { "$ref": "#/$defs/Name" },
+        "label": { "$ref": "#/$defs/Text" },
+        "subfamily_of": { "$ref": "#/$defs/Name" },
+        "constraints": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/Name" } },
+        "definition": { "$ref": "#/$defs/Text" },
+        "charts": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/Chart" } }
+      }
+    },
+
+    "BuiltFrom": {
+      "description": "The family's measure as operators applied, in order, to a named measure; the arguments are formulas in the canonical coordinates.",
+      "type": "object",
+      "required": ["base", "operators"],
+      "additionalProperties": false,
+      "properties": {
+        "mixture": {
+          "description": "When present, the base and operators build component j, for j from 1 to the count of the weights, and the measure is the mixture of the components with these weights; the operators' arguments may name j.",
+          "type": "object",
+          "required": ["weights"],
+          "additionalProperties": false,
+          "properties": { "weights": { "$ref": "#/$defs/Formula" } }
+        },
+        "base": { "$ref": "#/$defs/Name" },
+        "operators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["operator"],
+            "properties": { "operator": { "$ref": "#/$defs/Name" } },
+            "additionalProperties": { "$ref": "#/$defs/Formula" }
+          }
+        }
+      }
+    },
+
+    "Chart": {
+      "description": "A coordinate system on a family's parameters. It changes no measure. A chart that is not its family's canonical chart converts to the root family's canonical chart and back.",
+      "type": "object",
+      "required": ["id", "name", "label", "coordinates"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/Id" },
+        "name": { "$ref": "#/$defs/Name" },
+        "label": { "$ref": "#/$defs/Text" },
+        "coordinates": { "type": "array", "items": { "$ref": "#/$defs/Coordinate" } },
+        "domain_conditions": {
+          "description": "Conditions on the coordinates jointly, beyond each coordinate's own domain.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/Formula" }
+        },
+        "covers": {
+          "description": "The part of the canonical chart's domain this chart reaches, when it is not all of it: a condition in the canonical coordinates.",
+          "$ref": "#/$defs/Formula"
+        },
+        "to_canonical_where": {
+          "description": "Auxiliary quantities for to_canonical, in order, in this chart's coordinates and the quantities before them.",
+          "$ref": "#/$defs/Definitions"
+        },
+        "to_canonical": { "$ref": "#/$defs/Definitions" },
+        "from_canonical_where": {
+          "description": "Auxiliary quantities for from_canonical, in order, in the canonical coordinates and the quantities before them.",
+          "$ref": "#/$defs/Definitions"
+        },
+        "from_canonical": { "$ref": "#/$defs/Definitions" },
+        "conversion": {
+          "description": "exact when every formula of the conversion is rational in its coordinates; irrational otherwise.",
+          "enum": ["exact", "irrational"]
+        },
+        "written_as": {
+          "description": "Per format, the spellings of a point of this chart; a format may have more than one.",
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/Name" },
+          "additionalProperties": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/WrittenForm" } }
+        },
+        "cross_references": { "type": "array", "items": { "$ref": "#/$defs/CrossReference" } },
+        "provenance": { "$ref": "#/$defs/Text" }
+      }
+    },
+
+    "Coordinate": {
+      "type": "object",
+      "required": ["name", "symbol", "meaning", "domain"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "$ref": "#/$defs/CoordinateName" },
+        "symbol": { "$ref": "#/$defs/Text" },
+        "meaning": { "$ref": "#/$defs/Text" },
+        "domain": {
+          "description": "real: ℝ; positive: (0, ∞); nonnegative: [0, ∞); unit-interval: [0, 1]; extended-real: [−∞, ∞]; extended-nonnegative: [0, ∞]; the vector domains hold those entrywise; probability-vector: entries in [0, 1] summing to one; positive-probability-vector: entries in (0, 1] summing to one; stochastic-matrix: rows that are probability vectors.",
+          "enum": ["real", "positive", "nonnegative", "unit-interval", "extended-real", "extended-nonnegative",
+                   "real-vector", "positive-vector", "unit-interval-vector", "extended-real-vector",
+                   "extended-nonnegative-vector",
+                   "probability-vector", "positive-probability-vector", "stochastic-matrix"]
+        },
+        "as_expectation": {
+          "description": "The coordinate's meaning as an expectation under the law at the point: a formula in E(·) of the draw X, such as sqrt(E(log(X)**2) - E(log(X))**2) for the standard deviation of the logarithm.",
+          "$ref": "#/$defs/Formula"
+        },
+        "as_component_expectation": {
+          "description": "For a vector coordinate of a mixture's chart: entry j's meaning as an expectation under component j's law, a formula in E(·) of the draw X.",
+          "$ref": "#/$defs/Formula"
+        }
+      }
+    },
+
+    "WrittenForm": {
+      "description": "How a format writes a point of the chart: as a reader sees it (spelling), and as a writer builds it (head and arguments). Defaults, which belong to the written form and not to the law, are filled before a written law is compared with another.",
+      "type": "object",
+      "required": ["spelling", "head"],
+      "additionalProperties": false,
+      "properties": {
+        "spelling": { "$ref": "#/$defs/Text" },
+        "head": {
+          "description": "The name the format gives the law: a stage file's family call, a parameter file's key.",
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "arguments": {
+          "description": "A positional format's arguments, in order, or a keyed format's fields, each a formula in the chart's coordinates.",
+          "oneOf": [
+            { "type": "array", "items": { "$ref": "#/$defs/Formula" } },
+            { "$ref": "#/$defs/Definitions" }
+          ]
+        },
+        "defaults": {
+          "description": "A keyed format's value for a field left out.",
+          "$ref": "#/$defs/Definitions"
+        },
+        "per_component": {
+          "description": "The fields are written once per component of a mixture, in a list under components, each field's formula a vector over the components.",
+          "type": "boolean"
+        },
+        "none": {
+          "description": "The token a keyed format writes for an absent bound, and the value it stands for in each field that admits it.",
+          "type": "object",
+          "required": ["token", "values"],
+          "additionalProperties": false,
+          "properties": {
+            "token": { "$ref": "#/$defs/Text" },
+            "values": { "$ref": "#/$defs/Definitions" }
+          }
+        }
+      }
+    },
+
+    "CrossReference": {
+      "type": "object",
+      "required": ["predicate", "target"],
+      "additionalProperties": false,
+      "properties": {
+        "predicate": {
+          "enum": ["skos:exactMatch", "skos:closeMatch", "skos:broadMatch", "skos:narrowMatch", "skos:relatedMatch"]
+        },
+        "target": { "type": "string", "pattern": "^[a-z]+:[A-Za-z0-9_]+$" },
+        "note": { "$ref": "#/$defs/Text" }
+      }
+    },
+
+    "FamilyProperties": {
+      "description": "The values of properties, as formulas in the canonical coordinates; for moments, also in the order k.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "support": {
+          "type": "object",
+          "required": ["infimum", "supremum", "mass_at_infimum"],
+          "additionalProperties": false,
+          "properties": {
+            "infimum": { "$ref": "#/$defs/Formula" },
+            "supremum": { "$ref": "#/$defs/Formula" },
+            "mass_at_infimum": { "$ref": "#/$defs/Formula" }
+          }
+        },
+        "mean": { "$ref": "#/$defs/Formula" },
+        "moments": { "$ref": "#/$defs/Orders" },
+        "log-moments": { "$ref": "#/$defs/Orders" },
+        "atoms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["at", "mass"],
+            "additionalProperties": false,
+            "properties": {
+              "at": { "$ref": "#/$defs/Formula" },
+              "mass": { "$ref": "#/$defs/Formula" }
+            }
+          }
+        }
+      }
+    },
+
+    "Orders": {
+      "type": "object",
+      "required": ["orders"],
+      "additionalProperties": false,
+      "properties": {
+        "orders": {
+          "description": "all-real: every real k; nonnegative-integers: k = 0, 1, 2, ...",
+          "enum": ["all-real", "nonnegative-integers"]
+        },
+        "formula": { "$ref": "#/$defs/Formula" }
+      }
+    },
+
+    "Reduction": {
+      "description": "Where a point of the canonical chart is a member of another family, as a vacuous conditioning is: the condition, and that family's chart, whose coordinates are canonical coordinates of this family.",
+      "type": "object",
+      "required": ["when", "family", "chart"],
+      "additionalProperties": false,
+      "properties": {
+        "when": { "$ref": "#/$defs/Formula" },
+        "family": { "$ref": "#/$defs/Name" },
+        "chart": { "$ref": "#/$defs/Name" }
+      }
+    },
+
+    "Boundary": {
+      "description": "Where the canonical chart's domain ends at a member of another family: the condition, and that family's chart, whose coordinates are the canonical coordinates that remain free.",
+      "type": "object",
+      "required": ["where", "family", "chart"],
+      "additionalProperties": false,
+      "properties": {
+        "where": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]* = .+$" },
+        "family": { "$ref": "#/$defs/Name" },
+        "chart": { "$ref": "#/$defs/Name" }
+      }
+    }
+  }
+}

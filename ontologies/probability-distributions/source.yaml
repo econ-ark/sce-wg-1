@@ -1,0 +1,929 @@
+# The ontology of probability distributions: its one source.
+#
+# Everything else in this folder that describes a distribution is generated from this file by generate.py:
+# probability-distributions.ttl (OWL 2, Turtle) and probability-distributions.json (a flat table of rows).
+# The README explains the kinds, the operators, the identity rule and the formula syntax; source.schema.json
+# validates this file.
+#
+# Identifiers are opaque and permanent: a row keeps its identifier for life, and an identifier that leaves the
+# ontology is listed under `retired` and never used again. References between rows are by name.
+
+ontology:
+  title: Probability distributions
+  version: 0.1.0-draft.1
+  # Provisional until a w3id.org namespace is registered; the name is the owner's to choose.
+  namespace: https://example.org/provisional/ontologies/probability-distributions/
+  prefix: pd
+  license: https://creativecommons.org/licenses/by/4.0/
+  formats:
+    parameter-file: A parameter file of the working group's schemas, in YAML.
+    bellman-sym: A Bellman-SYM stage file.
+  prefixes:
+    probonto: http://www.probonto.org/ontology#
+  sources:
+    - name: ProbOnto
+      version: "2.5"
+      iri: http://www.probonto.org/ontology
+      license: https://creativecommons.org/licenses/by/4.0/
+      citation: >-
+        Swat MJ, Grenon P, Wimalaratne S (2016). ProbOnto: ontology and knowledge base of probability distributions.
+        Bioinformatics 32(17):2719-2721. doi:10.1093/bioinformatics/btw170
+
+retired: []
+
+measures:
+  - id: PD_0000001
+    name: standard-normal
+    label: standard normal
+    stated_set: ℝ
+    notation: N(0, 1)
+    density: exp(-z**2/2)/sqrt(2*pi)
+    support: {lower: "-inf", upper: inf}
+    definition: The measure on ℝ with density φ(z) = exp(−z²/2)/√(2π) with respect to Lebesgue measure.
+  - id: PD_0000033
+    name: unit-uniform
+    label: uniform on the unit interval
+    stated_set: "[0, 1]"
+    notation: U(0, 1)
+    density: "1"
+    support: {lower: "0", upper: "1"}
+    definition: Lebesgue measure on [0, 1].
+  - id: PD_0000038
+    name: standard-gumbel
+    label: standard Gumbel
+    stated_set: ℝ
+    notation: Gumbel(0, 1)
+    density: exp(-(z + exp(-z)))
+    support: {lower: "-inf", upper: inf}
+    definition: The measure on ℝ with distribution function exp(−exp(−z)), and so density exp(−z − exp(−z)).
+
+operators:
+  - id: PD_0000002
+    name: pushforward
+    label: pushforward
+    arguments:
+      - {name: map, meaning: a measurable map f from the measure's set}
+    definition: f∗μ(B) = μ(f⁻¹(B)), the law of f(X) when X has law μ.
+  - id: PD_0000003
+    name: conditioning
+    label: conditioning on a set
+    arguments:
+      - {name: set, meaning: a measurable set A with μ(A) > 0}
+    definition: μ|A(B) = μ(B ∩ A)/μ(A), the law of X given X ∈ A. Truncation is conditioning on an interval.
+  - id: PD_0000004
+    name: kernel-product
+    label: product with a kernel
+    arguments:
+      - {name: kernel, meaning: a Markov kernel κ from the measure's set to a set Y}
+    definition: >-
+      (μ ⊗ κ)(A × B) = ∫_A κ(x, B) μ(dx), a measure on the product of the two sets: draw X from μ, then Y from κ(X, ·).
+  - id: PD_0000005
+    name: affine-pushforward
+    label: affine map
+    case_of: pushforward
+    arguments:
+      - {name: location, meaning: a real number a}
+      - {name: scale, meaning: a positive number b}
+    map: location + scale*z
+    definition: The pushforward under z ↦ a + b·z.
+  - id: PD_0000006
+    name: exponential-pushforward
+    label: exponential map
+    case_of: pushforward
+    arguments: []
+    map: exp(z)
+    definition: The pushforward under z ↦ exp(z).
+  - id: PD_0000026
+    name: interval-conditioning
+    label: truncation to an interval
+    case_of: conditioning
+    arguments:
+      - {name: lower, meaning: the lower bound l; -inf for none}
+      - {name: upper, meaning: the upper bound u; inf for none}
+    set: lower <= z <= upper
+    definition: Conditioning on the interval [l, u], which must have positive measure.
+  - id: PD_0000059
+    name: piecewise-linear-pushforward
+    label: piecewise-linear map
+    case_of: pushforward
+    arguments:
+      - {name: knots_u, meaning: "the knots' abscissae, nondecreasing"}
+      - {name: knots_q, meaning: "the knots' ordinates, nondecreasing"}
+    map: interp(z, knots_u, knots_q)
+    definition: >-
+      The pushforward under the nondecreasing piecewise-linear function through the knots; an abscissa listed twice is a
+      jump.
+  - id: PD_0000041
+    name: finite-mixture
+    label: finite mixture
+    case_of: kernel-product
+    arguments:
+      - {name: weights, meaning: a probability vector w}
+      - {name: components, meaning: "the laws μ₁, …, μₙ"}
+    written_as:
+      bellman-sym:
+        - {spelling: "Mixture((w₁, J₁), …, (wₙ, Jₙ))", head: Mixture}
+    definition: >-
+      Σⱼ wⱼ μⱼ: draw a label j with probability wⱼ, then a value from μⱼ. It is the product of the categorical law on the
+      labels with the kernel sending j to μⱼ, projected onto the value.
+
+properties:
+  - id: PD_0000007
+    name: support
+    label: support
+    definition: >-
+      The smallest closed set of full measure, recorded by its infimum and supremum, whether the infimum is attained,
+      and the mass at the infimum.
+  - id: PD_0000008
+    name: mean
+    label: mean
+    definition: E[X], where it is finite.
+  - id: PD_0000009
+    name: moments
+    label: moments
+    definition: >-
+      E[X^k]: the orders k for which it is finite, and its closed form in the canonical coordinates where it has one.
+  - id: PD_0000010
+    name: log-moments
+    label: moments of the logarithm
+    definition: E[(ln X)^k], for a law on (0, ∞), with the orders k for which it is finite.
+  - id: PD_0000011
+    name: atoms
+    label: atoms
+    definition: The points of positive mass and their masses.
+
+constraints:
+  - id: PD_0000012
+    name: mean-one
+    label: mean one
+    property: mean
+    relation: "="
+    value: "1"
+    definition: >-
+      E[X] = 1. A constraint defines a subfamily; the reduced parameterization it induces is that subfamily's chart.
+
+families:
+  - id: PD_0000013
+    name: normal
+    label: normal
+    stated_set: ℝ
+    definition: The law of μ + σZ, Z standard normal.
+    measure: N(μ, σ) = aff(μ, σ)∗ N(0, 1)
+    built_from:
+      base: standard-normal
+      operators:
+        - {operator: affine-pushforward, location: mu, scale: sigma}
+    canonical_chart: mean-sd
+    charts:
+      - id: PD_0000014
+        name: mean-sd
+        label: mean and standard deviation
+        coordinates:
+          - {name: mu, symbol: μ, meaning: the mean, domain: real, as_expectation: E(X)}
+          - {name: sigma, symbol: σ, meaning: the standard deviation, domain: positive, as_expectation: sqrt(E(X**2) - E(X)**2)}
+        cross_references:
+          - {predicate: skos:exactMatch, target: probonto:PROB_k0000239, note: "Normal1 (mean, stdev)"}
+      - id: PD_0000015
+        name: mean-variance
+        label: mean and variance
+        coordinates:
+          - {name: mu, symbol: μ, meaning: the mean, domain: real, as_expectation: E(X)}
+          - {name: v, symbol: v, meaning: the variance, domain: positive, as_expectation: E(X**2) - E(X)**2}
+        to_canonical: {mu: mu, sigma: sqrt(v)}
+        from_canonical: {mu: mu, v: sigma**2}
+        conversion: irrational
+        written_as:
+          bellman-sym:
+            - {spelling: "N(μ, v)", head: N, arguments: [mu, v]}
+        cross_references:
+          - {predicate: skos:exactMatch, target: probonto:PROB_k0000265, note: "Normal2 (mean, var)"}
+        provenance: ProbOnto 2.5, Normal2, with its conversion to Normal1.
+    properties:
+      support: {infimum: "-inf", supremum: inf, mass_at_infimum: "0"}
+      mean: mu
+      moments: {orders: nonnegative-integers}
+    boundaries:
+      - {where: sigma = 0, family: point-mass, chart: normal-zero-variance}
+
+  - id: PD_0000016
+    name: lognormal
+    label: lognormal
+    stated_set: (0, ∞)
+    definition: The law of exp(μ + σZ), Z standard normal.
+    measure: LogNormal(μ, σ) = exp∗ aff(μ, σ)∗ N(0, 1)
+    built_from:
+      base: standard-normal
+      operators:
+        - {operator: affine-pushforward, location: mu, scale: sigma}
+        - {operator: exponential-pushforward}
+    canonical_chart: meanlog-sdlog
+    charts:
+      - id: PD_0000017
+        name: meanlog-sdlog
+        label: mean and standard deviation of the logarithm
+        coordinates:
+          - {name: mu, symbol: μ, meaning: the mean of ln X, domain: real, as_expectation: E(log(X))}
+          - {name: sigma, symbol: σ, meaning: the standard deviation of ln X, domain: positive, as_expectation: sqrt(E(log(X)**2) - E(log(X))**2)}
+        written_as:
+          bellman-sym:
+            - {spelling: "LogNormal(μ, σ)", head: LogNormal, arguments: [mu, sigma]}
+        cross_references:
+          - {predicate: skos:exactMatch, target: probonto:PROB_k0000428, note: "LogNormal1 (meanLog, stdevLog)"}
+    properties:
+      support: {infimum: "0", supremum: inf, mass_at_infimum: "0"}
+      mean: exp(mu + sigma**2/2)
+      moments: {orders: all-real, formula: exp(k*mu + k**2*sigma**2/2)}
+      log-moments: {orders: nonnegative-integers}
+    boundaries:
+      - {where: sigma = 0, family: point-mass, chart: lognormal-zero-spread}
+
+  - id: PD_0000018
+    name: mean-one-lognormal
+    label: lognormal with mean one
+    subfamily_of: lognormal
+    constraints: [mean-one]
+    definition: The lognormal laws whose mean is one.
+    charts:
+      - id: PD_0000019
+        name: sd-log
+        label: standard deviation of the logarithm
+        coordinates:
+          - {name: sigma, symbol: σ, meaning: the standard deviation of ln X, domain: positive, as_expectation: sqrt(E(log(X)**2) - E(log(X))**2)}
+        to_canonical: {mu: -sigma**2/2, sigma: sigma}
+        from_canonical: {sigma: sigma}
+        conversion: exact
+        written_as:
+          parameter-file:
+            - {spelling: "{LogNormal: {sd_log: σ}}", head: LogNormal, arguments: {sd_log: sigma}}
+          bellman-sym:
+            - {spelling: "LogNormal(-σ^2/2, σ)", head: LogNormal, arguments: [-sigma**2/2, sigma]}
+
+  - id: PD_0000020
+    name: point-mass
+    label: point mass
+    stated_set: ℝ
+    definition: >-
+      All mass at one point. A family of its own: the normal with zero variance and the lognormal with zero spread are
+      two of its charts, not members of those families.
+    measure: δ(x)(B) = 1 if x ∈ B, 0 otherwise
+    canonical_chart: value
+    charts:
+      - id: PD_0000021
+        name: value
+        label: the point
+        coordinates:
+          - {name: x, symbol: x, meaning: the point, domain: real, as_expectation: E(X)}
+      - id: PD_0000022
+        name: normal-zero-variance
+        label: a normal with variance zero
+        coordinates:
+          - {name: mu, symbol: μ, meaning: the point, domain: real, as_expectation: E(X)}
+        to_canonical: {x: mu}
+        from_canonical: {mu: x}
+        conversion: exact
+        written_as:
+          bellman-sym:
+            - {spelling: "N(μ, 0)", head: N, arguments: [mu, "0"]}
+      - id: PD_0000023
+        name: lognormal-zero-spread
+        label: a lognormal with zero spread
+        coordinates:
+          - {name: mu, symbol: μ, meaning: the logarithm of the point, domain: real, as_expectation: E(log(X))}
+        covers: x > 0
+        to_canonical: {x: exp(mu)}
+        from_canonical: {mu: log(x)}
+        conversion: irrational
+        written_as:
+          bellman-sym:
+            - {spelling: "LogNormal(μ, 0)", head: LogNormal, arguments: [mu, "0"]}
+    properties:
+      support: {infimum: x, supremum: x, mass_at_infimum: "1"}
+      mean: x
+      moments: {orders: nonnegative-integers, formula: x**k}
+      atoms: [{at: x, mass: "1"}]
+
+  - id: PD_0000024
+    name: point-mass-at-one
+    label: point mass at one
+    subfamily_of: point-mass
+    constraints: [mean-one]
+    definition: The one law all of whose mass is at one; the parameter files' only way to switch a shock off.
+    charts:
+      - id: PD_0000025
+        name: degenerate
+        label: no coordinates
+        coordinates: []
+        to_canonical: {x: "1"}
+        from_canonical: {}
+        conversion: exact
+        written_as:
+          parameter-file:
+            - {spelling: "{Degenerate: {}}", head: Degenerate, arguments: {}}
+          bellman-sym:
+            - {spelling: "LogNormal(0, 0)", head: LogNormal, arguments: ["0", "0"]}
+
+  - id: PD_0000027
+    name: truncated-normal
+    label: truncated normal
+    stated_set: "[l, u] ∩ ℝ"
+    definition: The law of μ + σZ given l ≤ μ + σZ ≤ u, Z standard normal.
+    measure: TruncatedNormal(μ, σ, l, u) = (aff(μ, σ)∗ N(0, 1))|[l, u]
+    built_from:
+      base: standard-normal
+      operators:
+        - {operator: affine-pushforward, location: mu, scale: sigma}
+        - {operator: interval-conditioning, lower: l, upper: u}
+    where:
+      a: (l - mu)/sigma
+      b: (u - mu)/sigma
+      D: Phi(b) - Phi(a)
+    canonical_chart: mean-sd-bounds
+    charts:
+      - id: PD_0000028
+        name: mean-sd-bounds
+        label: the normal's mean and standard deviation, and the bounds
+        coordinates:
+          - {name: mu, symbol: μ, meaning: the mean of the normal before truncation, domain: real}
+          - {name: sigma, symbol: σ, meaning: the standard deviation of the normal before truncation, domain: positive}
+          - {name: l, symbol: l, meaning: the lower bound; -inf for none, domain: extended-real}
+          - {name: u, symbol: u, meaning: the upper bound; inf for none, domain: extended-real}
+        domain_conditions: ["l < u"]
+        written_as:
+          bellman-sym:
+            - {spelling: "TruncatedNormal(μ, σ, l, u)", head: TruncatedNormal, arguments: [mu, sigma, l, u]}
+        cross_references:
+          - predicate: skos:closeMatch
+            target: probonto:PROB_k0000681
+            note: TruncatedNormal1 (mean, stdev, lowerBound, upperBound), whose bounds are finite
+    properties:
+      support: {infimum: l, supremum: u, mass_at_infimum: "0"}
+      mean: mu + sigma*(phi(a) - phi(b))/D
+      moments: {orders: nonnegative-integers}
+    reductions:
+      - {when: l == -inf and u == inf, family: normal, chart: mean-sd}
+
+  - id: PD_0000029
+    name: truncated-lognormal
+    label: truncated lognormal
+    stated_set: "[l, u] ∩ (0, ∞)"
+    definition: >-
+      The law of exp(μ + σZ) given l ≤ exp(μ + σZ) ≤ u, Z standard normal: the exponential of a normal truncated to
+      [ln l, ln u].
+    measure: TruncatedLogNormal(μ, σ, l, u) = (exp∗ aff(μ, σ)∗ N(0, 1))|[l, u] = exp∗ ((aff(μ, σ)∗ N(0, 1))|[ln l, ln u])
+    built_from:
+      base: standard-normal
+      operators:
+        - {operator: affine-pushforward, location: mu, scale: sigma}
+        - {operator: exponential-pushforward}
+        - {operator: interval-conditioning, lower: l, upper: u}
+    where:
+      a: (log(l) - mu)/sigma
+      b: (log(u) - mu)/sigma
+      D: Phi(b) - Phi(a)
+    canonical_chart: meanlog-sdlog-bounds
+    charts:
+      - id: PD_0000030
+        name: meanlog-sdlog-bounds
+        label: the mean and standard deviation of the logarithm before truncation, and the bounds
+        coordinates:
+          - {name: mu, symbol: μ, meaning: the mean of ln X before truncation, domain: real}
+          - {name: sigma, symbol: σ, meaning: the standard deviation of ln X before truncation, domain: positive}
+          - {name: l, symbol: l, meaning: "the lower bound, in the draw's units; 0 for none", domain: extended-nonnegative}
+          - {name: u, symbol: u, meaning: "the upper bound, in the draw's units; inf for none", domain: extended-nonnegative}
+        domain_conditions: ["l < u"]
+        written_as:
+          bellman-sym:
+            - {spelling: "TruncatedLogNormal(μ, σ, l, u)", head: TruncatedLogNormal, arguments: [mu, sigma, l, u]}
+    properties:
+      support: {infimum: l, supremum: u, mass_at_infimum: "0"}
+      mean: exp(mu + sigma**2/2)*(Phi(b - sigma) - Phi(a - sigma))/D
+      moments: {orders: all-real, formula: exp(k*mu + k**2*sigma**2/2)*(Phi(b - k*sigma) - Phi(a - k*sigma))/D}
+      log-moments: {orders: nonnegative-integers}
+    reductions:
+      - {when: l == 0 and u == inf, family: lognormal, chart: meanlog-sdlog}
+
+  - id: PD_0000031
+    name: mean-one-truncated-lognormal
+    label: truncated lognormal with mean one
+    subfamily_of: truncated-lognormal
+    constraints: [mean-one]
+    definition: >-
+      The truncated lognormal laws whose mean is one. Their chart is the parameter files' TruncatedLogNormal: the
+      standard deviation of the logarithm after truncation, and the bounds in standard deviations of the normal before
+      truncation.
+    charts:
+      - id: PD_0000032
+        name: sd-log-standardized-bounds
+        label: the standard deviation of the logarithm after truncation, and the bounds in standard deviations
+        coordinates:
+          - name: sd_log
+            symbol: σ
+            meaning: the standard deviation of ln X, after truncation
+            domain: positive
+            as_expectation: sqrt(E(log(X)**2) - E(log(X))**2)
+          - name: bot
+            symbol: bot
+            meaning: the lower bound, in standard deviations of the normal before truncation; -inf for none
+            domain: extended-real
+          - name: top
+            symbol: top
+            meaning: the upper bound, in standard deviations of the normal before truncation; inf for none
+            domain: extended-real
+        domain_conditions:
+          - bot < top
+          - bot > -inf or top < inf
+        to_canonical_where:
+          D: Phi(top) - Phi(bot)
+          v: 1 + (xphi(bot) - xphi(top))/D - ((phi(bot) - phi(top))/D)**2
+          s: sd_log/sqrt(v)
+          m: -s**2/2 - log((Phi(top - s) - Phi(bot - s))/D)
+        to_canonical: {mu: m, sigma: s, l: exp(m + s*bot), u: exp(m + s*top)}
+        from_canonical_where:
+          a: (log(l) - mu)/sigma
+          b: (log(u) - mu)/sigma
+          D: Phi(b) - Phi(a)
+          v: 1 + (xphi(a) - xphi(b))/D - ((phi(a) - phi(b))/D)**2
+        from_canonical: {sd_log: sigma*sqrt(v), bot: a, top: b}
+        conversion: irrational
+        written_as:
+          parameter-file:
+            - spelling: "{TruncatedLogNormal: {sd_log: σ, bot: bot, top: top}}"
+              head: TruncatedLogNormal
+              arguments: {sd_log: sd_log, bot: bot, top: top}
+              defaults: {bot: "-3", top: "3"}
+              none: {token: "null", values: {bot: "-inf", top: inf}}
+
+  - id: PD_0000034
+    name: uniform
+    label: uniform
+    stated_set: "[a, b]"
+    definition: The law with constant density on [a, b].
+    measure: Uniform(a, b) = aff(a, b − a)∗ U(0, 1)
+    built_from:
+      base: unit-uniform
+      operators:
+        - {operator: affine-pushforward, location: a, scale: b - a}
+    canonical_chart: endpoints
+    charts:
+      - id: PD_0000035
+        name: endpoints
+        label: the endpoints
+        coordinates:
+          - {name: a, symbol: a, meaning: the lower endpoint, domain: real}
+          - {name: b, symbol: b, meaning: the upper endpoint, domain: real}
+        domain_conditions: ["a < b"]
+        written_as:
+          bellman-sym:
+            - {spelling: "Uniform(a, b)", head: Uniform, arguments: [a, b]}
+        cross_references:
+          - {predicate: skos:exactMatch, target: probonto:PROB_k0000703, note: "Uniform1 (minimum, maximum)"}
+    properties:
+      support: {infimum: a, supremum: b, mass_at_infimum: "0"}
+      mean: (a + b)/2
+      moments: {orders: nonnegative-integers, formula: (b**(k + 1) - a**(k + 1))/((k + 1)*(b - a))}
+
+  - id: PD_0000036
+    name: mean-one-uniform
+    label: uniform with mean one
+    subfamily_of: uniform
+    constraints: [mean-one]
+    definition: >-
+      The uniform laws centered at one. Their chart is the parameter files' Uniform, whose half-width below one keeps
+      every value positive.
+    charts:
+      - id: PD_0000037
+        name: half-width
+        label: the half-width
+        coordinates:
+          - {name: w, symbol: w, meaning: the half-width, domain: positive, as_expectation: sqrt(3*(E(X**2) - E(X)**2))}
+        domain_conditions: ["w < 1"]
+        to_canonical: {a: 1 - w, b: 1 + w}
+        from_canonical: {w: (b - a)/2}
+        conversion: exact
+        written_as:
+          parameter-file:
+            - {spelling: "{Uniform: {half_width: w}}", head: Uniform, arguments: {half_width: w}}
+          bellman-sym:
+            - {spelling: "Uniform(1 - w, 1 + w)", head: Uniform, arguments: [1 - w, 1 + w]}
+
+  - id: PD_0000039
+    name: type-1-extreme-value
+    label: type I extreme value (Gumbel)
+    stated_set: ℝ
+    definition: >-
+      The law of μ + sG, G standard Gumbel, with distribution function exp(−exp(−(x − μ)/s)): the taste shock of logit
+      choice.
+    measure: TypeIExtremeValue(μ, s) = aff(μ, s)∗ Gumbel(0, 1)
+    built_from:
+      base: standard-gumbel
+      operators:
+        - {operator: affine-pushforward, location: mu, scale: s}
+    canonical_chart: location-scale
+    charts:
+      - id: PD_0000040
+        name: location-scale
+        label: location and scale
+        coordinates:
+          - name: mu
+            symbol: μ
+            meaning: the location, which is the mode
+            domain: real
+            as_expectation: E(X) - euler_gamma*sqrt(6*(E(X**2) - E(X)**2))/pi
+          - {name: s, symbol: s, meaning: the scale, domain: positive, as_expectation: sqrt(6*(E(X**2) - E(X)**2))/pi}
+        written_as:
+          bellman-sym:
+            - {spelling: "TypeIExtremeValue(μ, s)", head: TypeIExtremeValue, arguments: [mu, s]}
+        cross_references:
+          - {predicate: skos:exactMatch, target: probonto:PROB_k0000032, note: "Gumbel1 (location, scale)"}
+    properties:
+      support: {infimum: "-inf", supremum: inf, mass_at_infimum: "0"}
+      mean: mu + euler_gamma*s
+      moments: {orders: nonnegative-integers}
+
+  - id: PD_0000042
+    name: finite-discrete
+    label: finite discrete law on real points
+    stated_set: "{v₁, …, vₙ}"
+    definition: The law putting mass pᵢ at each of finitely many real points vᵢ, at least two.
+    measure: Σᵢ pᵢ δ(vᵢ), a finite mixture of point masses
+    canonical_chart: values-probabilities
+    charts:
+      - id: PD_0000043
+        name: values-probabilities
+        label: the points and their probabilities
+        coordinates:
+          - {name: values, symbol: v, meaning: "the points, strictly increasing", domain: real-vector}
+          - {name: probs, symbol: p, meaning: their probabilities, domain: positive-probability-vector}
+        domain_conditions:
+          - count(values) == count(probs)
+          - count(values) >= 2
+          - increasing(values)
+        written_as:
+          bellman-sym:
+            - {spelling: "Mixture((p₁, v₁), …, (pₙ, vₙ))", head: Mixture}
+    properties:
+      support: {infimum: first(values), supremum: last(values), mass_at_infimum: first(probs)}
+      mean: sum(probs*values)
+      moments: {orders: nonnegative-integers, formula: sum(probs*values**k)}
+      atoms: [{at: values, mass: probs}]
+
+  - id: PD_0000044
+    name: mean-one-finite-discrete
+    label: finite discrete law with mean one
+    subfamily_of: finite-discrete
+    constraints: [mean-one]
+    definition: >-
+      The finite discrete laws on positive points whose mean is one. Their chart is the parameter files' Discrete: the
+      points are the model, not a quadrature of another law.
+    charts:
+      - id: PD_0000045
+        name: values-probabilities
+        label: the points and their probabilities
+        coordinates:
+          - {name: values, symbol: v, meaning: "the points, positive and strictly increasing", domain: positive-vector}
+          - {name: probs, symbol: p, meaning: their probabilities, domain: positive-probability-vector}
+        domain_conditions:
+          - count(values) == count(probs)
+          - count(values) >= 2
+          - increasing(values)
+          - sum(probs*values) == 1
+        to_canonical: {values: values, probs: probs}
+        from_canonical: {values: values, probs: probs}
+        conversion: exact
+        written_as:
+          parameter-file:
+            - spelling: "{Discrete: {values: [v₁, …, vₙ], probs: [p₁, …, pₙ]}}"
+              head: Discrete
+              arguments: {values: values, probs: probs}
+
+  - id: PD_0000046
+    name: categorical
+    label: categorical
+    stated_set: the positions 1, …, n of a finite set of labels
+    definition: >-
+      The law drawing the label in position i of a finite set with probability fᵢ. Bellman-SYM also takes its weights
+      as the rows of a matrix, or as the one row a previous state selects; the latter is the categorical law at that row.
+    measure: Σᵢ fᵢ δ(i)
+    canonical_chart: weights
+    charts:
+      - id: PD_0000047
+        name: weights
+        label: the weights, in the order of the labels
+        coordinates:
+          - {name: f, symbol: f, meaning: the probability of each label, domain: probability-vector}
+        written_as:
+          bellman-sym:
+            - {spelling: "Categorical((f₁, …, fₙ))", head: Categorical, arguments: [f]}
+        cross_references:
+          - predicate: skos:closeMatch
+            target: probonto:PROB_k0000248
+            note: CategoricalNonordered1 (categoryProb)
+      - id: PD_0000048
+        name: bernoulli
+        label: the probability of the second of two labels
+        coordinates:
+          - {name: p, symbol: p, meaning: the probability of the second label, domain: unit-interval}
+        covers: count(f) == 2
+        to_canonical: {f: "[1 - p, p]"}
+        from_canonical: {p: last(f)}
+        conversion: exact
+        written_as:
+          bellman-sym:
+            - {spelling: "Bernoulli(p)", head: Bernoulli, arguments: [p]}
+        cross_references:
+          - predicate: skos:closeMatch
+            target: probonto:PROB_k0000000
+            note: Bernoulli1 (probability), on {0, 1} rather than on two labels
+    properties:
+      atoms: [{at: index(f), mass: f}]
+
+  - id: PD_0000049
+    name: finite-markov-kernel
+    label: finite Markov kernel
+    stated_set: "{x₁, …, xₙ}, the points"
+    definition: >-
+      A Markov kernel on finitely many real points: from the point in position i, the next draw is xⱼ with probability
+      Πᵢⱼ. Bellman-SYM writes it with either of two names; given a third argument, the previous state, a declaration is
+      the kernel at that state.
+    measure: κ(i, ·) = Σⱼ Πᵢⱼ δ(xⱼ)
+    state: {name: i, symbol: i, meaning: the position of the current point, range: count(points)}
+    canonical_chart: transitions-points
+    charts:
+      - id: PD_0000050
+        name: transitions-points
+        label: the transition matrix and the points
+        coordinates:
+          - {name: Pi, symbol: Π, meaning: "the transition probabilities, row i the law from point i", domain: stochastic-matrix}
+          - {name: points, symbol: x, meaning: "the points, strictly increasing", domain: real-vector}
+        domain_conditions:
+          - count(Pi) == count(points)
+          - increasing(points)
+        written_as:
+          bellman-sym:
+            - {spelling: "DiscreteMarkov(Π, points)", head: DiscreteMarkov, arguments: [Pi, points]}
+            - {spelling: "MarkovChain(Π, points)", head: MarkovChain, arguments: [Pi, points]}
+    properties:
+      mean: sum(row(Pi, i)*points)
+      moments: {orders: nonnegative-integers, formula: "sum(row(Pi, i)*points**k)"}
+      atoms: [{at: points, mass: "row(Pi, i)"}]
+
+  - id: PD_0000051
+    name: lognormal-mixture
+    label: lognormal mixture
+    stated_set: (0, ∞)
+    definition: >-
+      A finite mixture of lognormal laws, at least two. Its components are compared as a set: the same components in
+      another order, or a component split in two, write the same law.
+    measure: Σⱼ wⱼ LogNormal(μⱼ, σⱼ), the mixture over the components of exp∗ aff(μⱼ, σⱼ)∗ N(0, 1)
+    built_from:
+      mixture: {weights: weights}
+      base: standard-normal
+      operators:
+        - {operator: affine-pushforward, location: "mu[j]", scale: "sigma[j]"}
+        - {operator: exponential-pushforward}
+    canonical_chart: components
+    charts:
+      - id: PD_0000052
+        name: components
+        label: the weights, and each component's mean and standard deviation of the logarithm
+        coordinates:
+          - {name: weights, symbol: w, meaning: the components' weights, domain: positive-probability-vector}
+          - {name: mu, symbol: μ, meaning: each component's mean of ln X, domain: real-vector}
+          - {name: sigma, symbol: σ, meaning: each component's standard deviation of ln X, domain: positive-vector}
+        domain_conditions:
+          - count(weights) == count(mu) and count(weights) == count(sigma)
+          - count(weights) >= 2
+        written_as:
+          bellman-sym:
+            - {spelling: "Mixture((w₁, LogNormal(μ₁, σ₁)), …, (wₙ, LogNormal(μₙ, σₙ)))", head: Mixture}
+    properties:
+      support: {infimum: "0", supremum: inf, mass_at_infimum: "0"}
+      mean: sum(weights*exp(mu + sigma**2/2))
+      moments: {orders: all-real, formula: sum(weights*exp(k*mu + k**2*sigma**2/2))}
+
+  - id: PD_0000053
+    name: mean-one-lognormal-mixture
+    label: lognormal mixture with mean one
+    subfamily_of: lognormal-mixture
+    constraints: [mean-one]
+    definition: >-
+      The lognormal mixtures whose mean is one. Their chart is the parameter files' LogNormalMixture: ln X = c + Y, Y
+      drawn from component j with probability wⱼ, each component's mean of Y stated relative to the others, and one
+      common shift c making the mean one.
+    charts:
+      - id: PD_0000054
+        name: relative-means
+        label: the weights, each component's relative mean and standard deviation of the logarithm
+        coordinates:
+          - {name: weights, symbol: w, meaning: the components' weights, domain: positive-probability-vector}
+          - {name: mean_log, symbol: m, meaning: each component's mean of ln X less the common shift, domain: real-vector}
+          - name: sd_log
+            symbol: s
+            meaning: each component's standard deviation of ln X
+            domain: positive-vector
+            as_component_expectation: sqrt(E(log(X)**2) - E(log(X))**2)
+        domain_conditions:
+          - count(weights) == count(mean_log) and count(weights) == count(sd_log)
+          - count(weights) >= 2
+          - sum(weights*mean_log) == 0
+          - lex_increasing(mean_log, sd_log)
+        to_canonical_where:
+          c: -log(sum(weights*exp(mean_log + sd_log**2/2)))
+        to_canonical: {weights: weights, mu: c + mean_log, sigma: sd_log}
+        from_canonical_where:
+          c: sum(weights*mu)
+        from_canonical: {weights: weights, mean_log: mu - c, sd_log: sigma}
+        conversion: irrational
+        written_as:
+          parameter-file:
+            - spelling: "{LogNormalMixture: {components: [{weight: w₁, mean_log: m₁, sd_log: s₁}, …]}}"
+              head: LogNormalMixture
+              arguments: {weight: weights, mean_log: mean_log, sd_log: sd_log}
+              per_component: true
+          bellman-sym:
+            - spelling: "Mixture((w₁, LogNormal(c + m₁, s₁)), …), with c making the mean one"
+              head: Mixture
+
+  - id: PD_0000055
+    name: truncated-lognormal-mixture
+    label: truncated lognormal mixture
+    stated_set: (0, ∞)
+    definition: >-
+      A finite mixture of truncated lognormal laws, at least two. Its components are compared as a set; a component
+      truncated on neither side is a lognormal.
+    measure: Σⱼ wⱼ TruncatedLogNormal(μⱼ, σⱼ, lⱼ, uⱼ)
+    built_from:
+      mixture: {weights: weights}
+      base: standard-normal
+      operators:
+        - {operator: affine-pushforward, location: "mu[j]", scale: "sigma[j]"}
+        - {operator: exponential-pushforward}
+        - {operator: interval-conditioning, lower: "l[j]", upper: "u[j]"}
+    where:
+      a: (log(l) - mu)/sigma
+      b: (log(u) - mu)/sigma
+      D: Phi(b) - Phi(a)
+    canonical_chart: components
+    charts:
+      - id: PD_0000056
+        name: components
+        label: the weights, and each component's canonical truncated-lognormal coordinates
+        coordinates:
+          - {name: weights, symbol: w, meaning: the components' weights, domain: positive-probability-vector}
+          - {name: mu, symbol: μ, meaning: each component's mean of ln X before truncation, domain: real-vector}
+          - name: sigma
+            symbol: σ
+            meaning: each component's standard deviation of ln X before truncation
+            domain: positive-vector
+          - {name: l, symbol: l, meaning: "each component's lower bound, in the draw's units", domain: extended-nonnegative-vector}
+          - {name: u, symbol: u, meaning: "each component's upper bound, in the draw's units", domain: extended-nonnegative-vector}
+        domain_conditions:
+          - count(weights) == count(mu) and count(weights) == count(sigma)
+          - count(weights) == count(l) and count(weights) == count(u)
+          - count(weights) >= 2
+          - l < u
+        written_as:
+          bellman-sym:
+            - {spelling: "Mixture((w₁, TruncatedLogNormal(μ₁, σ₁, l₁, u₁)), …)", head: Mixture}
+    properties:
+      support: {infimum: min(l), supremum: max(u), mass_at_infimum: "0"}
+      mean: sum(weights*exp(mu + sigma**2/2)*(Phi(b - sigma) - Phi(a - sigma))/D)
+      moments: {orders: all-real, formula: sum(weights*exp(k*mu + k**2*sigma**2/2)*(Phi(b - k*sigma) - Phi(a - k*sigma))/D)}
+    reductions:
+      - {when: all(l == 0) and all(u == inf), family: lognormal-mixture, chart: components}
+
+  - id: PD_0000057
+    name: mean-one-truncated-lognormal-mixture
+    label: truncated lognormal mixture with mean one
+    subfamily_of: truncated-lognormal-mixture
+    constraints: [mean-one]
+    definition: >-
+      The truncated lognormal mixtures whose mean is one. Their chart is the parameter files' TruncatedLogNormalMixture:
+      ln X = c + Y, Y drawn from component j with probability wⱼ, component j a normal truncated at bounds in standard
+      deviations of that normal before truncation, stated by its mean, relative to the others, and its standard
+      deviation, both after truncation, with one common shift c making the mean one.
+    charts:
+      - id: PD_0000058
+        name: relative-means-standardized-bounds
+        label: the weights, each component's relative mean and standard deviation of the logarithm after truncation, and its bounds
+        coordinates:
+          - {name: weights, symbol: w, meaning: the components' weights, domain: positive-probability-vector}
+          - name: mean_log
+            symbol: m
+            meaning: each component's mean of ln X after truncation, less the common shift
+            domain: real-vector
+          - name: sd_log
+            symbol: s
+            meaning: each component's standard deviation of ln X after truncation
+            domain: positive-vector
+            as_component_expectation: sqrt(E(log(X)**2) - E(log(X))**2)
+          - name: bot
+            symbol: bot
+            meaning: each component's lower bound, in standard deviations of its normal before truncation; -inf for none
+            domain: extended-real-vector
+          - name: top
+            symbol: top
+            meaning: each component's upper bound, in standard deviations of its normal before truncation; inf for none
+            domain: extended-real-vector
+        domain_conditions:
+          - count(weights) == count(mean_log) and count(weights) == count(sd_log)
+          - count(weights) == count(bot) and count(weights) == count(top)
+          - count(weights) >= 2
+          - bot < top
+          - any(bot > -inf) or any(top < inf)
+          - sum(weights*mean_log) == 0
+          - lex_increasing(mean_log, sd_log, bot, top)
+        to_canonical_where:
+          D: Phi(top) - Phi(bot)
+          lam: (phi(bot) - phi(top))/D
+          v: 1 + (xphi(bot) - xphi(top))/D - lam**2
+          s: sd_log/sqrt(v)
+          loc: mean_log - s*lam
+          c: -log(sum(weights*exp(loc + s**2/2)*(Phi(top - s) - Phi(bot - s))/D))
+        to_canonical: {weights: weights, mu: c + loc, sigma: s, l: exp(c + loc + s*bot), u: exp(c + loc + s*top)}
+        from_canonical_where:
+          a: (log(l) - mu)/sigma
+          b: (log(u) - mu)/sigma
+          D: Phi(b) - Phi(a)
+          lam: (phi(a) - phi(b))/D
+          v: 1 + (xphi(a) - xphi(b))/D - lam**2
+          ml: mu + sigma*lam
+          c: sum(weights*ml)
+        from_canonical: {weights: weights, mean_log: ml - c, sd_log: sigma*sqrt(v), bot: a, top: b}
+        conversion: irrational
+        written_as:
+          parameter-file:
+            - spelling: "{TruncatedLogNormalMixture: {components: [{weight: w₁, mean_log: m₁, sd_log: s₁, bot: b₁, top: t₁}, …]}}"
+              head: TruncatedLogNormalMixture
+              arguments: {weight: weights, mean_log: mean_log, sd_log: sd_log, bot: bot, top: top}
+              defaults: {bot: "-3", top: "3"}
+              none: {token: "null", values: {bot: "-inf", top: inf}}
+              per_component: true
+          bellman-sym:
+            - spelling: "Mixture((w₁, TruncatedLogNormal(μ₁, σ₁, l₁, u₁)), …), computed from the chart"
+              head: Mixture
+
+  - id: PD_0000060
+    name: quantile-table
+    label: quantile table
+    stated_set: "[Q(0), Q(1)]"
+    definition: >-
+      The law whose quantile function Q, the inverse of the distribution function, is linear between the points of a
+      table: Q∗ U(0, 1). A stretch where u and Q both rise has a flat density; one where u rises and Q stays flat is a
+      point mass; a u listed twice, with Q higher the second time, is a gap in the support. The normal form removes an
+      interior point that lies on the line through its neighbors, which adds nothing; the canonical chart admits none.
+    measure: Q∗ U(0, 1), Q piecewise linear through the points (uᵢ, qᵢ)
+    built_from:
+      base: unit-uniform
+      operators:
+        - {operator: piecewise-linear-pushforward, knots_u: u, knots_q: q}
+    canonical_chart: points
+    charts:
+      - id: PD_0000061
+        name: points
+        label: the points of the table
+        coordinates:
+          - {name: u, symbol: u, meaning: "the probabilities, from 0 to 1", domain: unit-interval-vector}
+          - {name: q, symbol: Q, meaning: the quantiles there, domain: real-vector}
+        domain_conditions:
+          - count(u) == count(q) and count(u) >= 3
+          - first(u) == 0 and last(u) == 1 and first(diff(u)) > 0 and last(diff(u)) > 0
+          - diff(u) >= 0 and diff(q) >= 0
+          - heads(diff(u)) + tails(diff(u)) > 0
+          - diff(u) > 0 or diff(q) > 0
+          - any(diff(u)*diff(q) > 0)
+          - heads(diff(q))*tails(diff(u)) != tails(diff(q))*heads(diff(u))
+    properties:
+      support: {infimum: first(q), supremum: last(q), mass_at_infimum: first(diff(u))*(first(diff(q)) == 0)}
+      mean: sum(diff(u)*(heads(q) + tails(q))/2)
+
+  - id: PD_0000062
+    name: mean-one-quantile-table
+    label: quantile table with mean one
+    subfamily_of: quantile-table
+    constraints: [mean-one]
+    definition: >-
+      The quantile tables on positive values whose mean is one. Their chart is the parameter files' Tabulated, whose
+      checker accepts a mean within 10⁻¹² of one; the table is the law, not an approximation of one.
+    charts:
+      - id: PD_0000063
+        name: points
+        label: the points of the table
+        coordinates:
+          - {name: u, symbol: u, meaning: "the probabilities, from 0 to 1", domain: unit-interval-vector}
+          - {name: q, symbol: Q, meaning: "the quantiles there, positive", domain: positive-vector}
+        domain_conditions:
+          - count(u) == count(q) and count(u) >= 3
+          - first(u) == 0 and last(u) == 1 and first(diff(u)) > 0 and last(diff(u)) > 0
+          - diff(u) >= 0 and diff(q) >= 0
+          - heads(diff(u)) + tails(diff(u)) > 0
+          - diff(u) > 0 or diff(q) > 0
+          - any(diff(u)*diff(q) > 0)
+          - heads(diff(q))*tails(diff(u)) != tails(diff(q))*heads(diff(u))
+          - sum(diff(u)*(heads(q) + tails(q))/2) == 1
+        to_canonical: {u: u, q: q}
+        from_canonical: {u: u, q: q}
+        conversion: exact
+        written_as:
+          parameter-file:
+            - {spelling: "{Tabulated: {points: [[u₁, Q₁], …, [uₙ, Qₙ]]}}", head: Tabulated}
