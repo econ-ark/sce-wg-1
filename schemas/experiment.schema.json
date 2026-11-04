@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/econ-ark/sce-wg-1/schemas/experiment.schema.json",
+  "title": "An experiment every toolkit performs",
+  "description": "Draft, 2026-11-02 (experiments.md). An experiment names the members to solve, the request file each is solved with, the precision levels each toolkit runs, what every results file must carry, and the checks the harness makes on the results files. It names no toolkit and holds no setting of one.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["experiment", "title", "statement", "members", "levels", "reports", "checks"],
+  "properties": {
+    "experiment": {
+      "description": "The experiment's name and version, as a family's: a change to what it asks makes a new version.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*/[0-9]+$"
+    },
+    "title": {"type": "string", "minLength": 1},
+    "statement": {
+      "description": "What the experiment shows, in words.",
+      "type": "string",
+      "minLength": 1
+    },
+    "sources": {
+      "description": "Where the experiment comes from: for each source, its anchors. BST's must be among the ontology's bst-anchors.txt.",
+      "type": "object",
+      "additionalProperties": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+    },
+    "members": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/Member"}
+    },
+    "levels": {
+      "description": "The precision levels every toolkit runs, as numerics.md names them. A toolkit may run more.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["low", "medium", "high"]}
+    },
+    "reports": {
+      "description": "The results-file quantities every run must carry, beyond what the results schema requires of every file.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/Quantity"}
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/Check"}
+    },
+    "report_scripts": {
+      "description": "Scripts of the experiment's own that write tables and figures from the results files alone, solving nothing.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "writes"],
+        "properties": {
+          "path": {"$ref": "#/$defs/RelativePath"},
+          "writes": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "RelativePath": {
+      "description": "A path relative to the experiment file, with forward slashes.",
+      "type": "string",
+      "pattern": "^[^/\\\\][^\\\\]*$"
+    },
+    "Id": {
+      "description": "A member's id: its parameter file's name without the extension.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+([-.][a-z0-9]+)*$"
+    },
+    "Quantity": {
+      "description": "A path into the results file: keys joined by dots, [] after an array to take every item, as types[].rule.c. It must resolve in the family's results schema.",
+      "type": "string",
+      "pattern": "^[a-z_][a-z0-9_]*(\\[\\])?(\\.[a-z_][a-z0-9_]*(\\[\\])?)*$"
+    },
+    "Member": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "parameter_file", "parameter_file_sha256", "request_file", "request_file_sha256"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"},
+        "parameter_file": {"$ref": "#/$defs/RelativePath"},
+        "parameter_file_sha256": {"$ref": "#/$defs/Sha256"},
+        "request_file": {"$ref": "#/$defs/RelativePath"},
+        "request_file_sha256": {"$ref": "#/$defs/Sha256"},
+        "note": {"type": "string", "minLength": 1}
+      }
+    },
+    "Check": {
+      "description": "One comparison of results files and what it must show. members: one toolkit's files at one level, between the named pairs of members. toolkits: two toolkits' files for one member at one level. levels: one toolkit's files for one member, at successive levels.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "compare", "quantity", "metric", "expect"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9]*(_[a-z0-9]+)*$"},
+        "statement": {"type": "string", "minLength": 1},
+        "compare": {"enum": ["members", "toolkits", "levels"]},
+        "quantity": {"$ref": "#/$defs/Quantity"},
+        "metric": {
+          "description": "max_abs_difference: the largest absolute difference over every number the quantity holds, at the request's points for a rule. max_relative_difference: the same, divided by the larger of one and the first value's magnitude.",
+          "enum": ["max_abs_difference", "max_relative_difference"]
+        },
+        "pairs": {
+          "description": "For compare: members, the pairs, in the order the expectation reads them.",
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/Id"}}
+        },
+        "members": {
+          "description": "For compare: toolkits or levels, the members it applies to; every member when left out.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/Id"}
+        },
+        "expect": {
+          "description": "decreasing: each pair's metric smaller than the pair before it, at every level. falls_with_level: the metric smaller at each finer level. at_most: the metric no larger than the number, at every level.",
+          "oneOf": [
+            {"enum": ["decreasing", "falls_with_level"]},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["at_most"],
+              "properties": {"at_most": {"type": "number", "exclusiveMinimum": 0}}
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"compare": {"const": "members"}}},
+          "then": {"required": ["pairs"], "not": {"required": ["members"]}},
+          "else": {"not": {"required": ["pairs"]}}
+        },
+        {
+          "if": {"properties": {"expect": {"const": "decreasing"}}},
+          "then": {"properties": {"compare": {"const": "members"}}}
+        },
+        {
+          "if": {"properties": {"expect": {"const": "falls_with_level"}}},
+          "then": {"properties": {"compare": {"enum": ["toolkits", "levels"]}}}
+        }
+      ]
+    }
+  }
+}
