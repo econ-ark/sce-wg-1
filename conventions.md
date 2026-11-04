@@ -1,0 +1,31 @@
+# Conventions
+
+Every name the working group's schemas coin follows an existing convention or says why it departs. This registry
+holds one row per spelling, naming the chart of the [ontology of probability distributions](ontologies/probability-distributions/)
+it writes, the packages and objects it follows, with the page cited, and the reason for any departure. A new name
+enters a validator only with its row; a model repository's tests fail when a validator names one without a row.
+
+This first part covers the shock laws, the first class surveyed. The method names, settings, parameter-file keys and
+results come with their classes.
+
+## Shock laws
+
+| spelling | what it is | ontology | follows | departs, and why |
+|---|---|---|---|---|
+| `Degenerate` | law | `PD_0000025`, the point mass at one | Distributions.jl's `Dirac(x)` is the point mass at any x ([univariate](https://juliastats.org/Distributions.jl/stable/univariate/)) | No package names the point mass at one, which is the parameter files' only way to switch a shock off; the name says that it does nothing. |
+| `LogNormal` | law | `PD_0000019`, the lognormal with mean one | Distributions.jl's `LogNormal(μ,σ)`, "if X ∼ Normal(μ, σ) then exp(X) ∼ LogNormal(μ,σ)" ([univariate](https://juliastats.org/Distributions.jl/stable/univariate/)); ProbOnto's `LogNormal1` | The mean is pinned at one, so μ = −σ²/2 is not written. |
+| `sd_log` | field of `LogNormal`, `TruncatedLogNormal` and the mixtures' components | σ of `PD_0000019`; σ after truncation in `PD_0000032` and `PD_0000058` | The σ of Distributions.jl's `LogNormal(μ,σ)` and ProbOnto's `LogNormal1.stdevLog`: the standard deviation of the logarithm | In a truncated law it is the standard deviation after truncation, which no package states; so an estimated standard deviation is entered as it is, and the truncated law keeps it. |
+| `TruncatedLogNormal` | law | `PD_0000032`, the truncated lognormal with mean one | The name joins ProbOnto's `TruncatedNormal1` and `LogNormal1`; the stage files' `TruncatedLogNormal(μ, σ, l, u)` is the family's canonical chart | The bounds are in standard deviations, and the mean is pinned at one; see `bot`, `top` and `sd_log`. |
+| `bot`, `top` | fields of `TruncatedLogNormal` and of the components of `TruncatedLogNormalMixture` | the bounds of `PD_0000032` and `PD_0000058` | scipy's `truncnorm(a, b)`, "truncated at a and b standard deviations from loc" ([truncnorm](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.truncnorm.html)) | None in units. Every other package bounds the variable in its own units. |
+| a bound left out | default | the written form's `defaults`, −3 and 3 | none | No package has a default bound: an omitted bound is none in all of them. Here it is three standard deviations, the schemas' default, so that the usual truncation is the shortest spelling. |
+| `null` | no bound on a side | the written form's `none`, −∞ in `bot` and ∞ in `top` | Distributions.jl's `truncated(d0, nothing, u)` and `truncated(d0, l, nothing)` ([truncate](https://juliastats.org/Distributions.jl/stable/truncate/)); PyMC's `Truncated(..., lower=None, upper=None)` ([Truncated](https://www.pymc.io/projects/docs/en/stable/api/distributions/truncated.html)); NumPyro's `TruncatedNormal(..., low=None, high=None)` ([distributions](https://num.pyro.ai/en/stable/distributions.html)) | Only in that an omitted bound is not none here. |
+| `Uniform` | law | `PD_0000037`, the uniform with mean one | Distributions.jl's `Uniform(a,b)` ([univariate](https://juliastats.org/Distributions.jl/stable/univariate/)); ProbOnto's `Uniform1`; the stage files' `Uniform(a, b)` | The center is pinned at one; see `half_width`. |
+| `half_width` | field of `Uniform` | w of `PD_0000037` | none | Every package takes the endpoints. With the center at one, the half-width is the law's one free number, and 0 < w < 1 keeps the lowest value positive. |
+| `Discrete` | law | `PD_0000045`, the finite discrete law with mean one | Distributions.jl's `DiscreteNonParametric(xs, ps)` ([univariate](https://juliastats.org/Distributions.jl/stable/univariate/)); TensorFlow Probability's `FiniteDiscrete(outcomes, probs)` ([FiniteDiscrete](https://www.tensorflow.org/probability/api_docs/python/tfp/distributions/FiniteDiscrete)) | The name says what the law is, as the parameter files' other names do. |
+| `values`, `probs` | fields of `Discrete` | the coordinates of `PD_0000045` | TensorFlow Probability's `probs`; Distributions.jl's `xs` and `ps` | `values` says what `xs` and `outcomes` abbreviate. |
+| `LogNormalMixture` | law | `PD_0000054`, the lognormal mixture with mean one | Distributions.jl's `MixtureModel(components, prior)` ([mixture](https://juliastats.org/Distributions.jl/stable/mixture/)) and ProbOnto's `MixtureDistribution1` for a mixture; the stage files' `Mixture` of `LogNormal` components for the canonical chart | No package has a mixture of lognormals with one common shift pinning the mean. The name says the components are lognormal; it replaces `NormalMixture`, which elsewhere names a mixture of normals. |
+| `TruncatedLogNormalMixture` | law | `PD_0000058`, the truncated lognormal mixture with mean one | As `LogNormalMixture`, with `TruncatedLogNormal` components | As `LogNormalMixture`. |
+| `components`, `weight` | fields of the mixtures | the components' weights in `PD_0000054` and `PD_0000058` | ProbOnto's `MixtureDistribution1.weight`; Distributions.jl's `components` | A weight sits with its component, so the components are one list. |
+| `mean_log` | field of the mixtures' components | the relative means of `PD_0000054` and `PD_0000058` | The μ of Distributions.jl's `LogNormal(μ,σ)`, the mean of the logarithm | Stated relative to the other components, with Σ weight·mean_log = 0, since one common shift pins the mixture's mean; in a truncated component it is the mean after truncation. |
+| `Tabulated` | law | `PD_0000063`, the quantile table with mean one | none | No package states a law by a piecewise-linear quantile function; it is defined here, so that a user's own law is the table and not an approximation of one. |
+| `points` | field of `Tabulated` | the coordinates u and Q of `PD_0000063` | none | The table's points as pairs (u, Q(u)). |
