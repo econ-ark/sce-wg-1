@@ -1,0 +1,817 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/provisional/ontologies/buffer-stock-models/source.schema.json",
+  "title": "The source of the ontology of buffer-stock models",
+  "description": "Validates source.yaml. The generator checks what a schema cannot: that identifiers and names are unique, that references resolve, that formulas parse and name only defined symbols, and that every source cited is pinned. Since 0.1.0-draft.2 it also checks perches, the states a value or function is of, Bellman-SYM's concepts against their pinned list, and the laws' properties against the ontology of probability distributions.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ontology",
+    "retired",
+    "kinds",
+    "categories",
+    "category_concepts",
+    "model-classes",
+    "axioms",
+    "objects",
+    "moments",
+    "quantities",
+    "conditions",
+    "properties",
+    "results",
+    "identities",
+    "families",
+    "divergences"
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^BSM_[0-9]{7}$"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "symbol": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "formula": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bst": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "hafiscal-qe": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/fileline"
+          }
+        },
+        "schemas": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/fileline"
+          }
+        },
+        "mst-2020": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Ma, Stachurski and Toda (2020), cited by its own numbering: an assumption, a theorem, an example"
+        },
+        "mst-2022": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Ma, Stachurski and Toda (2022), cited by its own numbering: an assumption, a theorem, an example"
+        }
+      }
+    },
+    "fileline": {
+      "type": "string",
+      "pattern": "^[^:]+(:[0-9]+(-[0-9]+)?)?$"
+    },
+    "written_as": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "bst": {
+          "type": "string",
+          "pattern": "^\\\\[A-Za-z]+$"
+        },
+        "registry": {
+          "$ref": "#/$defs/name"
+        },
+        "parameter-file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bellman-sym": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "literal": {
+      "type": "string",
+      "pattern": "^(not )?[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "row": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/name"
+        }
+      }
+    }
+  },
+  "properties": {
+    "ontology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "version",
+        "namespace",
+        "prefix",
+        "license",
+        "imports",
+        "sources",
+        "formats",
+        "format_roles"
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[a-z0-9.]+)?$"
+        },
+        "namespace": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "/$"
+        },
+        "prefix": {
+          "type": "string",
+          "pattern": "^[a-z]+$"
+        },
+        "license": {
+          "type": "string",
+          "format": "uri"
+        },
+        "imports": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "sources": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "citation",
+              "url"
+            ],
+            "properties": {
+              "citation": {
+                "$ref": "#/$defs/text"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          }
+        },
+        "formats": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "text"
+            ],
+            "properties": {
+              "role": {
+                "enum": [
+                  "notation",
+                  "calibration"
+                ]
+              },
+              "text": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        },
+        "format_roles": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "retired": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "kinds": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "categories": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "model-classes": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "definition"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "definition": {
+            "$ref": "#/$defs/text"
+          },
+          "subclass_of": {
+            "$ref": "#/$defs/name"
+          },
+          "benchmark_of": {
+            "$ref": "#/$defs/name"
+          },
+          "axioms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "reduces_to": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "class",
+              "when"
+            ],
+            "properties": {
+              "class": {
+                "$ref": "#/$defs/name"
+              },
+              "when": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          },
+          "written_as": {
+            "$ref": "#/$defs/written_as"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          }
+        }
+      }
+    },
+    "axioms": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "of",
+          "tier",
+          "status",
+          "statement"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "of": {
+            "$ref": "#/$defs/name"
+          },
+          "tier": {
+            "enum": [
+              "membership",
+              "hypothesis"
+            ]
+          },
+          "status": {
+            "enum": [
+              "bst",
+              "ruling",
+              "proposed"
+            ]
+          },
+          "ruled": {
+            "type": "string",
+            "format": "date"
+          },
+          "statement": {
+            "$ref": "#/$defs/text"
+          },
+          "check": {
+            "$ref": "#/$defs/formula"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          }
+        },
+        "if": {
+          "properties": {
+            "status": {
+              "const": "ruling"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "ruled"
+          ]
+        }
+      }
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "category",
+          "definition"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "category": {
+            "$ref": "#/$defs/name"
+          },
+          "symbol": {
+            "$ref": "#/$defs/symbol"
+          },
+          "definition": {
+            "$ref": "#/$defs/text"
+          },
+          "law": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "pd"
+            ],
+            "properties": {
+              "pd": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^PD_[0-9]{7}$"
+                }
+              }
+            }
+          },
+          "written_as": {
+            "$ref": "#/$defs/written_as"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          },
+          "perch": {
+            "$ref": "#/$defs/name"
+          },
+          "of_state": {
+            "$ref": "#/$defs/name"
+          },
+          "state_domain": {
+            "$ref": "#/$defs/text"
+          },
+          "bellman_concept": {
+            "type": "string",
+            "pattern": "^[a-z0-9_-]+$"
+          },
+          "law_property": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "pd"
+            ],
+            "properties": {
+              "pd": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^PD_[0-9]{7}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "moments": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "of",
+          "symbol",
+          "formula"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "of": {
+            "$ref": "#/$defs/name"
+          },
+          "symbol": {
+            "$ref": "#/$defs/symbol"
+          },
+          "formula": {
+            "$ref": "#/$defs/formula"
+          },
+          "written_as": {
+            "$ref": "#/$defs/written_as"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          }
+        }
+      }
+    },
+    "quantities": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "symbol",
+          "formula",
+          "definition"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "symbol": {
+            "$ref": "#/$defs/symbol"
+          },
+          "formula": {
+            "$ref": "#/$defs/formula"
+          },
+          "domain": {
+            "$ref": "#/$defs/name"
+          },
+          "domain_note": {
+            "$ref": "#/$defs/text"
+          },
+          "definition": {
+            "$ref": "#/$defs/text"
+          },
+          "written_as": {
+            "$ref": "#/$defs/written_as"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          }
+        }
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "short",
+          "factor",
+          "holds"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "short": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Za-zα-ω-]*$"
+          },
+          "factor": {
+            "$ref": "#/$defs/name"
+          },
+          "holds": {
+            "$ref": "#/$defs/formula"
+          },
+          "note": {
+            "$ref": "#/$defs/text"
+          },
+          "written_as": {
+            "$ref": "#/$defs/written_as"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          }
+        }
+      }
+    },
+    "properties": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "definition"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "definition": {
+            "$ref": "#/$defs/text"
+          },
+          "written_as": {
+            "$ref": "#/$defs/written_as"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          }
+        }
+      }
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "kind",
+          "status",
+          "assumes",
+          "concludes",
+          "sources"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "kind": {
+            "enum": [
+              "theorem",
+              "lemma",
+              "proposition",
+              "property",
+              "remark"
+            ]
+          },
+          "status": {
+            "enum": [
+              "bst",
+              "cited",
+              "stated",
+              "deduced"
+            ]
+          },
+          "assumes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/literal"
+            }
+          },
+          "limit_in": {
+            "$ref": "#/$defs/name"
+          },
+          "within": {
+            "$ref": "#/$defs/name"
+          },
+          "concludes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/literal"
+            }
+          },
+          "note": {
+            "$ref": "#/$defs/text"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          }
+        }
+      }
+    },
+    "identities": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "kind",
+          "definition",
+          "sources"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "kind": {
+            "enum": [
+              "equivalence",
+              "reduction"
+            ]
+          },
+          "definition": {
+            "$ref": "#/$defs/text"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          }
+        }
+      }
+    },
+    "families": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "label",
+          "writes",
+          "definition",
+          "schema"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "label": {
+            "$ref": "#/$defs/text"
+          },
+          "writes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "definition": {
+            "$ref": "#/$defs/text"
+          },
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "repository": {
+            "type": "string",
+            "description": "The repository that holds the family's parameter schema when it is not this one; the generator then checks the schema file's existence only where that repository's files are present."
+          }
+        }
+      }
+    },
+    "divergences": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/row"
+          }
+        ],
+        "unevaluatedProperties": false,
+        "required": [
+          "term",
+          "where",
+          "statement",
+          "sources",
+          "kind"
+        ],
+        "properties": {
+          "id": true,
+          "name": true,
+          "term": {
+            "$ref": "#/$defs/name"
+          },
+          "where": {
+            "type": "string",
+            "minLength": 1
+          },
+          "statement": {
+            "$ref": "#/$defs/text"
+          },
+          "sources": {
+            "$ref": "#/$defs/sources"
+          },
+          "kind": {
+            "enum": [
+              "meaning",
+              "notation",
+              "convention",
+              "absence"
+            ]
+          }
+        }
+      }
+    },
+    "category_concepts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[a-z0-9_-]+$"
+      }
+    }
+  }
+}
