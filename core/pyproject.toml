@@ -1,0 +1,30 @@
+# The core of the working group's apparatus (../apparatus.md), as the package a canonical model's repository pins:
+#   wg1-core @ git+https://github.com/econ-ark/sce-wg-1@<tag>#subdirectory=core
+[project]
+name = "wg1-core"
+version = "0.1.0"
+description = "SCE Working Group 1's core: the runner, the execution records, the canonical serialization and hash, the shock laws and the experiment checker that a canonical model's repository pins"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = [
+  "jsonschema",
+  "pyyaml",
+  "referencing",
+  "scipy",
+  "numpy",
+]
+
+[project.scripts]
+wg1core = "wg1core.runner:main"
+
+[dependency-groups]
+dev = ["pytest"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["wg1core"]

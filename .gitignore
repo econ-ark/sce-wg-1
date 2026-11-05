@@ -34,3 +34,8 @@ docs/semantic-ontology-primer.pdf
 docs/semantic-ontology-primer/
 project-a/slides/semantic-ontology-cases/deck.pdf
 project-a/slides/semantic-ontology-cases/deck.html
+
+# Python caches, and the core package's environment built from its lock file.
+__pycache__/
+.pytest_cache/
+core/.venv/
