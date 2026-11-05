@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 import textwrap
 from pathlib import Path
 
@@ -230,3 +231,31 @@ def test_the_environment_hash_sees_only_what_git_records(model):
     git(m.root, "commit", "-q", "-m", "ignore")
     again, _ = records.environment_hash(m.root, records.repository(m.root)["commit"], "harness")
     assert again == clean and tree and len(tree) in (40, 64)
+
+
+def test_the_verifier_runs_from_the_root_with_absolute_paths(model):
+    """The verifier's command runs from the repository's root, its own paths written from there, and `{member}` and
+    `{results}` are replaced by absolute paths."""
+    root = model["root"]
+    (root / "tools").mkdir()
+    (root / "tools" / "verify.py").write_text(textwrap.dedent("""\
+        import json, os, sys
+        member, results = sys.argv[1], sys.argv[3]
+        data = json.load(open(results))
+        with open(os.path.join(os.path.dirname(results), "verifier.json"), "w") as f:
+            json.dump({"cwd": os.getcwd(), "member": member, "results": results}, f)
+        sys.exit(0 if data.get("types") else 1)
+        """))
+    registry = yaml.safe_load(model["registry"].read_text())
+    registry["model"]["verifier"] = [sys.executable, "tools/verify.py", "{member}", "--verify-results", "{results}"]
+    model["registry"].write_text(yaml.safe_dump(registry))
+    git(root, "add", "-A")
+    git(root, "commit", "-q", "-m", "a verifier at the root")
+    assert run(model, "--levels", "low") == 0
+    assert runner.main(["--registry", str(model["registry"]), "verify", str(model["out"])]) == 0
+    seen = [json.loads(p.read_text()) for p in sorted((model["out"] / "stub").rglob("verifier.json"))]
+    assert len(seen) == 2
+    for s in seen:
+        assert Path(s["cwd"]).resolve() == root.resolve()
+        assert Path(s["member"]).is_absolute() and Path(s["member"]).is_file()
+        assert Path(s["results"]).is_absolute() and Path(s["results"]).name == "results.json"

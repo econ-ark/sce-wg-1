@@ -25,16 +25,19 @@ through it.
 ## What a model repository gives it
 
 A registry file, `harness/toolkits.yaml` by default, read by every command. It names the toolkits and, under `model`,
-what the core needs of the repository; every path is relative to the file.
+what the core needs of the repository; every path is relative to the file, except inside the verifier's command,
+which runs from the repository's root and names its paths from there.
 
 ```yaml
 model:
   results_schema: ../schemas/bst/results.schema.json          # the family's results schema, which `reports` and checks resolve in
   anchors: ../ontologies/buffer-stock-models/bst-anchors.txt   # optional: the source page's anchors an experiment may cite
   experiments: ../schemas/bst/experiments                      # optional: where `list` looks for */experiment.yaml
-  verifier: [uv, run, --project, ., --frozen, python, ../schemas/checker/check.py, "{member}", --verify-results, "{results}"]
-                                                               # optional: the command that verifies one results file; its exit
-                                                               # status is the verdict; without it the results schema's validation is
+  verifier: [uv, run, --project, harness, --frozen, python, schemas/checker/check.py, "{member}", --verify-results, "{results}"]
+                                                               # optional: the command that verifies one results file, run from the
+                                                               # repository's root with its paths written from there, `{member}` and
+                                                               # `{results}` replaced by absolute paths; its exit status is the
+                                                               # verdict; without it the results schema's validation is
   registry_dir: runs.registry                                  # optional: where `register` writes; this is the default
 toolkits:
   hark:
