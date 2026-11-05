@@ -259,3 +259,28 @@ def test_the_verifier_runs_from_the_root_with_absolute_paths(model):
         assert Path(s["cwd"]).resolve() == root.resolve()
         assert Path(s["member"]).is_absolute() and Path(s["member"]).is_file()
         assert Path(s["results"]).is_absolute() and Path(s["results"]).name == "results.json"
+
+
+def test_the_record_names_the_continuous_integration_run(model, monkeypatch):
+    """Under GitHub Actions the `where` block carries the run, the provider, the identifier and the attempt's address,
+    from the service's own variables; on a workstation it carries no `ci` at all."""
+    for k in ("GITHUB_ACTIONS", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT", "GITHUB_REPOSITORY", "GITHUB_SERVER_URL"):
+        monkeypatch.delenv(k, raising=False)
+    assert "ci" not in records.machine("none")
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    monkeypatch.setenv("GITHUB_RUN_ID", "123456")
+    monkeypatch.setenv("GITHUB_RUN_ATTEMPT", "2")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "example/model")
+    monkeypatch.setenv("GITHUB_SERVER_URL", "https://github.com")
+    assert run(model, "--levels", "low") == 0
+    r = json.loads(next((model["out"] / "stub" / "m1").rglob("record.json")).read_text())
+    assert r["where"]["ci"] == {"provider": "github-actions", "run_id": "123456",
+                                "url": "https://github.com/example/model/actions/runs/123456/attempts/2"}
+    records.validate(r)
+
+
+def test_a_clone_whose_origin_is_a_local_path_is_refused_before_anything_runs(model):
+    git(model["root"], "remote", "set-url", "origin", str(model["root"].parent / "elsewhere"))
+    with pytest.raises(SystemExit, match="origin is"):
+        run(model, "--levels", "low")
+    assert not model["out"].exists()

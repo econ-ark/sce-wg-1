@@ -24,7 +24,8 @@ conditions, the start, end and duration, the outcome, and the extensions.
   working tree was dirty, which means that `git status --porcelain` printed anything, tracked changes or untracked
   files that are not ignored; and when it was, the tree of the working tree as it stood, written through a temporary
   index that both git commands read, so that the real index is neither read nor touched. A finding is not made from
-  a dirty run, but the record says exactly what ran.
+  a dirty run, but the record says exactly what ran. A clone whose origin is a local path has no remote a record can
+  name, and the runner refuses it before anything runs.
 - **The environment's hash** is taken over what git records under the environment's directory in the tree that ran,
   the commit's tree when clean and the working tree's when dirty, listed with `git ls-tree`, never from the index or
   the files on disk, since the index can hold staged blobs and the bytes on disk can differ from a blob under
@@ -33,7 +34,10 @@ conditions, the start, end and duration, the outcome, and the extensions.
   the result: builds are not bit-reproducible, and a REMARK's image depends on its whole checkout. The image's
   identifier is the image's identity.
 - **The machine** is the host's facts alone: the processor, its logical cores, the memory, the operating system and
-  kernel, and the container runtime, or none for a run on the host. **The conditions** are what the run was set and
+  kernel, and the container runtime, or none for a run on the host; and, when a continuous-integration service ran
+  it, the run itself under `ci`: the provider, the run's identifier and the address of the attempt, which is what
+  ties a record registered from such a run back to it, the runner's host name being a throwaway. **The conditions**
+  are what the run was set and
   limited to: the thread variables actually set, whether a just-in-time compiler's cache was cold, so that the duration
   includes compilation, and the caps on processors, memory, wall time and network.
 - **The stamps** are RFC 3339 with an offset, and the **duration** comes from a monotonic clock around the build or the

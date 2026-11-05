@@ -17,6 +17,7 @@ import hashlib
 import json
 import os
 import platform
+import re
 import subprocess
 import tempfile
 from pathlib import Path
@@ -123,16 +124,41 @@ def _read(path: str) -> str:
         return ""
 
 
+def ci_run() -> dict | None:
+    """The continuous-integration run executing this process, as the schema's `ci` block, read from the provider's own
+    variables: GitHub Actions today, its run identifier and the address of the attempt that ran. None on a workstation."""
+    env = os.environ
+    if env.get("GITHUB_ACTIONS") != "true" or not env.get("GITHUB_RUN_ID"):
+        return None
+    out = {"provider": "github-actions", "run_id": env["GITHUB_RUN_ID"]}
+    if env.get("GITHUB_REPOSITORY"):
+        server = env.get("GITHUB_SERVER_URL") or "https://github.com"
+        attempt = f"/attempts/{env['GITHUB_RUN_ATTEMPT']}" if env.get("GITHUB_RUN_ATTEMPT") else ""
+        out["url"] = f"{server}/{env['GITHUB_REPOSITORY']}/actions/runs/{env['GITHUB_RUN_ID']}{attempt}"
+    return out
+
+
+def remote_is_named(remote: str) -> bool:
+    """Whether a remote is one a record may name: the schema's https pattern, after normalization."""
+    pattern = json.loads(CORE_SCHEMA.read_text(encoding="utf-8"))["$defs"]["Https"]["pattern"]
+    return re.fullmatch(pattern, remote) is not None
+
+
 def machine(runtime: str) -> dict:
-    """The `where` block: the machine's facts and the runtime, nothing of the run's settings."""
+    """The `where` block: the machine's facts, the runtime, and the continuous-integration run when there is one;
+    nothing of the run's settings."""
     cpu = next((ln.split(":", 1)[1].strip() for ln in _read("/proc/cpuinfo").splitlines()
                 if ln.startswith("model name")), platform.processor() or platform.machine())
     mem = next((int(ln.split()[1]) * 1024 for ln in _read("/proc/meminfo").splitlines()
                 if ln.startswith("MemTotal:")), 0)
     pretty = next((ln.split("=", 1)[1].strip().strip('"') for ln in _read("/etc/os-release").splitlines()
                    if ln.startswith("PRETTY_NAME=")), platform.platform())
-    return {"host": platform.node(), "cpu": cpu, "cores": os.cpu_count() or 1, "memory_bytes": mem, "os": pretty,
-            "kernel": platform.release(), "runtime": runtime}
+    out = {"host": platform.node(), "cpu": cpu, "cores": os.cpu_count() or 1, "memory_bytes": mem, "os": pretty,
+           "kernel": platform.release(), "runtime": runtime}
+    ci = ci_run()
+    if ci:
+        out["ci"] = ci
+    return out
 
 
 def docker_runtime() -> str | None:

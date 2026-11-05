@@ -378,12 +378,16 @@ def cmd_run(args) -> int:
     members = args.members.split(",") if args.members else [m["id"] for m in exp["members"]]
     out = Path(args.out).resolve() if args.out else model.dir / "runs" / exp["experiment"].replace("/", "-")
     jobs = plan_jobs(exp_path, exp, model, toolkits, levels, members, out)
+    repo = records.repository(model.root)
+    if not records.remote_is_named(repo["remote"]):
+        raise SystemExit(f"origin is {repo['remote']!r}, which a record cannot name; set it to the repository's https or "
+                         "ssh address before running, since every record names the repository by its remote")
     out.mkdir(parents=True, exist_ok=True)
     runtime = records.docker_runtime() if args.runtime == "docker" else None
     if args.runtime == "docker" and runtime is None:
         raise SystemExit("--runtime docker: the Docker daemon does not answer; run under a shell in the docker group")
     uv = subprocess.run(["uv", "--version"], capture_output=True, text=True)
-    ctx = {"model": model, "runtime": args.runtime, "run_id": out.name, "repo": records.repository(model.root),
+    ctx = {"model": model, "runtime": args.runtime, "run_id": out.name, "repo": repo,
            "where": records.machine(runtime or "none"), "uv_version": uv.stdout.strip() if uv.returncode == 0 else "uv",
            "recorder": {**identity(), "name": "wg1core runner"},
            "experiment": {"id": exp["experiment"], "sha256": exp_hash},

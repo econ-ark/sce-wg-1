@@ -49,7 +49,11 @@ toolkits:
     threads: 2                                 # the cap on each job's BLAS and OpenMP threads
 ```
 
-The repository's root is the git top level of the registry file's folder; the records are written against it.
+The repository's root is the git top level of the registry file's folder; the records are written against it. Every
+record names the repository by its remote, `origin` normalized to its https form, so a clone whose origin is a local
+path is refused before anything runs, until its origin is set. Under GitHub Actions a record's `where.ci` names the
+run: the provider, the run's identifier and the address of the attempt that ran, read from the service's own
+variables, since the runner's host name is a throwaway.
 
 ## The commands
 
