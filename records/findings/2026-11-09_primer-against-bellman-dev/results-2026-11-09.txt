@@ -1,0 +1,37 @@
+Output of deck_check.py on 2026-11-09 (jhu-dell), copied from the session's terminal. The long refusal
+messages are cut at the width the script printed; the comparator's renaming is cut after its first
+entries.
+
+======= CURRENT bellman-dev (5c82c1a20)
+[ACCEPT] deck file (should construct)  -> ElaboratedStage
+[ACCEPT] doc example (should construct)  -> ElaboratedStage
+[REFUSE] shock outside expectation, y NOT in inputs: V[<]=E_{y}(V)+y
+    ConstructionError rule=signature-complete
+    "deck.bl:23:5-23:47: the line reads y, which the header of block 'dcsn_to_arvl' does not list and no earlier line of the block defines; ..."
+[REFUSE] shock outside expectation, y IN inputs: V[<]=E_{y}(V)+y
+    ConstructionError rule=shock-reintroduced
+    "deck.bl:23:5-23:47: the line reads the shock y beside a term in which the expectation over y on line dcsn_to_arvl.value has already integrated y, and no other value input of that combination still depends on y; a backward function does not read a shock again after its expectation; ... (address 'dcsn_to_arvl.value'; rule shock-reintroduced)"
+[REFUSE] continuation value at decision perch: cntn_to_dcsn input side !dcsn
+    ConstructionError rule=field-perch
+    "deck.bl:19:1-21:2: the mark on V[>] places the field at the cntn perch, and the input side of block 'cntn_to_dcsn' is marked `: !dcsn`; ... (address 'cntn_to_dcsn'; rule field-perch)"
+[REFUSE] continuation value declared @ !dcsn on the field
+    ConstructionError rule=field-perch
+    "deck.bl:19:1-21:2: V[>] on the input side of block 'cntn_to_dcsn' is marked for the cntn perch and carries the perch word for dcsn; the mark and the word name one perch (address 'cntn_to_dcsn'; rule field-perch)"
+[ACCEPT] mean of shock in transition: m=R*k+exp(mu+sig^2/2)  -> ElaboratedStage
+[ACCEPT] second beta in expectation block  -> ElaboratedStage
+COMPARE verdict: equal share: 1.0 renaming: {"buffer_stock": "buffer_stock", "c": "c", "w": "m", "b": "k", "a": "a", "V": "V", "y": "y", ...
+
+======= BASELINE b84a6934d (13 Oct)
+[ACCEPT] deck file (should construct)  -> ElaboratedStage
+[ACCEPT] doc example (should construct)  -> ElaboratedStage
+[REFUSE] shock outside expectation, y NOT in inputs: V[<]=E_{y}(V)+y
+    ConstructionError rule=signature-complete
+[REFUSE] shock outside expectation, y IN inputs: V[<]=E_{y}(V)+y
+    ConstructionError rule=shock-reintroduced
+[REFUSE] continuation value at decision perch: cntn_to_dcsn input side !dcsn
+    ConstructionError rule=field-perch
+[REFUSE] continuation value declared @ !dcsn on the field
+    ConstructionError rule=field-perch
+[ACCEPT] mean of shock in transition: m=R*k+exp(mu+sig^2/2)  -> ElaboratedStage
+[ACCEPT] second beta in expectation block  -> ElaboratedStage
+COMPARE verdict: equal share: 1.0 renaming: {"buffer_stock": "buffer_stock", "c": "c", "w": "m", "b": "k", "a": "a", "V": "V", "y": "y", ...
