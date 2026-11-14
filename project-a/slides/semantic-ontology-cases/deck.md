@@ -1192,7 +1192,7 @@ td code { font-size: 14px; }
 | Whether a symbol is a variable, a function, or a random variable | The symbol $m_t$, defined by $m_t=R\,k_t+y_t$, is i) the path of one household's resources, ii) the function $(k,y)\mapsto Rk+y$ composed inside the operator, and iii) the random variable whose law is the cross-sectional distribution. A paper writes one symbol for all three meanings, whereas code must represent them as three objects of different types with different uses. |
 | Shock law | The statement fixes $\log y_t\sim N(\mu_y,\sigma_y^2)$. In the shorter form $y\sim\mathrm{LogNormal}(\mu_y,\sigma_y)$, $\mu_y$ denotes the mean of $\log y$ under one convention and the mean of $y$ under another. |
 
-<div class="footnote">The LogNormal convention: Project Bellman (the authors' project, slide 33), reference page "Shock distributions".</div>
+<div class="footnote">The LogNormal convention: Project Bellman (the authors' project, slide 33), reference page <a href="https://bellman.io/Bellman-Sym/reference/laws/">“Shock distributions”</a>.</div>
 
 
 ---
@@ -1302,7 +1302,7 @@ td code { font-size: 14px; }
 </div>
 </div>
 
-<div class="footnote">Bellman-SYM, Stages §§1–4: the documentation example, whose b and w are written here as the calculus’s k and m (Bellman calculus, Stages and perches §1, bellman-ddsl/docs) &middot; the law line fixes the convention that slide 30 left to a subfield &middot; Bellman-SYM and bellman-ddsl are internal Project Bellman documentation, not yet public.</div>
+<div class="footnote">Bellman-SYM, <a href="https://bellman.io/Bellman-Sym/01-stage/">Stages</a> §§1–4: the documentation example, whose b and w are written here as the calculus’s k and m (Bellman calculus, <a href="https://bellman.io/bellman-calculus/03-Stages%20and%20perches/#1-the-general-stage">Stages and perches</a> §1) &middot; the law line fixes the convention that slide 30 left to a subfield &middot; Project Bellman’s documentation is public, at <a href="https://bellman.io/">bellman.io</a>.</div>
 
 
 ---
@@ -1337,7 +1337,7 @@ td code { font-size: 13.5px; }
 | writes a second `β` in the expectation block | <span class="c-green">accepts</span> it, leaving the second `β` visible on its own line |
 | would impose a stationary closure $v_{t+1}=v_t$ | has no line for it, since `V[>]` comes from the next period or the terminal value |
 
-<div class="footnote">The reference on refusals, rules shock-reintroduced and field-perch; Bellman-SYM, Field equations §5, Perch tagging rules §3, Periods §§2–3, Trellises §2; the internal runs of <code>elaborate_text</code> of 13 October 2026.</div>
+<div class="footnote">The reference on <a href="https://bellman.io/Bellman-Sym/reference/refusals/#3-the-catalogue">refusals</a>, rules shock-reintroduced and field-perch; Bellman-SYM, <a href="https://bellman.io/Bellman-Sym/03-field-equations/#5-expectations">Field equations</a> §5, <a href="https://bellman.io/Bellman-Sym/appendices/13-perch-tagging-rules/#3-shocks-and-expectations">Perch tagging rules</a> §3, <a href="https://bellman.io/Bellman-Sym/06-period/">Periods</a> §§2–3, <a href="https://bellman.io/Bellman-Sym/07-trellis/#2-inter-period-connectors">Trellises</a> §2; the internal runs of <code>elaborate_text</code> of 13 October 2026.</div>
 
 
 ---
@@ -1854,7 +1854,7 @@ td code { font-size: 14px; }
 | Checker | the elaborator (slide 34), which constructs the typed object or refuses the file, naming the rule the file breaks and the line; and the comparator, a program that compares two elaborated files up to renaming and reports, for each kind of item, agreement, difference or an undecided residue, the items it can neither match nor reject |
 | Run on the file of slide 33 | The elaborator constructed the object from the file and refused the line `E_{y}(V) + y`, with `y` listed among the block's inputs, under `shock-reintroduced`.<br>The comparator read the file and the documentation example, with b and w for k and m, as one object under that renaming. |
 
-<div class="footnote">Bellman-SYM, Stages §5 (checked interpretation) &middot; bellman-ddsl wiki (internal), Υ §1 (the elaborator) and judge §4 (the comparator) &middot; the internal runs: <code>elaborate_text</code> of <code>bellman.factory.elaboration</code> and <code>compare</code> of <code>meaning_map_training.compare</code>, 13 October 2026, on the stage file of slide 33 and on Bellman-SYM's documentation example (Stages §4).</div>
+<div class="footnote">Bellman-SYM, <a href="https://bellman.io/Bellman-Sym/01-stage/#5-files-and-next-steps">Stages</a> §5 (checked interpretation) &middot; Project Bellman’s wiki, <a href="https://bellman.io/wiki/upsilon/#1-the-elaborator">Υ</a> §1 (the elaborator) and <a href="https://bellman.io/wiki/judge/#4-comparing-texts-and-comparing-elaborated-semantic-objects">judge</a> §4 (the comparator) &middot; the internal runs: <code>elaborate_text</code> of <code>bellman.factory.elaboration</code> and <code>compare</code> of <code>meaning_map_training.compare</code>, 13 October 2026, on the stage file of slide 33 and on Bellman-SYM's documentation example (<a href="https://bellman.io/Bellman-Sym/01-stage/#4-a-complete-stage-file">Stages</a> §4).</div>
 
 
 ---
@@ -1944,7 +1944,7 @@ $$\begin{aligned}
 </div>
 </div>
 
-<div class="footnote">Bellman-SYM, Project Bellman's model language, parses a file into such a tree, builds the semantic graph from it by a checked interpretation, which the calculus calls Υ (upsilon), and discards the tree (Bellman calculus, Introduction §§1–2; Bellman-SYM, Stages §5).</div>
+<div class="footnote">Bellman-SYM, Project Bellman's model language, parses a file into such a tree, builds the semantic graph from it by a checked interpretation, which the calculus calls Υ (upsilon), and discards the tree (Bellman calculus, <a href="https://bellman.io/bellman-calculus/01-Introduction%20to%20T-calculus/">Introduction</a> §§1–2; Bellman-SYM, <a href="https://bellman.io/Bellman-Sym/01-stage/#5-files-and-next-steps">Stages</a> §5).</div>
 
 
 ---
