@@ -9,7 +9,8 @@ each toolkit, one stage file and one parameter file can be solved by every toolk
 results file, the checker verifies each file, and the files are compared.
 
 A stone is written for a competent reader: an AI session or a person who reads the toolkit's documentation and code,
-knows the mathematical structure of the problem, and is given the parameters and the settings. It states what the
+knows the mathematical structure of the problem, and is given the [parameters](https://bellman.io/wiki/parameters/) and the
+[settings](https://bellman.io/wiki/settings/). It states what the
 toolkit is expected to perform, and it records what a reader did to make the toolkit perform it. It does not prescribe
 how the toolkit is to be called: that is the reader's to work out from the toolkit, and to record.
 
@@ -20,8 +21,9 @@ parameter files. Each toolkit is a spoke, mapped to the hub alone. No stone tran
 toolkits meet only in their results files, which the family's results schema makes alike.
 
 This is the design of Project Bellman's Rosetta stone. That registry records which operations and methods a toolkit's
-routines carry out, and the conventions under which each correspondence holds (Bellman's documentation, *Core
-concepts*). A stone holds the toolkit's side only: the operator's side, the stage's own, is Bellman's to fill. It adds
+routines carry out, and the conventions under which each correspondence holds (Bellman's documentation,
+[*How Bellman-SYM works*](https://bellman.io/overview/01-concepts/#32-from-semantics-to-code), and its
+[workflow](https://bellman.io/overview/06-workflow/)). A stone holds the toolkit's side only: the operator's side, the stage's own, is Bellman's to fill. It adds
 what this project needs at the two ends, which Bellman's registry does not hold: the parameter file going in and the
 results file coming out.
 
@@ -39,11 +41,14 @@ What the reader may not decide for itself. Short, exact, and in one place each.
    transition, and so on, under the family's rules of attachment. Each place takes one method. The methods are
    stated in two files, each part in exactly one of them.
    - *The methods addition* holds whatever Bellman's language can state. It is a methods file in Bellman's form
-     (Bellman's documentation, *Addition* and *Methodization*): an addition to the family's stage file, kept beside
+     (Bellman's documentation, [*Addition*](https://bellman.io/wiki/addition/) and
+     [*Methodization*](https://bellman.io/Bellman-Sym/04-methodization/)): an addition to the family's stage file, kept beside
      the adapter, one for each family the toolkit solves. An entry names the place by its path in the stage and the
-     method by Bellman's word for it, from Bellman's published method types; once a reader has realized the method,
-     the entry also names the handler, as a package and a callable in it. A place whose method Bellman has no word
-     for carries its handler alone. The addition is checked by binding it on the stage file under Bellman's package,
+     method by Bellman's word for it, from Bellman's published
+     [method types](https://bellman.io/Bellman-Sym/reference/methods/); once a reader has realized the method,
+     the entry also names the [handler](https://bellman.io/wiki/handler/), as a package and a callable in it. A place whose method Bellman has no word
+     for carries its handler alone. The addition is checked by
+     [binding it](https://bellman.io/Bellman-Sym/04-methodization/#7-loading-and-binding) on the stage file under Bellman's package,
      which refuses a place the stage does not have and a word the place does not admit.
    - *The YAML method file* holds what an addition cannot: a part the stage has no place for, such as the stationary
      population, and a method that is neither a word nor a routine at a place. Every run writes it beside its
