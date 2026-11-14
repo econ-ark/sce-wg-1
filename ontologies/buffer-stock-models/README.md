@@ -1,13 +1,13 @@
 # Buffer-stock models
 
 A semantic ontology of buffer-stock saving models, in the sense of the working group's
-[Project A](../../project-a/special-issue-proposal.md). It has three parts: what is assumed to exist (the *ontology*),
+[Project A](https://econ-ark.github.io/sce-wg-1/project-a.html). It has three parts: what is assumed to exist (the *ontology*),
 what stands for what (the *denotation*), and what is written down (the *syntax*). It also records when the reading holds
 and when two statements of a model are the same. Its primary source is Carroll and Shanker's *Theoretical Foundations of
 Buffer Stock Saving* (BST), cited by the anchors of [its published page](https://llorracc.github.io/BufferStockTheory/).
 Where another paper, a notation or a schema uses BST's terms in another sense, the ontology records the divergence. It
 names no toolkit, and nothing peculiar to how a toolkit solves or simulates a model: how each toolkit holds the terms,
-and where it departs from them, is in that toolkit's [Rosetta Stone](../../rosetta/README.md).
+and where it departs from them, is in that toolkit's [Rosetta Stone](https://github.com/llorracc/sce-wg-1-dev/blob/main/rosetta/README.md).
 
 **Status: draft, version 0.1.0-draft.3.** Its decisions are the working group's to confirm; the questions still open
 are listed [at the end](#open-questions). Its namespace is provisional, as the ontology of probability distributions'
@@ -336,7 +336,7 @@ Each divergence is recorded where it is found, with a checkable source. Each has
 - or an absence.
 
 A toolkit's departures from the terms are not divergences of the ontology: each is recorded in that toolkit's
-[Rosetta Stone](../../rosetta/README.md).
+[Rosetta Stone](https://github.com/llorracc/sce-wg-1-dev/blob/main/rosetta/README.md).
 
 The divergences:
 - **BST and Bellman-SYM:** 𝕄 names BST's cross-sectional mean and the forward distribution operator alike.
