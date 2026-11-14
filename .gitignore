@@ -38,6 +38,3 @@ project-a/slides/semantic-ontology-cases/deck.html
 # Python caches from the ontologies' generators and tests.
 __pycache__/
 .pytest_cache/
-
-# Python caches, and the core package's environment built from its lock file.
-core/.venv/
