@@ -40,6 +40,8 @@ meaning is corrected.
   it, is rescinded, on the owner's ruling of 2026-11-14.
 - The README's section on Bellman-SYM's terms links the documentation's pages on the stage, its perches and the values
   at them.
+- The README's links to Project A and to the Rosetta Stones are absolute addresses, so that they hold in a copy of this
+  folder, such as the buffer-stock model's repository's.
 
 ## 0.1.0-draft.2 (unreleased)
 
