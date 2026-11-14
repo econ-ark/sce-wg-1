@@ -10,7 +10,8 @@ family for it.
 A truncation bound left out of a parameter file is three standard deviations; null is no bound. `filled` writes the
 defaults in, and the hash is taken over the filled form, so a law written with its defaults and without them hash alike.
 Each law is a chart of a subfamily of mean one in the ontology of probability distributions, whose identifier the law's
-class names; the conversions to Bellman-SYM's charts are the ontology's.
+class names; the conversions to Bellman-SYM's charts are the ontology's. Bellman-SYM's laws are its documentation's
+shock distributions, https://bellman.io/Bellman-Sym/reference/laws/.
 """
 
 from __future__ import annotations

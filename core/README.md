@@ -152,7 +152,7 @@ and this package offers the reader for that kind, `wg1core.status:read`, as an e
 | `runner` | the commands above |
 | `records` | the records: the repository's state from git, the environment's hash over what git records, the machine, the stamps and durations, the validation |
 | `canonical` | the strict YAML subset, the canonical serialization and the hash that identifies a model |
-| `laws` | the shock laws a parameter file states, with their moments in closed form and their counterparts in the stage files' language |
+| `laws` | the shock laws a parameter file states, with their moments in closed form and their counterparts in the stage files' language ([shock distributions](https://bellman.io/Bellman-Sym/reference/laws/)) |
 | `experiment` | experiment files and what their validator cannot say |
 | `metrics` | the distance between two files' numbers: the core's three metrics, and those an experiment defines |
 | `comparator` | the experiment's checks evaluated on a run, and every job's distance from its member's reference |
