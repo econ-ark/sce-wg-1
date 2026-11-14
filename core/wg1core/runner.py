@@ -53,6 +53,7 @@ import json
 import os
 import re
 import shutil
+import signal as signals
 import subprocess
 import sys
 import time
@@ -71,6 +72,25 @@ TOOLKIT_KEYS = {"adapter", "code", "environment", "stone", "levels", "threads", 
 KINDS = ("exact", "numerical")  # how an entry obtains its solution; numerical when the registry file states none
 MODEL_KEYS = {"results_schema", "anchors", "experiments", "verifier", "registry_dir", "identity"}
 REGISTRY_FILES = ("harness/toolkits.yaml", "toolkits.yaml")
+# Linux's signal numbers, by which a container's exit code of 128 and a number names a signal, whatever the host's are:
+# on macOS, 10 is SIGBUS and 30 SIGUSR1.
+LINUX_SIGNALS = dict(enumerate(
+    "SIGHUP SIGINT SIGQUIT SIGILL SIGTRAP SIGABRT SIGBUS SIGFPE SIGKILL SIGUSR1 SIGSEGV SIGUSR2 SIGPIPE SIGALRM "
+    "SIGTERM SIGSTKFLT SIGCHLD SIGCONT SIGSTOP SIGTSTP SIGTTIN SIGTTOU SIGURG SIGXCPU SIGXFSZ SIGVTALRM SIGPROF "
+    "SIGWINCH SIGIO SIGPWR SIGSYS".split(), start=1))
+
+
+def signal_name(number: int, linux: bool) -> str:
+    """A signal's name, `SIGKILL`, by Linux's numbering for a container and the host's for a process the core started;
+    `signal <number>` for one without a name, as every signal was recorded before, which a reader still accepts."""
+    if linux:
+        name = LINUX_SIGNALS.get(number)
+    else:
+        try:
+            name = signals.Signals(number).name
+        except ValueError:
+            name = None
+    return name or f"signal {number}"
 
 
 def sha256_file(path: Path) -> str:
@@ -97,13 +117,25 @@ class Model:
         self.results_schema_file = (self.dir / m["results_schema"]).resolve() if m.get("results_schema") else None
         self.results_schema = (json.loads(self.results_schema_file.read_text(encoding="utf-8"))
                                if self.results_schema_file else None)
-        anchors = (self.dir / m["anchors"]).resolve() if m.get("anchors") else None
-        self.anchors = experiments.read_anchors(anchors) if anchors and anchors.is_file() else None
+        self.anchors = self._anchors(m.get("anchors"))
         self.experiments_dir = (self.dir / m["experiments"]).resolve() if m.get("experiments") else self.root
         self.verifier = [str(a) for a in m["verifier"]] if m.get("verifier") else None
         self.registry_dir = (self.dir / m.get("registry_dir", "runs.registry")).resolve()
         self.identity = [str(k) for k in m.get("identity", [])]
         self.toolkits = self._toolkits(raw.get("toolkits") or {})
+
+    def _anchors(self, raw) -> dict[str, set[str]] | None:
+        """Each source's anchors by its key in an experiment's `sources`. The registry file names one file, BST's, or a
+        file per source key; a file that is not there leaves its source unchecked, as before."""
+        if not raw:
+            return None
+        files = raw if isinstance(raw, dict) else {"bst": raw}
+        out = {}
+        for key, rel in files.items():
+            path = (self.dir / str(rel)).resolve()
+            if path.is_file():
+                out[str(key)] = experiments.read_anchors(path)
+        return out or None
 
     def _toolkits(self, raw: dict) -> dict:
         out = {}
@@ -350,6 +382,8 @@ def run_job(job: dict, tk: dict, ctx: dict) -> dict:
             code, termination = 124, "timeout"
             if in_container:
                 docker("kill", container_name(job, ctx["run_id"]), check=False)
+    if not in_container and termination == "exited" and code < 0:
+        termination, signal = "signal", signal_name(-code, linux=False)  # a process the core started, ended by a signal
     when = {"started": started, "ended": records.now(), "duration_seconds": round(time.perf_counter() - clock, 3)}
     if in_container:
         state = docker("inspect", "--format", "{{.State.ExitCode}} {{.State.OOMKilled}}",
@@ -361,7 +395,7 @@ def run_job(job: dict, tk: dict, ctx: dict) -> dict:
                 if oom == "true":
                     termination = "oom"
                 elif code > 128:
-                    termination, signal = "signal", f"signal {code - 128}"
+                    termination, signal = "signal", signal_name(code - 128, linux=True)
         docker("rm", "--force", container_name(job, ctx["run_id"]), check=False)
     ok = code == 0 and (d / "results.json").is_file()
     shown = [model.rel(Path(c)) if c.startswith("/") else c for c in cmd]

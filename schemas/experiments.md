@@ -40,7 +40,7 @@ Three rules:
 |---|---|
 | `experiment` | the name and version, as a family's: `restrained-limit/1`. A change to what it asks makes a new version |
 | `title`, `statement` | what it shows, in words |
-| `sources` | where it comes from, by anchor; BST's must be among the published page's (`bst-anchors.txt` in the ontology) |
+| `sources` | where it comes from, by anchor, under each source's key; a source's anchors must be among its page's, in the file the model's registry file names for that key (BST's is `bst-anchors.txt` in the ontology) |
 | `members` | for each member: its `id` (the parameter file's name), the parameter file and the request file, each with its hash as the checker takes it, and optionally its `reference`: the reference results file, that file's hash, its `kind`, what it was `produced_by` and `certified_by`, the record that produced it, and the reference's certified `errors` per quantity (below). Pinning the hashes means an edited member or reference makes the experiment fail its test, not silently change; a changed reference is a new experiment version. The hash identifies the reference's file, not a reproduction of it: a results file need not be byte-identical across machines, so a solution is compared with the reference by distance, never by hash |
 | `levels` | the named precision levels every toolkit runs: `low`, `medium` and `high`, as a toolkit's ladder names its elements. A toolkit may run more |
 | `reports` | the results-file quantities every run must carry beyond what the results schema requires of every file, as paths into it: `types[].rule.c`, `types[].kink` |
@@ -237,7 +237,7 @@ The checker of experiment files, part of the harness's core, checks that:
 - the experiment file is strict YAML and validates;
 - the members' and request files exist and hash as the file says, and each request file is for its member;
 - the checks name declared members, and every quantity resolves in the family's results schema;
-- the report scripts exist, and BST's anchors are the published page's;
+- the report scripts exist, and each source's anchors are its page's, for a source whose anchors the model names;
 - the members of a member-against-member check ask for the same points;
 - a check names levels the experiment has, and a check against the reference names members that pin one, each
   stating the error an exact entry is to be held to;
