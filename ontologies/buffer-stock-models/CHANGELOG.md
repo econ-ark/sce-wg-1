@@ -3,6 +3,23 @@
 Each entry says whether a change alters a class (its axioms), a term's meaning (a definition or a formula), a written
 form, or only labels and text.
 
+## 0.1.0-draft.3 (unreleased)
+
+Bellman-SYM's documentation is public, at bellman.io, so the ontology links its concepts. No class, axiom or meaning
+changes.
+
+**Written forms.**
+- Each term and category that names a Bellman-SYM concept links to the concept's page,
+  `https://bellman.io/wiki/<slug>/`: in the Turtle file as `rdfs:seeAlso`, in the table as `bellman_url`. Every
+  pinned slug's page answered on 2026-11-14.
+- The source `bellman-sym`, Bellman-SYM's documentation, is declared, with the address of its wiki, so the ontology
+  names it as a source. The generator refuses a source that names a concept without it.
+
+**Labels and text.**
+- The statement that Bellman-SYM's documentation is not public, in the README, `bellman-concepts.txt` and the
+  definition of `bellmanConcept`, is corrected. The rule that a concept is named and never linked, which rested on
+  it, is rescinded, on the owner's ruling of 2026-11-14.
+
 ## 0.1.0-draft.2 (unreleased)
 
 The ontology stated in Bellman-SYM's terms, after consultation on Bellman-SYM's concepts on 2026-10-31. It names no

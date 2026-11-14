@@ -20,6 +20,7 @@ stage files, run in the buffer-stock model's repository, which holds the members
 from __future__ import annotations
 
 import copy
+import json
 import math
 import re
 from pathlib import Path
@@ -91,6 +92,17 @@ def test_turtle_parses_as_rdf():
     assert len(rows) == len(generate.rows(SOURCE))
 
 
+def test_each_bellman_concept_links_to_its_page():
+    """A term or category that names a Bellman-SYM concept links to the concept's page on bellman.io."""
+    table = json.loads(generate.TABLE.read_text(encoding="utf-8"))
+    named = [r for r in table["rows"] if "bellman_concept" in r]
+    assert named
+    for r in named:
+        assert r["bellman_url"] == f"https://bellman.io/wiki/{r['bellman_concept']}/"
+    ttl = generate.TURTLE.read_text(encoding="utf-8")
+    assert ttl.count("rdfs:seeAlso <https://bellman.io/wiki/") == ttl.count(":bellmanConcept \"")
+
+
 @pytest.mark.parametrize("break_it", [
     lambda s: s["results"][0]["assumes"].append("no-such-condition"),
     lambda s: s["conditions"][0].update(holds="thorn < undefined_symbol"),
@@ -102,6 +114,7 @@ def test_turtle_parses_as_rdf():
     lambda s: s["quantities"][0].update(formula="E(X)"),
     lambda s: next(r for r in s["objects"] if r["name"] == "value-arrival").update(perch="perch-decision"),
     lambda s: next(r for r in s["objects"] if r["name"] == "stage").update(bellman_concept="not-a-bellman-concept"),
+    lambda s: s["ontology"]["sources"].pop("bellman-sym"),
     lambda s: next(r for r in s["objects"] if r["name"] == "value-decision").update(of_state="consumption"),
     lambda s: next(r for r in s["results"] if r["name"] == "liquidity-constrained-limit").update(limit_in="crra"),
 ])

@@ -11,8 +11,8 @@ Beyond the schema, the generator refuses a source whose identifiers repeat or re
 whose references do not resolve, whose formulas leave the formula syntax or name a symbol not defined before them, whose
 results assume or conclude anything but a condition or a property, whose perches and states do not resolve or disagree,
 or whose citations are not pinned: a bst anchor not in bst-anchors.txt, a registry key not in registry-keys.txt, a
-Bellman-SYM concept not in bellman-concepts.txt, a law or law property not a row of the ontology of probability
-distributions, a source, format or format role the source does not declare.
+Bellman-SYM concept not in bellman-concepts.txt or named without the source that gives its page, a law or law property
+not a row of the ontology of probability distributions, a source, format or format role the source does not declare.
 
 The formula syntax is the ontology of probability distributions' (its formulas.py), shared rather than copied.
 """
@@ -196,6 +196,9 @@ def check(source: dict) -> None:
     # citations and written forms
     anchors, registry, concepts = _pinned(BST_ANCHORS), _pinned(REGISTRY_KEYS), _pinned(BELLMAN_CONCEPTS)
     pd_ids = {r["id"] for r in json.loads(PD_TABLE.read_text(encoding="utf-8"))["rows"]}
+    if (source["category_concepts"] or any("bellman_concept" in row for _, row in all_rows)) \
+            and "bellman-sym" not in source["ontology"]["sources"]:
+        problems.append("Bellman-SYM concepts are named, but not the source 'bellman-sym', which gives their pages")
     for category, concept in source["category_concepts"].items():
         if concept not in concepts:
             problems.append(f"category_concepts/{category}: Bellman-SYM concept {concept!r} is not pinned")
@@ -268,7 +271,7 @@ DATA_PROPERTIES = {
     "note": "A note.",
     "schemaDocument": "The schema document of a written family, relative to this folder.",
     "sourceDigest": "The SHA-256 of the source this file was generated from.",
-    "bellmanConcept": "The slug of Bellman-SYM's concept this term is, its documentation not being public.",
+    "bellmanConcept": "The slug of Bellman-SYM's concept this term is; the concept's page is the term's rdfs:seeAlso.",
     "stateDomain": "The set a state or control takes its values in, as a stage file declares it.",
     "divergenceKind": "meaning, notation, approximation, convention or absence.",
     "formatRole": "notation, calibration or realization.",
@@ -310,6 +313,11 @@ def source_urls(source: dict, cited: dict) -> list[str]:
     return out
 
 
+def bellman_url(source: dict, slug: str) -> str:
+    """The page of a Bellman-SYM concept in Bellman-SYM's documentation."""
+    return f"{source['ontology']['sources']['bellman-sym']['url']}{slug}/"
+
+
 def table(source: dict, digest: str) -> dict:
     ident = {row["name"]: row["id"] for _, row in rows(source)}
     syms = symbols(source)
@@ -340,6 +348,8 @@ def table(source: dict, digest: str) -> dict:
             r["depends_on"] = sorted(ident[syms[s]] for s in formulas.names(text) if s in syms)
         if "sources" in row:
             r["source_urls"] = source_urls(source, row["sources"])
+        if "bellman_concept" in row:
+            r["bellman_url"] = bellman_url(source, row["bellman_concept"])
         out_rows.append(r)
     meta = dict(source["ontology"])
     meta["source_digest"] = f"sha256:{digest}"
@@ -382,7 +392,8 @@ def turtle(source: dict, digest: str) -> str:
                   f"    skos:definition {_lit(source['kinds'][kind])} .", ""]
     for cat, text in source["categories"].items():
         concept = source["category_concepts"].get(cat)
-        extra = [f"    {p}:bellmanConcept {_lit(concept, False)} ;"] if concept else []
+        extra = [f"    {p}:bellmanConcept {_lit(concept, False)} ;",
+                 f"    rdfs:seeAlso <{bellman_url(source, concept)}> ;"] if concept else []
         lines += [f"{p}:{_camel(cat)} a owl:Class ;", f"    rdfs:subClassOf {p}:Object ;", *extra,
                   f"    rdfs:label {_lit(cat)} ;", f"    skos:definition {_lit(text)} .", ""]
     for prop, text in OBJECT_PROPERTIES.items():
@@ -420,6 +431,8 @@ def turtle(source: dict, digest: str) -> str:
         for key, prop in simple.items():
             if key in row:
                 triples.append(f"{p}:{prop} {_lit(row[key], False)}")
+        if "bellman_concept" in row:
+            triples.append(f"rdfs:seeAlso <{bellman_url(source, row['bellman_concept'])}>")
         if "ruled" in row:
             triples.append(f'{p}:ruled "{row["ruled"]}"^^xsd:date')
         if kind == "result":

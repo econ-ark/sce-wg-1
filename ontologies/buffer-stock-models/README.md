@@ -9,7 +9,7 @@ Where another paper, a notation or a schema uses BST's terms in another sense, t
 names no toolkit, and nothing peculiar to how a toolkit solves or simulates a model: how each toolkit holds the terms,
 and where it departs from them, is in that toolkit's [Rosetta Stone](../../rosetta/README.md).
 
-**Status: draft, version 0.1.0-draft.2.** Its decisions are the working group's to confirm; the questions still open
+**Status: draft, version 0.1.0-draft.3.** Its decisions are the working group's to confirm; the questions still open
 are listed [at the end](#open-questions). Its namespace is provisional, as the ontology of probability distributions'
 is. Since draft.2 it states its objects in Bellman-SYM's terms, the language of the schemas' stage files
 ([below](#in-bellman-syms-terms)).
@@ -237,8 +237,10 @@ The schemas' hash is a finer identity, of written forms; these are identities of
 ## In Bellman-SYM's terms
 
 The schemas state each family's household problem in a Bellman-SYM stage file, so the ontology states its objects in
-that language's terms. Bellman-SYM's documentation is not public. Its rules are therefore stated here as the ontology's
-own, and its concepts are named by their slugs, pinned in `bellman-concepts.txt`, never linked.
+that language's terms. Bellman-SYM's documentation is public, at [bellman.io](https://bellman.io/). The rules the
+ontology relies on are still stated here, so that it reads on its own. Each concept is named by its slug, pinned in
+`bellman-concepts.txt`, and linked to its page, `https://bellman.io/wiki/<slug>/`: in the Turtle file as the term's
+`rdfs:seeAlso`, in the table as its `bellman_url`.
 
 - **Perches and values.**
   - A stage has three perches: arrival, decision and continuation. They are information contexts, not dates.
@@ -381,7 +383,7 @@ conventions silently differ.
 | `buffer-stock-models.json` | a flat table, one row per term, references resolved (generated) |
 | `bst-anchors.txt` | the anchors of BST's published page, read on 2026-10-31, which every bst citation must be among |
 | `registry-keys.txt` | the keys of econ-ark's notation registry, version 8.0.0 |
-| `bellman-concepts.txt` | the slugs of Bellman-SYM's concepts, read on 2026-10-31, named and never linked |
+| `bellman-concepts.txt` | the slugs of Bellman-SYM's concepts, read on 2026-10-31, each linked to its page on bellman.io |
 | `test_ontology.py` | the tests |
 | `CHANGELOG.md` | what each version changed |
 | `LICENSE` | Creative Commons Attribution 4.0 International |
