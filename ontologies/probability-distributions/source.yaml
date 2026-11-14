@@ -10,7 +10,7 @@
 
 ontology:
   title: Probability distributions
-  version: 0.1.0-draft.1
+  version: 0.1.0-draft.2
   # Provisional until a w3id.org namespace is registered; the name is the owner's to choose.
   namespace: https://example.org/provisional/ontologies/probability-distributions/
   prefix: pd
@@ -28,6 +28,13 @@ ontology:
       citation: >-
         Swat MJ, Grenon P, Wimalaratne S (2016). ProbOnto: ontology and knowledge base of probability distributions.
         Bioinformatics 32(17):2719-2721. doi:10.1093/bioinformatics/btw170
+    - name: Bellman-SYM's shock distributions
+      version: the documentation at bellman.io, read on 2026-11-14
+      iri: https://bellman.io/Bellman-Sym/reference/laws/
+      license: https://www.apache.org/licenses/LICENSE-2.0
+      citation: >-
+        Project Bellman. Shock distributions, a reference page of Bellman-SYM's documentation: the families a stage file
+        declares a shock's law by, and their arguments. The source of the bellman-sym written forms.
 
 retired: []
 
