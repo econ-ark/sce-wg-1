@@ -7,7 +7,7 @@ compared, a toolkit's laws can be checked against one standard, and the provenan
 The ontology gives definitions, charts and conversion formulas. It provides no routines for sampling or evaluating a
 distribution.
 
-**Status: draft, version 0.1.0-draft.1.** The design below is settled, and [the catalog](#the-catalog) holds every
+**Status: draft, version 0.1.0-draft.2.** The design below is settled, and [the catalog](#the-catalog) holds every
 family the schemas' parameter files and Bellman-SYM's stage files write.
 
 ## The kinds
@@ -87,7 +87,7 @@ mean-and-variance chart.
 ## Written forms and defaults
 
 Two formats are declared: `parameter-file`, the YAML parameter files of the working group's schemas, and `bellman-sym`,
-Bellman-SYM stage files. A chart's `written_as` gives each format's spellings of a point of the chart, more than one where
+Bellman-SYM stage files, whose laws are its documentation's [shock distributions](https://bellman.io/Bellman-Sym/reference/laws/). A chart's `written_as` gives each format's spellings of a point of the chart, more than one where
 a format has synonyms. Each spelling is given twice: as a reader sees it (`spelling`), and as a writer builds it, by its
 `head` (a stage file's family call, a parameter file's key) and its `arguments` (positional, or by field), each a formula
 in the chart's coordinates. A keyed form may give `defaults` for fields left out, and `none`: the token for an

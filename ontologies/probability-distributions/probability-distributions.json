@@ -1,7 +1,7 @@
 {
   "ontology": {
     "title": "Probability distributions",
-    "version": "0.1.0-draft.1",
+    "version": "0.1.0-draft.2",
     "namespace": "https://example.org/provisional/ontologies/probability-distributions/",
     "prefix": "pd",
     "license": "https://creativecommons.org/licenses/by/4.0/",
@@ -19,9 +19,16 @@
         "iri": "http://www.probonto.org/ontology",
         "license": "https://creativecommons.org/licenses/by/4.0/",
         "citation": "Swat MJ, Grenon P, Wimalaratne S (2016). ProbOnto: ontology and knowledge base of probability distributions. Bioinformatics 32(17):2719-2721. doi:10.1093/bioinformatics/btw170"
+      },
+      {
+        "name": "Bellman-SYM's shock distributions",
+        "version": "the documentation at bellman.io, read on 2026-11-14",
+        "iri": "https://bellman.io/Bellman-Sym/reference/laws/",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "citation": "Project Bellman. Shock distributions, a reference page of Bellman-SYM's documentation: the families a stage file declares a shock's law by, and their arguments. The source of the bellman-sym written forms."
       }
     ],
-    "source_sha256": "2ef9d5c6d5fd02ee163d05f1a9138d1e3a9560e2a186a0c0e93a8756687d8252"
+    "source_sha256": "5bc9a22bfcefd015041c59ec07bd996dd00716712a3a34d9cd5233b560bf9bb1"
   },
   "retired": [],
   "rows": [

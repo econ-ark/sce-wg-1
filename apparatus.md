@@ -15,7 +15,8 @@ to make that test cheap to run, hard to get wrong, and honest about what it esta
 
 ## The parts
 
-- **A canonical model's repository.** One repository per model, holding the definition: the families' stage files,
+- **A canonical model's repository.** One repository per model, holding the definition: the families'
+  [stage files](https://bellman.io/wiki/stage/),
   the parameter and results schemas, the members and their conditions, the syntax of the model class's ontology; the
   experiments; the reference solutions; the toolkits' stones and adapters; the runs of record and their registry. It
   is a REMARK, a reproducible project in econ-ark's sense: its reproduce script builds each toolkit's image, runs every
@@ -34,7 +35,7 @@ to make that test cheap to run, hard to get wrong, and honest about what it esta
 - **The container contract.** One job: the repository mounted read-only, the job's folder writable, no network, the
   thread cap, a scratch space for what the toolkit caches, and caps on processors, memory and wall time. The adapter's
   command line takes the parameter file, the request file, the level and the output folder, and writes the results,
-  method and settings files. Verification and the comparison run outside the toolkit's container, so that nothing the
+  method and [settings](https://bellman.io/wiki/settings/) files. Verification and the comparison run outside the toolkit's container, so that nothing the
   toolkit does changes the verdict.
 - **The execution records and the registry.** Every image built and every job run writes a record: the repository's
   commit and whether its tree was dirty, the environment's hash over what git records, the image, the machine, the
@@ -63,7 +64,8 @@ to make that test cheap to run, hard to get wrong, and honest about what it esta
 ## How a toolkit takes part
 
 1. **The card:** half a page, the first section of the toolkit's stone: the toolkit and its version, the families it
-   solves, how it represents the laws, its method at each of the stage file's places, its names, timing and
+   solves, how it represents the laws, its method at each of the stage file's
+   [places](https://bellman.io/wiki/methodization/), its names, timing and
    normalization for the parameter file's keys and the results objects, and what it does not compute.
 2. **The adapter:** the contract's command line in any language, reading the parameter and request files and writing
    the results, method and settings files, with its environment pinned beside it.

@@ -19,6 +19,8 @@ changes.
 - The statement that Bellman-SYM's documentation is not public, in the README, `bellman-concepts.txt` and the
   definition of `bellmanConcept`, is corrected. The rule that a concept is named and never linked, which rested on
   it, is rescinded, on the owner's ruling of 2026-11-14.
+- The README's section on Bellman-SYM's terms links the documentation's pages on the stage, its perches and the values
+  at them.
 
 ## 0.1.0-draft.2 (unreleased)
 

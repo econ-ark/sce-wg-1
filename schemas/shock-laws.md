@@ -181,7 +181,8 @@ model.
 
 ## Bellman-SYM counterparts
 
-The stage files are written in Bellman-SYM. The checker's converter writes each law as the Bellman-SYM call that states
+The stage files are written in Bellman-SYM, whose laws are its documentation's
+[shock distributions](https://bellman.io/Bellman-Sym/reference/laws/). The checker's converter writes each law as the Bellman-SYM call that states
 it, by the ontology's conversions; the cross-test
 confirms that each call carries the ontology's coordinates of the law. A member whose law differs from the one a stage
 file writes needs a stage file of its own.
@@ -190,7 +191,7 @@ file writes needs a stage file of its own.
 |---|---|
 | Degenerate | `LogNormal(0, 0)`, a point mass at one |
 | LogNormal | `LogNormal(−σ²/2, σ)` |
-| TruncatedLogNormal | `TruncatedLogNormal(μ, s, l, u)`, with s = sd_log/√v, μ = −ln E[exp(sZ) \| bot ≤ Z ≤ top], l = exp(μ + s·bot) and u = exp(μ + s·top), and 0 and `inf` for no bound; the family is in preparation in Bellman-SYM, and a stage file can write it once it is released |
+| TruncatedLogNormal | `TruncatedLogNormal(μ, s, l, u)`, with s = sd_log/√v, μ = −ln E[exp(sZ) \| bot ≤ Z ≤ top], l = exp(μ + s·bot) and u = exp(μ + s·top), and 0 and `inf` for no bound; Bellman-SYM lists the family among its [shock distributions](https://bellman.io/Bellman-Sym/reference/laws/#2-the-families) |
 | Uniform | `Uniform(1 − w, 1 + w)` |
 | Discrete | `Mixture((p₁, v₁), …)`, point masses with weights; Bellman-SYM checks no mean |
 | LogNormalMixture | `Mixture((w₁, LogNormal(c + m₁, s₁)), …)`, the common shift folded into each location |
