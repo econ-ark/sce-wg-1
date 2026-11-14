@@ -240,7 +240,10 @@ The schemas state each family's household problem in a Bellman-SYM stage file, s
 that language's terms. Bellman-SYM's documentation is public, at [bellman.io](https://bellman.io/). The rules the
 ontology relies on are still stated here, so that it reads on its own. Each concept is named by its slug, pinned in
 `bellman-concepts.txt`, and linked to its page, `https://bellman.io/wiki/<slug>/`: in the Turtle file as the term's
-`rdfs:seeAlso`, in the table as its `bellman_url`.
+`rdfs:seeAlso`, in the table as its `bellman_url`. The stage, its perches and the values at them are set out in
+Bellman-SYM's [Stages](https://bellman.io/Bellman-Sym/01-stage/#1-stages-and-perches) and
+[Solutions at the perches](https://bellman.io/Bellman-Sym/11-solutions-at-the-perches/), and in the calculus's
+[Stages and perches](https://bellman.io/bellman-calculus/03-Stages%20and%20perches/).
 
 - **Perches and values.**
   - A stage has three perches: arrival, decision and continuation. They are information contexts, not dates.
