@@ -60,7 +60,7 @@
     "text": "a name in the buffer-stock families' Bellman-SYM stage files as the language now writes it: a declared field, parameter, set or function, a perch mark, a derivative term, or the id of a block or line, which is the address of where a relation is written, not an object"
    }
   },
-  "source_digest": "sha256:b0a54dabf1dfe18fabc03d1bcc3f633a9405b8398341756db2f3f3975e6e1189"
+  "source_digest": "sha256:a2121c971c8fbd69228255af50651cf56b72196586fa296e40c329b124bbb671"
  },
  "kinds": {
   "model-class": "A class of models, defined by axioms. A model is a member when it satisfies every membership axiom.",
@@ -1510,7 +1510,7 @@
    "name": "transitory-shock",
    "label": "transitory shock",
    "category": "shock",
-   "definition": "ξ, transitory income as a ratio to permanent income, the unemployment event included: ξ_u with probability ℘, else the scaled employed draw. The families' stage files compose it from the shocks j and θ in a line of the arrival transition, where it is an intermediate field; a stage file may instead declare ξ itself, with a mixture law.",
+   "definition": "ξ, transitory income as a ratio to permanent income, the unemployment event included: ξ_u with probability ℘, else the scaled employed draw. The families' stage files draw it whole, with a mixture law, since 2026-11-12; until then they composed it from the shocks j and θ in a line of the arrival transition.",
    "written_as": {
     "bst": "\\tranShkAll",
     "registry": "transitory-shock-all",
@@ -1533,7 +1533,7 @@
    "name": "transitory-shock-employed",
    "label": "employed transitory draw",
    "category": "shock",
-   "definition": "θ, the mean-one draw of transitory income while employed.",
+   "definition": "θ, the mean-one draw of transitory income while employed. The families' stage files state its law by its parameters and draw ξ, whose employed component is θ scaled, in its place (since 2026-11-12).",
    "law": {
     "pd": [
      "PD_0000012",
@@ -1544,8 +1544,7 @@
    "written_as": {
     "bst": "\\tranShkEmp",
     "registry": "transitory-shock-employed",
-    "parameter-file": "income.employed_shock",
-    "bellman-sym": "θ"
+    "parameter-file": "income.employed_shock"
    },
    "sources": {
     "bst": [
@@ -1562,9 +1561,9 @@
    "name": "unemployment-event",
    "label": "unemployment event",
    "category": "shock",
-   "definition": "j, a shock on the two-point set {employed, unemployed}, unemployed with probability ℘, independent of ψ and θ; transitory income is ξ_u when it is unemployed, BST's zero-income event when ξ_u = 0.",
+   "definition": "j, a shock on the two-point set {employed, unemployed}, unemployed with probability ℘, independent of ψ and θ; transitory income is ξ_u when it is unemployed, BST's zero-income event when ξ_u = 0. The families' stage files wrote it as j until 2026-11-12; they now draw ξ from a mixture whose first weight is ℘, and spell no event. A member's parameter file writes it as its block of probability and income.",
    "written_as": {
-    "bellman-sym": "j"
+    "parameter-file": "income.unemployment"
    },
    "sources": {
     "bst": [
@@ -2108,7 +2107,7 @@
    "written_as": {
     "bst": "\\Ex",
     "registry": "expectation",
-    "bellman-sym": "E_{ψ,θ,j}"
+    "bellman-sym": "E_{ψ,ξ}"
    },
    "sources": {
     "bst": [
@@ -2993,8 +2992,8 @@
    "label": "natural borrowing limit, computed",
    "symbol": "a_Nat_value",
    "formula": "-xi_min*psi_min/(R/G - psi_min)",
-   "domain_note": "when ψ_min < ℛ; otherwise there is no natural limit",
-   "definition": "The value of a_Nat: −ξ_min ψ_min/(ℛ − ψ_min), which is zero when the worst transitory income is zero or the permanent shock's law is unbounded below.",
+   "domain_note": "when ψ_min < ℛ. When ψ_min ≥ ℛ the value is zero if ξ_min = 0, the present value of nothing; if ξ_min > 0 the limit is finite at every finite horizon and falls without bound as the horizon recedes, so the limiting model has no finite one",
+   "definition": "The value of a_Nat: zero when the worst transitory income is zero, at any growth of permanent income, or when the permanent shock's law is unbounded below; otherwise −ξ_min ψ_min/(ℛ − ψ_min), finite only where ψ_min < ℛ.",
    "sources": {
     "bst": [
      "borocnstnat"

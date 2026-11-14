@@ -5,10 +5,29 @@ form, or only labels and text.
 
 ## 0.1.0-draft.3 (unreleased)
 
-Bellman-SYM's documentation is public, at bellman.io, so the ontology links its concepts. No class, axiom or meaning
-changes.
+Bellman-SYM's documentation is public, at bellman.io, so the ontology links its concepts. With them, two corrections
+made on 2026-11-12 in the buffer-stock model's repository's copy of this ontology, which this copy lacked; this
+repository's copy is the ontology's home, by the owner's decision of 2026-11-14. No class or axiom changes; one term's
+meaning is corrected.
+
+**Meanings changed.**
+- The row `BSM_0000081`, `natural-limit`, in its definition and its domain note; the formula is unchanged. The note
+  said that there is no natural limit where ψ_min ≥ ℛ. The value is zero where the worst transitory income is zero,
+  as with BST's zero-income event, at any growth of permanent income: the present value of nothing. Where the worst
+  transitory income is positive and ψ_min ≥ ℛ, the limit is finite at every finite horizon and falls without bound as
+  the horizon recedes, so the limiting model has none. The owner found the error, which had reached the schemas'
+  natural family as a requirement its model does not need.
 
 **Written forms.**
+- The row `BSM_0000055`, `expectation`: its Bellman-SYM form is `E_{ψ,ξ}` in place of `E_{ψ,θ,j}`. Since the owner's
+  decision of 2026-11-12 the families' stage files draw transitory income ξ whole, from a mixture, and no longer draw
+  θ and the event j with a line defining ξ. The same change, in three rows' text and written forms:
+  - `BSM_0000033`, `transitory-shock-all`, says the files draw ξ whole;
+  - `BSM_0000034`, `transitory-shock-employed`, and `BSM_0000035`, `unemployment-event`, lose their Bellman-SYM
+    forms, θ and j, which the files no longer draw, and say so;
+  - the event's written form is now the parameter file's block, `income.unemployment`.
+
+  None of these meanings changes.
 - Each term and category that names a Bellman-SYM concept links to the concept's page,
   `https://bellman.io/wiki/<slug>/`: in the Turtle file as `rdfs:seeAlso`, in the table as `bellman_url`. Every
   pinned slug's page answered on 2026-11-14.

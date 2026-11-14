@@ -21,7 +21,7 @@
     dcterms:source <https://arxiv.org/abs/2012.00219v2> ;
     dcterms:source <https://github.com/llorracc/HAFiscal-QE/tree/1afdf80de4325e436a0c1c20895f754aefefd38c> ;
     dcterms:source <https://bellman.io/wiki/> ;
-    bsm:sourceDigest "sha256:b0a54dabf1dfe18fabc03d1bcc3f633a9405b8398341756db2f3f3975e6e1189" .
+    bsm:sourceDigest "sha256:a2121c971c8fbd69228255af50651cf56b72196586fa296e40c329b124bbb671" .
 
 skos:definition a owl:AnnotationProperty .
 skos:notation a owl:AnnotationProperty .
@@ -969,7 +969,7 @@ bsm:BSM_0000033
     a owl:NamedIndividual, bsm:Shock ;
     rdfs:label "transitory shock"@en ;
     skos:notation "transitory-shock" ;
-    skos:definition "ξ, transitory income as a ratio to permanent income, the unemployment event included: ξ_u with probability ℘, else the scaled employed draw. The families' stage files compose it from the shocks j and θ in a line of the arrival transition, where it is an intermediate field; a stage file may instead declare ξ itself, with a mixture law."@en ;
+    skos:definition "ξ, transitory income as a ratio to permanent income, the unemployment event included: ξ_u with probability ℘, else the scaled employed draw. The families' stage files draw it whole, with a mixture law, since 2026-11-12; until then they composed it from the shocks j and θ in a line of the arrival transition."@en ;
     bsm:category "shock" ;
     bsm:inBST "\\tranShkAll" ;
     bsm:registryKey "transitory-shock-all" ;
@@ -981,7 +981,7 @@ bsm:BSM_0000034
     a owl:NamedIndividual, bsm:Shock ;
     rdfs:label "employed transitory draw"@en ;
     skos:notation "transitory-shock-employed" ;
-    skos:definition "θ, the mean-one draw of transitory income while employed."@en ;
+    skos:definition "θ, the mean-one draw of transitory income while employed. The families' stage files state its law by its parameters and draw ξ, whose employed component is θ scaled, in its place (since 2026-11-12)."@en ;
     bsm:category "shock" ;
     bsm:lawIn pd:PD_0000012 ;
     bsm:lawIn pd:PD_0000018 ;
@@ -989,16 +989,15 @@ bsm:BSM_0000034
     bsm:inBST "\\tranShkEmp" ;
     bsm:registryKey "transitory-shock-employed" ;
     bsm:inParameterFile "income.employed_shock" ;
-    bsm:inBellmanSym "θ" ;
     dcterms:source <https://llorracc.github.io/BufferStockTheory/#ass-shocks> .
 
 bsm:BSM_0000035
     a owl:NamedIndividual, bsm:Shock ;
     rdfs:label "unemployment event"@en ;
     skos:notation "unemployment-event" ;
-    skos:definition "j, a shock on the two-point set {employed, unemployed}, unemployed with probability ℘, independent of ψ and θ; transitory income is ξ_u when it is unemployed, BST's zero-income event when ξ_u = 0."@en ;
+    skos:definition "j, a shock on the two-point set {employed, unemployed}, unemployed with probability ℘, independent of ψ and θ; transitory income is ξ_u when it is unemployed, BST's zero-income event when ξ_u = 0. The families' stage files wrote it as j until 2026-11-12; they now draw ξ from a mixture whose first weight is ℘, and spell no event. A member's parameter file writes it as its block of probability and income."@en ;
     bsm:category "shock" ;
-    bsm:inBellmanSym "j" ;
+    bsm:inParameterFile "income.unemployment" ;
     dcterms:source <https://llorracc.github.io/BufferStockTheory/#eq-transhkdef> .
 
 bsm:BSM_0000036
@@ -1277,7 +1276,7 @@ bsm:BSM_0000055
     bsm:category "operation" ;
     bsm:inBST "\\Ex" ;
     bsm:registryKey "expectation" ;
-    bsm:inBellmanSym "E_{ψ,θ,j}" ;
+    bsm:inBellmanSym "E_{ψ,ξ}" ;
     dcterms:source <https://llorracc.github.io/BufferStockTheory/#eq-levelrecproblem> .
 
 bsm:BSM_0000056
@@ -1759,10 +1758,10 @@ bsm:BSM_0000081
     a owl:NamedIndividual, bsm:Quantity ;
     rdfs:label "natural borrowing limit, computed"@en ;
     skos:notation "natural-limit" ;
-    skos:definition "The value of a_Nat: −ξ_min ψ_min/(ℛ − ψ_min), which is zero when the worst transitory income is zero or the permanent shock's law is unbounded below."@en ;
+    skos:definition "The value of a_Nat: zero when the worst transitory income is zero, at any growth of permanent income, or when the permanent shock's law is unbounded below; otherwise −ξ_min ψ_min/(ℛ − ψ_min), finite only where ψ_min < ℛ."@en ;
     bsm:symbol "a_Nat_value" ;
     bsm:formula "-xi_min*psi_min/(R/G - psi_min)" ;
-    bsm:note "when ψ_min < ℛ; otherwise there is no natural limit" ;
+    bsm:note "when ψ_min < ℛ. When ψ_min ≥ ℛ the value is zero if ξ_min = 0, the present value of nothing; if ξ_min > 0 the limit is finite at every finite horizon and falls without bound as the horizon recedes, so the limiting model has no finite one" ;
     bsm:dependsOn bsm:BSM_0000041 ;
     bsm:dependsOn bsm:BSM_0000040 ;
     bsm:dependsOn bsm:BSM_0000046 ;
