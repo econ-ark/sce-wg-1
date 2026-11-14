@@ -1,7 +1,7 @@
 {
  "ontology": {
   "title": "Buffer-stock models",
-  "version": "0.1.0-draft.2",
+  "version": "0.1.0-draft.3",
   "namespace": "https://example.org/provisional/ontologies/buffer-stock-models/",
   "prefix": "bsm",
   "license": "https://creativecommons.org/licenses/by/4.0/",
@@ -32,6 +32,10 @@
    "hafiscal-qe": {
     "citation": "Carroll, Crawley, Du, Frankovic and Tretvoll, Welfare and Spending Effects of Consumption Stimulus Policies: the public replication package, at commit 1afdf80 (2026-06-12).",
     "url": "https://github.com/llorracc/HAFiscal-QE/tree/1afdf80de4325e436a0c1c20895f754aefefd38c"
+   },
+   "bellman-sym": {
+    "citation": "Bellman-SYM's documentation, Project Bellman's wiki at bellman.io: a page for each concept, at https://bellman.io/wiki/<slug>/. The slugs read on 2026-10-31; every pinned slug's page answered on 2026-11-14.",
+    "url": "https://bellman.io/wiki/"
    }
   },
   "format_roles": {
@@ -56,7 +60,7 @@
     "text": "a name in the buffer-stock families' Bellman-SYM stage files as the language now writes it: a declared field, parameter, set or function, a perch mark, a derivative term, or the id of a block or line, which is the address of where a relation is written, not an object"
    }
   },
-  "source_digest": "sha256:d2e52fa84d52e51422881c2aae39a9be3c7b6bb8f8848b64a9d7576cb90513aa"
+  "source_digest": "sha256:b0a54dabf1dfe18fabc03d1bcc3f633a9405b8398341756db2f3f3975e6e1189"
  },
  "kinds": {
   "model-class": "A class of models, defined by axioms. A model is a member when it satisfies every membership axiom.",
@@ -1323,7 +1327,8 @@
    },
    "source_urls": [
     "https://llorracc.github.io/BufferStockTheory/#subsec-setup"
-   ]
+   ],
+   "bellman_url": "https://bellman.io/wiki/period/"
   },
   {
    "id": "BSM_0000026",
@@ -2019,7 +2024,8 @@
    "source_urls": [
     "https://llorracc.github.io/BufferStockTheory/#eq-veqnnrmrecbellman",
     "https://llorracc.github.io/BufferStockTheory/#def-nondegeneracy"
-   ]
+   ],
+   "bellman_url": "https://bellman.io/wiki/field/"
   },
   {
    "id": "BSM_0000052",
@@ -2241,7 +2247,8 @@
    "bellman_concept": "perch",
    "written_as": {
     "bellman-sym": "!arvl"
-   }
+   },
+   "bellman_url": "https://bellman.io/wiki/perch/"
   },
   {
    "id": "BSM_0000161",
@@ -2253,7 +2260,8 @@
    "bellman_concept": "perch",
    "written_as": {
     "bellman-sym": "!dcsn"
-   }
+   },
+   "bellman_url": "https://bellman.io/wiki/perch/"
   },
   {
    "id": "BSM_0000162",
@@ -2265,7 +2273,8 @@
    "bellman_concept": "perch",
    "written_as": {
     "bellman-sym": "!cntn"
-   }
+   },
+   "bellman_url": "https://bellman.io/wiki/perch/"
   },
   {
    "id": "BSM_0000163",
@@ -2274,7 +2283,8 @@
    "label": "stage",
    "category": "structure",
    "definition": "One decision problem with its three perches and its transitions, used at each period where it occurs. Each buffer-stock family writes one stage per period, in its own stage file, so its perches coincide with BST's beginning of the period, its moment of choice and its end; a period of several stages would not.",
-   "bellman_concept": "stage"
+   "bellman_concept": "stage",
+   "bellman_url": "https://bellman.io/wiki/stage/"
   },
   {
    "id": "BSM_0000164",
@@ -2283,7 +2293,8 @@
    "label": "trellis",
    "category": "structure",
    "definition": "The finite sequence of a model's periods, indexed by h, the number of periods before the terminal one, with the connectors that join them and the terminal value as boundary data. BST's infinite horizon is its limit, which a trellis does not state.",
-   "bellman_concept": "trellis"
+   "bellman_concept": "trellis",
+   "bellman_url": "https://bellman.io/wiki/trellis/"
   },
   {
    "id": "BSM_0000165",
@@ -2303,7 +2314,8 @@
    "bellman_concept": "field",
    "written_as": {
     "bellman-sym": "V[<]"
-   }
+   },
+   "bellman_url": "https://bellman.io/wiki/field/"
   },
   {
    "id": "BSM_0000166",
@@ -2323,7 +2335,8 @@
    "bellman_concept": "field",
    "written_as": {
     "bellman-sym": "V[>]"
-   }
+   },
+   "bellman_url": "https://bellman.io/wiki/field/"
   },
   {
    "id": "BSM_0000167",
@@ -2443,7 +2456,8 @@
    "label": "connector between periods",
    "category": "connector",
    "definition": "k′ = a: the renaming that joins one period's continuation state a to the next period's arrival state k, with no calculation; the return and the normalization by growth stand in the next period's arrival law of motion.",
-   "bellman_concept": "connector"
+   "bellman_concept": "connector",
+   "bellman_url": "https://bellman.io/wiki/connector/"
   },
   {
    "id": "BSM_0000175",
@@ -2452,7 +2466,8 @@
    "label": "backward stage operator",
    "category": "operator",
    "definition": "𝕋 = 𝕋_≺ ∘ 𝕋_≻, from continuation value to arrival value. 𝕋_≻ chooses c to maximize u(c) + β̊ V[>](m − c) over 𝒞(m), giving the decision value; 𝕋_≺ takes the expectation, V[<](k) = E[(𝒢ψ)^(1−ϱ) V(m)], whose factor (𝒢ψ)^(1−ϱ) is a non-identity arrival aggregator. 𝕋_π fixes the policy π in place of the maximization.",
-   "bellman_concept": "bellman_operator"
+   "bellman_concept": "bellman_operator",
+   "bellman_url": "https://bellman.io/wiki/bellman_operator/"
   },
   {
    "id": "BSM_0000176",
@@ -2461,7 +2476,8 @@
    "label": "forward distribution operator",
    "category": "operator",
    "definition": "𝕄_π = 𝕄_≻,π ∘ 𝕄_≺, which moves a measure on the arrival states to the continuation states under the policy π: extending it by the shocks' laws, pushing it forward along the two laws of motion. Across the connector it gives the next period's arrival measure. Paired with the undiscounted transition expectation, it is that expectation's adjoint; the optimizing backward operator has no such pairing.",
-   "bellman_concept": "forward_builder"
+   "bellman_concept": "forward_builder",
+   "bellman_url": "https://bellman.io/wiki/forward_builder/"
   },
   {
    "id": "BSM_0000177",

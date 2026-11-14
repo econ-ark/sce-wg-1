@@ -9,14 +9,16 @@
 #
 # Sources are cited so that a reader can check them. `bst` is an anchor of the published paper's page,
 # https://llorracc.github.io/BufferStockTheory/#<anchor>, pinned in bst-anchors.txt; `hafiscal-qe` is a file and line of
-# the public replication package; `mst-2020` and `mst-2022` are papers, cited by their own numbering.
+# the public replication package; `mst-2020` and `mst-2022` are papers, cited by their own numbering. A row's
+# `bellman_concept` is the slug of a Bellman-SYM concept, pinned in bellman-concepts.txt, whose page is
+# https://bellman.io/wiki/<slug>/ in Bellman-SYM's documentation.
 #
 # The ontology names no toolkit, and nothing peculiar to how a toolkit solves or simulates a model. How each toolkit
 # holds the ontology's terms, and where it departs from them, is in that toolkit's Rosetta Stone (rosetta/).
 
 ontology:
   title: Buffer-stock models
-  version: 0.1.0-draft.2
+  version: 0.1.0-draft.3
   # Provisional, as the ontology of probability distributions' is, until a namespace is registered.
   namespace: https://example.org/provisional/ontologies/buffer-stock-models/
   prefix: bsm
@@ -50,6 +52,11 @@ ontology:
         Carroll, Crawley, Du, Frankovic and Tretvoll, Welfare and Spending Effects of Consumption Stimulus Policies:
         the public replication package, at commit 1afdf80 (2026-06-12).
       url: https://github.com/llorracc/HAFiscal-QE/tree/1afdf80de4325e436a0c1c20895f754aefefd38c
+    bellman-sym:
+      citation: >-
+        Bellman-SYM's documentation, Project Bellman's wiki at bellman.io: a page for each concept, at
+        https://bellman.io/wiki/<slug>/. The slugs read on 2026-10-31; every pinned slug's page answered on 2026-11-14.
+      url: https://bellman.io/wiki/
   # The written forms of a term, each in a format with a role. A notation's spellings are the expressions that
   # the meaning map of the notation sends to the term; a calibration's key is where a value of the term is bound. The
   # ontology names no toolkit: how a toolkit holds a term is that toolkit's Rosetta Stone's to say.

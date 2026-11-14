@@ -1,5 +1,5 @@
 # The concept slugs of Bellman-SYM's wiki, read on 2026-10-31 at the language's current main. Bellman-SYM's
-# documentation is not public: a slug is named in this ontology, never linked.
+# documentation is public: each slug's page is https://bellman.io/wiki/<slug>/, and every page answered on 2026-11-14.
 abstract_decision_process
 accretion-modules
 adequacy
