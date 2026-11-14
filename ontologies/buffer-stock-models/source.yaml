@@ -685,17 +685,19 @@ objects:
     category: shock
     definition: >-
       ξ, transitory income as a ratio to permanent income, the unemployment event included: ξ_u with probability ℘,
-      else the scaled employed draw. The families' stage files compose it from the shocks j and θ in a line of the arrival
-      transition, where it is an intermediate field; a stage file may instead declare ξ itself, with a mixture law.
+      else the scaled employed draw. The families' stage files draw it whole, with a mixture law, since 2026-11-12;
+      until then they composed it from the shocks j and θ in a line of the arrival transition.
     written_as: {bst: '\tranShkAll', registry: transitory-shock-all, bellman-sym: ξ}
     sources: {bst: [ass-shocks, eq-transhkdef]}
   - id: BSM_0000034
     name: transitory-shock-employed
     label: employed transitory draw
     category: shock
-    definition: θ, the mean-one draw of transitory income while employed.
+    definition: >-
+      θ, the mean-one draw of transitory income while employed. The families' stage files state its law by its
+      parameters and draw ξ, whose employed component is θ scaled, in its place (since 2026-11-12).
     law: {pd: [PD_0000012, PD_0000018, PD_0000031]}
-    written_as: {bst: '\tranShkEmp', registry: transitory-shock-employed, parameter-file: income.employed_shock, bellman-sym: θ}
+    written_as: {bst: '\tranShkEmp', registry: transitory-shock-employed, parameter-file: income.employed_shock}
     sources: {bst: [ass-shocks]}
   - id: BSM_0000035
     name: unemployment-event
@@ -703,8 +705,10 @@ objects:
     category: shock
     definition: >-
       j, a shock on the two-point set {employed, unemployed}, unemployed with probability ℘, independent of ψ and θ;
-      transitory income is ξ_u when it is unemployed, BST's zero-income event when ξ_u = 0.
-    written_as: {bellman-sym: j}
+      transitory income is ξ_u when it is unemployed, BST's zero-income event when ξ_u = 0. The families' stage files
+      wrote it as j until 2026-11-12; they now draw ξ from a mixture whose first weight is ℘, and spell no event. A
+      member's parameter file writes it as its block of probability and income.
+    written_as: {parameter-file: income.unemployment}
     sources: {bst: [eq-transhkdef]}
   - id: BSM_0000036
     name: survival-event
@@ -920,7 +924,7 @@ objects:
     definition: >-
       E_t, the expectation over next period's shocks, for one agent's beliefs; an operation inside the arrival
       operator, integrating against the declared laws of the shocks.
-    written_as: {bst: '\Ex', registry: expectation, bellman-sym: "E_{ψ,θ,j}"}
+    written_as: {bst: '\Ex', registry: expectation, bellman-sym: "E_{ψ,ξ}"}
     sources: {bst: [eq-levelrecproblem]}
   - id: BSM_0000056
     name: cross-sectional-mean
@@ -1276,10 +1280,13 @@ quantities:
     label: natural borrowing limit, computed
     symbol: a_Nat_value
     formula: "-xi_min*psi_min/(R/G - psi_min)"
-    domain_note: when ψ_min < ℛ; otherwise there is no natural limit
+    domain_note: >-
+      when ψ_min < ℛ. When ψ_min ≥ ℛ the value is zero if ξ_min = 0, the present value of nothing; if ξ_min > 0 the
+      limit is finite at every finite horizon and falls without bound as the horizon recedes, so the limiting model
+      has no finite one
     definition: >-
-      The value of a_Nat: −ξ_min ψ_min/(ℛ − ψ_min), which is zero when the worst transitory income is zero or the
-      permanent shock's law is unbounded below.
+      The value of a_Nat: zero when the worst transitory income is zero, at any growth of permanent income, or when
+      the permanent shock's law is unbounded below; otherwise −ξ_min ψ_min/(ℛ − ψ_min), finite only where ψ_min < ℛ.
     sources: {bst: [borocnstnat]}
   - id: BSM_0000198
     name: discounted-return-factor
