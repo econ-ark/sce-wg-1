@@ -4,9 +4,9 @@
 errors first: missing or misnamed files, hashes that differ, a request file for another member, checks naming
 undeclared members or levels, a check against the reference for a member that pins none or whose reference states no
 error the check needs, a metric that is neither the core's nor defined by the experiment, a metric's function that is
-missing or changed, quantities the model's results schema does not define, missing report scripts, and anchors the
-model's source page does not have. The results schema and the anchors are the model repository's, named in its
-registry file; the runner calls this before it runs anything.
+missing or changed, quantities the model's results schema does not define, missing report scripts, and anchors a
+source's page does not have. The results schema and the anchors are the model repository's, named in its registry
+file, the anchors by the key in `sources` they are for; the runner calls this before it runs anything.
 
 A solution has a kind and a role. Its kind is how it is obtained: `exact`, evaluated from a closed form, or
 `numerical`, approximated by a method with settings at a level. Its role is what it is for in an experiment: the
@@ -82,9 +82,10 @@ def resolves(path: str, results: dict) -> bool:
 
 
 def problems(experiment: dict, folder: Path, results_schema: dict | None = None,
-             anchors: set[str] | None = None) -> list[str]:
+             anchors: dict[str, set[str]] | set[str] | None = None) -> list[str]:
     """What the validator cannot say about an experiment: its files, hashes, names and quantities. Without a results
-    schema the quantities are not checked; without anchors the sources are not."""
+    schema the quantities are not checked. `anchors` holds each source's anchors by its key in `sources`; a set alone
+    is BST's, as before a model could name anchors for another source. A source without anchors is not checked."""
     folder = Path(folder)
     out = [f"{'/'.join(map(str, e.path))}: {e.message}"
            for e in jsonschema.Draft202012Validator(SCHEMA).iter_errors(experiment)]
@@ -142,7 +143,9 @@ def problems(experiment: dict, folder: Path, results_schema: dict | None = None,
     for s in experiment.get("report_scripts", []):
         if not (folder / s["path"]).is_file():
             out.append(f"no report script {s['path']}")
-    if anchors is not None:
-        out += [f"the source page has no anchor {a}" for a in experiment.get("sources", {}).get("bst", [])
-                if a not in anchors]
+    if isinstance(anchors, (set, frozenset)):
+        anchors = {"bst": anchors}
+    for key, cited in experiment.get("sources", {}).items():
+        if anchors and key in anchors:
+            out += [f"the source page of {key} has no anchor {a}" for a in cited if a not in anchors[key]]
     return out
