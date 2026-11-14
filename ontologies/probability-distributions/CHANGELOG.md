@@ -3,6 +3,12 @@
 Each entry says whether a change alters a measure (a family's definition), a chart (its coordinates or conversions), or
 only labels and text.
 
+## 0.1.0-draft.2 (unreleased)
+
+Only labels and text: no measure or chart changes. Bellman-SYM's documentation is public, at bellman.io, so its page of
+shock distributions, from which the `bellman-sym` written forms are read, is declared as a source, beside ProbOnto, and
+the README links it.
+
 ## 0.1.0-draft.1 (unreleased)
 
 The first draft. The design: the six kinds, the three primitive operators, the identity rule, the three settlements, the
