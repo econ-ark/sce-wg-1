@@ -417,3 +417,66 @@ def test_a_clone_whose_origin_is_a_local_path_is_refused_before_anything_runs(mo
     with pytest.raises(SystemExit, match="origin is"):
         run(model, "--levels", "low")
     assert not model["out"].exists()
+
+
+def test_the_environment_hash_takes_each_name_as_it_is_whatever_core_quotepath_says(model):
+    """Without `-z`, git quotes a name outside ASCII when `core.quotePath` is true, its default, and the hash then
+    held the quoted name with its directory; with it, the hash is the schema's on the name itself."""
+    m = runner.Model(model["registry"])
+    (m.root / "harness" / "données.txt").write_text("é\n", encoding="utf-8")
+    git(m.root, "add", "-A")
+    git(m.root, "commit", "-q", "-m", "a name outside ASCII")
+    commit = records.repository(m.root)["commit"]
+    hashes = set()
+    for quote in ("true", "false"):
+        git(m.root, "config", "core.quotePath", quote)
+        hashes.add(records.environment_hash(m.root, commit, "harness")[0])
+    lines = []
+    for line in git(m.root, "-c", "core.quotePath=false", "ls-tree", "-r", commit, "--", "harness").splitlines():
+        meta, _, name = line.partition("\t")
+        mode, _, obj = meta.split()
+        blob = subprocess.run(["git", "cat-file", "blob", obj], cwd=m.root, capture_output=True, check=True).stdout
+        rel = name.removeprefix("harness/").encode("utf-8")
+        lines.append((rel, f"blob {mode} {hashlib.sha256(blob).hexdigest()} ".encode() + rel + b"\n"))
+    assert hashes == {hashlib.sha256(b"".join(text for _, text in sorted(lines))).hexdigest()}
+
+
+def test_each_source_is_checked_against_its_own_anchors(model):
+    exp = experiment.load(model["experiment"])
+    folder = model["experiment"].parent
+    exp["sources"] = {"bst": ["a-limit"], "other": ["a-section", "no-such-section"]}
+    # A set alone is BST's anchors, as before; the other source has none, so it is not checked.
+    assert experiment.problems(exp, folder, RESULTS_SCHEMA, {"a-limit"}) == []
+    assert experiment.problems(exp, folder, RESULTS_SCHEMA, {"bst": {"a-limit"}, "other": {"a-section"}}) == [
+        "the source page of other has no anchor no-such-section"]
+    assert experiment.problems(exp, folder, RESULTS_SCHEMA, {"bst": set()}) == [
+        "the source page of bst has no anchor a-limit"]
+
+
+def test_the_registry_file_names_one_anchors_file_or_one_per_source(model):
+    harness = model["registry"].parent
+    (harness / "bst-anchors.txt").write_text("# BST's\na-limit\n")
+    (harness / "other-anchors.txt").write_text("a-section\n")
+    registry = yaml.safe_load(model["registry"].read_text())
+    registry["model"]["anchors"] = "bst-anchors.txt"
+    model["registry"].write_text(yaml.safe_dump(registry))
+    assert runner.Model(model["registry"]).anchors == {"bst": {"a-limit"}}
+    registry["model"]["anchors"] = {"bst": "bst-anchors.txt", "other": "other-anchors.txt", "third": "missing.txt"}
+    model["registry"].write_text(yaml.safe_dump(registry))
+    assert runner.Model(model["registry"]).anchors == {"bst": {"a-limit"}, "other": {"a-section"}}
+
+
+def test_a_signal_is_recorded_by_its_name():
+    assert runner.signal_name(9, linux=True) == "SIGKILL"
+    assert runner.signal_name(10, linux=True) == "SIGUSR1"  # SIGBUS by macOS's numbering, which a container never has
+    assert runner.signal_name(9, linux=False) == "SIGKILL"
+    assert runner.signal_name(64, linux=True) == "signal 64"
+
+
+def test_a_job_its_process_killed_by_a_signal_is_recorded_so(model):
+    killed = "import os, signal\nos.kill(os.getpid(), signal.SIGKILL)\n"
+    (model["registry"].parent / "stub_adapter.py").write_text(killed)
+    git(model["root"], "commit", "-q", "-am", "an adapter that is killed")
+    assert run(model, "--levels", "low") != 0
+    outcome = record(model, "m1")["outcome"]
+    assert (outcome["termination"], outcome["signal"], outcome["exit_code"]) == ("signal", "SIGKILL", -9)

@@ -51,6 +51,10 @@ toolkits:
     kind: numerical                            # optional: exact for an entry that evaluates a closed form; numerical when left out
 ```
 
+`anchors` names BST's anchors file, or a file for each key of an experiment's `sources`: `anchors: {bst:
+../ontologies/buffer-stock-models/bst-anchors.txt, <key>: <file>}`. An experiment's anchors for a source are checked
+against that source's file; a source with no file, or whose file is not there, is not checked.
+
 An entry's kind says how it obtains its solution ([`../schemas/experiments.md`](../schemas/experiments.md), "Kinds and
 roles"). The run's manifest and every record the runner writes carry it, and the comparator sets only numerical
 entries beside one another and along their levels. An entry stated to be exact has its kind in its jobs' fingerprints, so stating

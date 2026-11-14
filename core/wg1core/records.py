@@ -90,24 +90,31 @@ def tree_that_ran(repo: dict) -> str:
 def environment_hash(root: Path, tree: str, path: str) -> tuple[str, str | None]:
     """The schema's hash of an environment directory in a tree, and git's own name for that directory's tree.
 
-    `git ls-tree -r <tree> -- <path>` lists what git records there, never the index or the files on disk. Each blob's
-    bytes, or a symbolic link's text, are hashed alone; then the listing `<type> <mode> <sha256> <path>` with the path
-    relative to the directory, sorted bytewise on the path, is hashed."""
-    listing = git("ls-tree", "-r", tree, "--", path, cwd=root)
+    `git ls-tree -r -z <tree> -- <path>` lists what git records there, never the index or the files on disk; `-z` gives
+    each name as it is, where without it git quotes a name with a byte outside ASCII, a quote, a backslash or a control
+    character, as `core.quotePath` says, so two machines could hash one tree differently. Each blob's bytes, or a
+    symbolic link's text, are hashed alone; then the listing `<type> <mode> <sha256> <path>` with the path relative to
+    the directory, sorted bytewise on the path, is hashed."""
+    done = subprocess.run(["git", "ls-tree", "-r", "-z", tree, "--", path], cwd=root, capture_output=True)
+    if done.returncode:
+        raise RuntimeError(f"git ls-tree -r -z {tree} -- {path}: {done.stderr.decode('utf-8', 'replace').strip()}")
+    prefix = path.encode("utf-8")
     lines = []
-    for line in listing.splitlines():
-        meta, _, name = line.partition("\t")
-        mode, kind, obj = meta.split()
+    for entry in done.stdout.split(b"\0"):
+        if not entry:
+            continue
+        meta, _, name = entry.partition(b"\t")
+        mode, kind, obj = meta.decode("ascii").split()
         if kind != "blob":
             continue
         blob = subprocess.run(["git", "cat-file", "blob", obj], cwd=root, capture_output=True).stdout
-        relname = name[len(path):].lstrip("/") if name.startswith(path) else name
-        lines.append((relname.encode("utf-8"), f"{'link' if mode == '120000' else 'blob'} {mode} "
-                      f"{hashlib.sha256(blob).hexdigest()} {relname}\n"))
+        relname = name[len(prefix):].lstrip(b"/") if name.startswith(prefix) else name
+        lines.append((relname, f"{'link' if mode == '120000' else 'blob'} {mode} "
+                      f"{hashlib.sha256(blob).hexdigest()} ".encode("ascii") + relname + b"\n"))
     if not lines:
         raise RuntimeError(f"nothing tracked under {path} in {tree[:12]}")
     lines.sort(key=lambda p: p[0])
-    digest = hashlib.sha256("".join(text for _, text in lines).encode("utf-8")).hexdigest()
+    digest = hashlib.sha256(b"".join(text for _, text in lines)).hexdigest()
     done = subprocess.run(["git", "rev-parse", f"{tree}:{path}"], cwd=root, capture_output=True, text=True)
     return digest, (done.stdout.strip() if done.returncode == 0 else None)
 

@@ -43,7 +43,10 @@ conditions, the start, end and duration, the outcome, and the extensions.
 - **The stamps** are RFC 3339 with an offset, and the **duration** comes from a monotonic clock around the build or the
   script alone. A duration is read with the machine and the conditions beside it, never alone and never as a ranking.
 - **How it ended** is kept apart from the exit code: an exit of its own, the wall cap, the memory cap, which the
-  container runtime reports, or another signal, since an exit code of 137 alone cannot tell the last three apart.
+  container runtime reports, or another signal, since an exit code of 137 alone cannot tell the last three apart. A
+  signal is recorded by its name, `SIGKILL`; records before 2026-11-14 give its number, `signal 9`, and a reader
+  accepts either. The runtime does not always report a kill by the memory cap, so a `SIGKILL` under a memory cap may
+  be one that went unreported.
 - **The outputs** are the files the project names, each with its hash, so that a later run is compared file by file,
   relative to the output directory the record names.
 - **Formats are patterns.** Timestamps and remotes are checked by regular expressions rather than format assertions,
