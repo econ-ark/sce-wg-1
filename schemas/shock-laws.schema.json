@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Shock law",
+  "description": "The probability distribution of one shock in a parameter file: a positive random variable with mean one. Draft; see shock-laws.md.",
+  "$comment": "This validator checks names, types and ranges only. The checker checks what JSON Schema cannot express: orderings, sums, means, bot < top, and the rules for tables. Each law is a mapping with one key, the law's name.",
+  "$ref": "#/$defs/ShockLaw",
+  "$defs": {
+    "ShockLaw": {
+      "$comment": "The accepted laws. Formula and Code, defined below, are reserved for a later version and deliberately left out of this list, so a file that uses either fails validation.",
+      "oneOf": [
+        { "$ref": "#/$defs/Degenerate" },
+        { "$ref": "#/$defs/LogNormal" },
+        { "$ref": "#/$defs/TruncatedLogNormal" },
+        { "$ref": "#/$defs/Uniform" },
+        { "$ref": "#/$defs/Discrete" },
+        { "$ref": "#/$defs/LogNormalMixture" },
+        { "$ref": "#/$defs/TruncatedLogNormalMixture" },
+        { "$ref": "#/$defs/Tabulated" }
+      ]
+    },
+
+    "PositiveNumber": { "type": "number", "exclusiveMinimum": 0 },
+    "Probability": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+    "TruncationBound": {
+      "type": ["number", "null"],
+      "description": "A truncation bound in standard deviations of the normal before truncation. Left out, it is three standard deviations (-3 below, 3 above); null means no bound on that side."
+    },
+
+    "Degenerate": {
+      "description": "psi = 1: the shock is switched off.",
+      "type": "object",
+      "required": ["Degenerate"],
+      "additionalProperties": false,
+      "properties": {
+        "Degenerate": { "type": "object", "additionalProperties": false }
+      }
+    },
+
+    "LogNormal": {
+      "description": "ln psi ~ N(-sd_log^2/2, sd_log^2).",
+      "type": "object",
+      "required": ["LogNormal"],
+      "additionalProperties": false,
+      "properties": {
+        "LogNormal": {
+          "type": "object",
+          "required": ["sd_log"],
+          "additionalProperties": false,
+          "properties": { "sd_log": { "$ref": "#/$defs/PositiveNumber" } }
+        }
+      }
+    },
+
+    "TruncatedLogNormal": {
+      "description": "ln psi = mu + s * Z, with Z standard normal conditioned on bot <= Z <= top. sd_log is the standard deviation of ln psi after truncation, so s = sd_log / sqrt(Var(Z | bot <= Z <= top)); mu is set so that E[psi] = 1 after truncation.",
+      "$comment": "An omitted bound is three standard deviations; null is no bound. The checker refuses null on both sides, which is LogNormal, and requires bot < top. The ontology's chart: PD_0000032.",
+      "type": "object",
+      "required": ["TruncatedLogNormal"],
+      "additionalProperties": false,
+      "properties": {
+        "TruncatedLogNormal": {
+          "type": "object",
+          "required": ["sd_log"],
+          "additionalProperties": false,
+          "properties": {
+            "sd_log": { "$ref": "#/$defs/PositiveNumber" },
+            "bot": { "$ref": "#/$defs/TruncationBound" },
+            "top": { "$ref": "#/$defs/TruncationBound" }
+          }
+        }
+      }
+    },
+
+    "Uniform": {
+      "description": "psi ~ U[1 - half_width, 1 + half_width], in levels.",
+      "type": "object",
+      "required": ["Uniform"],
+      "additionalProperties": false,
+      "properties": {
+        "Uniform": {
+          "type": "object",
+          "required": ["half_width"],
+          "additionalProperties": false,
+          "properties": {
+            "half_width": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 }
+          }
+        }
+      }
+    },
+
+    "Discrete": {
+      "description": "psi takes the stated values with the stated probabilities. The points are the model, not a quadrature.",
+      "$comment": "The checker requires equal lengths, strictly increasing values, probabilities summing to one, and a mean of one.",
+      "type": "object",
+      "required": ["Discrete"],
+      "additionalProperties": false,
+      "properties": {
+        "Discrete": {
+          "type": "object",
+          "required": ["values", "probs"],
+          "additionalProperties": false,
+          "properties": {
+            "values": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/PositiveNumber" } },
+            "probs": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/Probability" } }
+          }
+        }
+      }
+    },
+
+    "LogNormalMixture": {
+      "description": "ln psi = c + X, with X drawn from normal components, component j with probability weight_j, mean mean_log_j and standard deviation sd_log_j, and one common shift c making E[psi] = 1.",
+      "$comment": "The checker requires weights summing to one, the weighted mean of mean_log equal to zero, and components in increasing order of mean_log, then of sd_log. The ontology's chart: PD_0000054.",
+      "type": "object",
+      "required": ["LogNormalMixture"],
+      "additionalProperties": false,
+      "properties": {
+        "LogNormalMixture": {
+          "type": "object",
+          "required": ["components"],
+          "additionalProperties": false,
+          "properties": {
+            "components": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": ["weight", "mean_log", "sd_log"],
+                "additionalProperties": false,
+                "properties": {
+                  "weight": { "$ref": "#/$defs/Probability" },
+                  "mean_log": { "type": "number" },
+                  "sd_log": { "$ref": "#/$defs/PositiveNumber" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "TruncatedLogNormalMixture": {
+      "description": "ln psi = c + X, with X drawn from truncated normal components, each with its mean_log and sd_log stated after truncation and its bounds in standard deviations of its normal before truncation, as for TruncatedLogNormal, and one common shift c making E[psi] = 1.",
+      "$comment": "An omitted bound is three standard deviations; null is no bound. The checker requires weights summing to one, the weighted mean of mean_log equal to zero, components in increasing order of mean_log, then sd_log, bot and top, bot < top in each, and some component truncated: with none, the law is LogNormalMixture. The ontology's chart: PD_0000058.",
+      "type": "object",
+      "required": ["TruncatedLogNormalMixture"],
+      "additionalProperties": false,
+      "properties": {
+        "TruncatedLogNormalMixture": {
+          "type": "object",
+          "required": ["components"],
+          "additionalProperties": false,
+          "properties": {
+            "components": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": ["weight", "mean_log", "sd_log"],
+                "additionalProperties": false,
+                "properties": {
+                  "weight": { "$ref": "#/$defs/Probability" },
+                  "mean_log": { "type": "number" },
+                  "sd_log": { "$ref": "#/$defs/PositiveNumber" },
+                  "bot": { "$ref": "#/$defs/TruncationBound" },
+                  "top": { "$ref": "#/$defs/TruncationBound" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "Tabulated": {
+      "description": "A user's own law, given as its quantile function: points (u, Q(u)) for u from 0 to 1, with Q linear in u between consecutive points. The table is the law, not an approximation of one.",
+      "$comment": "The checker requires: first u 0 and last u 1, neither repeated; u never falling, an interior value at most twice and consecutively; Q never falling; at least one stretch where u and Q both rise, and not a single rising stretch (Uniform); no interior point exactly collinear with its neighbors; mean one to within 1e-12.",
+      "type": "object",
+      "required": ["Tabulated"],
+      "additionalProperties": false,
+      "properties": {
+        "Tabulated": {
+          "type": "object",
+          "required": ["points"],
+          "additionalProperties": false,
+          "properties": {
+            "points": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "array",
+                "prefixItems": [
+                  { "type": "number", "minimum": 0, "maximum": 1 },
+                  { "$ref": "#/$defs/PositiveNumber" }
+                ],
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "Formula": {
+      "description": "RESERVED, not accepted yet: a law given as a mathematical expression for its quantile function, density or CDF.",
+      "$comment": "Candidate languages: Content MathML (how SBML states its math, and the basis of its Distributions package), or a small text grammar with a reference parser in each supported language. The checker would verify mean one and the regularity conditions by numerical integration. See shock-laws.md.",
+      "type": "object",
+      "required": ["Formula"],
+      "additionalProperties": false,
+      "properties": {
+        "Formula": {
+          "type": "object",
+          "required": ["defines", "language", "expression"],
+          "additionalProperties": false,
+          "properties": {
+            "defines": { "enum": ["quantile", "density", "cdf"] },
+            "language": { "enum": ["content-mathml", "infix"] },
+            "expression": { "type": "string" },
+            "support": {
+              "type": "array",
+              "prefixItems": [{ "$ref": "#/$defs/PositiveNumber" }, { "$ref": "#/$defs/PositiveNumber" }],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        }
+      }
+    },
+
+    "Code": {
+      "description": "RESERVED, not accepted yet: a law given as compiled functions behind a fixed interface, such as quantile(u), cdf(x), pdf(x) and support().",
+      "$comment": "Candidate forms: C source, or WebAssembly for identical behavior on every platform; the file identified by its SHA-256. Precedent: the Functional Mock-up Interface. Open questions: running other people's code, reproducibility across platforms, toolkits that cannot call C, and a hash that identifies the file rather than the law. See shock-laws.md.",
+      "type": "object",
+      "required": ["Code"],
+      "additionalProperties": false,
+      "properties": {
+        "Code": {
+          "type": "object",
+          "required": ["interface", "form", "path", "sha256"],
+          "additionalProperties": false,
+          "properties": {
+            "interface": { "const": "shock-law-c" },
+            "form": { "enum": ["c-source", "wasm"] },
+            "path": { "type": "string" },
+            "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+          }
+        }
+      }
+    }
+  }
+}
