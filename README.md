@@ -1,6 +1,6 @@
 # SCE Working Group 1: Language and Semantics
 
-Working Group 1 of the Society for Computational Economics develops formal specifications of dynamic economic models and their solution and estimation methods. The group was formed at CEF 2026 in Venice and works with [Econ-ARK](https://econ-ark.org) and [QuantEcon](https://quantecon.org).
+Working Group 1 of the Society for Computational Economics develops formal specifications of dynamic economic models and their solution and estimation methods. For the models it takes up, the group fixes a canonical definition of each that is exact in this sense: every valid solution method, given unbounded computation, converges to the same solution as every other. The group was formed at CEF 2026 in Venice and works with [Econ-ARK](https://econ-ark.org) and [QuantEcon](https://quantecon.org).
 
 [Working group website](https://econ-ark.github.io/sce-wg-1/)
 

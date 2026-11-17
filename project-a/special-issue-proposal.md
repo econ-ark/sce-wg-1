@@ -24,6 +24,9 @@ abstract: |
   account, independent of code and solver, of which economic objects exist,
   what stands for what, and what is written down, together with the conditions
   under which that interpretation holds.
+  For a model, such a statement is exact when it fixes the solution: every
+  valid solution method, given unbounded computation, converges to the same
+  solution as every other.
   We propose a special issue collecting semantic ontologies for modeling
   languages, toolkits, empirical methods, and model classes.
 exports:
@@ -89,8 +92,30 @@ example, Dynare), toolkits (for example, HARK and SSJ), empirical methods
 (for example, structural modeling and estimation), and model classes (for
 example, life-cycle, real-business-cycle, and agent-based models).
 In addition to the semantic ontologies, the working group will write a
-paper and assemble a community resource of canonical models and their
-ontologies.[^mmb]
+paper and assemble a community resource of canonical models, each with an
+exact definition, and their ontologies.[^mmb]
+
+A definition of a model is exact when it leaves nothing to convention that
+the solution depends on.
+We make this precise through solution methods.
+A solution method is valid for a definition when it approximates the problem
+as stated and nothing else, and when whatever it adds of its own, grids,
+quadratures, tolerances, and interpolants, can be refined without bound; a
+choice that survives the refinement, such as a fixed set of nodes standing
+for a continuous shock, changes the problem.
+A definition is exact when every valid solution method, given unbounded
+computation, converges to the same solution as every other, and that common
+limit is the model's solution.
+The definition must therefore name the objects that make up the solution,
+the conditions under which they exist and are unique, and the sense in which
+an approximation approaches them.
+Exactness can be tested: an implementation, whoever or whatever wrote it,
+either converges to the solution or does not, and two valid methods that
+converge to different solutions have located a convention the definition
+left unstated.
+For each model it takes up, the working group fixes one exact definition as
+canonical: the statement to which every toolkit's files and calls are mapped,
+and against which every solution is judged.
 
 The working group will also contribute papers that use the stated
 ontologies to compare modeling strategies for the same problem — for
@@ -101,10 +126,11 @@ Economics comes to this task with an unusual advantage — the theory already
 states the objects and relations an ontology must record, so what remains is
 the map from model files and toolkit calls to the theory — and an unusual
 obstacle: no settled timing convention to standardize against.
-Each team will therefore state the conventions its own domain assumes, and
-where two teams' ontologies disagree they will have located a point where the
-profession's conventions silently diverge — the substance of the closing
-comparison paper.
+Each team will therefore state the conventions its own domain assumes.
+Where two teams' ontologies disagree, or two valid solution methods for one
+canonical model converge to different solutions, they will have located a
+point where the profession's conventions silently diverge — the substance of
+the closing comparison paper.
 
 The SCE working group will submit a subset of the papers, an open call will
 invite the rest, and a comparison paper, written jointly by the participating
@@ -471,6 +497,9 @@ Denotational equivalence: two written forms, one denotation.
 Adequacy: an implementation computes exactly the object denoted.
 Convergence: a numerical approximation approaches it as grids and tolerances
 are refined.
+Exactness: for a model, every valid solution method converges, given
+unbounded computation, to the same solution as every other, so that adequacy
+and convergence are judged against one object.
 
 ::::
 
