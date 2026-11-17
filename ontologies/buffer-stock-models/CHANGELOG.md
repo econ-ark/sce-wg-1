@@ -7,8 +7,17 @@ form, or only labels and text.
 
 Bellman-SYM's documentation is public, at bellman.io, so the ontology links its concepts. With them, two corrections
 made on 2026-11-12 in the buffer-stock model's repository's copy of this ontology, which this copy lacked; this
-repository's copy is the ontology's home, by the owner's decision of 2026-11-14. No class or axiom changes; one term's
-meaning is corrected.
+repository's copy is the ontology's home, by the owner's decision of 2026-11-14. Then, on 2026-11-16, minimum human
+wealth, which the natural family's stage file now takes in from the next period as a field. No class or axiom changes;
+one term is added, and one term's meaning is corrected.
+
+**New terms.**
+- The row `BSM_0000232`, `minimum-human-wealth`, h_min: the present value of the least future noncapital income on the
+  path of lowest permanent shocks, as a ratio to permanent income, excluding this period's; zero in the last period
+  and (𝒢ψ_min/R)(ξ_min + the next period's) before it, with the limit ξ_min 𝒢ψ_min/(R − 𝒢ψ_min) where 𝒢ψ_min < R.
+  Its written forms are BST's `\hNrmPes`, the notation registry's `human-wealth-pessimist`, and the natural family's
+  stage file's `h_min[>]`, the field that bounds a. Its sources are the paper's appendix on a positive minimum income.
+  A test checks that its formula is the limit of its recursion, and minus the natural limit's value.
 
 **Meanings changed.**
 - The row `BSM_0000081`, `natural-limit`, in its definition and its domain note; the formula is unchanged. The note
@@ -35,6 +44,13 @@ meaning is corrected.
   names it as a source. The generator refuses a source that names a concept without it.
 
 **Labels and text.**
+- The row `BSM_0000057`, `borrowing-limit-natural`: its definition said that no stage file carries the natural
+  constraint. Since 2026-11-16 the natural family's stage file takes it in from the next period as a field, minus
+  minimum human wealth, h_min[>]; it is still no parameter. The definition says so and names h_min, and the row cites
+  the appendix's lemma on the natural borrowing limit. Its meaning is unchanged.
+- The row `BSM_0000081`, `natural-limit`, says that its value is −h_min in the limit of an infinite horizon.
+- `bst-anchors.txt` was read again from BST's published page on 2026-11-16: its appendix on a positive minimum income
+  added 80 anchors, and none had gone.
 - The statement that Bellman-SYM's documentation is not public, in the README, `bellman-concepts.txt` and the
   definition of `bellmanConcept`, is corrected. The rule that a concept is named and never linked, which rested on
   it, is rescinded, on the owner's ruling of 2026-11-14.

@@ -942,12 +942,13 @@ objects:
     symbol: a_Nat
     definition: >-
       a_Nat, the lowest end-of-period assets from which the worst income next period still allows positive consumption
-      forever: minus the present value of the worst income, capitalized at ℛ, that is −h_min. A quantity of the laws.
-      No stage file carries it as a parameter: the natural family's members have it at zero, through the zero-income
-      event, and the artificial family states a_Art above it. The family of the natural scenario without a point mass
-      wrote it out from the laws' bounds until its abolition on 2026-11-03.
+      forever: minus minimum human wealth, −h_min, so that a > −h_min. A quantity of the laws, and no parameter. The
+      natural family's stage file takes it in from the next period as a field, h_min[>], which each period sends back
+      to the one before; that family's members have it at zero, through the zero-income event. The artificial family
+      states a_Art above it. The family of the natural scenario without a point mass wrote it out from the laws' bounds
+      until its abolition on 2026-11-03.
     written_as: {bst: '\BoroCnstNat', registry: borrowing-limit-natural}
-    sources: {bst: [borocnstnat, pdv]}
+    sources: {bst: [borocnstnat, pdv, lemma-naturalborrowinglimit, eq-naturalborrowinglimit]}
   - id: BSM_0000058
     name: borrowing-limit
     label: constraint in force
@@ -1275,6 +1276,25 @@ quantities:
     definition: κ_max = 1 − p_worst^(1/ϱ) Þ̊_R, the limit of the MPC as m falls to its lowest value.
     written_as: {bst: '\MPCmax', registry: mpc-max}
     sources: {bst: [eq-mpcmaxdefn]}
+  - id: BSM_0000232
+    name: minimum-human-wealth
+    label: minimum human wealth
+    symbol: h_min
+    formula: "xi_min*G*psi_min/(R - G*psi_min)"
+    domain_note: >-
+      when 𝒢ψ_min < R, that is ψ_min < ℛ. If ξ_min = 0 it is zero at every horizon; if ξ_min > 0 and 𝒢ψ_min ≥ R it is
+      finite at every finite horizon and grows without bound as the horizon recedes
+    definition: >-
+      h_min, the present value of the least future noncapital income, on the path on which every permanent shock takes
+      its lowest value, as a ratio to permanent income: what a lender who must be repaid with certainty will lend.
+      Unlike h, it excludes this period's income. It belongs to a horizon: zero in the last period, and
+      (𝒢ψ_min/R)(ξ_min + the next period's) before it; the formula is its limit as the horizon recedes. The natural
+      constraint is −h_min. In the natural family's stage file it is a field constant within its period: taken in at
+      the continuation perch as h_min[>], the value that bounds a; held at the decision perch as h_min, the period's
+      least income added, zero there; and sent back to the arrival perch as h_min[<] = (𝒢ψ_min/R) h_min, the previous
+      period's h_min[>].
+    written_as: {bst: '\hNrmPes', registry: human-wealth-pessimist, bellman-sym: "h_min[>]"}
+    sources: {bst: [subsec-minimumhumanwealth, eq-hnrmminrecursion, eq-finiteminhumanwealth, prop-infiniteminhumanwealth]}
   - id: BSM_0000081
     name: natural-limit
     label: natural borrowing limit, computed
@@ -1287,7 +1307,8 @@ quantities:
     definition: >-
       The value of a_Nat: zero when the worst transitory income is zero, at any growth of permanent income, or when
       the permanent shock's law is unbounded below; otherwise −ξ_min ψ_min/(ℛ − ψ_min), finite only where ψ_min < ℛ.
-    sources: {bst: [borocnstnat]}
+      It is −h_min in the limit of an infinite horizon.
+    sources: {bst: [borocnstnat, eq-finiteminhumanwealth]}
   - id: BSM_0000198
     name: discounted-return-factor
     label: discounted return factor of the normalized problem

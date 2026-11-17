@@ -21,7 +21,7 @@
     dcterms:source <https://arxiv.org/abs/2012.00219v2> ;
     dcterms:source <https://github.com/llorracc/HAFiscal-QE/tree/1afdf80de4325e436a0c1c20895f754aefefd38c> ;
     dcterms:source <https://bellman.io/wiki/> ;
-    bsm:sourceDigest "sha256:a2121c971c8fbd69228255af50651cf56b72196586fa296e40c329b124bbb671" .
+    bsm:sourceDigest "sha256:09aac3b9d2680ac8269cf4ce56ceb5902378e9485cceddc1b35363c50360e5b1" .
 
 skos:definition a owl:AnnotationProperty .
 skos:notation a owl:AnnotationProperty .
@@ -1292,13 +1292,15 @@ bsm:BSM_0000057
     a owl:NamedIndividual, bsm:Constraint ;
     rdfs:label "natural borrowing constraint"@en ;
     skos:notation "borrowing-limit-natural" ;
-    skos:definition "a_Nat, the lowest end-of-period assets from which the worst income next period still allows positive consumption forever: minus the present value of the worst income, capitalized at ℛ, that is −h_min. A quantity of the laws. No stage file carries it as a parameter: the natural family's members have it at zero, through the zero-income event, and the artificial family states a_Art above it. The family of the natural scenario without a point mass wrote it out from the laws' bounds until its abolition on 2026-11-03."@en ;
+    skos:definition "a_Nat, the lowest end-of-period assets from which the worst income next period still allows positive consumption forever: minus minimum human wealth, −h_min, so that a > −h_min. A quantity of the laws, and no parameter. The natural family's stage file takes it in from the next period as a field, h_min[>], which each period sends back to the one before; that family's members have it at zero, through the zero-income event. The artificial family states a_Art above it. The family of the natural scenario without a point mass wrote it out from the laws' bounds until its abolition on 2026-11-03."@en ;
     bsm:symbol "a_Nat" ;
     bsm:category "constraint" ;
     bsm:inBST "\\BoroCnstNat" ;
     bsm:registryKey "borrowing-limit-natural" ;
     dcterms:source <https://llorracc.github.io/BufferStockTheory/#borocnstnat> ;
-    dcterms:source <https://llorracc.github.io/BufferStockTheory/#pdv> .
+    dcterms:source <https://llorracc.github.io/BufferStockTheory/#pdv> ;
+    dcterms:source <https://llorracc.github.io/BufferStockTheory/#lemma-naturalborrowinglimit> ;
+    dcterms:source <https://llorracc.github.io/BufferStockTheory/#eq-naturalborrowinglimit> .
 
 bsm:BSM_0000058
     a owl:NamedIndividual, bsm:Constraint ;
@@ -1754,11 +1756,31 @@ bsm:BSM_0000080
     bsm:registryKey "mpc-max" ;
     dcterms:source <https://llorracc.github.io/BufferStockTheory/#eq-mpcmaxdefn> .
 
+bsm:BSM_0000232
+    a owl:NamedIndividual, bsm:Quantity ;
+    rdfs:label "minimum human wealth"@en ;
+    skos:notation "minimum-human-wealth" ;
+    skos:definition "h_min, the present value of the least future noncapital income, on the path on which every permanent shock takes its lowest value, as a ratio to permanent income: what a lender who must be repaid with certainty will lend. Unlike h, it excludes this period's income. It belongs to a horizon: zero in the last period, and (𝒢ψ_min/R)(ξ_min + the next period's) before it; the formula is its limit as the horizon recedes. The natural constraint is −h_min. In the natural family's stage file it is a field constant within its period: taken in at the continuation perch as h_min[>], the value that bounds a; held at the decision perch as h_min, the period's least income added, zero there; and sent back to the arrival perch as h_min[<] = (𝒢ψ_min/R) h_min, the previous period's h_min[>]."@en ;
+    bsm:symbol "h_min" ;
+    bsm:formula "xi_min*G*psi_min/(R - G*psi_min)" ;
+    bsm:note "when 𝒢ψ_min < R, that is ψ_min < ℛ. If ξ_min = 0 it is zero at every horizon; if ξ_min > 0 and 𝒢ψ_min ≥ R it is finite at every finite horizon and grows without bound as the horizon recedes" ;
+    bsm:dependsOn bsm:BSM_0000041 ;
+    bsm:dependsOn bsm:BSM_0000040 ;
+    bsm:dependsOn bsm:BSM_0000046 ;
+    bsm:dependsOn bsm:BSM_0000047 ;
+    bsm:inBST "\\hNrmPes" ;
+    bsm:registryKey "human-wealth-pessimist" ;
+    bsm:inBellmanSym "h_min[>]" ;
+    dcterms:source <https://llorracc.github.io/BufferStockTheory/#subsec-minimumhumanwealth> ;
+    dcterms:source <https://llorracc.github.io/BufferStockTheory/#eq-hnrmminrecursion> ;
+    dcterms:source <https://llorracc.github.io/BufferStockTheory/#eq-finiteminhumanwealth> ;
+    dcterms:source <https://llorracc.github.io/BufferStockTheory/#prop-infiniteminhumanwealth> .
+
 bsm:BSM_0000081
     a owl:NamedIndividual, bsm:Quantity ;
     rdfs:label "natural borrowing limit, computed"@en ;
     skos:notation "natural-limit" ;
-    skos:definition "The value of a_Nat: zero when the worst transitory income is zero, at any growth of permanent income, or when the permanent shock's law is unbounded below; otherwise −ξ_min ψ_min/(ℛ − ψ_min), finite only where ψ_min < ℛ."@en ;
+    skos:definition "The value of a_Nat: zero when the worst transitory income is zero, at any growth of permanent income, or when the permanent shock's law is unbounded below; otherwise −ξ_min ψ_min/(ℛ − ψ_min), finite only where ψ_min < ℛ. It is −h_min in the limit of an infinite horizon."@en ;
     bsm:symbol "a_Nat_value" ;
     bsm:formula "-xi_min*psi_min/(R/G - psi_min)" ;
     bsm:note "when ψ_min < ℛ. When ψ_min ≥ ℛ the value is zero if ξ_min = 0, the present value of nothing; if ξ_min > 0 the limit is finite at every finite horizon and falls without bound as the horizon recedes, so the limiting model has no finite one" ;
@@ -1766,7 +1788,8 @@ bsm:BSM_0000081
     bsm:dependsOn bsm:BSM_0000040 ;
     bsm:dependsOn bsm:BSM_0000046 ;
     bsm:dependsOn bsm:BSM_0000047 ;
-    dcterms:source <https://llorracc.github.io/BufferStockTheory/#borocnstnat> .
+    dcterms:source <https://llorracc.github.io/BufferStockTheory/#borocnstnat> ;
+    dcterms:source <https://llorracc.github.io/BufferStockTheory/#eq-finiteminhumanwealth> .
 
 bsm:BSM_0000198
     a owl:NamedIndividual, bsm:Quantity ;

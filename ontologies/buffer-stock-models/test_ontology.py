@@ -7,6 +7,7 @@ claims:
 - the generated files are current, and the Turtle file parses as RDF;
 - the generator refuses a broken source;
 - the moments' formulas agree with the closed forms of the mean-one lognormal;
+- minimum human wealth's formula is the limit of its recursion, and minus the natural limit's value;
 - every implication among the conditions alone holds on sampled models, and is tested on enough of them that it is not
   vacuous; and conditions the ontology keeps apart do come apart;
 - the classes form a tree and the two constraints are told apart; the ontology names no toolkit.
@@ -138,6 +139,20 @@ def test_moments_agree_with_the_lognormal_closed_forms(sigma, rho):
     assert env["E_log_psi"] == pytest.approx(-s2 / 2, rel=1e-12)
     assert env["E_psi_log_psi"] == pytest.approx(s2 / 2, rel=1e-10)
     assert env["E_psi_mrho"] == pytest.approx(math.exp(rho * (rho + 1) * s2 / 2), rel=1e-10)
+
+
+@pytest.mark.parametrize("R, G, psi_min, xi_min", [(1.03, 1.01, 0.8, 0.3), (1.04, 1.0, 0.95, 0.1), (1.02, 1.03, 0.5, 0.0),
+                                                   (1.01, 1.0, 0.0, 0.2)])
+def test_minimum_human_wealth_is_the_recursions_limit_and_minus_the_natural_limit(R, G, psi_min, xi_min):
+    """The row minimum-human-wealth: its recursion, zero in the last period and (𝒢ψ_min/R)(ξ_min + the next period's)
+    before it, tends to its formula as the horizon recedes, and that limit is minus the natural limit's value."""
+    primitives = {"rho": 2.0, "beta": 0.96, "L": 1.0, "R": R, "G": G, "wp": 0.0, "xi_u": 0.0, "a_Art": 0.0}
+    env = environment(primitives, lognormal(0.1), {"psi_min": psi_min, "xi_min": xi_min, "xi_atom": 0.0, "p_worst": 0.0})
+    h = 0.0
+    for _ in range(5000):
+        h = (G * psi_min / R) * (xi_min + h)
+    assert env["h_min"] == pytest.approx(h, rel=1e-12, abs=1e-15)
+    assert env["a_Nat_value"] == pytest.approx(-env["h_min"], rel=1e-12, abs=1e-15)
 
 
 # The implications among the conditions.
