@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/econ-ark/sce-wg-1/schemas/runs.registry/0.1.0-draft.6.json",
+  "title": "A record in a model repository's registry",
+  "description": "DRAFT 0.1.0-draft.6, 2026-11-04. Every file of a run's folder, harness/runs.registry/<stamp>_<experiment>/: the build records, which are the core schema's (execution-record.schema.json, destined for REMARK), and the execution records, one per job, <toolkit>_<member>_<level>.json, which are the core's with a model repository's fields under the namespace sce-wg-1, defined here and nowhere in the core. One schema covers the whole folder, dispatching on `kind`.",
+  "allOf": [
+    {
+      "$ref": "https://github.com/econ-ark/sce-wg-1/schemas/execution-record/0.1.0-draft.4.json"
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "execution"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "extensions"
+        ],
+        "properties": {
+          "extensions": {
+            "type": "object",
+            "required": [
+              "sce-wg-1"
+            ],
+            "properties": {
+              "sce-wg-1": {
+                "$ref": "#/$defs/SceWg1"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "Sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "SceWg1": {
+      "description": "A model repository's fields for one job of the harness: which toolkit solved which member at which level, and what the organizer's gate said.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "experiment",
+        "toolkit",
+        "member",
+        "request",
+        "level",
+        "results_sha256",
+        "verification"
+      ],
+      "properties": {
+        "experiment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "sha256": {
+              "$ref": "#/$defs/Sha256"
+            }
+          }
+        },
+        "toolkit": {
+          "type": "string",
+          "description": "The toolkit's name as harness/toolkits.yaml spells it."
+        },
+        "mode": {
+          "type": "string",
+          "description": "The mode of solution, when a toolkit has more than one, such as indshock or markov; proposed with the results schema's mode string."
+        },
+        "adapter": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "code_sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "code_sha256": {
+              "$ref": "#/$defs/Sha256",
+              "description": "The hash of the adapter's code and the modules it imports, as the runner's fingerprint computes it."
+            }
+          }
+        },
+        "member": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "hash",
+            "parameter_file_sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "hash": {
+              "$ref": "#/$defs/Sha256",
+              "description": "The member's canonical hash, which identifies the model."
+            },
+            "parameter_file_sha256": {
+              "$ref": "#/$defs/Sha256"
+            }
+          }
+        },
+        "request": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sha256"
+          ],
+          "properties": {
+            "sha256": {
+              "$ref": "#/$defs/Sha256"
+            }
+          }
+        },
+        "level": {
+          "type": "string",
+          "description": "The experiment's level name; the adapter's own argument is in the record's arguments."
+        },
+        "settings_sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "methods_sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "results_sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "toolkit_version": {
+          "type": "string",
+          "description": "As the results file reports it, with its commit when it has one."
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "verdict"
+          ],
+          "properties": {
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "verified",
+                "failed",
+                "not run"
+              ]
+            },
+            "problems": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "comparison": {
+          "description": "The job's comparison with its member's reference, as the comparator wrote it: reported, never judged, since a distance from the reference carries no verdict; only the experiment's checks pass or fail.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "computed",
+                "not run",
+                "error"
+              ],
+              "description": "computed: every named distance computed; not run: the member pins no reference, or the job wrote no results file; error: the member pins a reference and the comparison could not be computed, the reference not loading, not answering the same question by the model's identity keys, or a quantity not comparable. An error fails the compare command; a distance never does."
+            },
+            "reference": {
+              "$ref": "#/$defs/Sha256",
+              "description": "The reference results file's hash, as the experiment pins it."
+            },
+            "report": {
+              "type": "string",
+              "description": "The comparator's report for the job, relative to the record: every distance with the reference's error beside it."
+            },
+            "largest_distance": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "quantity",
+                "metric",
+                "distance"
+              ],
+              "properties": {
+                "quantity": {
+                  "type": "string"
+                },
+                "metric": {
+                  "type": "string",
+                  "enum": [
+                    "max_abs_difference",
+                    "max_relative_difference"
+                  ]
+                },
+                "distance": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "reference_error": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "The reference's own certified error for that quantity, when the experiment states one."
+                }
+              }
+            },
+            "reason": {
+              "type": "string",
+              "description": "Why the comparison was not run or is in error."
+            }
+          }
+        },
+        "core_version": {
+          "type": "string",
+          "description": "The version of the checker, runner and comparator that gated the run."
+        }
+      }
+    }
+  }
+}
