@@ -288,9 +288,12 @@ jobs:
         with:
           path: site
 
+  # Only the working group's repository publishes the site. A fork builds and
+  # checks it all the same, but has no Pages site of its own to deploy to, and
+  # a deploy there fails on every push to main.
   deploy:
     needs: assemble
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.repository == 'econ-ark/sce-wg-1'
     runs-on: ubuntu-latest
     permissions:
       pages: write
