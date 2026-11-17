@@ -384,7 +384,7 @@ conventions silently differ.
 | `generate.py` | writes the two files below from the source, or checks that they are current |
 | `buffer-stock-models.ttl` | the ontology in OWL 2, Turtle syntax (generated) |
 | `buffer-stock-models.json` | a flat table, one row per term, references resolved (generated) |
-| `bst-anchors.txt` | the anchors of BST's published page, read on 2026-10-31, which every bst citation must be among |
+| `bst-anchors.txt` | the anchors of BST's published page, read on 2026-10-31 and again on 2026-11-16, which every bst citation must be among |
 | `registry-keys.txt` | the keys of econ-ark's notation registry, version 8.0.0 |
 | `bellman-concepts.txt` | the slugs of Bellman-SYM's concepts, read on 2026-10-31, each linked to its page on bellman.io |
 | `test_ontology.py` | the tests |
