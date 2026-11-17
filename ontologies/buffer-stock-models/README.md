@@ -253,7 +253,7 @@ Bellman-SYM's [Stages](https://bellman.io/Bellman-Sym/01-stage/#1-stages-and-per
   - BST's v_t(m) is the decision value. Its arrival value is v≺(k) = E[(𝒢ψ)^(1−ϱ) v(m)]. Its continuation value is a
     function of a, supplied by the next period's arrival value.
   - The derivative of a value is no field. It is read by a derivative term: D_{m}V, D_{k}V[<] and D_{a}V[>].
-  - BST's end-of-period value is β̊ V[>](a), and its end-of-period marginal value is β̊ D_{a}V[>](a) =
+  - BST's end-of-period value is β̊ `V[>](a)`, and its end-of-period marginal value is β̊ `D_{a}V[>](a)` =
     β̊ R E[(𝒢ψ′)^(−ϱ) u′(c(m′))].
   - The policy is the consumption function, from the decision state into the feasible set. The control c is its value
     at one m.

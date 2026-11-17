@@ -58,6 +58,9 @@ one term is added, and one term's meaning is corrected.
   at them.
 - The README's links to Project A and to the Rosetta Stones are absolute addresses, so that they hold in a copy of this
   folder, such as the buffer-stock model's repository's.
+- The README writes the end-of-period value and its marginal value, `V[>](a)` and `D_{a}V[>](a)`, as code. Written
+  plainly, Markdown read `[>](a)` as a link, and GitHub showed a link labeled ">" in place of the perch mark and the
+  argument.
 
 ## 0.1.0-draft.2 (unreleased)
 
