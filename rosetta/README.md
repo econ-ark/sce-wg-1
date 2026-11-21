@@ -102,10 +102,14 @@ registry takes cards. Nobody edits them by hand.
 
 ### What a stone does not hold
 
-Whatever is the same for every toolkit. The adapter contract, the command line and the files between the harness and
+Whatever is the same for every toolkit. The adapter contract, the command and the files between the harness and
 an adapter, is the harness's. Where a model's adapters share code, what a toolkit's part hands it is that code's own
 page to state; such code is a reference realization of the toolkit-neutral parts, the effective member, the
-population, the residuals and the files, which a reader may use or replace under the same acceptance.
+population, the residuals and the files, which a reader may use or replace under the same acceptance. On the
+contract's second form that code is the model's bench, run outside the toolkit's container.
+
+What is the toolkit's own, the stone holds: how its adapter answers each of an experiment's suggestions, and every
+reading, where the adapter reads the toolkit's internals rather than what the toolkit returns, with the reason.
 
 A stone records no run times or speeds: those belong to the run registry, with the machine and the conditions beside
 them.
