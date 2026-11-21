@@ -43,6 +43,8 @@ model:
 toolkits:
   hark:
     adapter: adapters/hark/adapter.py          # the adapter contract: <adapter> <parameter file> --out <dir> --level <n> --request <file>
+    # command: [python, "{adapter}"]           # optional: the words that start the adapter, {adapter} once among them; the default
+                                               # is shown, and stating any command puts it in the jobs' fingerprints
     code: [adapters/common.py, adapters/hark/adapter.py, ../schemas/checker/*.py]   # what a run's output depends on besides the environment
     environment: adapters/hark/env             # the adapter's own: pyproject.toml, uv.lock, .python-version, Dockerfile
     stone: ../rosetta/hark.md
@@ -50,6 +52,11 @@ toolkits:
     threads: 2                                 # the cap on each job's BLAS and OpenMP threads
     kind: numerical                            # optional: exact for an entry that evaluates a closed form; numerical when left out
 ```
+
+An adapter's **command** is used as it is given, on the host and in the container. A command whose first word is
+`python` runs in the adapter's uv project, as `python <adapter>` always has; any other runs as it is written, so that
+an adapter may be in any language. An entry that states no command keeps the fingerprint it had before commands could
+be stated.
 
 `anchors` names BST's anchors file, or a file for each key of an experiment's `sources`: `anchors: {bst:
 ../ontologies/buffer-stock-models/bst-anchors.txt, <key>: <file>}`. An experiment's anchors for a source are checked
