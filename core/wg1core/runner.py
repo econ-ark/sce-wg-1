@@ -10,7 +10,9 @@ registry's records. The `wg1core` command.
     wg1core status
 
 Every command reads a model repository's registry file, `--registry`, `harness/toolkits.yaml` under the current
-directory by default. The file names the toolkits, each with its adapter, the files its runs depend on, its
+directory by default. The file names the toolkits, each with its adapter, the command that starts it where that is
+not `python <adapter>` (a list of words in which `{adapter}` stands once for the adapter's path, so that an adapter
+may be written in any language), the files its runs depend on, its
 environment, its stone, its levels, its thread cap and its kind, exact for an entry that evaluates a closed form and
 numerical, the default, for one that approximates by a method, and under `model` what the core needs of the
 repository: its
@@ -68,8 +70,12 @@ from . import experiment as experiments
 THREAD_VARIABLES = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS")
 OUTPUTS = ("results.json", "methods.yaml", "settings.yaml")
 IMAGE_PREFIX = "sce-wg-1"
-TOOLKIT_KEYS = {"adapter", "code", "environment", "stone", "levels", "threads", "kind"}
+TOOLKIT_KEYS = {"adapter", "command", "code", "environment", "stone", "levels", "threads", "kind"}
 KINDS = ("exact", "numerical")  # how an entry obtains its solution; numerical when the registry file states none
+# An adapter's command: the words that start it, `{adapter}` standing once, as a word of its own, for the adapter's path.
+# A command whose first word is `python` runs in the adapter's environment; any other runs as it is given.
+ADAPTER = "{adapter}"
+DEFAULT_COMMAND = ("python", ADAPTER)
 MODEL_KEYS = {"results_schema", "anchors", "experiments", "verifier", "registry_dir", "identity"}
 REGISTRY_FILES = ("harness/toolkits.yaml", "toolkits.yaml")
 # Linux's signal numbers, by which a container's exit code of 128 and a number names a signal, whatever the host's are:
@@ -145,8 +151,14 @@ class Model:
                 raise SystemExit(f"{self.file.name}: {name}: unknown keys {sorted(unknown)} or no adapter or levels")
             if entry.get("kind", "numerical") not in KINDS:
                 raise SystemExit(f"{self.file.name}: {name}: kind is {entry['kind']!r}; it is one of {', '.join(KINDS)}")
+            stated = entry.get("command")
+            if stated is not None and not (isinstance(stated, list) and stated and all(isinstance(w, str) and w for w in stated)
+                                           and stated.count(ADAPTER) == 1):
+                raise SystemExit(f"{self.file.name}: {name}: command is a list of words, {ADAPTER} standing once as a "
+                                 f"word of its own for the adapter's path")
             tk = {"name": name, "adapter": (self.dir / entry["adapter"]).resolve(), "kind": entry.get("kind", "numerical"),
-                  "levels": dict(entry["levels"]), "threads": int(entry.get("threads", 2))}
+                  "levels": dict(entry["levels"]), "threads": int(entry.get("threads", 2)),
+                  "command": list(stated) if stated is not None else None}
             tk["environment"] = (self.dir / entry["environment"]).resolve() if entry.get("environment") else None
             tk["stone"] = (self.dir / entry["stone"]).resolve() if entry.get("stone") else None
             files = set()
@@ -236,6 +248,8 @@ def fingerprint(job: dict, tk: dict, model: Model) -> dict:
            "environment": environment_identity(tk, model), "code_sha256": code_sha256(tk, model), "threads": tk["threads"]}
     if tk["kind"] != "numerical":
         out["kind"] = tk["kind"]
+    if tk["command"] is not None:
+        out["command"] = tk["command"]
     return out
 
 
@@ -246,11 +260,20 @@ def adapter_arguments(job: dict, out_dir: str, in_container: bool, model: Model)
     return [p, "--out", out_dir, "--level", str(job["level_arg"]), "--request", r]
 
 
+def adapter_words(tk: dict, adapter: str) -> list[str]:
+    """The adapter's command with its path put in: the registry's `command`, or `python <adapter>`."""
+    return [adapter if w == ADAPTER else w for w in (tk["command"] or DEFAULT_COMMAND)]
+
+
 def command(job: dict, tk: dict, model: Model) -> list[str]:
-    args = [str(tk["adapter"])] + adapter_arguments(job, str(job["dir"]), False, model)
+    """The job on this machine: a command that starts with `python` in the adapter's uv project, or in the core's own
+    Python where the adapter states no environment; any other command as the registry file gives it."""
+    words = adapter_words(tk, str(tk["adapter"])) + adapter_arguments(job, str(job["dir"]), False, model)
+    if words[0] != "python":
+        return words
     if tk["environment"] is None:
-        return [sys.executable] + args
-    return ["uv", "run", "--quiet", "--project", str(tk["environment"]), "--frozen", "python"] + args
+        return [sys.executable] + words[1:]
+    return ["uv", "run", "--quiet", "--project", str(tk["environment"]), "--frozen"] + words
 
 
 def container_name(job: dict, run_id: str) -> str:
@@ -270,8 +293,8 @@ def container_command(job: dict, tk: dict, ctx: dict) -> list[str]:
     cmd += ["--tmpfs", "/tmp", "--env", "HOME=/tmp", "--env", "NUMBA_CACHE_DIR=/tmp/numba", "--env", "MPLCONFIGDIR=/tmp/mpl",
             "--mount", f"type=bind,source={model.root},target=/src,readonly",
             "--mount", f"type=bind,source={job['dir']},target=/out",
-            "--workdir", "/src", tk["image_id"], "python", model.rel(tk["adapter"])]
-    return cmd + adapter_arguments(job, "/out", True, model)
+            "--workdir", "/src", tk["image_id"]]
+    return cmd + adapter_words(tk, model.rel(tk["adapter"])) + adapter_arguments(job, "/out", True, model)
 
 
 def docker(*args: str, check: bool = True) -> subprocess.CompletedProcess:
@@ -399,7 +422,7 @@ def run_job(job: dict, tk: dict, ctx: dict) -> dict:
         docker("rm", "--force", container_name(job, ctx["run_id"]), check=False)
     ok = code == 0 and (d / "results.json").is_file()
     shown = [model.rel(Path(c)) if c.startswith("/") else c for c in cmd]
-    if tk["environment"] is None:
+    if not in_container and cmd[0] == sys.executable:
         shown[0] = "python"
     out = {"status": "ok" if ok else "failed", "exit_code": code, "command": shown, "fingerprint": fp}
     record.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
@@ -481,6 +504,7 @@ def cmd_run(args) -> int:
                     if m["id"] in members],
         "levels": levels,
         "toolkits": {n: {"adapter": model.rel(model.toolkits[n]["adapter"]), "kind": model.toolkits[n]["kind"],
+                         **({"command": model.toolkits[n]["command"]} if model.toolkits[n]["command"] else {}),
                          "environment": environment_identity(model.toolkits[n], model),
                          "code_sha256": code_sha256(model.toolkits[n], model), "threads": model.toolkits[n]["threads"]} for n in toolkits},
         "model": model_commit(model),
