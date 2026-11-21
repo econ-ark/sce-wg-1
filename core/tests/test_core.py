@@ -480,3 +480,47 @@ def test_a_job_its_process_killed_by_a_signal_is_recorded_so(model):
     assert run(model, "--levels", "low") != 0
     outcome = record(model, "m1")["outcome"]
     assert (outcome["termination"], outcome["signal"], outcome["exit_code"]) == ("signal", "SIGKILL", -9)
+
+
+def test_an_adapter_is_started_by_its_stated_command(model):
+    """A registry entry's `command` is used as it is given: here the interpreter named by its own path, which is not
+    the word `python`, so that nothing is put before it. The record names the adapter as its script and its arguments
+    as the contract's; the fingerprint holds the command, so that a changed command reruns the jobs."""
+    registry = yaml.safe_load(model["registry"].read_text())
+    registry["toolkits"]["stub"]["command"] = [sys.executable, "-X", "utf8", "{adapter}"]
+    model["registry"].write_text(yaml.safe_dump(registry))
+    git(model["root"], "commit", "-q", "-am", "the stub started by a stated command")
+    assert run(model, "--levels", "low") == 0
+    r = record(model, "m1")
+    records.validate(r)
+    assert r["script"] == "harness/stub_adapter.py" and r["arguments"][1] == "--out"
+    job = json.loads((model["out"] / "stub" / "m1" / "low" / "job.json").read_text())
+    assert job["command"][:4] == ["python", "-X", "utf8", "harness/stub_adapter.py"]  # the interpreter shown as python
+    assert job["fingerprint"]["command"] == [sys.executable, "-X", "utf8", "{adapter}"]
+    assert manifest(model)["toolkits"]["stub"]["command"] == [sys.executable, "-X", "utf8", "{adapter}"]
+    m = runner.Model(model["registry"])
+    tk = {**m.toolkits["stub"], "image_id": "sha256:" + "0" * 64}
+    job = {"toolkit": "stub", "member": "m1", "level": "low", "level_arg": 1,
+           "parameter_file": model["experiment"].parent / "m1.yaml",
+           "request_file": model["experiment"].parent / "m1.request.yaml", "dir": model["out"] / "stub" / "m1" / "low"}
+    cmd = runner.container_command(job, tk, {"model": m, "run_id": "run", "caps": {"cpus": 2.0}})
+    at = cmd.index(tk["image_id"])
+    assert cmd[at + 1:at + 5] == [sys.executable, "-X", "utf8", "harness/stub_adapter.py"]
+
+
+def test_a_default_command_is_not_in_the_fingerprint(model):
+    """An entry that states no command keeps the fingerprint it had before commands could be stated, so that no run
+    of record looks stale for it."""
+    assert run(model, "--levels", "low") == 0
+    job = json.loads((model["out"] / "stub" / "m1" / "low" / "job.json").read_text())
+    assert "command" not in job["fingerprint"] and "command" not in manifest(model)["toolkits"]["stub"]
+
+
+@pytest.mark.parametrize("stated", [[], ["python"], ["python", "{adapter}", "{adapter}"], "python {adapter}",
+                                    ["python", "--file={adapter}"]])
+def test_a_command_without_the_adapter_as_a_word_is_refused(model, stated):
+    registry = yaml.safe_load(model["registry"].read_text())
+    registry["toolkits"]["stub"]["command"] = stated
+    model["registry"].write_text(yaml.safe_dump(registry))
+    with pytest.raises(SystemExit, match="command is a list of words"):
+        runner.Model(model["registry"])
