@@ -158,7 +158,7 @@ def test_a_run_whose_checks_and_records_use_the_metrics_the_experiment_defines(t
     # a record names its largest distance's metric, whatever its name
     record = json.loads((model["out"] / "stub" / "m1" / "low" / "record.json").read_text())
     assert record["extensions"]["sce-wg-1"]["comparison"]["largest_distance"]["metric"] == "count_off"
-    assert record["$schema"].endswith("/0.1.0-draft.8.json")
+    assert record["$schema"].endswith("/0.1.0-draft.9.json")
     records.validate(record)
 
 

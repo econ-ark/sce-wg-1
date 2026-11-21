@@ -192,6 +192,13 @@ def outputs(folder: Path, names: tuple[str, ...]) -> list[dict]:
     return out
 
 
+def results_record(job_dir: Path) -> Path:
+    """The record that carries a job's results file, and so its verdict and comparison: its measure step's,
+    `measure.json`, for an adapter on contract 2; the job's own, `record.json`, otherwise."""
+    measure = Path(job_dir) / "measure.json"
+    return measure if measure.is_file() else Path(job_dir) / "record.json"
+
+
 def held() -> dict[str, dict]:
     """Every schema this core holds, by its identifier: its own drafts, and the earlier ones in `schemas/earlier/`."""
     out = {}

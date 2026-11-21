@@ -201,13 +201,15 @@ def in_order(levels, order: list[str]) -> list[str]:
 def describe(cell_records: list[dict], build: dict | None, experiment: dict | None) -> dict:
     """What a run's records say of one cell."""
     fields = [r["extensions"][NAMESPACE] for r in cell_records]
+    # the records that carry a results file: a job's own, or its measure step's under contract 2, never its solve's
+    measured = [f for f in fields if f.get("step", "job") != "solve"]
     order = experiment["levels"] if experiment else []
     first = started(cell_records)
     members = sorted({f["member"]["id"] for f in fields})
-    comparison = collections.Counter((f.get("comparison") or {}).get("status", "not recorded") for f in fields)
-    reasons = sorted({f["comparison"]["reason"] for f in fields if (f.get("comparison") or {}).get("reason")})
+    comparison = collections.Counter((f.get("comparison") or {}).get("status", "not recorded") for f in measured)
+    reasons = sorted({f["comparison"]["reason"] for f in measured if (f.get("comparison") or {}).get("reason")})
     largest: dict = {}
-    for f in fields:
+    for f in measured:
         block = f.get("comparison") or {}
         if block.get("status") == "computed" and block.get("largest_distance"):
             best = largest.get(f["level"])
@@ -228,7 +230,8 @@ def describe(cell_records: list[dict], build: dict | None, experiment: dict | No
         "schema": checked(cell_records + ([build] if build else [])),
         "jobs_not_ended_cleanly": sum(1 for r in cell_records
                                       if r["outcome"].get("exit_code") != 0 or r["outcome"].get("termination") != "exited"),
-        "verification": dict(collections.Counter(f["verification"]["verdict"] for f in fields)),
+        "steps": dict(collections.Counter(f.get("step", "job") for f in fields)),
+        "verification": dict(collections.Counter(f["verification"]["verdict"] for f in measured)),
         "comparison": {"statuses": dict(comparison), "reasons": reasons,
                        "largest_distance_by_level": {lv: largest[lv] for lv in in_order(largest, order)}},
         "experiment_sha256": sorted({f["experiment"]["sha256"] for f in fields}),

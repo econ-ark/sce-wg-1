@@ -34,9 +34,14 @@ to make that test cheap to run, hard to get wrong, and honest about what it esta
   nothing of the model, which is mounted when a job runs.
 - **The container contract.** One job: the repository mounted read-only, the job's folder writable, no network, the
   thread cap, a scratch space for what the toolkit caches, and caps on processors, memory and wall time. The adapter's
-  command line takes the parameter file, the request file, the level and the output folder, and writes the results,
-  method and [settings](https://bellman.io/wiki/settings/) files. Verification and the comparison run outside the toolkit's container, so that nothing the
-  toolkit does changes the verdict.
+  command, `python <adapter>` or the words its registry entry states, takes the parameter file, the request file, the
+  output folder and, by the form of the contract the entry states, the level or the level's suggestions. On the first
+  form it writes the results, method and [settings](https://bellman.io/wiki/settings/) files. On the second it writes
+  the toolkit's solution with the method and settings files, the settings saying which suggestions the toolkit took,
+  adapted or declined, or for an exact entry, which has no settings, that none applies; the model's bench then measures the solution outside the container, in the harness's
+  environment, and writes the results file, so that every toolkit's solution is measured by one code, once.
+  Verification and the comparison run outside the toolkit's container too, so that nothing the toolkit does changes
+  the verdict.
 - **The execution records and the registry.** Every image built and every job run writes a record: the repository's
   commit and whether its tree was dirty, the environment's hash over what git records, the image, the machine, the
   conditions, the start, end and duration, how the job ended, the outputs' hashes, and the model repository's own
@@ -67,10 +72,15 @@ to make that test cheap to run, hard to get wrong, and honest about what it esta
    solves, how it represents the laws, its method at each of the stage file's
    [places](https://bellman.io/wiki/methodization/), its names, timing and
    normalization for the parameter file's keys and the results objects, and what it does not compute.
-2. **The adapter:** the contract's command line in any language, reading the parameter and request files and writing
-   the results, method and settings files, with its environment pinned beside it.
-3. **The run:** the harness runs the adapter on every experiment at the toolkit's levels, verifies every results file
-   with the checker, compares it with the reference, and registers the records.
+2. **The adapter:** a command in any language, its words stated in the registry file, reading the parameter and
+   request files and, on the contract's second form, the level's suggestions; writing the toolkit's solution, or on
+   the first form the results file, with the method and settings files; its environment pinned beside it. It
+   translates the member into the toolkit's terms, calls the toolkit and translates the answer back. It supplies none
+   of the toolkit's numerical choices, and where it reads the toolkit's internals rather than what the toolkit
+   returns, its solution file says so.
+3. **The run:** the harness runs the adapter on every experiment at the experiment's levels, measures each solution
+   with the model's bench where the adapter is on the second form, verifies every results file with the checker,
+   compares it with the reference, and registers the records.
 4. **The stone:** the lexicon, the handlers, the departures and the evidence, revised on the verified runs.
 
 A toolkit whose authors cannot provide an environment submits results files, which are verified and shown as

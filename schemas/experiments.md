@@ -7,12 +7,14 @@ restrained-limit experiment, is in the buffer-stock model's repository with its 
 A family's schemas say what a model is. An **experiment** says what every toolkit is to do with some of a family's
 members, and what the results must show. An experiment file names:
 - the members, with the request file each is solved with;
-- the precision levels every toolkit runs;
+- the precision levels every toolkit runs, and optionally what it suggests at each;
 - what every results file must carry;
-- the checks the harness makes on the results files.
+- the checks the harness makes on the results files;
+- optionally, the settings of the model's bench, which measures the toolkits' solutions.
 
 It names no toolkit and holds none of a toolkit's settings. Those stay in the toolkit's method and settings files,
-and its Rosetta Stone says how it maps onto the family. An experiment is to the
+and its Rosetta Stone says how it maps onto the family. What an experiment suggests at a level is no toolkit's setting
+until the toolkit takes it, and the toolkit's settings file says when it does. An experiment is to the
 toolkits what CMIP's experiment protocols and data request are to climate models: one statement of what everyone runs
 and reports, so that the results can be laid side by side.
 
@@ -22,12 +24,19 @@ and reports, so that the results can be laid side by side.
 ## What the harness gives a toolkit, and what it asks of it
 
 Three rules:
-- **It gives parameters, never methods or settings.** An adapter receives the member's parameter file, the request
-  file, the name of a precision level, and a folder to write into; nothing else. What a level means is the
-  toolkit's own ladder's business; the harness only maps the names.
+- **It gives parameters, and suggests settings it never imposes.** An adapter receives the member's parameter file,
+  the request file, a folder to write into, and one thing more, by the form of the adapter contract its registry
+  entry states. On the first form, the name of a precision level: what a level means is the toolkit's own ladder's
+  business, and the harness only maps the names. On the second, the level's suggestions, settings in the model's own
+  terms, such as a grid's number of points, spacing and bounds or a tolerance, which the toolkit may take, adapt or
+  decline, saying which in its settings file; an exact entry, which has no settings, answers each not
+  applicable. Only the outcome is judged; nothing checks that a suggestion was taken.
+  An adapter translates the member into the toolkit's terms, calls the toolkit and translates its answer back. It
+  supplies none of the toolkit's numerical choices, and where it reads the toolkit's internals rather than what the
+  toolkit returns, its solution file says so and the stone says why.
 - **The stated model's laws are the parameter file's, and each toolkit represents them as it likes:** by discretizing, by a
-  continuous representation, or otherwise. No experiment and no code the adapters share prescribes nodes, grids or a
-  population method. What a toolkit chose is read from its method file, its stone and its reported effective member.
+  continuous representation, or otherwise. No experiment prescribes nodes, grids or a population method, though it
+  may suggest them, and no code the adapters share imposes them. What a toolkit chose is read from its method file, its stone and its reported effective member.
 - **It asks every toolkit for,** through the family's results schema: the rule and its
   special points, the buffer-stock target among them; the stationary distributions of m, a and c under both measures,
   which carry the population's means of m, a and c, and marginal welfare, E[u′(c)]; the stationary distribution of
@@ -42,7 +51,9 @@ Three rules:
 | `title`, `statement` | what it shows, in words |
 | `sources` | where it comes from, by anchor, under each source's key; a source's anchors must be among its page's, in the file the model's registry file names for that key (BST's is `bst-anchors.txt` in the ontology) |
 | `members` | for each member: its `id` (the parameter file's name), the parameter file and the request file, each with its hash as the checker takes it, and optionally its `reference`: the reference results file, that file's hash, its `kind`, what it was `produced_by` and `certified_by`, the record that produced it, and the reference's certified `errors` per quantity (below). Pinning the hashes means an edited member or reference makes the experiment fail its test, not silently change; a changed reference is a new experiment version. The hash identifies the reference's file, not a reproduction of it: a results file need not be byte-identical across machines, so a solution is compared with the reference by distance, never by hash |
-| `levels` | the named precision levels every toolkit runs: `low`, `medium` and `high`, as a toolkit's ladder names its elements. A toolkit may run more |
+| `levels` | the named precision levels every toolkit runs, from coarsest to finest: `low`, `medium` and `high`, or names of the experiment's own, such as `out-of-box` for the toolkits' own defaults. An adapter on the contract's first form must offer each in its registry entry, as its ladder names its elements; one on the second is given each level's suggestions. A toolkit may run more |
+| `suggestions` | optional: what the experiment suggests to every toolkit at each level, in the model's own terms, which the model's suggestions schema states, `suggestions: {low: {tolerance: 1.0e-8}}`. An adapter on the contract's second form is given its level's object and says in its settings file which suggestions it took, adapted or declined, or, being exact, that none applies. A level given no object suggests nothing, and the toolkit runs at its own defaults |
+| `bench` | optional: the settings of the model's bench, which measures the solution of every adapter on the contract's second form by one code: its `version`, its `settings` at every level, and each level's overrides under `levels`, merged key by key. They are conventions that reach every entry at once, so the experiment names them, as it names its metrics |
 | `reports` | the results-file quantities every run must carry beyond what the results schema requires of every file, as paths into it: `types[].rule.c`, `types[].kink` |
 | `metrics` | optional: the metrics the experiment defines, by name (below) |
 | `checks` | what the results must show (below) |

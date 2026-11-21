@@ -63,6 +63,18 @@ the reference file's hash, the report's path and the largest distance with the r
 verdict, and the version of the core that gated the run. A run's records are registered in the model repository's registry, one file per job and one per
 build, and one validation covers the folder, since the model's schema dispatches on the record's kind.
 
+A job of an adapter on the contract's second form has two records, one for each of its steps, and `step` says which:
+- **its solve,** `<toolkit>_<member>_<level>.json`: the adapter in the toolkit's environment or container, with the
+  hash of the suggestions it was given and of the solution file it wrote, and no results file, verdict or comparison;
+- **its measure,** `<toolkit>_<member>_<level>_measure.json`: the model's bench on the host, in the harness's
+  environment and outside any container, its inputs (the solve's files and the bench's settings at the level) with
+  their hashes, its bench (the script, the hash of its code and the hash of its settings), the results file's hash,
+  and the verdict and the comparison, which belong to the record that carries the results file.
+
+A job of an adapter on the first form has one record, as before, which states no step. Draft 9 of the registry schema
+adds these fields; a record of draft 8 is unchanged under it but for its `$schema`, and the core holds draft 8 among
+its earlier drafts.
+
 ## The runs of record and the status table
 
 The registry holds every run that was registered, and a later run does not make an earlier one disappear. Which run

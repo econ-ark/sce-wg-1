@@ -552,7 +552,7 @@ def write_outputs(report: dict, jobs: list[dict], run: Path) -> None:
         job = by_dir[entry["dir"]]
         job_report = {k: v for k, v in entry.items() if k != "dir"}
         (job["dir"] / "comparison.json").write_text(json.dumps(job_report, indent=1) + "\n", encoding="utf-8")
-        record = job["dir"] / "record.json"
+        record = records.results_record(job["dir"])
         if record.is_file():
             data = json.loads(record.read_text(encoding="utf-8"))
             block = {"status": entry["status"], "report": "comparison.json"}
