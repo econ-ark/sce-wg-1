@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/econ-ark/sce-wg-1/schemas/experiment.schema.json",
   "title": "An experiment every toolkit performs",
-  "description": "Draft, 2026-11-02, revised 2026-11-11 and 2026-11-12 (experiments.md). An experiment names the members to solve, the request file each is solved with, the precision levels each toolkit runs, what every results file must carry, and the checks the harness makes on the results files. It names no toolkit and holds no setting of one. A member may pin a reference solution, with its kind, what produced it and its stated errors; a check may hold the entries of one kind to it. An experiment may define metrics of its own, by name, beside the three the core has.",
+  "description": "Draft, 2026-11-02, revised 2026-11-11, 2026-11-12 and 2026-11-20 (experiments.md). An experiment names the members to solve, the request file each is solved with, the precision levels each toolkit runs, what every results file must carry, and the checks the harness makes on the results files. It names no toolkit and holds no setting of one: what it suggests at a level, in the model's own terms, a toolkit may take, adapt or decline, and only the outcome is judged. It may state the settings of the model's bench, which measures every solution of an adapter on contract 2 by one code. A member may pin a reference solution, with its kind, what produced it and its stated errors; a check may hold the entries of one kind to it. An experiment may define metrics of its own, by name, beside the three the core has.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -49,12 +49,46 @@
       }
     },
     "levels": {
-      "description": "The precision levels every toolkit runs, as numerics.md names them. A toolkit may run more.",
+      "description": "The precision levels every toolkit runs, named by the experiment, in the order from coarsest to finest. A toolkit may run more.",
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
       "items": {
         "$ref": "#/$defs/Level"
+      }
+    },
+    "suggestions": {
+      "description": "What the experiment suggests to every toolkit at each of its levels, in the model's own terms, which the model's suggestions schema states (its registry file's `suggestions_schema`). An adapter on contract 2 is given its level's object as a file and says, in its settings file, which suggestions it took, adapted or declined, or, for an exact entry, which has no settings, that none applies. A level the experiment gives no object, or an empty one, suggests nothing: the toolkit's own defaults. An adapter on contract 1 is given its level's argument from the registry file, as before.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/Level"
+      },
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "bench": {
+      "description": "The settings of the model's bench, which measures every contract-2 adapter's solution by one code and writes its results file: `settings` at every level, with each level's overrides under `levels`, merged key by key. Named here as the experiment names its metrics, since the bench's choices are conventions that reach every entry at once.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The bench's version, as its model names it."
+        },
+        "settings": {
+          "type": "object"
+        },
+        "levels": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/Level"
+          },
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
       }
     },
     "reports": {
@@ -542,12 +576,9 @@
       ]
     },
     "Level": {
-      "description": "A named precision level, as numerics.md names them.",
-      "enum": [
-        "low",
-        "medium",
-        "high"
-      ]
+      "description": "A precision level's name, as the experiment declares it in `levels`: low, medium, high, or another such as out-of-box, the toolkit's own defaults.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
     },
     "Kind": {
       "description": "How a solution is obtained. exact: evaluated from a closed form, with no settings, so that every level names the same computation, and no error but round-off. numerical: approximated by a method with settings, at a level.",
