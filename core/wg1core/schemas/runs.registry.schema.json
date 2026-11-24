@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/econ-ark/sce-wg-1/schemas/runs.registry/0.1.0-draft.8.json",
+  "$id": "https://github.com/econ-ark/sce-wg-1/schemas/runs.registry/0.1.0-draft.9.json",
   "title": "A record in a model repository's registry",
-  "description": "DRAFT 0.1.0-draft.8, 2026-11-12. Every file of a run's folder, harness/runs.registry/<stamp>_<experiment>/: the build records, which are the core schema's (execution-record.schema.json, destined for REMARK), and the execution records, one per job, <toolkit>_<member>_<level>.json, which are the core's with a model repository's fields under the namespace sce-wg-1, defined here and nowhere in the core. One schema covers the whole folder, dispatching on `kind`.",
+  "description": "DRAFT 0.1.0-draft.9, 2026-11-20. Every file of a run's folder, harness/runs.registry/<stamp>_<experiment>/: the build records, which are the core schema's (execution-record.schema.json, destined for REMARK), and the execution records, which are the core's with a model repository's fields under the namespace sce-wg-1, defined here and nowhere in the core. A job of an adapter on contract 1, which writes the results file itself, has one record, <toolkit>_<member>_<level>.json. A job of an adapter on contract 2 has two: its solve, <toolkit>_<member>_<level>.json, the adapter writing the solution, method and settings files in the toolkit's environment; and its measure, <toolkit>_<member>_<level>_measure.json, the model's bench writing the results file from them in the harness's environment, outside the toolkit's container. One schema covers the whole folder, dispatching on `kind`. Draft 9 adds the step, the contract, the suggestions' and the solution's hashes, the measure step's inputs and its bench; a record of draft 8 is unchanged under it but for its `$schema`.",
   "allOf": [
     {
       "$ref": "https://github.com/econ-ark/sce-wg-1/schemas/execution-record/0.1.0-draft.4.json"
@@ -41,7 +41,7 @@
       "pattern": "^[0-9a-f]{64}$"
     },
     "SceWg1": {
-      "description": "A model repository's fields for one job of the harness: which toolkit solved which member at which level, and what the organizer's gate said.",
+      "description": "A model repository's fields for one job of the harness, or one step of it: which toolkit solved which member at which level, and what the organizer's gate said.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -49,9 +49,7 @@
         "toolkit",
         "member",
         "request",
-        "level",
-        "results_sha256",
-        "verification"
+        "level"
       ],
       "properties": {
         "experiment": {
@@ -138,6 +136,29 @@
         "level": {
           "type": "string",
           "description": "The experiment's level name; the adapter's own argument is in the record's arguments."
+        },
+        "step": {
+          "enum": [
+            "job",
+            "solve",
+            "measure"
+          ],
+          "description": "Which part of a job the record is of. job, the default: the whole job of an adapter on contract 1, which writes the results file itself. solve: the adapter on contract 2, in the toolkit's environment, writing the solution, method and settings files. measure: the model's bench, in the harness's environment and outside the toolkit's container, writing the results file from the solve's files."
+        },
+        "contract": {
+          "enum": [
+            1,
+            2
+          ],
+          "description": "The adapter's contract as the registry file states it; 1 when it states none."
+        },
+        "suggestions_sha256": {
+          "$ref": "#/$defs/Sha256",
+          "description": "Under contract 2, the canonical hash of the suggestions file the adapter was given: the level's suggestions as the experiment states them, which a toolkit may take, adapt or decline."
+        },
+        "solution_sha256": {
+          "$ref": "#/$defs/Sha256",
+          "description": "Under contract 2, the hash of the solution file the adapter wrote."
         },
         "settings_sha256": {
           "$ref": "#/$defs/Sha256"
@@ -242,7 +263,84 @@
         "core_version": {
           "type": "string",
           "description": "The version of the checker, runner and comparator that gated the run."
+        },
+        "inputs": {
+          "description": "A measure step's inputs: the solve's files and the bench's settings file, each with its hash.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "$ref": "#/$defs/Sha256"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "bench": {
+          "description": "A measure step's bench: the model's script, the hash of its code as the runner's fingerprint computes it, and the canonical hash of the settings the experiment gives it at the level.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "script",
+            "code_sha256",
+            "settings_sha256"
+          ],
+          "properties": {
+            "script": {
+              "type": "string"
+            },
+            "code_sha256": {
+              "$ref": "#/$defs/Sha256"
+            },
+            "settings_sha256": {
+              "$ref": "#/$defs/Sha256"
+            }
+          }
         }
+      },
+      "if": {
+        "required": [
+          "step"
+        ],
+        "properties": {
+          "step": {
+            "const": "solve"
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "results_sha256"
+              ]
+            },
+            {
+              "required": [
+                "verification"
+              ]
+            }
+          ]
+        }
+      },
+      "else": {
+        "required": [
+          "results_sha256",
+          "verification"
+        ]
       }
     }
   }

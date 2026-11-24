@@ -40,6 +40,12 @@ model:
                                                                # verdict; without it the results schema's validation is
   registry_dir: runs.registry                                  # optional: where `register` writes; this is the default
   identity: [parameter_file_sha256, request_file_sha256]       # optional: results-file keys a job's file and its reference must agree on
+  solution_schema: ../schemas/bst/solution.schema.json         # optional: what an adapter on contract 2 writes, checked after its solve
+  suggestions_schema: ../schemas/bst/suggestions.schema.json   # optional: what an experiment may suggest, checked with the experiment
+  bench:                                                       # needed by an adapter on contract 2: the model's bench, which measures its solutions
+    script: bench/bench.py                                     #   run as: <script> <parameter file> --request <file> --solution <job folder>
+    code: [../schemas/checker/*.py]                            #     --bench <bench.yaml> --out <job folder>, writing results.json
+    environment: .                                             #   its uv project, on the host; `command` may state other words, {script} among them
 toolkits:
   hark:
     adapter: adapters/hark/adapter.py          # the adapter contract: <adapter> <parameter file> --out <dir> --level <n> --request <file>
@@ -51,12 +57,28 @@ toolkits:
     levels: {low: 1, medium: 2, high: 3}       # the adapter's --level for each named level
     threads: 2                                 # the cap on each job's BLAS and OpenMP threads
     kind: numerical                            # optional: exact for an entry that evaluates a closed form; numerical when left out
+  dolo:                                        # an adapter on contract 2: <adapter> <parameter file> --out <dir> --suggest <file> --request <file>
+    adapter: adapters/dolo/adapter.py
+    contract: 2                                # it writes solution.json, methods.yaml and settings.yaml; the bench writes results.json
+    code: [adapters/dolo/adapter.py]           # no levels: the experiment names them, with what it suggests at each
+    environment: adapters/dolo/env
+    threads: 2
 ```
 
 An adapter's **command** is used as it is given, on the host and in the container. A command whose first word is
 `python` runs in the adapter's uv project, as `python <adapter>` always has; any other runs as it is written, so that
 an adapter may be in any language. An entry that states no command keeps the fingerprint it had before commands could
 be stated.
+
+An adapter's **contract** has two forms. On the first, the default, the adapter is given the level's argument from its
+`levels` and writes the results file itself. On the second it is given the level's suggestions, which the experiment
+states in the model's own terms, as a file, `suggestions.yaml`, and writes the toolkit's solution, `solution.json`,
+with its method and settings files, the settings saying which suggestions the toolkit took, adapted or declined, or,
+for an exact entry, which has no settings, that none applies (`not_applicable`). The
+model's bench then measures the solution on the host, in the harness's environment and outside the container, given
+its settings at the level from the experiment as `bench.yaml`, and writes the results file. Each step has its own
+fingerprint and record, so a change to the bench measures every job again without solving one again, and a change to
+the suggestions solves again.
 
 `anchors` names BST's anchors file, or a file for each key of an experiment's `sources`: `anchors: {bst:
 ../ontologies/buffer-stock-models/bst-anchors.txt, <key>: <file>}`. An experiment's anchors for a source are checked
@@ -93,10 +115,13 @@ wg1core status
   what the toolkit caches, and the processor, memory and wall-time caps given. A job writes into
   `<run folder>/<toolkit>/<member>/<level>/`, the folder named for the level and never for its position: the adapter's files, its log, `job.json` with the fingerprint of
   everything the output depends on, and `record.json`, its execution record. A job whose fingerprint is unchanged and
-  whose results file exists is skipped. `manifest.json` names every hash.
+  whose results file exists is skipped. A job of an adapter on contract 2 is solved and then measured: the folder
+  holds the suggestions and the bench's settings it was given, the solution, the bench's log and `measure.json`, the
+  measure step's record, besides, and each step is skipped when its own fingerprint is unchanged. `manifest.json`
+  names every hash.
 - **`verify`** runs the model's verifier on every results file, or validates it against the results schema when the
   model names none, checks that each carries the experiment's `reports`, writes `verification.json`, and fills each
-  record's verdict.
+  record's verdict: the job's, or its measure step's under contract 2.
 - **`compare`** evaluates the experiment's checks on the run's results files, each with a verdict of pass, fail, not
   applicable or error, among them the checks that hold the entries of one kind to a member's reference; and it reports
   every job's distances from its member's reference on the experiment's quantities, with where the largest sits and
@@ -108,7 +133,8 @@ wg1core status
   each job's folder, and each record's comparison block; its exit status is the checks' and the errors', never a
   distance's. The levels are ordered as the experiment lists them.
 - **`register`** copies a run's records into the registry folder, `<registry_dir>/<stamp>_<experiment>/`, one file per
-  job and one per build, validating each against `wg1core/schemas/runs.registry.schema.json`.
+  job, two for a job on contract 2 (its solve and its measure, `..._measure.json`), and one per build, validating each
+  against `wg1core/schemas/runs.registry.schema.json`.
 - **`status`** runs nothing. It prints what the repository holds: for each experiment and toolkit, the run of record
   the repository names and what that run's records say, as the next section describes. Its exit status is nonzero
   when the file of runs of record, or a record of a run it names, has a problem.
