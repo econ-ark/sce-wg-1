@@ -27,6 +27,7 @@ INF = math.inf
 SAMPLES = {
     "real": (-1.3, 0.0, 0.45),
     "positive": (0.05, 0.3, 0.9),
+    "negative": (-3.0, -1.3, -0.25),
     "unit-interval": (0.0, 0.3, 1.0),
     "extended-real": (-INF, -2.0, 0.5, INF),
     "extended-nonnegative": (0.0, 0.6, 1.4, INF),
@@ -182,6 +183,7 @@ def _construct(rows: dict, built: dict, env: dict) -> tuple[np.ndarray, np.ndarr
     forward, inverse = [], []  # the increasing maps applied so far, and their inverses
     lower, upper = -INF, INF  # the base's conditioning interval
     breaks = []  # points where a map has a kink, at which the base's panels must break
+    thinning = []  # the probabilities of keeping a draw of the base, as functions of it
     for step in built["operators"]:
         op = rows[step["operator"]]["name"]
         args = {k: formulas.evaluate(f, env) for k, f in step["arguments"].items()}
@@ -198,6 +200,10 @@ def _construct(rows: dict, built: dict, env: dict) -> tuple[np.ndarray, np.ndarr
             knots_u, knots_q = np.asarray(args["knots_u"]), np.asarray(args["knots_q"])
             forward.append(lambda z, ku=knots_u, kq=knots_q: np.interp(z, ku, kq))
             breaks.extend(knots_u.tolist())
+        elif op == "reflection-thinning":
+            assert not forward, "a thinning applies to the base"
+            weight = rows[step["operator"]]["weight"]
+            thinning.append(lambda z, a=args, f=weight: np.asarray(formulas.evaluate(f, {**a, "z": z}), dtype=float))
         elif op == "interval-conditioning":
             lo, hi = args["lower"], args["upper"]
             for g in reversed(inverse):
@@ -206,6 +212,12 @@ def _construct(rows: dict, built: dict, env: dict) -> tuple[np.ndarray, np.ndarr
         else:
             raise AssertionError(f"no quadrature rule for the operator {op}")
     z, w = base_rule(rows[built["base"]], lower, upper, breaks)
+    for keep in thinning:
+        w = w * keep(z)
+        mass = float(w.sum())
+        if mass < MIN_MASS:
+            raise Degenerate
+        w = w / mass
     for f in forward:
         z = f(z)
     return z, w

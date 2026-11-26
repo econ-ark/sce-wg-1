@@ -3,6 +3,20 @@
 Each entry says whether a change alters a measure (a family's definition), a chart (its coordinates or conversions), or
 only labels and text.
 
+## 0.1.0-draft.3 (unreleased)
+
+A measure added, and with it an operator and a coordinate domain; no existing measure or chart changes.
+
+- The jumpless truncated lognormal (`PD_0000065`), the law of exp(μ + σZ) where Z, on z ≥ b, has the standard normal
+  density less its reflection in b, (φ(z) − φ(2b − z))/(Φ(−b) − Φ(b)): truncated below at l = exp(μ + σb) with no jump in
+  the density, and no bound above. Its canonical chart (`PD_0000066`) is (μ, σ, l), as the truncated lognormal's.
+- Its subfamily of mean one (`PD_0000067`), written by the parameter files' `JumplessTruncatedLogNormal`
+  (`PD_0000068`): the standard deviation of the logarithm, and the bound in standard deviations below the center, an
+  omitted bound meaning three.
+- The thinning by a bound's reflection (`PD_0000064`), a case of conditioning, which builds it. An operator's `weight`,
+  the probability of keeping a draw, enters the source's schema with it.
+- The coordinate domain `negative`, (−∞, 0), for the bound.
+
 ## 0.1.0-draft.2 (unreleased)
 
 Only labels and text: no measure or chart changes. Bellman-SYM's documentation is public, at bellman.io, so its page of

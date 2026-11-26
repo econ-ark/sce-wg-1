@@ -10,7 +10,7 @@
 
 ontology:
   title: Probability distributions
-  version: 0.1.0-draft.2
+  version: 0.1.0-draft.3
   # Provisional until a w3id.org namespace is registered; the name is the owner's to choose.
   namespace: https://example.org/provisional/ontologies/probability-distributions/
   prefix: pd
@@ -120,6 +120,20 @@ operators:
     definition: >-
       The pushforward under the nondecreasing piecewise-linear function through the knots; an abscissa listed twice is a
       jump.
+  - id: PD_0000064
+    name: reflection-thinning
+    label: thinning by a bound's reflection
+    case_of: conditioning
+    arguments:
+      - {name: bound, meaning: "the bound b, a real number below zero"}
+    weight: 1 - exp(2*bound*(z - bound))
+    definition: >-
+      For a law on [b, ∞): keep a draw at z with probability 1 − exp(2b(z − b)) and condition on keeping it. It is the
+      conditioning of the product of the law with a uniform U on [0, 1] on the set {u ≤ 1 − exp(2b(z − b))}, projected
+      onto z. Applied to the standard normal truncated to [b, ∞), it gives the density (φ(z) − φ(2b − z))/(Φ(−b) − Φ(b)),
+      the standard normal less its reflection in b: the law at time one of a Brownian motion from zero conditioned on
+      staying above b, since 1 − exp(2b(z − b)) is the probability that a Brownian bridge from zero to z stays above b.
+
   - id: PD_0000041
     name: finite-mixture
     label: finite mixture
@@ -459,6 +473,89 @@ families:
               arguments: {sd_log: sd_log, bot: bot, top: top}
               defaults: {bot: "-3", top: "3"}
               none: {token: "null", values: {bot: "-inf", top: inf}}
+
+  - id: PD_0000065
+    name: jumpless-truncated-lognormal
+    label: jumpless truncated lognormal
+    stated_set: "[l, ∞)"
+    definition: >-
+      The law of exp(μ + σZ), where Z, on z ≥ b = (ln l − μ)/σ, has the standard normal density less its reflection in
+      b: a lognormal truncated below at l < exp(μ) whose density has no jump there, being zero at l and rising linearly
+      from it, and which has no bound above.
+    measure: >-
+      JumplessTruncatedLogNormal(μ, σ, l) = exp∗ aff(μ, σ)∗ θ_b(N(0, 1)|[b, ∞)), with b = (ln l − μ)/σ and θ_b the
+      thinning by the reflection in b
+    built_from:
+      base: standard-normal
+      operators:
+        - {operator: interval-conditioning, lower: b, upper: inf}
+        - {operator: reflection-thinning, bound: b}
+        - {operator: affine-pushforward, location: mu, scale: sigma}
+        - {operator: exponential-pushforward}
+    where:
+      b: (log(l) - mu)/sigma
+      D: Phi(-b) - Phi(b)
+    canonical_chart: meanlog-sdlog-bound
+    charts:
+      - id: PD_0000066
+        name: meanlog-sdlog-bound
+        label: the location and scale of the normal whose reflection is taken away, and the bound
+        coordinates:
+          - {name: mu, symbol: μ, meaning: the location of the normal in logs, domain: real}
+          - {name: sigma, symbol: σ, meaning: the scale of the normal in logs, domain: positive}
+          - {name: l, symbol: l, meaning: "the bound, in the draw's units: the law's infimum", domain: positive}
+        domain_conditions: ["l < exp(mu)"]
+    properties:
+      support: {infimum: l, supremum: inf, mass_at_infimum: "0"}
+      mean: exp(mu + sigma**2/2)*(Phi(sigma - b) - exp(2*b*sigma)*Phi(sigma + b))/D
+      moments:
+        orders: all-real
+        formula: exp(k*mu + k**2*sigma**2/2)*(Phi(k*sigma - b) - exp(2*b*k*sigma)*Phi(k*sigma + b))/D
+      log-moments: {orders: nonnegative-integers}
+
+  - id: PD_0000067
+    name: mean-one-jumpless-truncated-lognormal
+    label: jumpless truncated lognormal with mean one
+    subfamily_of: jumpless-truncated-lognormal
+    constraints: [mean-one]
+    definition: >-
+      The jumpless truncated lognormal laws whose mean is one. Their chart is the parameter files'
+      JumplessTruncatedLogNormal: the standard deviation of the logarithm, and the bound in standard deviations of the
+      normal below its center.
+    charts:
+      - id: PD_0000068
+        name: sd-log-standardized-bound
+        label: the standard deviation of the logarithm, and the bound in standard deviations
+        coordinates:
+          - name: sd_log
+            symbol: σ
+            meaning: the standard deviation of ln X
+            domain: positive
+            as_expectation: sqrt(E(log(X)**2) - E(log(X))**2)
+          - name: bot
+            symbol: bot
+            meaning: the bound, in standard deviations of the normal below its center
+            domain: negative
+        to_canonical_where:
+          D: Phi(-bot) - Phi(bot)
+          ez: -2*bot*Phi(bot)/D
+          v: 1 - (2*xphi(bot) + 4*bot**2*Phi(bot))/D - ez**2
+          s: sd_log/sqrt(v)
+          m: -s**2/2 - log((Phi(s - bot) - exp(2*bot*s)*Phi(s + bot))/D)
+        to_canonical: {mu: m, sigma: s, l: exp(m + s*bot)}
+        from_canonical_where:
+          b: (log(l) - mu)/sigma
+          D: Phi(-b) - Phi(b)
+          ez: -2*b*Phi(b)/D
+          v: 1 - (2*xphi(b) + 4*b**2*Phi(b))/D - ez**2
+        from_canonical: {sd_log: sigma*sqrt(v), bot: b}
+        conversion: irrational
+        written_as:
+          parameter-file:
+            - spelling: "{JumplessTruncatedLogNormal: {sd_log: σ, bot: bot}}"
+              head: JumplessTruncatedLogNormal
+              arguments: {sd_log: sd_log, bot: bot}
+              defaults: {bot: "-3"}
 
   - id: PD_0000034
     name: uniform

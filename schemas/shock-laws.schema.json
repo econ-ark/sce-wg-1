@@ -11,6 +11,7 @@
         { "$ref": "#/$defs/Degenerate" },
         { "$ref": "#/$defs/LogNormal" },
         { "$ref": "#/$defs/TruncatedLogNormal" },
+        { "$ref": "#/$defs/JumplessTruncatedLogNormal" },
         { "$ref": "#/$defs/Uniform" },
         { "$ref": "#/$defs/Discrete" },
         { "$ref": "#/$defs/LogNormalMixture" },
@@ -66,6 +67,29 @@
             "sd_log": { "$ref": "#/$defs/PositiveNumber" },
             "bot": { "$ref": "#/$defs/TruncationBound" },
             "top": { "$ref": "#/$defs/TruncationBound" }
+          }
+        }
+      }
+    },
+
+    "JumplessTruncatedLogNormal": {
+      "description": "ln psi = mu + s * Z, with Z on z >= bot having the standard normal density less its reflection in the bound, (phi(z) - phi(2 bot - z)) / (Phi(-bot) - Phi(bot)): truncated below with no jump in the density, and no bound above. sd_log is the standard deviation of ln psi, so s = sd_log / sqrt(Var(Z)); mu is set so that E[psi] = 1.",
+      "$comment": "An omitted bound is three standard deviations below the center; it may not be null, which would be LogNormal, and there is no top. The ontology's chart: PD_0000068.",
+      "type": "object",
+      "required": ["JumplessTruncatedLogNormal"],
+      "additionalProperties": false,
+      "properties": {
+        "JumplessTruncatedLogNormal": {
+          "type": "object",
+          "required": ["sd_log"],
+          "additionalProperties": false,
+          "properties": {
+            "sd_log": { "$ref": "#/$defs/PositiveNumber" },
+            "bot": {
+              "type": "number",
+              "exclusiveMaximum": 0,
+              "description": "The bound, in standard deviations of the normal below its center. Left out, it is -3."
+            }
           }
         }
       }

@@ -138,6 +138,10 @@
           "description": "For a case of conditioning: the set, a condition in z and the arguments.",
           "$ref": "#/$defs/Formula"
         },
+        "weight": {
+          "description": "For a case of conditioning that thins: the probability of keeping a draw at z, a formula in z and the arguments; the law is conditioned on keeping it.",
+          "$ref": "#/$defs/Formula"
+        },
         "written_as": {
           "description": "Per format, how the operator applied to its arguments is written.",
           "type": "object",
@@ -322,8 +326,8 @@
         "symbol": { "$ref": "#/$defs/Text" },
         "meaning": { "$ref": "#/$defs/Text" },
         "domain": {
-          "description": "real: ℝ; positive: (0, ∞); nonnegative: [0, ∞); unit-interval: [0, 1]; extended-real: [−∞, ∞]; extended-nonnegative: [0, ∞]; the vector domains hold those entrywise; probability-vector: entries in [0, 1] summing to one; positive-probability-vector: entries in (0, 1] summing to one; stochastic-matrix: rows that are probability vectors.",
-          "enum": ["real", "positive", "nonnegative", "unit-interval", "extended-real", "extended-nonnegative",
+          "description": "real: ℝ; positive: (0, ∞); negative: (−∞, 0); nonnegative: [0, ∞); unit-interval: [0, 1]; extended-real: [−∞, ∞]; extended-nonnegative: [0, ∞]; the vector domains hold those entrywise; probability-vector: entries in [0, 1] summing to one; positive-probability-vector: entries in (0, 1] summing to one; stochastic-matrix: rows that are probability vectors.",
+          "enum": ["real", "positive", "negative", "nonnegative", "unit-interval", "extended-real", "extended-nonnegative",
                    "real-vector", "positive-vector", "unit-interval-vector", "extended-real-vector",
                    "extended-nonnegative-vector",
                    "probability-vector", "positive-probability-vector", "stochastic-matrix"]

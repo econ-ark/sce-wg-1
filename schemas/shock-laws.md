@@ -11,7 +11,7 @@ The law belongs to the model. How a toolkit takes expectations under it (its qua
 the toolkit's choice.
 
 Each law here is a chart of a subfamily of mean one in the [ontology of probability distributions](../ontologies/probability-distributions/),
-version 0.1.0-draft.1, whose identifier is given with the law. The ontology defines each law as a measure, converts its
+version 0.1.0-draft.3, whose identifier is given with the law. The ontology defines each law as a measure, converts its
 coordinates to its family's canonical chart and to Bellman-SYM's, and decides when two written laws are the same law.
 The checker, the core's program that checks what a validator cannot express, reads every law through a copy of the
 ontology's table and compares the ontology's formulas with its own closed forms.
@@ -25,7 +25,7 @@ ontology's table and compares the ontology's formulas with its own closed forms.
   that fails. It never rescales.
 - **Defaults, and no bound.** A truncation bound left out is three standard deviations of the normal before truncation:
   −3 below, 3 above. No bound on a side is written `null`, as Distributions.jl writes `nothing` and PyMC and NumPyro
-  `None`. A file holds no infinity, which JSON cannot write. The hash is taken over the filled form, with every omitted
+  `None`; `JumplessTruncatedLogNormal`, whose one bound is always finite, has no `null`. A file holds no infinity, which JSON cannot write. The hash is taken over the filled form, with every omitted
   bound written in, so a law written with its defaults and the same law written without them are one model; a `null`
   stays `null`.
 - **Who checks what.** The validator, [`shock-laws.schema.json`](shock-laws.schema.json), checks names, types and ranges.
@@ -85,6 +85,36 @@ The moments have closed forms:
 {TruncatedLogNormal: {sd_log: 0.0548, bot: -3.0, top: 3.0}}
 {TruncatedLogNormal: {sd_log: 0.0548}}                        # the same law: each bound three
 {TruncatedLogNormal: {sd_log: 0.0548, top: null}}            # truncated below only, at three
+```
+
+### JumplessTruncatedLogNormal
+
+A lognormal truncated below whose density has no jump at the bound, and which has no bound above. ln ψ = μ + sZ, where Z,
+on z ≥ `bot`, has the standard normal density less its reflection in the bound:
+
+    f(z) = [φ(z) − φ(2·bot − z)] / D,   D = Φ(−bot) − Φ(bot),   z ≥ bot
+
+At the bound the reflection equals the density, so the density of ψ is zero at its lowest value, exp(μ + s·bot), and
+rises linearly from it. A distance d above the bound the reflection is exp(2·bot·d) of the density, so above the bound
+the law is soon the lognormal's own, with the lognormal's upper tail. What the reflection takes out is the normal's tail
+below the bound, folded over it: the law leaves out 2Φ(bot) of the normal's probability, 0.27% at a bound of −3. Z is the
+value at time one of a Brownian motion from zero conditioned on staying above `bot`.
+
+`bot` is in standard deviations of the normal, below its center: `bot` < 0, finite. Left out, it is −3; it may not be
+`null`, since a lognormal with no bound is `LogNormal`, and the law has no `top`. Ontology: `PD_0000068`, the jumpless
+truncated lognormal with mean one.
+
+`sd_log` is the standard deviation of ln ψ itself, as in `TruncatedLogNormal`, and the scale s is larger:
+
+    s = sd_log / √v,   v = Var(Z) = 1 − [2·bot·φ(bot) + 4·bot²·Φ(bot)] / D − E[Z]²,   E[Z] = −2·bot·Φ(bot) / D
+
+At a bound of −3, 1/√v is 1.011253. μ is set so that E[ψ] = 1, and the moments have closed forms, with t = ks:
+
+    E[ψ^k] = exp(kμ + t²/2) · [Φ(t − bot) − exp(2·bot·t) · Φ(t + bot)] / D
+
+```yaml
+{JumplessTruncatedLogNormal: {sd_log: 0.1, bot: -3.0}}
+{JumplessTruncatedLogNormal: {sd_log: 0.1}}               # the same law: the bound three below
 ```
 
 ### Uniform
@@ -192,6 +222,7 @@ file writes needs a stage file of its own.
 | Degenerate | `LogNormal(0, 0)`, a point mass at one |
 | LogNormal | `LogNormal(−σ²/2, σ)` |
 | TruncatedLogNormal | `TruncatedLogNormal(μ, s, l, u)`, with s = sd_log/√v, μ = −ln E[exp(sZ) \| bot ≤ Z ≤ top], l = exp(μ + s·bot) and u = exp(μ + s·top), and 0 and `inf` for no bound; Bellman-SYM lists the family among its [shock distributions](https://bellman.io/Bellman-Sym/reference/laws/#2-the-families) |
+| JumplessTruncatedLogNormal | none: Bellman-SYM has no family for it, and its `Mixture` takes no negative weight |
 | Uniform | `Uniform(1 − w, 1 + w)` |
 | Discrete | `Mixture((p₁, v₁), …)`, point masses with weights; Bellman-SYM checks no mean |
 | LogNormalMixture | `Mixture((w₁, LogNormal(c + m₁, s₁)), …)`, the common shift folded into each location |

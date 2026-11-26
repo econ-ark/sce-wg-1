@@ -150,7 +150,7 @@ def build(source: dict, digest: str) -> dict:
         if "case_of" in op:
             row["case_of"] = ident("operators", op["case_of"], where)
         row["arguments"] = [dict(a) for a in op["arguments"]]
-        for key in ("map", "set"):
+        for key in ("map", "set", "weight"):
             if key in op:
                 row[key] = _check_formula(op[key], {"z"} | {a["name"] for a in op["arguments"]}, where)
         if "written_as" in op:
@@ -411,6 +411,7 @@ VOCABULARY = {
         "measureExpression": "The family's measure in the operator notation, in the canonical coordinates.",
         "map": "The map of a case of the pushforward, as a formula in z and the arguments.",
         "set": "The set of a case of conditioning, as a condition in z and the arguments.",
+        "weight": "The probability of keeping a draw at z in a case of conditioning that thins, as a formula in z and the arguments.",
         "when": "The condition of a reduction.",
         "domainCondition": "A condition on a chart's coordinates jointly.",
         "head": "The name a format gives the law: a stage file's family call, a parameter file's key.",
@@ -554,7 +555,7 @@ def turtle(table: dict) -> str:
             for i, a in enumerate(row["arguments"], 1):
                 pairs.append((f"{pd}:argument", _bnode([(f"{pd}:position", str(i)), (f"{pd}:name", _lit(a["name"])),
                                                        (f"{pd}:meaning", _lit(a["meaning"], "en"))])))
-            for key in ("map", "set"):
+            for key in ("map", "set", "weight"):
                 if key in row:
                     pairs.append((f"{pd}:{key}", _lit(row[key])))
             pairs += _written_pairs(pd, row)
