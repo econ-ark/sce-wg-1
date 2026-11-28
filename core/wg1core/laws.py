@@ -7,8 +7,9 @@ read. `check` returns the problems the validator cannot express, as a list of se
 well formed. `bellman` returns the law's Bellman-SYM call, the converter's output, or None where Bellman-SYM has no
 family for it.
 
-A truncation bound left out of a parameter file is three standard deviations; null is no bound. `filled` writes the
-defaults in, and the hash is taken over the filled form, so a law written with its defaults and without them hash alike.
+A truncation bound left out of a parameter file is three standard deviations; null is no bound, except in
+JumplessTruncatedLogNormal, whose one bound is always finite. `filled` writes the defaults in, and the hash is taken over
+the filled form, so a law written with its defaults and without them hash alike.
 Each law is a chart of a subfamily of mean one in the ontology of probability distributions, whose identifier the law's
 class names; the conversions to Bellman-SYM's charts are the ontology's. Bellman-SYM's laws are its documentation's
 shock distributions, https://bellman.io/Bellman-Sym/reference/laws/.
@@ -119,10 +120,65 @@ class _TruncatedNormalInLogs:
         return INF if math.isinf(self.top) else self.location + self.scale * self.top
 
 
+class _JumplessNormalInLogs:
+    """ln X = location + scale * Z, with Z on z >= bot having the standard normal density less its reflection in the
+    bound, (phi(z) - phi(2 bot - z)) / (Phi(-bot) - Phi(bot)), for a finite bot < 0. The density is zero at the bound and
+    rises linearly from it; the upper tail is the normal's own.
+
+    `sd_log` and `mean_log` are the standard deviation and the mean of ln X; `scale` and `location` are those of the
+    normal whose reflection is taken away.
+    """
+
+    top = INF
+
+    def __init__(self, sd_log: float, bot: float):
+        self.bot = bot
+        self.mass = math.erf(-bot / math.sqrt(2.0))  # Phi(-bot) - Phi(bot), without the cancellation near zero
+        self.ez = -2.0 * bot * _Phi(bot) / self.mass
+        var = 1.0 - (2.0 * bot * _phi(bot) + 4.0 * bot * bot * _Phi(bot)) / self.mass - self.ez * self.ez
+        self.scale = sd_log / math.sqrt(var)
+        self.location = 0.0
+
+    def _log_g(self, t: float) -> float:
+        """log[Phi(t - bot) - exp(2 bot t) Phi(t + bot)], the bracket of E[exp(t Z)] times the mass."""
+        a = float(log_ndtr(t - self.bot))
+        b = 2.0 * self.bot * t + float(log_ndtr(t + self.bot))
+        return a + math.log1p(-math.exp(b - a))
+
+    def log_mgf_at_location_zero(self, k: float) -> float:
+        """log E[exp(k * scale * Z)]."""
+        t = k * self.scale
+        return 0.5 * t * t + self._log_g(t) - math.log(self.mass)
+
+    def log_mgf(self, k: float) -> float:
+        return k * self.location + self.log_mgf_at_location_zero(k)
+
+    def mgf(self, k: float) -> float:
+        return math.exp(self.log_mgf(k))
+
+    def mgf_derivative(self, k: float) -> float:
+        """d/dk E[exp(k (location + scale Z))]. The bracket's derivative in t is -2 bot exp(2 bot t) Phi(t + bot), since
+        exp(2 bot t) phi(t + bot) = phi(t - bot)."""
+        s, t = self.scale, k * self.scale
+        tail = math.exp(k * self.location + 0.5 * t * t) / self.mass
+        return self.mgf(k) * (self.location + k * s * s) + tail * s * (-2.0 * self.bot) * math.exp(
+            2.0 * self.bot * t) * _Phi(t + self.bot)
+
+    def mean(self) -> float:
+        return self.location + self.scale * self.ez
+
+    def lower(self) -> float:
+        return self.location + self.scale * self.bot
+
+    def upper(self) -> float:
+        return INF
+
+
 # How a law behaves at the lowest value of its support, which the lower tail of the stationary distribution inherits:
-# "atom", a point mass there; "density", a positive finite density there; "thin", a density that vanishes faster than any
-# power (a lognormal at zero).
-FLOOR_ATOM, FLOOR_DENSITY, FLOOR_THIN = "atom", "density", "thin"
+# "atom", a point mass there; "density", a positive finite density there; "linear", a density that is zero there and
+# rises linearly from it (the jumpless truncated lognormal); "thin", a density that vanishes faster than any power (a
+# lognormal at zero).
+FLOOR_ATOM, FLOOR_DENSITY, FLOOR_LINEAR, FLOOR_THIN = "atom", "density", "linear", "thin"
 
 
 class Degenerate:
@@ -225,6 +281,60 @@ class LogNormal(TruncatedLogNormal):
     def bellman(self):
         sd = self.params["sd_log"]
         return f"LogNormal({_num(-sd * sd / 2)}, {_num(sd)})"
+
+
+class JumplessTruncatedLogNormal:
+    """ln X = μ + sZ, with Z on z >= bot having the standard normal density less its reflection in the bound: truncated
+    below with no jump in the density, and no bound above."""
+
+    name = "JumplessTruncatedLogNormal"
+    ontology = "PD_0000068"  # the jumpless truncated lognormal with mean one, chart sd-log-standardized-bound
+
+    def __init__(self, params: dict):
+        self.params = params
+        sd_log = params["sd_log"]
+        self.bot = params.get("bot", -DEFAULT_BOUND)
+        if sd_log > 0 and self.bot is not None and -INF < self.bot < 0:
+            self.bot = float(self.bot)
+            self.normal = _JumplessNormalInLogs(sd_log, self.bot)
+            self.normal.location = -self.normal.log_mgf_at_location_zero(1.0)
+
+    def check(self):
+        problems = []
+        if self.params["sd_log"] <= 0:
+            problems.append("sd_log must be positive")
+        if self.bot is None:
+            problems.append("the bound may not be null: a lognormal with no bound is LogNormal")
+        elif not -INF < self.bot < 0:
+            problems.append("bot must be finite and below zero, the center of the normal")
+        if "top" in self.params:
+            problems.append("the law has no upper bound: top is not one of its fields")
+        return problems
+
+    def moment(self, k):
+        return self.normal.mgf(k)
+
+    def log_moment(self, k):
+        return self.normal.log_mgf(k)
+
+    @property
+    def mean_log(self):
+        return self.normal.mean()
+
+    @property
+    def mean_x_log_x(self):
+        return self.normal.mgf_derivative(1.0)
+
+    @property
+    def infimum(self):
+        return math.exp(self.normal.lower())
+
+    supremum = INF
+    mass_at_infimum = 0.0
+    floor_kind = FLOOR_LINEAR
+
+    def bellman(self):
+        return None  # Bellman-SYM has no family for it
 
 
 class Uniform:
@@ -551,19 +661,22 @@ class Tabulated:
         return None  # Bellman-SYM has no quantile table
 
 
-LAWS = {cls.name: cls for cls in (Degenerate, LogNormal, TruncatedLogNormal, Uniform, Discrete, LogNormalMixture,
-                                  TruncatedLogNormalMixture, Tabulated)}
+LAWS = {cls.name: cls for cls in (Degenerate, LogNormal, TruncatedLogNormal, JumplessTruncatedLogNormal, Uniform, Discrete,
+                                  LogNormalMixture, TruncatedLogNormalMixture, Tabulated)}
 
 
 def filled(value):
     """The value with every omitted truncation bound written in, wherever a law that takes bounds appears: the form the
     hash is taken over. A null bound stays null."""
     if isinstance(value, dict):
-        if len(value) == 1 and next(iter(value)) in ("TruncatedLogNormal", "TruncatedLogNormalMixture"):
+        if len(value) == 1 and next(iter(value)) in ("TruncatedLogNormal", "JumplessTruncatedLogNormal",
+                                                     "TruncatedLogNormalMixture"):
             (name, params), = value.items()
             if isinstance(params, dict):
                 if name == "TruncatedLogNormal":
                     return {name: {"bot": -DEFAULT_BOUND, "top": DEFAULT_BOUND, **params}}
+                if name == "JumplessTruncatedLogNormal":
+                    return {name: {"bot": -DEFAULT_BOUND, **params}}
                 if isinstance(params.get("components"), list):
                     return {name: {**params, "components": [
                         {"bot": -DEFAULT_BOUND, "top": DEFAULT_BOUND, **c} if isinstance(c, dict) else c
