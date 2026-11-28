@@ -7,7 +7,7 @@ compared, a toolkit's laws can be checked against one standard, and the provenan
 The ontology gives definitions, charts and conversion formulas. It provides no routines for sampling or evaluating a
 distribution.
 
-**Status: draft, version 0.1.0-draft.2.** The design below is settled, and [the catalog](#the-catalog) holds every
+**Status: draft, version 0.1.0-draft.3.** The design below is settled, and [the catalog](#the-catalog) holds every
 family the schemas' parameter files and Bellman-SYM's stage files write.
 
 ## The kinds
@@ -40,7 +40,9 @@ The rest are cases of these. The affine map aff(a, b), z ↦ a + b·z, and the e
 mixture is the product of a law on labels with the kernel sending each label to its component, followed by the projection
 onto the component's value. The product of independent laws is the product with a constant kernel. A Markov chain iterates
 the product with its transition kernel. Censoring is the pushforward under a clamp. A named case enters the ontology when a
-family is built from it; this release has the affine and the exponential maps.
+family is built from it; this release has the affine and the exponential maps, the piecewise-linear map, and the
+thinning by a bound's reflection, a case of conditioning: keep a draw at z with probability 1 − exp(2b(z − b)), which
+is conditioning the product of the law with a uniform on [0, 1] and projecting onto z.
 
 Conditioning commutes with an injective pushforward, since f⁻¹(f(A)) = A. So a lognormal truncated to [l, u] is the
 exponential of a normal truncated to [ln l, ln u], and bounds stated in standard deviations of the normal convert exactly
@@ -211,6 +213,7 @@ of probability distributions", *Bioinformatics* 32(17):2719–2721, doi:10.1093/
 | lognormal mixture, Bellman-SYM's `Mixture` of `LogNormal` components, and its subfamily of mean one, written by the parameter files' `LogNormalMixture` | in this release |
 | truncated lognormal mixture, Bellman-SYM's `Mixture` of `TruncatedLogNormal` components, and its subfamily of mean one, written by the parameter files' `TruncatedLogNormalMixture` | in this release |
 | quantile table, the pushforward of the unit uniform under a piecewise-linear quantile function, and its subfamily of mean one, written by the parameter files' `Tabulated` | in this release |
+| jumpless truncated lognormal, the exponential of a normal truncated below and thinned by its reflection in the bound, so that its density is zero at the bound and rises linearly from it, with no bound above; its canonical chart is the truncated lognormal's with the bound in the draw's units, since Bellman-SYM has no family for it; and its subfamily of mean one, written by the parameter files' `JumplessTruncatedLogNormal` (the standard deviation of the logarithm, and the bound in standard deviations below the center, an omitted bound meaning three) | in version 0.1.0-draft.3 |
 
 Families outside this list, such as the gamma, Weibull and beta, enter when a schema or a toolkit needs them.
 
