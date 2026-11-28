@@ -13,7 +13,7 @@ The package is under the Apache License 2.0 (`LICENSE`), as HARK is.
 A model repository adds the package at a tag of this repository, with uv's subdirectory syntax:
 
 ```sh
-uv add "wg1-core @ git+https://github.com/econ-ark/sce-wg-1@v0.1.0#subdirectory=core"
+uv add "wg1-core @ git+https://github.com/econ-ark/sce-wg-1@v0.2.0#subdirectory=core"
 ```
 
 and runs it as `uv run wg1core ...`. The package's version is in `wg1core/__init__.py` and `pyproject.toml`; the
@@ -21,6 +21,17 @@ records name it and, when the package was installed from git, the commit it was 
 installation's own metadata, since the version alone does not identify a development commit. The package needs
 Python 3.11 or later, so that it can be installed in every adapter's environment, whose adapters read the model
 through it.
+
+## Versions
+
+- **0.2.0**, 2026-11-27: an adapter started by the command its registry entry states, in any language; the
+  contract's second form, in which the adapter writes the toolkit's solution, given the level's suggestions, and the
+  model's bench measures it outside the toolkit's container, with draft 9 of the registry schema; levels named by the
+  experiment; the law `JumplessTruncatedLogNormal` and the floor kind `linear`. A model repository whose adapters write
+  the results file themselves runs unchanged, its registered records still valid.
+- **0.1.0**, 2026-11-20, the tag at the working group's d66f54b: the runner, the experiments' checker, the comparator
+  with the reference as its own kind and an experiment's own metrics, the status reader, and draft 8 of the registry
+  schema.
 
 ## What a model repository gives it
 
