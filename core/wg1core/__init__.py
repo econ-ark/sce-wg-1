@@ -15,7 +15,7 @@
 - `schemas/`: the validators of an experiment file, of an execution record, and of a model repository's registry entry.
 """
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 
 def identity() -> dict:
